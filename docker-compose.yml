@@ -1,0 +1,41 @@
+# For development use
+
+version: '3'
+services:
+  frontend:
+    build: ./frontend
+    ports:
+      - 3000:3000
+    volumes:
+      - './frontend:/home/node'
+      - '/home/node/node_modules'
+    stdin_open: true
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    depends_on:
+      - backend
+
+  backend:
+    restart: always
+    build: ./backend
+    working_dir: /app
+    command: ["python3", "src/manage.py", "runserver", "0.0.0.0:8000"]
+    environment:
+      - 'DATABASE_URL=postgres://keadatabase:keadatabase@database:5432/keadatabase'
+    volumes:
+      - ./backend:/app
+    ports:
+      - 8000:8000
+    depends_on:
+      - database
+
+  database:
+    image: postgis/postgis
+    environment:
+      - POSTGRES_DB=keadatabase
+      - POSTGRES_USER=keadatabase
+      - POSTGRES_PASSWORD=keadatabase
+    ports:
+      - 5432:5432
+    volumes:
+      - ./database:/var/lib/postgresql/data

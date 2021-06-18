@@ -8,6 +8,23 @@ Structure
 * `frontend/` React-based front-end
 * `backend/` Django-based back-end
 
+Getting started
+---------------
+A docker-compose file is provided for development purposes that spins up containers for the frontend, backend and database. The contents of the database will be stored in `database/`.
+
+To provision run:
+```
+docker-compose up
+```
+
+Environment variables need to be set for the front-end and the back-end to make the API-dependent services work (e.g. map tile providers).
+
+If you're using a fresh install, run the Django migrations and create a super user.
+```
+docker-compose run --rm backend python3 src/manage.py migrate
+docker-compose run --rm backend python3 src/manage.py createsuperuser
+```
+
 Licence
 -------
 Kea Database  

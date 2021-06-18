@@ -12,6 +12,6 @@ RUN apt update \
 COPY requirements.txt requirements.txt
 RUN pip install -r requirements.txt
 
-COPY /src /src
+COPY /src /app
 
-CMD ["gunicorn", "--pythonpath", "src", "--bind", "0.0.0.0:8000", "keadatabase.wsgi"]
+CMD ["gunicorn", "--pythonpath", "app", "--bind", "0.0.0.0:8000", "keadatabase.wsgi"]

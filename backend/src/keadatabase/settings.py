@@ -90,10 +90,10 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.middleware.gzip.GZipMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -224,23 +224,23 @@ REST_FRAMEWORK = {
 
 # CORS
 
-CORS_ORIGIN_WHITELIST = ('localhost:3000', )
+from corsheaders.defaults import default_headers
+
+CORS_ALLOW_HEADERS = list(default_headers) + [
+    'sentry-trace',
+]
+
+CORS_ALLOW_ALL_ORIGINS = True
 
 if not DEBUG:
-    CORS_ORIGIN_WHITELIST = (
-        'beta.keadatabase.nz',
-        'www.keadatabase.nz',
-        'map.keadatabase.nz',
-        'keadatabase.nz',
-        'survey.keadatabase.nz',
-        'about.keadatabase.nz',
-        'electricmagnetic.io',
-    )
+    CORS_ALLOW_ALL_ORIGINS = False
 
-if env.bool('CORS_ALLOW_LOCALHOST', False):
-    CORS_ORIGIN_WHITELIST += (
-        'localhost:3000',
-        'localhost:8000',
+    CORS_ALLOWED_ORIGIN_REGEXES = (
+        r'^https?://\w*\.?keadatabase.nz$',
+        r'^https?://\w*\.?electricmagnetic.io$',
+        r'^https?://\w*\.?maps.net.nz$',
+        r'^https?://localhost:3000$',
+        r'^https?://localhost:8000$',
     )
 
 # Custom admin site header

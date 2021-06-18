@@ -1,0 +1,26 @@
+language: python
+dist: bionic
+python:
+  - "3.8"
+install:
+  - pip install -r requirements.txt
+  - pip install codecov coverage
+script:
+  - yapf src/**/*.py --diff
+  - coverage run --source='src' src/manage.py test src
+services:
+  - postgresql
+before_script:
+  - psql -c 'create database keadatabase_test;' -U postgres
+  - psql -U postgres -c "create extension postgis"
+addons:
+  postgresql: "10"
+  apt:
+    packages:
+    - postgresql-10-postgis-2.4
+    - postgresql-10-postgis-2.4-scripts
+branches:
+  only:
+  - master
+after_success:
+  - codecov

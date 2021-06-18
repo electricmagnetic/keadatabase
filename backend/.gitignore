@@ -1,0 +1,17 @@
+*.pyc
+*.pyo
+*~
+*#*#
+*.orig
+.DS_Store
+
+/static/
+
+.vagrant/
+src/media/
+__pycache__/
+data/
+env/
+
+.coverage
+.env

@@ -4,6 +4,7 @@ version: '3'
 services:
   frontend:
     build: ./frontend
+    working_dir: /home/node
     ports:
       - 3000:3000
     volumes:
@@ -21,21 +22,27 @@ services:
     working_dir: /app
     command: ["python3", "src/manage.py", "runserver", "0.0.0.0:8000"]
     environment:
-      - 'DATABASE_URL=postgres://keadatabase:keadatabase@database:5432/keadatabase'
+      - 'DATABASE_URL=postgres://postgres:keadatabase@database:5432/keadatabase'
     volumes:
       - ./backend:/app
     ports:
       - 8000:8000
     depends_on:
-      - database
+      database:
+        condition: service_healthy
 
   database:
     image: postgis/postgis
     environment:
       - POSTGRES_DB=keadatabase
-      - POSTGRES_USER=keadatabase
+      - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=keadatabase
     ports:
       - 5432:5432
     volumes:
       - ./database:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5

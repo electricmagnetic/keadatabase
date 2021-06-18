@@ -3,6 +3,7 @@
 version: '3'
 services:
   frontend:
+    image: electricmagnetic/keadatabase_frontend
     build: ./frontend
     working_dir: /home/node
     ports:
@@ -17,6 +18,7 @@ services:
       - backend
 
   backend:
+    image: electricmagnetic/keadatabase_backend
     restart: always
     build: ./backend
     working_dir: /app

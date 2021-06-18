@@ -18,6 +18,18 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
+    services:
+      image: postgis/postgis
+      env:
+        - POSTGRES_DB=keadatabase
+        - POSTGRES_USER=postgres
+        - POSTGRES_PASSWORD=keadatabase
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
     
     strategy:
       fail-fast: false
@@ -38,3 +50,8 @@ jobs:
     - name: Check code formatting
       run: |
         yapf src/**/*.py --diff
+    - name: Run tests
+      run: |
+        python3 src/manage.py test src
+      env:
+        DATABASE_URL: postgres://postgres:keadatabase@database:5432/keadatabase

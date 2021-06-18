@@ -24,9 +24,9 @@ jobs:
       database:
         image: postgis/postgis
         env:
-          POSTGRES_DB=keadatabase
-          POSTGRES_USER=postgres
-          POSTGRES_PASSWORD=keadatabase
+          POSTGRES_DB: keadatabase
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: keadatabase
         options: >-
           --health-cmd pg_isready
           --health-interval 10s

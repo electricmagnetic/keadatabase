@@ -1,0 +1,48 @@
+@import 'assets/css/_variables';
+
+footer {
+  background-color: $footer-inner;
+
+  p {
+    margin: 0;
+  }
+
+  ul.footer-links {
+    padding-left: 0;
+    list-style: none;
+    margin-bottom: 0;
+    margin-left: -($grid-gutter-width/2);
+
+    li {
+      margin-left: $grid-gutter-width/2;
+      margin-right: $grid-gutter-width/2;
+      display: inline-block;
+    }
+  }
+
+  .footer-sponsor {
+    font-size: $font-size-sm;
+  }
+  .footer-attribution {
+    font-size: $font-size-sm * 0.9;
+
+    @include media-breakpoint-up(md) {
+      text-align: right;
+    }
+
+    .logo {
+      height: 24px;
+    }
+
+    .version {
+      color: #807e77;
+    }
+  }
+  .catalyst {
+    color: #ba2025;
+  }
+  .constrainer {
+    background-color: $footer-outer;
+    border-color: $footer-border;
+  }
+}

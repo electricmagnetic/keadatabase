@@ -1,0 +1,74 @@
+@import 'assets/css/_variables';
+@import 'bootstrap/scss/bootstrap';
+
+$constrainer-width: map-get($container-max-widths, 'xl') + 160px;
+
+#root {
+  background-color: #fff;
+}
+
+.constrainer {
+  @media (min-width: $constrainer-width+1px) {
+    border: 1px solid rgba($black, 0.125);
+    border-top: 0;
+    border-bottom: 0;
+    margin: auto;
+    width: $constrainer-width;
+    &::before,
+    &::after {
+      content: '';
+      display: table;
+      clear: both;
+    }
+  }
+}
+
+.btn-transparent {
+  @include button-variant(rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.1));
+  color: rgba(255, 255, 255, 1);
+
+  @include hover {
+    color: rgba(255, 255, 255, 0.8);
+  }
+}
+
+fieldset {
+  margin-bottom: 2rem;
+}
+
+legend {
+  border-bottom: 1px solid rgba($black, 0.125);
+  margin-bottom: 1.5rem;
+}
+
+label {
+  font-weight: bold;
+}
+
+.react-datepicker__time-list {
+  padding-left: 0;
+}
+
+.card-dull {
+  h2 {
+    font-size: $h5-font-size;
+  }
+
+  &.card,
+  .list-group-item {
+    background-color: lighten($brown-faded, 10%);
+    border-color: darken($brown-faded, 5%);
+    i {
+      color: darken($brown-faded, 50%);
+    }
+  }
+}
+
+img.isDead {
+  filter: grayscale(100%);
+}
+
+.card,
+.card > * {
+  min-height: 0.01px; // IE11 flex fix
+}

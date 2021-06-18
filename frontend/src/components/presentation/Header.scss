@@ -1,0 +1,11 @@
+@import 'assets/css/_variables';
+
+nav {
+  .navbar-brand img {
+    height: 28px;
+
+    @include media-breakpoint-up(sm) {
+      height: 32px;
+    }
+  }
+}

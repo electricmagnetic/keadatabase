@@ -1,0 +1,34 @@
+@import 'assets/css/_variables';
+
+.BirdPage {
+  .Banner {
+    h1 {
+      color: $primary;
+      margin-bottom: 2rem;
+    }
+  }
+
+  .profile-picture {
+    @include media-breakpoint-up(md) {
+      position: relative;
+
+      figure {
+        position: absolute;
+        right: $grid-gutter-width / 2;
+      }
+    }
+  }
+
+  .band-combo {
+    display: flex;
+    align-items: center;
+
+    .PrettyBandCombo {
+      margin-right: 0.5rem;
+    }
+  }
+
+  .description {
+    white-space: pre-line;
+  }
+}

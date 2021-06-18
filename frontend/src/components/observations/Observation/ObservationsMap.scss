@@ -1,0 +1,23 @@
+@import 'assets/css/_variables';
+
+.ObservationsMap {
+  height: 640px;
+
+  .ObservationPopup {
+    font-family: $font-family-sans-serif;
+    font-size: $font-size-sm;
+
+    .leaflet-popup-content-wrapper {
+      border-radius: 0;
+
+      .leaflet-popup-content {
+        border-radius: 0;
+        margin: 0;
+
+        .card {
+          border: 0;
+        }
+      }
+    }
+  }
+}

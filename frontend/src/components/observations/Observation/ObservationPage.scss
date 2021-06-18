@@ -1,0 +1,12 @@
+@import 'assets/css/_variables';
+
+.ObservationPage {
+  .comments,
+  .behaviour,
+  .location {
+    white-space: pre-line;
+  }
+  h2 {
+    font-size: $h3-font-size;
+  }
+}

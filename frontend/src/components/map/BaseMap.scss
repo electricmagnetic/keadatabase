@@ -1,0 +1,31 @@
+@import 'assets/css/_variables';
+
+.map {
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  font-family: $font-family-base;
+
+  a {
+    color: $link-color;
+    text-decoration: $link-decoration;
+
+    &:hover {
+      color: $link-hover-color;
+      text-decoration: $link-hover-decoration;
+    }
+  }
+
+  .leaflet-control-layers {
+    label {
+      margin: map-get($spacers, 1) 0;
+    }
+    input[type='radio'],
+    input[type='checkbox'] {
+      margin-right: map-get($spacers, 1);
+    }
+  }
+  .leaflet-control-layers-expanded {
+    padding: map-get($spacers, 1) map-get($spacers, 2);
+  }
+}

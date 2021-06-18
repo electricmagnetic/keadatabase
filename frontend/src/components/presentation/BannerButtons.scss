@@ -1,0 +1,29 @@
+@import 'assets/css/_variables';
+
+.BannerButtons {
+  background-color: $green-dark;
+
+  .container {
+    padding-top: $spacer;
+    padding-bottom: $spacer;
+
+    .banner-button {
+      .btn {
+        width: 100%;
+      }
+
+      @include media-breakpoint-down(sm) {
+        margin-bottom: $spacer/2;
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+
+      @include media-breakpoint-down(md) {
+        a {
+          font-size: $font-size-base;
+        }
+      }
+    }
+  }
+}

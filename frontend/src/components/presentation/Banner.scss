@@ -1,0 +1,40 @@
+@import 'assets/css/_variables';
+
+.Banner {
+  background: $footer-inner;
+  background-repeat: no-repeat;
+  background-position: center top;
+  background-size: cover;
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    margin: 0;
+  }
+
+  @include media-breakpoint-up(sm) {
+    h1 {
+      font-size: $display4-size;
+    }
+  }
+
+  &.size-large {
+    padding-top: $spacer * 11;
+    padding-bottom: $spacer * 11;
+  }
+  @include media-breakpoint-down(sm) {
+    &.size-large {
+      padding-top: $spacer * 8;
+      padding-bottom: $spacer * 8;
+    }
+  }
+  &.size-medium {
+    padding-top: $spacer * 6;
+    padding-bottom: $spacer * 6;
+  }
+  &.size-small {
+    padding-top: $spacer * 3;
+    padding-bottom: $spacer * 3;
+  }
+}

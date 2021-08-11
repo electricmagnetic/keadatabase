@@ -29,14 +29,6 @@ router.register(r'geojson/observations', ObservationGeoJSONViewSet, 'Observation
 router.register(r'geojson/bird_observations', BirdObservationGeoJSONViewSet, 'BirdObservationGeoJSON')
 router.register(r'report/observation', ReportObservationViewSet, 'ReportObservation')
 
-# Sightings endpoints (to be deprecated)
-router.register(r'sightings/sightings', ObservationViewSet, 'Sighting')
-router.register(r'sightings/birds', BirdObservationViewSet, 'BirdSighting')
-router.register(r'sightings/media', ObservationsMediaViewSet, 'SightingsMedia')
-router.register(r'geojson/sightings', ObservationGeoJSONViewSet, 'SightingGeoJSON')
-router.register(r'geojson/birds', BirdObservationGeoJSONViewSet, 'BirdSightingGeoJSON')
-router.register(r'report/sighting', ReportObservationViewSet, 'ReportSighting')
-
 # Survey endpoints
 router.register(r'surveys/grid_tiles', GridTileViewSet, 'GridTile')
 router.register(r'surveys/hours', SurveyHourViewSet, 'SurveyHour')

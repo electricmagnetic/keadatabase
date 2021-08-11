@@ -1,4 +1,4 @@
-FROM node:16
+FROM node:16-slim
 USER node
 WORKDIR /home/node
 ENV PATH /home/node/node_modules/.bin:$PATH

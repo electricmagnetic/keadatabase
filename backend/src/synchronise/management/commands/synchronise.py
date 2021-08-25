@@ -29,7 +29,7 @@ class Command(management.BaseCommand):
         if settings.DEFAULT_FILE_STORAGE == 'storages.backends.s3boto3.S3Boto3Storage':
             with default_storage.open('data/tStudyAreas.csv', 'r') as areas_csv_bin, \
                  default_storage.open('data/Kea.csv', 'r') as birds_csv_bin, \
-                 default_storage.open('data/Transmitter actions.csv', 'r') as transmitters_csv_bin:
+                 default_storage.open('data/Kea_Tag_Actions.csv', 'r') as transmitters_csv_bin:
 
                 # boto3 opens files as binary, hence the need to convert
                 areas_csv = io.StringIO(areas_csv_bin.read().decode('utf-8'))
@@ -44,7 +44,7 @@ class Command(management.BaseCommand):
         else:
             with open('../data/tStudyAreas.csv', 'rt') as areas_csv, \
                  open('../data/Kea.csv', 'rt') as birds_csv, \
-                 open('../data/Transmitter actions.csv', 'rt') as transmitters_csv:
+                 open('../data/Kea_Tag_Actions.csv', 'rt') as transmitters_csv:
 
                 synchronise_StudyArea(self, areas_csv)
                 synchronise_Bird(self, birds_csv)

@@ -33,7 +33,7 @@ def get_StudyArea(row):
 
     try:
         # Checks last word  (e.g. 'Rotoiti')
-        one_word_location = ' '.join(row['Transmitter ID'].split()[-1:])
+        one_word_location = ' '.join(row['TagID'].split()[-1:])
         study_area = StudyArea.objects.get(slug=slugify(one_word_location))
         return study_area
     except StudyArea.DoesNotExist:
@@ -41,7 +41,7 @@ def get_StudyArea(row):
 
     try:
         # Checks last two words (e.g. 'Abel Tasman')
-        two_word_location = ' '.join(row['Transmitter ID'].split()[-2:])
+        two_word_location = ' '.join(row['TagID'].split()[-2:])
         study_area = StudyArea.objects.get(slug=slugify(two_word_location))
         return study_area
     except StudyArea.DoesNotExist:
@@ -50,7 +50,7 @@ def get_StudyArea(row):
     try:
         # Checks second-to-last word (e.g. 'Waimakariri 2')
         second_last_word_location = ' '.join(
-            row['Transmitter ID'].split()[-2:-1]
+            row['TagID'].split()[-2:-1]
         )
         study_area = StudyArea.objects.get(
             slug=slugify(second_last_word_location)
@@ -87,7 +87,7 @@ def is_valid_BandCombo(row):
         return False
 
     # must have valid colour
-    if not any(colour in row['Transmitter ID'].lower() for colour in COLOURS):
+    if not any(colour in row['TagID'].lower() for colour in COLOURS):
         return False
 
     # must have a date
@@ -95,17 +95,17 @@ def is_valid_BandCombo(row):
         return False
 
     # special case
-    if 'yellowdot' in row['Transmitter ID']:
+    if 'yellowdot' in row['TagID']:
         return False
 
     # 'Kea ID' must match up with a Bird
     if not get_Bird(row):
-        raise ValueError('No Bird exists for this band:', row['Transmitter ID'])
+        raise ValueError('No Bird exists for this band:', row['TagID'])
 
     # Location contained within ID must match with a StudyArea
     if not get_StudyArea(row):
         raise ValueError(
-            'No StudyArea exists for this band:', row['Transmitter ID']
+            'No StudyArea exists for this band:', row['TagID']
         )
 
     return True
@@ -125,7 +125,7 @@ def standardise_BandCombo(row, bird, study_area):
             datetime.datetime.strptime(row['Date'], "%Y-%m-%d %H:%M:%S").date(),
     }
 
-    raw_bc_str = row['Transmitter ID']
+    raw_bc_str = row['TagID']
 
     # [common] remove identified StudyArea from raw string
     raw_bc_str = raw_bc_str.replace(str(study_area), "")
@@ -190,7 +190,7 @@ def standardise_BandCombo(row, bird, study_area):
                 raw_symbols.remove(raw_symbol)
 
         # remove duplicates (e.g ['A', 'A'])
-        standardised_bc['symbols'] = list(set(raw_symbols))
+        standardised_bc['symbols'] = sorted(list(set(raw_symbols)))
 
     # [common] modify LightBlue into Light Blue
     raw_bc_str = raw_bc_str.replace('LightBlue', 'Light Blue')

@@ -49,9 +49,7 @@ def get_StudyArea(row):
 
     try:
         # Checks second-to-last word (e.g. 'Waimakariri 2')
-        second_last_word_location = ' '.join(
-            row['TagID'].split()[-2:-1]
-        )
+        second_last_word_location = ' '.join(row['TagID'].split()[-2:-1])
         study_area = StudyArea.objects.get(
             slug=slugify(second_last_word_location)
         )
@@ -104,9 +102,7 @@ def is_valid_BandCombo(row):
 
     # Location contained within ID must match with a StudyArea
     if not get_StudyArea(row):
-        raise ValueError(
-            'No StudyArea exists for this band:', row['TagID']
-        )
+        raise ValueError('No StudyArea exists for this band:', row['TagID'])
 
     return True
 

@@ -22,11 +22,13 @@ from django.http import HttpResponse
 from .router import router
 
 # Custom admin site settings
+
 admin.site.site_header = settings.ADMIN_SITE_HEADER
 admin.site.site_title = settings.ADMIN_SITE_TITLE
 admin.site.index_title = settings.ADMIN_INDEX_TITLE
 
 # URLs
+
 urlpatterns = [
     url(
         r'^robots.txt',
@@ -39,6 +41,8 @@ urlpatterns = [
     url(r'^', include(router.urls)),
 ]
 
+# Debug toolbar
+
 if settings.DEBUG:
     import debug_toolbar
     urlpatterns = [
@@ -46,3 +50,15 @@ if settings.DEBUG:
     ] + urlpatterns
 
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+# JWT authentication
+
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
+
+urlpatterns = [
+    url(r'^token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    url(r'^token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+] + urlpatterns

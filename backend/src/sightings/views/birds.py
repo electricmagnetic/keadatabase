@@ -19,7 +19,7 @@ class BirdSightingFilter(django_filters.FilterSet):
         )
 
 
-class BirdObservationViewSet(viewsets.ReadOnlyModelViewSet):
+class BirdObservationViewSet(viewsets.ModelViewSet):
     serializer_class = BirdObservationSerializer
     pagination_class = ObservationPagination
     ordering = (

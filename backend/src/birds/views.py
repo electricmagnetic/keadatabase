@@ -57,7 +57,7 @@ class BirdFilter(django_filters.FilterSet):
         )
 
 
-class BirdViewSet(viewsets.ReadOnlyModelViewSet):
+class BirdViewSet(viewsets.ModelViewSet):
     queryset = Bird.objects. \
                select_related('bird_extended', 'band_combo', 'study_area',). \
                all()

@@ -74,6 +74,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_gis',
     'rest_framework_csv',
+    'rest_framework_simplejwt',
     'debug_toolbar',
     'leaflet',
     'birds',
@@ -216,6 +217,10 @@ REST_FRAMEWORK = {
     },
     'DEFAULT_PAGINATION_CLASS':
         'rest_framework.pagination.PageNumberPagination',
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
     'EXCEPTION_HANDLER':
         'keadatabase.exceptions.exception_handler',
     'PAGE_SIZE':

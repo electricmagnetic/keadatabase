@@ -5,7 +5,7 @@ from ..models.observations import Sighting
 from ..serializers.observations import ObservationSerializer
 
 
-class ObservationViewSet(viewsets.ReadOnlyModelViewSet):
+class ObservationViewSet(viewsets.ModelViewSet):
     queryset = Sighting.objects. \
                select_related('contributor',). \
                exclude(status='private').exclude(status='bad')

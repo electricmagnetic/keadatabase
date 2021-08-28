@@ -29,7 +29,7 @@ class BandComboFilter(django_filters.FilterSet):
         )
 
 
-class BandComboViewSet(viewsets.ReadOnlyModelViewSet):
+class BandComboViewSet(viewsets.ModelViewSet):
     serializer_class = BandComboSerializer
     pagination_class = BirdPagination
     search_fields = (

@@ -14,13 +14,7 @@ class BirdObservationSerializer(serializers.ModelSerializer):
     bird = BirdSerializer(many=False, read_only=True)
     sighting = ObservationSerializer(many=False, read_only=True)
 
-    # TODO: remove these three fields. Currently left in for backwards compatibility.
-    sighting__date_sighted = serializers.ReadOnlyField(
-        source='sighting.date_sighted'
-    )
-    sighting__time_sighted = serializers.ReadOnlyField(
-        source='sighting.time_sighted'
-    )
+    # TODO: remove this field. Currently left in for GeoJSON reasons.
     sighting__point_location = GeometryField(source='sighting.point_location')
 
     class Meta:

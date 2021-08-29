@@ -17,6 +17,21 @@ services:
     depends_on:
       - backend
 
+  about:
+    image: electricmagnetic/keadatabase_about
+    build: ./about
+    working_dir: /home/node
+    ports:
+      - 3000:3000
+    volumes:
+      - './about:/home/node'
+      - '/home/node/node_modules'
+    stdin_open: true
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    depends_on:
+      - backend
+
   backend:
     image: electricmagnetic/keadatabase_backend
     restart: always

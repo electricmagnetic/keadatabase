@@ -12,10 +12,18 @@ Getting started
 ---------------
 A docker-compose file is provided for development purposes that spins up containers for the frontend, backend and database. The contents of the database will be stored in `database/`.
 
-To provision run:
+To provision the whole stack run:
 ```
 docker-compose up
 ```
+
+To provision individual components run (examples):
+```
+docker-compose up frontend
+docker-compose up about
+```
+
+Dependencies will be spun up as necessary.
 
 Environment variables need to be set for the front-end and the back-end to make the API-dependent services work (e.g. map tile providers).
 

@@ -1,0 +1,18 @@
+@import 'bootstrap/scss/functions';
+@import 'bootstrap/scss/mixins';
+
+$orange-dark: #df5206;
+$green-dark: #6a7029;
+$brown-dull: #dfd4ba;
+$brown-faded: #e6dfcc;
+
+$primary: $orange-dark;
+$secondary: $green-dark;
+
+$font-family-sans-serif: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+  'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+  'Segoe UI Symbol', 'Noto Color Emoji';
+$headings-font-family: 'Playfair Display', serif;
+$headings-font-weight: 700;
+
+@import 'bootstrap/scss/_variables';

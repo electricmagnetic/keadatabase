@@ -1,0 +1,22 @@
+@import './_variables';
+@import 'bootstrap/scss/bootstrap';
+
+.logo {
+  height: $h1-font-size;
+  margin-bottom: map-get($spacers, 2);
+}
+
+.bg-faded {
+  background-color: $brown-faded;
+}
+
+.Statistic {
+  h3 {
+    font-size: $h1-font-size * 2;
+    margin: 0;
+  }
+  figcaption {
+    font-size: $font-size-lg;
+    color: $body-color;
+  }
+}

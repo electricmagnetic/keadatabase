@@ -22,7 +22,7 @@ services:
     build: ./about
     working_dir: /home/node
     ports:
-      - 3000:3000
+      - 3001:3001
     volumes:
       - './about:/home/node'
       - '/home/node/node_modules'

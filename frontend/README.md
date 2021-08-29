@@ -1,9 +1,10 @@
 # keadatabase-front
 
+The front-end for the Kea Database.
+
 ## Setup
 
-You will need to have Node >= 16 installed with npm. Then run:  
-`npm install`
+You will need to have Node >= 16 installed with npm. Then run `npm install`
 
 ## Running
 

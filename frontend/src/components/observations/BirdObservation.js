@@ -1,6 +1,6 @@
 import React from 'react';
-import useSWR from 'swr';
 import PropTypes from 'prop-types';
+import { useQuery } from 'react-query';
 
 import Observation from './Observation';
 import BirdObservationBirdCard from './BirdObservation/BirdObservationBirdCard';
@@ -9,7 +9,7 @@ import BirdObservationFeature from './BirdObservation/BirdObservationFeature';
 import Loader from '../helpers/Loader';
 import Error from '../helpers/Error';
 
-const API_URL = `${process.env.REACT_APP_API_BASE}/bird_observations/`;
+const API_PATH = `bird_observations`;
 
 const RenderBirdObservation = ({ birdObservation, type, ...others }) => {
   if (!birdObservation) return <Error message="Invalid bird observation" />;
@@ -30,17 +30,15 @@ const RenderBirdObservation = ({ birdObservation, type, ...others }) => {
   - Fetches a bird observation using the given id and renders as a specified type
   */
 const BirdObservation = ({ id, birdObservation, ...others }) => {
-  const { data, error, isValidating } = useSWR(id ? `${API_URL}${id}/` : null, {
-    dedupingInterval: 0,
-  });
+  const { isLoading, data, error } = useQuery([`${API_PATH}/${id}/`], { enabled: !!id });
 
   if (id) {
-    if (isValidating) {
+    if (isLoading) {
       return <Loader />;
     } else if (error) {
       return <Error message="Error fetching birdObservation" />;
     } else if (data) {
-      return <RenderBirdObservation birdObservation={data} {...others} />;
+      return <RenderBirdObservation birdObservation={data.results} {...others} />;
     } else return null;
   } else if (birdObservation) {
     return <RenderBirdObservation birdObservation={birdObservation} {...others} />;

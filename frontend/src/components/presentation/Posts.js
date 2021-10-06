@@ -1,5 +1,5 @@
 import React from 'react';
-import useSWR from 'swr';
+import { useQuery } from 'react-query';
 import Moment from 'react-moment';
 
 import Loader from '../helpers/Loader';
@@ -7,7 +7,7 @@ import Error from '../helpers/Error';
 
 import './Posts.scss';
 
-const API_URL = `${process.env.REACT_APP_WORDPRESS_API}/posts/?per_page=1`;
+const API_PATH = `posts/?per_page=1`;
 
 const Post = ({ post }) => {
   return (
@@ -24,15 +24,19 @@ const Post = ({ post }) => {
 };
 
 const Posts = props => {
-  const { data, error, isValidating } = useSWR(`${API_URL}`);
+  const { isLoading, data, error } = useQuery([
+    `${API_PATH}`,
+    {},
+    `${process.env.REACT_APP_WORDPRESS_API}`,
+  ]);
 
-  if (isValidating) return <Loader />;
+  if (isLoading) return <Loader />;
   else if (error) return <Error />;
   else if (data) {
     return (
       <div className="Posts">
         <ul className="list-unstyled">
-          {data.map(post => (
+          {data.results.map(post => (
             <Post post={post} key={post.id} />
           ))}
         </ul>

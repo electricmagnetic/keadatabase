@@ -11,6 +11,7 @@ const makeRequest = async ({
     method: method,
     url: `${apiPath}/${path}`,
     ...(values && { data: values }),
+    headers: { Accept: 'application/json' },
   });
 
   // Substitute 'data' with 'results' to avoid clashing with react-query 'data' variable
@@ -32,7 +33,13 @@ export const getQueryFn = async ({ queryKey }) => {
   });
 };
 
+export const optionsFn = async ({ queryKey }) => {
+  const [basePath] = queryKey;
+
+  return await makeRequest({ method: 'options', path: basePath });
+};
+
 // Create
 export const postMutationFn = async ({ mutationPath, values }) => {
-  return await makeRequest('post', mutationPath, values);
+  return await makeRequest({ method: 'post', path: mutationPath, values: values });
 };

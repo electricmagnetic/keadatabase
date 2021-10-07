@@ -19,6 +19,7 @@
     "moment": "^2.29.1",
     "prop-types": "^15.7.2",
     "qs": "^6.9.6",
+    "query-string": "^7.0.1",
     "react": "^17.0.2",
     "react-app-polyfill": "^1.0.6",
     "react-bootstrap-typeahead": "^5.1.4",
@@ -36,6 +37,7 @@
     "redux-api-middleware": "^2.3.0",
     "redux-thunk": "^2.3.0",
     "regenerator-runtime": "^0.13.7",
+    "use-query-params": "^1.2.3",
     "yup": "^0.32.9"
   },
   "scripts": {

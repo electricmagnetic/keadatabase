@@ -2,6 +2,7 @@ import React, { Component, Suspense, lazy } from 'react';
 import { Route, Switch, Redirect, Router } from 'react-router-dom';
 import { QueryClientProvider, QueryClient } from 'react-query';
 import { Provider } from 'react-redux';
+import { QueryParamProvider } from 'use-query-params';
 
 import configureStore from './store/store';
 import initGa from './analytics';
@@ -52,52 +53,54 @@ class App extends Component {
       <QueryClientProvider client={queryClient}>
         <Provider store={store}>
           <Router history={history}>
-            <ScrollToTop>
-              <div className="Router">
-                <Header />
+            <QueryParamProvider ReactRouterRoute={Route}>
+              <ScrollToTop>
+                <div className="Router">
+                  <Header />
 
-                <Suspense fallback={<Loader />}>
-                  <main className="constrainer">
-                    <Switch>
-                      <Route exact path="/" component={HomePage} />
+                  <Suspense fallback={<Loader />}>
+                    <main className="constrainer">
+                      <Switch>
+                        <Route exact path="/" component={HomePage} />
 
-                      <Route exact path="/about" component={AboutPage} />
-                      <Route exact path="/terms" component={TermsPage} />
-                      <Route exact path="/licence" component={LicencePage} />
-                      <Route exact path="/sponsor" component={SponsorPage} />
-                      <Route exact path="/help" component={HelpPage} />
+                        <Route exact path="/about" component={AboutPage} />
+                        <Route exact path="/terms" component={TermsPage} />
+                        <Route exact path="/licence" component={LicencePage} />
+                        <Route exact path="/sponsor" component={SponsorPage} />
+                        <Route exact path="/help" component={HelpPage} />
 
-                      <Route exact path="/birds" component={BirdsPage} />
-                      <Route exact path="/birds/:slug" component={BirdDetailPage} />
+                        <Route exact path="/birds" component={BirdsPage} />
+                        <Route exact path="/birds/:slug" component={BirdDetailPage} />
 
-                      <Route exact path="/observations" component={ObservationsPage} />
-                      <Route exact path="/observations/:id" component={ObservationDetailPage} />
+                        <Route exact path="/observations" component={ObservationsPage} />
+                        <Route exact path="/observations/:id" component={ObservationDetailPage} />
 
-                      <Route exact path="/report" component={ReportObservationPage} />
-                      <Route
-                        exact
-                        path="/report/success"
-                        component={ReportObservationSuccessPage}
-                      />
-                      <Route
-                        exact
-                        path="/report/success/:id"
-                        component={ReportObservationSuccessPage}
-                      />
+                        <Route exact path="/report" component={ReportObservationPage} />
+                        <Route
+                          exact
+                          path="/report/success"
+                          component={ReportObservationSuccessPage}
+                        />
+                        <Route
+                          exact
+                          path="/report/success/:id"
+                          component={ReportObservationSuccessPage}
+                        />
 
-                      {/* Deprecated but retained to prevent broken URLs */}
-                      <Redirect exact from="/sightings" to="/observations" />
-                      <Redirect exact from="/sightings/:id" to="/observations/:id" />
-                      <Redirect exact from="/report/sighting" to="/report" />
+                        {/* Deprecated but retained to prevent broken URLs */}
+                        <Redirect exact from="/sightings" to="/observations" />
+                        <Redirect exact from="/sightings/:id" to="/observations/:id" />
+                        <Redirect exact from="/report/sighting" to="/report" />
 
-                      <Route component={NoMatchPage} />
-                    </Switch>
-                  </main>
-                </Suspense>
+                        <Route component={NoMatchPage} />
+                      </Switch>
+                    </main>
+                  </Suspense>
 
-                <Footer />
-              </div>
-            </ScrollToTop>
+                  <Footer />
+                </div>
+              </ScrollToTop>
+            </QueryParamProvider>
           </Router>
         </Provider>
       </QueryClientProvider>

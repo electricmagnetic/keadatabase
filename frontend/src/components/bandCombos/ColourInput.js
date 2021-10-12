@@ -80,7 +80,6 @@ class ColourInput extends Component {
           selected={selected}
           renderMenuItemChildren={this._renderMenuItemChildren}
           renderToken={this._renderToken}
-          clearButton
         />
       </React.Fragment>
     );

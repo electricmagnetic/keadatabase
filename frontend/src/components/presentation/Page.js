@@ -1,26 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import useSWR from 'swr';
+import { useQuery } from 'react-query';
 
 import Loader from '../helpers/Loader';
 import Error from '../helpers/Error';
 
 import './Page.scss';
 
-const API_URL = `${process.env.REACT_APP_WORDPRESS_API}/pages/?per_page=100`;
+const API_PATH = `pages/?per_page=100`;
 
 const Page = props => {
-  const { data, error, isValidating } = useSWR(`${API_URL}`);
+  const { isLoading, data, error } = useQuery([
+    `${API_PATH}`,
+    {},
+    `${process.env.REACT_APP_WORDPRESS_API}`,
+  ]);
 
   const { hideTitle, id } = props;
 
   // Add sr-only (screen-reader only) class
   const className = hideTitle ? 'sr-only' : '';
 
-  if (isValidating) return <Loader />;
+  if (isLoading) return <Loader />;
   else if (error) return <Error />;
   else if (data) {
-    const page = data.find(page => page.id === id);
+    const page = data.results.find(page => page.id === id);
 
     return (
       <div className="Page">

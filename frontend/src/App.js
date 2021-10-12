@@ -1,12 +1,12 @@
 import React, { Component, Suspense, lazy } from 'react';
 import { Route, Switch, Redirect, Router } from 'react-router-dom';
-import { Provider } from 'react-redux';
-import { SWRConfig } from 'swr';
+import { QueryClientProvider, QueryClient } from 'react-query';
+import { QueryParamProvider } from 'use-query-params';
 
-import configureStore from './store/store';
 import initGa from './analytics';
 import history from './history';
 
+import { getQueryFn } from './components/api';
 import Loader from './components/helpers/Loader';
 import ScrollToTop from './components/helpers/ScrollToTop';
 import Header from './components/presentation/Header';
@@ -30,36 +30,25 @@ const ObservationDetailPage = lazy(() => import('./views/observations/detail'));
 const ReportObservationPage = lazy(() => import('./views/report/index'));
 const ReportObservationSuccessPage = lazy(() => import('./views/report/success'));
 
-const CACHE_TIME = 24 * 60 * 60 * 1000;
-const fetcher = async url => {
-  const result = await fetch(url);
-
-  if (!result.ok) {
-    const error = new Error('An error occurred while fetching the data.');
-
-    error.info = await result.json();
-    error.status = result.status;
-    throw error;
-  }
-  return result.json();
-};
-
-const store = configureStore();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      queryFn: getQueryFn,
+      retry: false,
+      staleTime: 10 * 1000,
+      keepPreviousData: true,
+    },
+  },
+});
 
 initGa(history);
 
 class App extends Component {
   render() {
     return (
-      <SWRConfig
-        value={{
-          fetcher: fetcher,
-          dedupingInterval: CACHE_TIME,
-          revalidateOnFocus: false,
-        }}
-      >
-        <Provider store={store}>
-          <Router history={history}>
+      <QueryClientProvider client={queryClient}>
+        <Router history={history}>
+          <QueryParamProvider ReactRouterRoute={Route}>
             <ScrollToTop>
               <div className="Router">
                 <Header />
@@ -106,9 +95,9 @@ class App extends Component {
                 <Footer />
               </div>
             </ScrollToTop>
-          </Router>
-        </Provider>
-      </SWRConfig>
+          </QueryParamProvider>
+        </Router>
+      </QueryClientProvider>
     );
   }
 }

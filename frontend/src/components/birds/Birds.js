@@ -1,26 +1,26 @@
 import React from 'react';
-import useSWR from 'swr';
 import PropTypes from 'prop-types';
+import { useQuery } from 'react-query';
 
 import Bird from './Bird';
 
 import Loader from '../helpers/Loader';
 import Error from '../helpers/Error';
 
-const API_URL = `${process.env.REACT_APP_API_BASE}/birds/`;
+const API_PATH = `birds`;
 
 /**
   Birds fetches a series of birds using a given (optional) queryString and renders it using Bird.
   */
 const Birds = ({ queryString, ...others }) => {
-  const { data, error, isValidating } = useSWR(`${API_URL}${queryString}`, { dedupingInterval: 0 });
+  const { isLoading, data, error } = useQuery([`${API_PATH}/${queryString}`]);
 
-  if (isValidating) {
+  if (isLoading || !data) {
     return <Loader />;
   } else if (error) {
-    return <Error message="Error fetching birds" />;
+    return <Error />;
   } else if (data) {
-    const birds = data.results;
+    const birds = data.results.results;
 
     return birds.map(bird => <Bird bird={bird} key={bird.slug} {...others} />);
   } else return null;

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import useSWR from 'swr';
+import { useQuery } from 'react-query';
 
 import BirdObservation from './BirdObservation';
 import ObservationsMap from './Observation/ObservationsMap';
@@ -8,21 +8,21 @@ import ObservationsMap from './Observation/ObservationsMap';
 import Loader from '../helpers/Loader';
 import Error from '../helpers/Error';
 
-const API_URL = `${process.env.REACT_APP_API_BASE}/bird_observations/`;
+const API_PATH = `bird_observations`;
 
 /**
   BirdObservations fetches a series of bird observations using a given (optional) queryString and renders it using BirdObservation.
   */
 const BirdObservations = props => {
   const { queryString, ...others } = props;
-  const { data, error, isValidating } = useSWR(`${API_URL}${queryString}`, { dedupingInterval: 0 });
+  const { isLoading, data, error } = useQuery([`${API_PATH}/${queryString}`]);
 
-  if (isValidating) {
+  if (isLoading || !data) {
     return <Loader />;
   } else if (error) {
     return <Error />;
   } else if (data) {
-    const birdObservations = data.results;
+    const birdObservations = data.results.results;
 
     // Catch zero observations so map doesn't attempt to render
     if (birdObservations.length === 0) return null;

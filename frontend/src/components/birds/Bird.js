@@ -1,6 +1,6 @@
 import React from 'react';
-import useSWR from 'swr';
 import PropTypes from 'prop-types';
+import { useQuery } from 'react-query';
 
 import BirdPage from './Bird/BirdPage';
 import BirdCard from './Bird/BirdCard';
@@ -9,7 +9,7 @@ import BirdFeature from './Bird/BirdFeature';
 import Loader from '../helpers/Loader';
 import Error from '../helpers/Error';
 
-const API_URL = `${process.env.REACT_APP_API_BASE}/birds/`;
+const API_PATH = `birds`;
 
 /**
   Selects component to render with, based on type
@@ -33,17 +33,15 @@ const RenderBird = ({ bird, type, ...others }) => {
   - Fetches a bird using the given id and renders as a specified type
   */
 const Bird = ({ id, bird, ...others }) => {
-  const { data, error, isValidating } = useSWR(id ? `${API_URL}${id}/` : null, {
-    dedupingInterval: 0,
-  });
+  const { isLoading, data, error } = useQuery([`${API_PATH}/${id}/`], { enabled: !!id });
 
   if (id) {
-    if (isValidating) {
+    if (isLoading) {
       return <Loader />;
     } else if (error) {
       return <Error message="Error fetching bird" />;
     } else if (data) {
-      return <RenderBird bird={data} {...others} />;
+      return <RenderBird bird={data.results} {...others} />;
     } else return null;
   } else if (bird) {
     return <RenderBird bird={bird} {...others} />;

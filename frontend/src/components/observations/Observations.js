@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import useSWR from 'swr';
+import { useQuery } from 'react-query';
 
 import Observation from './Observation';
 import ObservationsMap from './Observation/ObservationsMap';
@@ -8,21 +8,21 @@ import ObservationsMap from './Observation/ObservationsMap';
 import Loader from '../helpers/Loader';
 import Error from '../helpers/Error';
 
-const API_URL = `${process.env.REACT_APP_API_BASE}/observations/`;
+const API_PATH = `observations`;
 
 /**
   Observations fetches a series of observations using a given (optional) queryString and renders it using Observation.
   */
 const Observations = props => {
   const { queryString, ...others } = props;
-  const { data, error, isValidating } = useSWR(`${API_URL}${queryString}`, { dedupingInterval: 0 });
+  const { isLoading, data, error } = useQuery([`${API_PATH}/${queryString}`]);
 
-  if (isValidating) {
+  if (isLoading || !data) {
     return <Loader />;
   } else if (error) {
     return <Error />;
   } else if (data) {
-    const observations = data.results;
+    const observations = data.results.results;
 
     // Intercept type 'map', as this needs rendering as a group on a single map
     if (props.type === 'map') return <ObservationsMap observations={observations} {...others} />;

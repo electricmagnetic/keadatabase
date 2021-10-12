@@ -33,9 +33,6 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "^4.0.3",
     "react-truncate-markup": "^5.1.0",
-    "redux": "^4.0.5",
-    "redux-api-middleware": "^2.3.0",
-    "redux-thunk": "^2.3.0",
     "regenerator-runtime": "^0.13.7",
     "use-query-params": "^1.2.3",
     "yup": "^0.32.9"

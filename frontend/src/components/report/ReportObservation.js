@@ -1,22 +1,19 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { compose } from 'redux';
+import React, { useEffect, useRef } from 'react';
 import { Formik, Form } from 'formik';
 import moment from 'moment';
 import * as yup from 'yup';
-import { withRouter } from 'react-router-dom';
+import { useQuery, useMutation, useQueryClient } from 'react-query';
+import { useHistory } from 'react-router-dom';
 
+import { optionsFn, postMutationFn } from '../api';
 import Loader from '../helpers/Loader';
 import Error from '../helpers/Error';
+
 import ObservationDetailsFieldset from './fieldset/ObservationDetailsFieldset';
 import ObservationBirdsFieldset from './fieldset/ObservationBirdsFieldset';
 import ContributorFieldset from './fieldset/ContributorFieldset';
 import FurtherInformationFieldset from './fieldset/FurtherInformationFieldset';
 import SubmitFieldset from './fieldset/SubmitFieldset';
-import {
-  getReportObservationOptions,
-  postReportObservation,
-} from '../../actions/reportObservation';
 
 const initialValues = {
   date_sighted: moment().format('YYYY-MM-DD'),
@@ -61,57 +58,149 @@ const validationSchema = yup.object().shape({
   }),
 });
 
-class ReportObservation extends Component {
-  constructor(props) {
-    super(props);
-    this.handleSubmit = this.handleSubmit.bind(this);
+const API_PATH = 'report/observation';
+
+const formatObservation = (values = {}) => {
+  const observation = {};
+
+  // Add challenge (basic spam prevention)
+  observation.challenge = 'kea';
+
+  // Format coordinates into numbers with 'Point' type
+  if (values.longitude && values.latitude) {
+    observation.point_location = {
+      type: 'Point',
+      coordinates: [parseFloat(values.longitude), parseFloat(values.latitude)],
+    };
   }
 
-  componentDidMount() {
-    const { dispatch } = this.props;
-    dispatch(getReportObservationOptions());
+  // Copy only defined values
+  if (values.birds && values.birds.length > 0) {
+    observation.birds = [];
+    values.birds.forEach((bird, i) => {
+      const formattedBird = {};
+      Object.keys(bird).forEach(key => {
+        if (bird[key]) formattedBird[key] = bird[key];
+      });
+      observation.birds.push(formattedBird);
+    });
+  } else {
+    // Add empty observation.birds if none defined as back-end requires it to be at least defined
+    observation.birds = [];
   }
 
-  handleSubmit(values, formikBag) {
-    const { dispatch, history } = this.props;
-    dispatch(postReportObservation(values, Object.assign({}, formikBag, { history: history })));
+  // For 'sighted' sighting_type only (where number field is not defined), get length of array for number
+  if (values.sighting_type) {
+    if (values.sighting_type === 'sighted') {
+      observation.number = observation.birds.length;
+    } else {
+      observation.number = values.number;
+    }
   }
 
-  render() {
-    const { reportObservationOptions, reportObservationPost } = this.props;
-
-    if (reportObservationOptions.pending) return <Loader />;
-    else if (reportObservationOptions.rejected)
-      return <Error reason={reportObservationOptions.value.message} />;
-    else if (reportObservationOptions.fulfilled) {
-      const options = reportObservationOptions.value.actions.POST;
-      return (
-        <div>
-          <p>All fields are required, except where indicated.</p>
-          <Formik
-            initialValues={initialValues}
-            validationSchema={validationSchema}
-            onSubmit={this.handleSubmit}
-          >
-            {props => (
-              <Form>
-                <ObservationDetailsFieldset {...props} options={options} />
-                <ObservationBirdsFieldset {...props} options={options} />
-                <ContributorFieldset {...props} options={options} />
-                <FurtherInformationFieldset {...props} options={options} />
-                <SubmitFieldset {...props} response={reportObservationPost} />
-              </Form>
-            )}
-          </Formik>
-        </div>
-      );
-    } else return null;
+  if (values.contributor) {
+    observation.contributor = {};
+    Object.keys(values.contributor).forEach(key => {
+      if (values.contributor[key]) observation.contributor[key] = values.contributor[key];
+    });
   }
-}
 
-const mapStateToProps = state => ({
-  reportObservationOptions: state.reportObservationOptions,
-  reportObservationPost: state.reportObservationPost,
-});
+  // Copy other parameters if exist
+  [
+    'date_sighted',
+    'time_sighted',
+    'precision',
+    'location_details',
+    'sighting_type',
+    'behaviour',
+    'comments',
+  ].forEach(key => {
+    if (values[key]) {
+      observation[key] = values[key];
+    }
+  });
 
-export default compose(withRouter, connect(mapStateToProps))(ReportObservation);
+  return JSON.stringify(observation);
+};
+
+const ReportObservation = () => {
+  const queryClient = useQueryClient();
+  const history = useHistory();
+  const formikRef = useRef(null);
+  const { isLoading, data, error } = useQuery([`${API_PATH}/`], optionsFn, {
+    retry: false,
+    cacheTime: 60 * 60 * 24 * 1000,
+    refetchOnMount: false,
+    refetchInterval: false,
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: false,
+  });
+  const mutation = useMutation(postMutationFn, {
+    onSuccess: () => {
+      queryClient.invalidateQueries('observations');
+    },
+  });
+
+  useEffect(() => {
+    // Redirect on success
+
+    if (mutation.data?.results) history.push(`/report/success/${mutation.data.results.id}`);
+  }, [mutation.data, history]);
+
+  useEffect(() => {
+    // Process errors received from API
+
+    if (mutation.error) {
+      const errors = mutation.error.response.data;
+
+      if (errors.point_location && errors.point_location[0]) {
+        errors.longitude = errors.point_location[0];
+        errors.latitude = errors.point_location[0];
+      }
+
+      formikRef.current.setErrors(errors);
+    }
+  }, [mutation.error]);
+
+  if (isLoading || !data) {
+    return <Loader />;
+  } else if (error) {
+    return <Error />;
+  } else if (data) {
+    // An OPTIONS request to the API will provide dropdown values
+    const options = data.results.actions.POST;
+
+    return (
+      <div>
+        <p>All fields are required, except where indicated.</p>
+        <Formik
+          initialValues={initialValues}
+          validationSchema={validationSchema}
+          innerRef={formikRef}
+          onSubmit={(values, actions) => {
+            const processedValues = formatObservation(values);
+
+            mutation.mutate({
+              mutationPath: `${API_PATH}/`,
+              values: processedValues,
+            });
+
+            actions.setSubmitting(false);
+          }}
+        >
+          {props => (
+            <Form>
+              <ObservationDetailsFieldset {...props} options={options} />
+              <ObservationBirdsFieldset {...props} options={options} />
+              <ContributorFieldset {...props} options={options} />
+              <FurtherInformationFieldset {...props} options={options} />
+              <SubmitFieldset {...props} response={mutation} />
+            </Form>
+          )}
+        </Formik>
+      </div>
+    );
+  } else return null;
+};
+
+export default ReportObservation;

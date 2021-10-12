@@ -4,7 +4,8 @@ import PropTypes from 'prop-types';
 import Page from '../../presentation/Page';
 
 const SubmitFieldset = ({ submitCount, isValid, isSubmitting, response }) => {
-  const showInvalid = (submitCount > 0 && !isValid) || response.rejected;
+  const showInvalid = (submitCount > 0 && !isValid) || response.isError;
+
   return (
     <fieldset>
       <legend>5. Confirmation</legend>
@@ -22,7 +23,7 @@ const SubmitFieldset = ({ submitCount, isValid, isSubmitting, response }) => {
             Hmm, it seems there were some errors. Please scroll up and check the data you've
             entered.
           </div>
-          {response.rejected && <small>{response.value.message}</small>}
+          {response.isError && <small>{response.error.message}</small>}
         </div>
       )}
     </fieldset>
@@ -33,10 +34,7 @@ SubmitFieldset.propTypes = {
   submitCount: PropTypes.number.isRequired,
   isValid: PropTypes.bool.isRequired,
   isSubmitting: PropTypes.bool.isRequired,
-  response: PropTypes.shape({
-    rejected: PropTypes.bool.isRequired,
-    value: PropTypes.object.isRequired,
-  }).isRequired,
+  response: PropTypes.object.isRequired,
 };
 
 export default SubmitFieldset;

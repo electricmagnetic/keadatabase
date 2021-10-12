@@ -11,7 +11,7 @@ const makeRequest = async ({
     method: method,
     url: `${apiPath}/${path}`,
     ...(values && { data: values }),
-    headers: { Accept: 'application/json' },
+    headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
   });
 
   // Substitute 'data' with 'results' to avoid clashing with react-query 'data' variable

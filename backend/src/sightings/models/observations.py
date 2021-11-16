@@ -30,9 +30,10 @@ STATUS_CHOICES = (
     ),
     (
         'Special', (
-            ('fwf', 'FWF Sighting'),
-            ('kct', 'KCT Sighting'),
-            ('captive', 'Captive Sighting'),
+            ('fwf', 'FWF Observation'),
+            ('kct', 'KCT Observation'),
+            ('nztf', 'NZTF Observation'),
+            ('captive', 'Captive Observation'),
         )
     ),
 )

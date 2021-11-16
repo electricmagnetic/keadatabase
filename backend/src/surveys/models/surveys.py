@@ -16,6 +16,7 @@ PURPOSE_CHOICES = (
     ('research', 'Researching'),
     ('kea', 'Kea Surveying'),
     ('hut', 'Hut Wardening'),
+    ('cycle', 'Bike/Cycle Touring'),
     ('other', 'Other'),
 )
 

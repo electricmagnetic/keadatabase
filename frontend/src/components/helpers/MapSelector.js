@@ -14,7 +14,7 @@ import './MapSelector.scss';
   map only renders coordinates that fall within the bounds of New Zealand.
   Radius specified by the form field 'precision'.
  */
-class MapSelector extends Component<{}, State> {
+class MapSelector extends Component {
   constructor(props) {
     super(props);
     this.handleClick = this.handleClick.bind(this);

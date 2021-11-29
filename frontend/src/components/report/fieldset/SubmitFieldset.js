@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import Page from '../../presentation/Page';
 
-const SubmitFieldset = ({ submitCount, isValid, isSubmitting, response }) => {
+const SubmitFieldset = ({ submitCount, isValid, response, submissionPending }) => {
   const showInvalid = (submitCount > 0 && !isValid) || response.isError;
 
   return (
@@ -12,9 +12,10 @@ const SubmitFieldset = ({ submitCount, isValid, isSubmitting, response }) => {
       <Page id={185} hideTitle />
 
       <p>
-        <button type="submit" className="btn btn-primary" disabled={isSubmitting}>
+        <button type="submit" className="btn btn-primary" disabled={submissionPending}>
           Submit
         </button>
+        {submissionPending && <span className="mx-2">Submitting</span>}
       </p>
 
       {showInvalid && (
@@ -33,8 +34,8 @@ const SubmitFieldset = ({ submitCount, isValid, isSubmitting, response }) => {
 SubmitFieldset.propTypes = {
   submitCount: PropTypes.number.isRequired,
   isValid: PropTypes.bool.isRequired,
-  isSubmitting: PropTypes.bool.isRequired,
   response: PropTypes.object.isRequired,
+  submissionPending: PropTypes.bool.isRequired,
 };
 
 export default SubmitFieldset;

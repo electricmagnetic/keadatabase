@@ -177,15 +177,21 @@ const ReportObservation = () => {
           initialValues={initialValues}
           validationSchema={validationSchema}
           innerRef={formikRef}
-          onSubmit={(values, actions) => {
+          onSubmit={(values, { setSubmitting, isSubmitting }) => {
             const processedValues = formatObservation(values);
 
-            mutation.mutate({
-              mutationPath: `${API_PATH}/`,
-              values: processedValues,
-            });
-
-            actions.setSubmitting(false);
+            if (!isSubmitting) {
+              try {
+                mutation.mutate({
+                  mutationPath: `${API_PATH}/`,
+                  values: processedValues,
+                });
+              } catch (error) {
+                console.error(error);
+              } finally {
+                setSubmitting(false);
+              }
+            }
           }}
         >
           {props => (
@@ -194,7 +200,11 @@ const ReportObservation = () => {
               <ObservationBirdsFieldset {...props} options={options} />
               <ContributorFieldset {...props} options={options} />
               <FurtherInformationFieldset {...props} options={options} />
-              <SubmitFieldset {...props} response={mutation} />
+              <SubmitFieldset
+                {...props}
+                response={mutation}
+                submissionPending={props.isSubmitting || mutation.isLoading}
+              />
             </Form>
           )}
         </Formik>

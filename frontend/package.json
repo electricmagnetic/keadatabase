@@ -39,7 +39,7 @@
   },
   "scripts": {
     "predeploy": "npm run build",
-    "deploy": "s3-deploy './build/**' --cwd './build/' --region ap-southeast-2 --delete-removed --distId E32E6W6ZJ80KGJ --invalidate '/index.html' --bucket keadatabase.nz",
+    "deploy": "firebase deploy",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -68,7 +68,6 @@
     "husky": "^6.0.0",
     "lint-staged": "^11.0.0",
     "prettier": "^2.2.1",
-    "s3-deploy": "^1.4.0",
     "sass": "^1.43.4"
   },
   "prettier": {

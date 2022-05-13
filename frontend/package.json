@@ -31,7 +31,7 @@
     "react-moment": "^1.1.1",
     "react-query": "^3.32.3",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "^4.0.3",
+    "react-scripts": "^5.0.0",
     "react-truncate-markup": "^5.1.0",
     "regenerator-runtime": "^0.13.7",
     "use-query-params": "^1.2.3",

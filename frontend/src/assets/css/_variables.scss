@@ -1,5 +1,5 @@
-@import 'bootstrap/scss/functions';
-@import 'bootstrap/scss/mixins';
+@import '~bootstrap/scss/_functions.scss';
+@import '~bootstrap/scss/_mixins.scss';
 
 // Custom
 
@@ -44,4 +44,4 @@ $list-group-item-padding-y: 0.5rem;
 
 $card-border-radius: 0;
 
-@import 'bootstrap/scss/variables';
+@import '~bootstrap/scss/_variables.scss';

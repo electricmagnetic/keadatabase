@@ -1,6 +1,6 @@
 {
   "name": "keadatabase-front",
-  "version": "2.11.0",
+  "version": "2.11.1",
   "private": true,
   "homepage": "https://keadatabase.nz",
   "dependencies": {
@@ -31,7 +31,7 @@
     "react-moment": "^1.1.1",
     "react-query": "^3.32.3",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "^4.0.3",
+    "react-scripts": "5.0.1",
     "react-truncate-markup": "^5.1.0",
     "regenerator-runtime": "^0.13.7",
     "use-query-params": "^1.2.3",
@@ -68,7 +68,7 @@
     "husky": "^6.0.0",
     "lint-staged": "^11.0.0",
     "prettier": "^2.2.1",
-    "sass": "^1.43.4"
+    "sass": "^1.52.3"
   },
   "prettier": {
     "endOfLine": "lf",

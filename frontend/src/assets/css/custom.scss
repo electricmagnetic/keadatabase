@@ -1,5 +1,5 @@
-@import 'assets/css/_variables';
-@import 'bootstrap/scss/bootstrap';
+@import './_variables.scss';
+@import '~bootstrap/scss/bootstrap.scss';
 
 $constrainer-width: map-get($container-max-widths, 'xl') + 160px;
 
@@ -8,7 +8,7 @@ $constrainer-width: map-get($container-max-widths, 'xl') + 160px;
 }
 
 .constrainer {
-  @media (min-width: $constrainer-width+1px) {
+  @media (min-width: ($constrainer-width+1px)) {
     border: 1px solid rgba($black, 0.125);
     border-top: 0;
     border-bottom: 0;

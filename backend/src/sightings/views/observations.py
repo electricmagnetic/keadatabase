@@ -1,15 +1,12 @@
 from rest_framework import viewsets
-#from rest_framework_gis.filters import InBBoxFilter
-from rest_framework_gis.filterset import GeoFilterSet
 from rest_framework_gis.filters import GeometryFilter
-from django_filters.rest_framework import DjangoFilterBackend
 from django_filters import FilterSet
 
 from keadatabase.pagination import ObservationPagination
 from ..models.observations import Sighting
 from ..serializers.observations import ObservationSerializer
 
-class ObservationFilter(GeoFilterSet):
+class ObservationFilter(FilterSet):
     point_location = GeometryFilter(lookup_expr='within')
 
     class Meta:
@@ -29,9 +26,6 @@ class ObservationViewSet(viewsets.ModelViewSet):
     serializer_class = ObservationSerializer
     pagination_class = ObservationPagination
     filterset_class = ObservationFilter
-    #filter_backends = (InBBoxFilter, DjangoFilterBackend)
-    #bbox_filter_field = 'point_location'
-    #bbox_filter_include_overlapping = True # Optional
     ordering_fields = (
         'contributor',
         'region',

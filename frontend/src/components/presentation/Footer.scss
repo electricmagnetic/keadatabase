@@ -11,11 +11,11 @@ footer {
     padding-left: 0;
     list-style: none;
     margin-bottom: 0;
-    margin-left: -($grid-gutter-width/2);
+    margin-left: calc(-1 * $grid-gutter-width/2);
 
     li {
-      margin-left: $grid-gutter-width/2;
-      margin-right: $grid-gutter-width/2;
+      margin-left: calc($grid-gutter-width/2);
+      margin-right: calc($grid-gutter-width/2);
       display: inline-block;
     }
   }

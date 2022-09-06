@@ -14,7 +14,7 @@
 
       figure {
         position: absolute;
-        right: $grid-gutter-width / 2;
+        right: calc($grid-gutter-width / 2);
       }
     }
   }

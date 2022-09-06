@@ -4,7 +4,7 @@
   // Common
   .leg {
     display: inline-block;
-    margin-right: $grid-gutter-width/4;
+    margin-right: calc($grid-gutter-width / 4);
 
     .band {
       background-color: transparent;

@@ -19,6 +19,8 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.http import HttpResponse
 
+from .auth import ThrottledObtainAuthToken
+
 from .router import router
 
 # Custom admin site settings
@@ -59,6 +61,7 @@ from rest_framework_simplejwt.views import (
 )
 
 urlpatterns = [
-    url(r'^token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    url(r'^token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    url(r'^jwt/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    url(r'^jwt/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    url(r'^token/', ThrottledObtainAuthToken.as_view())
 ] + urlpatterns

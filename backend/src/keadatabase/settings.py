@@ -72,6 +72,7 @@ INSTALLED_APPS = [
     'django_filters',
     'corsheaders',
     'rest_framework',
+    'rest_framework.authtoken',
     'rest_framework_gis',
     'rest_framework_csv',
     'rest_framework_simplejwt',
@@ -214,6 +215,7 @@ REST_FRAMEWORK = {
         ('rest_framework.throttling.ScopedRateThrottle', ),
     'DEFAULT_THROTTLE_RATES': {
         'report': '60/hour',
+        'auth': '60/hour',
     },
     'DEFAULT_PAGINATION_CLASS':
         'rest_framework.pagination.PageNumberPagination',
@@ -221,6 +223,7 @@ REST_FRAMEWORK = {
         (
             'rest_framework.authentication.SessionAuthentication',
             'rest_framework_simplejwt.authentication.JWTAuthentication',
+            'rest_framework.authentication.TokenAuthentication',
         ),
     'EXCEPTION_HANDLER':
         'keadatabase.exceptions.exception_handler',

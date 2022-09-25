@@ -24,5 +24,6 @@ class ReportSurveyViewSet(ReportObservationBaseViewSet):
 class ImportObservationViewSet(
     mixins.CreateModelMixin, viewsets.GenericViewSet
 ):
+    """ Auth-required view for data import (without throttling) """
     serializer_class = ImportObservationSerializer
     permission_classes = [permissions.IsAuthenticated]

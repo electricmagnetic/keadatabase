@@ -94,6 +94,11 @@ def mark_kct(modeladmin, request, queryset):
     mark_kct.short_description = "Mark selected as KCT"
 
 
+def mark_radio(modeladmin, request, queryset):
+    queryset.update(status='radio')
+    mark_radio.short_description = "Mark selected as Radio Tracking"
+
+
 class ObservationAdmin(LeafletGeoAdmin):
     list_display = (
         'id',
@@ -121,7 +126,7 @@ class ObservationAdmin(LeafletGeoAdmin):
         'import_id',
     )
     search_fields = ('id__exact', )
-    actions = [mark_public, mark_fwf, mark_kct]
+    actions = [mark_public, mark_fwf, mark_kct, mark_radio]
 
 
 class BirdObservationAdmin(admin.ModelAdmin):

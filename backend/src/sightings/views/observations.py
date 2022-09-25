@@ -6,6 +6,7 @@ from keadatabase.pagination import ObservationPagination
 from ..models.observations import Sighting
 from ..serializers.observations import ObservationSerializer
 
+
 class ObservationFilter(FilterSet):
     point_location = GeometryFilter(lookup_expr='within')
 
@@ -18,6 +19,7 @@ class ObservationFilter(FilterSet):
             'status',
             'confirmed',
         )
+
 
 class ObservationViewSet(viewsets.ModelViewSet):
     queryset = Sighting.objects. \

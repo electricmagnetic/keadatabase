@@ -9,9 +9,7 @@ from sightings.models.birds import BirdSighting
 class ImportBirdObservationSerializer(serializers.ModelSerializer):
     class Meta:
         model = BirdSighting
-        exclude = (
-            'sighting',
-        )
+        exclude = ('sighting', )
 
 
 class ImportContributorSerializer(serializers.ModelSerializer):

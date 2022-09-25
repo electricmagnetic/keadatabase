@@ -21,6 +21,8 @@ class ReportSurveyViewSet(ReportObservationBaseViewSet):
     serializer_class = ReportSurveySerializer
 
 
-class ImportObservationViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
+class ImportObservationViewSet(
+    mixins.CreateModelMixin, viewsets.GenericViewSet
+):
     serializer_class = ImportObservationSerializer
     permission_classes = [permissions.IsAuthenticated]

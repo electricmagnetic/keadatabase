@@ -34,7 +34,12 @@ STATUS_CHOICES = (
             ('kct', 'KCT Observation'),
             ('nztf', 'NZTF Observation'),
             ('captive', 'Captive Observation'),
+        )
+    ),
+    (
+        'Automated', (
             ('radio', 'Radio Tracking Observation'),
+            ('camera', 'Trail Camera Observation'),
         )
     ),
 )

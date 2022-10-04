@@ -1,0 +1,4 @@
+API_KEY="xxxxxxxxxx"
+API_URL="http://localhost:8000/report/import/"
+RAW_DATA="./data.csv"
+CONTRIBUTOR_EMAIL="test@example.org"

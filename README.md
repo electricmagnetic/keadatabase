@@ -7,6 +7,8 @@ Structure
 ---------
 * `frontend/` React-based front-end
 * `backend/` Django-based back-end
+* `about/` Simple summary site
+* `scripts/` Helper scripts in R for data management
 
 Getting started
 ---------------
@@ -36,7 +38,7 @@ docker-compose run --rm backend python3 src/manage.py createsuperuser
 Licence
 -------
 Kea Database  
-Copyright (C) 2021 Electric Magnetic Limited  
+Copyright (C) 2022 Electric Magnetic Limited  
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as published by

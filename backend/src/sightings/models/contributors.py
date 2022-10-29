@@ -12,6 +12,7 @@ ACTIVITY_CHOICES = (
     ('tramper', 'Tramper'),
     ('hunter', 'Hunter'),
     ('birder', 'Birder'),
+    ('climber', 'Climber'),
     ('doc', 'DOC Staff'),
     ('research', 'Researcher'),
     ('other', 'Other'),

@@ -1,2 +1,3 @@
 database/
 **.npm*
+.DS_Store

@@ -1,5 +1,5 @@
 import { LatLngBoundsExpression } from "leaflet";
-import React, { FC } from "react";
+import { FC, PropsWithChildren } from "react";
 
 import {
   MapContainer,
@@ -8,7 +8,11 @@ import {
 
 import { DEFAULT_BOUNDS, MAX_BOUNDS } from "./constants";
 
-const BaseMap: FC<{ bounds?: LatLngBoundsExpression; children?: any }> = ({
+type BaseMapProps = {
+  bounds?: LatLngBoundsExpression;
+}
+
+const BaseMap: FC<PropsWithChildren<BaseMapProps>> = ({
   bounds,
   children,
 }) => {

@@ -1,24 +1,17 @@
 import { LatLngBoundsExpression } from "leaflet";
 import { FC, PropsWithChildren } from "react";
 
-import {
-  MapContainer,
-  TileLayer
-} from "react-leaflet";
+import { MapContainer, TileLayer } from "react-leaflet";
 
 import { DEFAULT_BOUNDS, MAX_BOUNDS } from "./constants";
 
-import 'leaflet/dist/leaflet.css';
+import "leaflet/dist/leaflet.css";
 
 type BaseMapProps = {
   bounds?: LatLngBoundsExpression;
-}
+};
 
-const BaseMap: FC<PropsWithChildren<BaseMapProps>> = ({
-  bounds,
-  children,
-}) => {
-
+const BaseMap: FC<PropsWithChildren<BaseMapProps>> = ({ bounds, children }) => {
   return (
     <MapContainer
       minZoom={6}

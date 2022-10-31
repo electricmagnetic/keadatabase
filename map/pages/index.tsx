@@ -1,9 +1,9 @@
-import Head from 'next/head';
+import Head from "next/head";
 import dynamic from "next/dynamic";
 
 import { Loader } from "components/utilities";
 
-const BaseMap = dynamic(() => import("components/map/map"), {
+const BaseMap = dynamic(() => import("components/map/base"), {
   ssr: false,
   loading: () => <Loader />,
 });
@@ -19,5 +19,5 @@ export default function Home() {
 
       <BaseMap />
     </div>
-  )
+  );
 }

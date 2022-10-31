@@ -8,4 +8,4 @@ export const Loader: FC = () => <span>Loading</span>;
 /**
  * Basic error component
  */
- export const Error: FC = () => <span>Error</span>;
+export const Error: FC = () => <span>Error</span>;

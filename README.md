@@ -5,10 +5,12 @@ Canonical monorepo for the [Kea Database](https://keadatabase.nz).
 
 Structure
 ---------
-* `frontend/` React-based front-end
-* `backend/` Django-based back-end
 * `about/` Simple summary site
+* `backend/` Django-based back-end
+* `frontend/` React-based front-end
+* `map/` Mapping utility site (for embedding, specific queries etc)
 * `scripts/` Helper scripts in R for data management
+
 
 Getting started
 ---------------

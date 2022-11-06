@@ -1,26 +1,15 @@
 import { useEffect, useState } from "react";
-import dynamic from "next/dynamic";
 import { stringify } from "qs";
 import { LayersControl } from "react-leaflet";
 
+import BaseMap from "components/map/BaseMap";
+import ObservationsLayer from "components/map/ObservationsLayer";
 import { Loader } from "components/utilities";
 import { ZoneFilter } from "components/filters/ZoneFilter";
 import { Filters } from "components/filters/filters";
+import { MapLoader, TitleControl } from "components/map/utilities";
 
-const BaseMap = dynamic(() => import("components/map/BaseMap"), {
-  ssr: false,
-  loading: () => <Loader />,
-});
-
-const ObservationsLayer = dynamic(
-  () => import("components/map/ObservationsLayer"),
-  {
-    ssr: false,
-    loading: () => <Loader />,
-  }
-);
-
-export default function ZonesPage() {
+export default function ZoneMap() {
   const [filters, setFilters] = useState<Filters>({});
   const [query, setQuery] = useState("");
   const [isValidating, setValidating] = useState(false);
@@ -38,33 +27,21 @@ export default function ZonesPage() {
   }, [filters]);
 
   return (
-    <>
-      <ZoneFilter filters={filters} setFilters={setFilters} />
-      <dl>
-        <dt>Zone:</dt>
-        <dd>{filters.zone?.id}</dd>
-        <dt>Loading:</dt>
-        <dd>{isValidating ? <Loader /> : "No"}</dd>
-      </dl>
-
-      <span>Map:</span>
-      <div style={{ height: "640px" }}>
-        <BaseMap>
-          <LayersControl position="topright" collapsed={false}>
-            {filters.zone && (
-              <LayersControl.Overlay
-                name={filters.zone.properties?.name || "Observations"}
-                checked
-              >
-                <ObservationsLayer
-                  query={query}
-                  setValidating={setValidating}
-                />
-              </LayersControl.Overlay>
-            )}
-          </LayersControl>
-        </BaseMap>
-      </div>
-    </>
+    <BaseMap>
+      <TitleControl>
+        <ZoneFilter filters={filters} setFilters={setFilters} />
+      </TitleControl>
+      {filters.zone && (
+        <LayersControl position="topright" collapsed={false}>
+          <LayersControl.Overlay
+            name={filters.zone.properties?.name || "Observations"}
+            checked
+          >
+            <ObservationsLayer query={query} setValidating={setValidating} />
+          </LayersControl.Overlay>
+        </LayersControl>
+      )}
+      {isValidating && <MapLoader />}
+    </BaseMap>
   );
 }

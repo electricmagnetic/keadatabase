@@ -2,3 +2,13 @@ html, body, #__next {
   height: 100%;
   width: 100%;
 }
+
+h1 {
+  margin: 0;
+  padding: 0;
+  font-size: 1.2rem;
+}
+
+.avoidZoomControl {
+  margin-left: 55px;
+}

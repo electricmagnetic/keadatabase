@@ -55,10 +55,7 @@ const observationOnEachFeature = (feature: any, layer: Layer) => {
 
 const OBSERVATIONS_URL = `${process.env.NEXT_PUBLIC_API_BASE}/geojson/observations/`;
 
-/**
- * Basic map function that takes an Annotated Track and displays the start/end points; and separates sections by machine/human power.
- */
-const Map: FC<{
+const ObservationsLayer: FC<{
   query?: string;
   setValidating: Dispatch<SetStateAction<boolean>>;
 }> = ({ query, setValidating }) => {
@@ -66,7 +63,7 @@ const Map: FC<{
 
   const { data, error, isValidating } = useSWR<BaseResponse>(url);
 
-  useEffect(() => setValidating(isValidating), [isValidating]);
+  useEffect(() => setValidating(isValidating));
 
   if (isValidating) return null;
   else if (error) return <span>Error</span>;
@@ -82,4 +79,4 @@ const Map: FC<{
   } else return null;
 };
 
-export default Map;
+export default ObservationsLayer;

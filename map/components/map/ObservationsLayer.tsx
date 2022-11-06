@@ -1,10 +1,8 @@
-import React, { FC } from "react";
+import React, { Dispatch, FC, SetStateAction, useEffect } from "react";
 import useSWR from "swr";
 import { GeoJSON } from 'react-leaflet';
 import { Feature, FeatureCollection, Point } from "geojson";
 import { LatLng, Layer, CircleMarker, CircleMarkerOptions } from "leaflet";
-
-import { Loader } from "components/utilities";
 
 import "leaflet/dist/leaflet.css";
 
@@ -62,12 +60,15 @@ const OBSERVATIONS_URL = `${process.env.NEXT_PUBLIC_API_BASE}/geojson/observatio
  */
 const Map: FC<{
   query?: string,
-}> = ({ query }) => {
+  setValidating: Dispatch<SetStateAction<boolean>>,
+}> = ({ query, setValidating }) => {
   const url = query ? `${OBSERVATIONS_URL}${query}` : OBSERVATIONS_URL;
 
   const { data, error, isValidating } = useSWR<BaseResponse>(url);
 
-  if (isValidating) return <Loader />;
+  useEffect(() => setValidating(isValidating), [isValidating]);
+
+  if (isValidating) return null;
   else if (error) return <span>Error</span>;
   else if (data) {
     return (

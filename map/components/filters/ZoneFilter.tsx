@@ -1,33 +1,32 @@
 import { FC } from "react";
 import { Formik, Field, Form, FormikHelpers } from "formik";
 
-import keaZones from 'static/kea-zones_2022-10-31.json';
+import keaZones from 'public/geo/kea-zones_2022-10-31.json';
 import { Filters, SetFilters } from './filters';
 
-interface ZoneFilters extends Filters {
-  zone?: string;
+interface ZoneForm {
+  zoneId?: string;
 }
 
-export const ZoneFilter: FC<{ filters: ZoneFilters, setFilters: SetFilters<ZoneFilters>, }> = ({ filters, setFilters }) => {
-  const zoneOptions = keaZones.features.map(keaZone => Object.assign({}, { id: keaZone.id, name: keaZone.properties.name }));
-
+export const ZoneFilter: FC<{ filters: Filters, setFilters: SetFilters<Filters>, }> = ({ filters, setFilters }) => {
   return (<div>
     <Formik
       initialValues={filters}
       onSubmit={(
         values,
-        { setSubmitting }: FormikHelpers<ZoneFilters>
+        { setSubmitting }: FormikHelpers<ZoneForm>
       ) => {
-        setFilters(values);
+        const zone = keaZones.features.filter(keaZone => keaZone.id === values.zoneId)[0];
+        if(zone) setFilters({ zone: zone });
         setSubmitting(false);
       }}
     >
       {({ isSubmitting }) =>
         <Form>
-          <label htmlFor="zone">Zone</label>
-          <Field name="zone" id="zone" as="select">
+          <label htmlFor="zoneId">Zone</label>
+          <Field name="zoneId" id="zoneId" as="select">
             <option value=''></option>
-            {zoneOptions.map(option => <option value={option.id} key={option.id}>{option.name}</option>)}
+            {keaZones.features.map(feature => <option value={feature.id} key={feature.id}>{feature.properties.name}</option>)}
           </Field>
 
           <button type="submit" disabled={isSubmitting}>Submit</button>

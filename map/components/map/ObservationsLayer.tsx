@@ -1,17 +1,17 @@
 import React, { Dispatch, FC, SetStateAction, useEffect } from "react";
 import useSWR from "swr";
-import { GeoJSON } from 'react-leaflet';
+import { GeoJSON } from "react-leaflet";
 import { Feature, FeatureCollection, Point } from "geojson";
 import { LatLng, Layer, CircleMarker, CircleMarkerOptions } from "leaflet";
 
 import "leaflet/dist/leaflet.css";
 
 const defaultPointMarkerOptions = {
-  color: '#000',
+  color: "#000",
   weight: 1,
   opacity: 1,
   fillOpacity: 0.8,
-  filColor: '#000',
+  filColor: "#000",
 };
 
 interface BaseResponse extends FeatureCollection<any> {
@@ -25,14 +25,14 @@ const observationPointToLayer = (feature: Feature<Point>, latlng: LatLng) => {
 
   // Color based on status
   switch (feature.properties?.status) {
-    case 'public':
-      pointMarkerOptions.fillColor = '#df5206';
+    case "public":
+      pointMarkerOptions.fillColor = "#df5206";
       break;
-    case 'new':
-      pointMarkerOptions.fillColor = '#ffffff';
+    case "new":
+      pointMarkerOptions.fillColor = "#ffffff";
       break;
-    case 'radio':
-      pointMarkerOptions.fillColor = '#00ff00';
+    case "radio":
+      pointMarkerOptions.fillColor = "#00ff00";
       break;
   }
 
@@ -43,7 +43,7 @@ const observationPointToLayer = (feature: Feature<Point>, latlng: LatLng) => {
   else pointMarkerOptions.radius = 5;
 
   return new CircleMarker(latlng, pointMarkerOptions);
-}
+};
 
 const observationOnEachFeature = (feature: any, layer: Layer) => {
   layer.bindPopup(`
@@ -51,7 +51,7 @@ const observationOnEachFeature = (feature: any, layer: Layer) => {
       <strong>${feature.id}</strong>: ${feature.properties.get_sighting_type_display} ${feature.properties.number} on ${feature.properties.date_sighted}
     </a>
   `);
-}
+};
 
 const OBSERVATIONS_URL = `${process.env.NEXT_PUBLIC_API_BASE}/geojson/observations/`;
 
@@ -59,8 +59,8 @@ const OBSERVATIONS_URL = `${process.env.NEXT_PUBLIC_API_BASE}/geojson/observatio
  * Basic map function that takes an Annotated Track and displays the start/end points; and separates sections by machine/human power.
  */
 const Map: FC<{
-  query?: string,
-  setValidating: Dispatch<SetStateAction<boolean>>,
+  query?: string;
+  setValidating: Dispatch<SetStateAction<boolean>>;
 }> = ({ query, setValidating }) => {
   const url = query ? `${OBSERVATIONS_URL}${query}` : OBSERVATIONS_URL;
 
@@ -78,8 +78,7 @@ const Map: FC<{
         onEachFeature={observationOnEachFeature}
         attribution="Data: KSP, KCT"
       />
-    )
-    ;
+    );
   } else return null;
 };
 

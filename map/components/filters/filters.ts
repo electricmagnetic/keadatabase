@@ -1,7 +1,7 @@
-import { Dispatch, SetStateAction } from "react"
+import { Dispatch, SetStateAction } from "react";
 
 export interface Filters {
-  [name: string]: any
+  [name: string]: any;
 }
 
 export type SetFilters<T> = Dispatch<SetStateAction<T>>;

@@ -12,23 +12,30 @@ const BaseMap = dynamic(() => import("components/map/BaseMap"), {
   loading: () => <Loader />,
 });
 
-const ObservationsLayer = dynamic(() => import("components/map/ObservationsLayer"), {
-  ssr: false,
-  loading: () => <Loader />,
-});
+const ObservationsLayer = dynamic(
+  () => import("components/map/ObservationsLayer"),
+  {
+    ssr: false,
+    loading: () => <Loader />,
+  }
+);
 
 export default function ZonesPage() {
   const [filters, setFilters] = useState<Filters>({});
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState("");
   const [isValidating, setValidating] = useState(false);
 
   useEffect(() => {
-    if(filters.zone) {
+    if (filters.zone) {
       const zoneGeometryString = JSON.stringify(filters.zone.geometry);
-      if(zoneGeometryString) setQuery(stringify(Object.assign({}, { point_location: zoneGeometryString }), { addQueryPrefix: true }));
+      if (zoneGeometryString)
+        setQuery(
+          stringify(Object.assign({}, { point_location: zoneGeometryString }), {
+            addQueryPrefix: true,
+          })
+        );
     }
   }, [filters]);
-
 
   return (
     <>
@@ -37,17 +44,24 @@ export default function ZonesPage() {
         <dt>Zone:</dt>
         <dd>{filters.zone?.id}</dd>
         <dt>Loading:</dt>
-        <dd>{isValidating ? <Loader /> : 'No'}</dd>
+        <dd>{isValidating ? <Loader /> : "No"}</dd>
       </dl>
 
       <span>Map:</span>
-      <div style={{height: "640px"}}>
+      <div style={{ height: "640px" }}>
         <BaseMap>
           <LayersControl position="topright" collapsed={false}>
-            {filters.zone && <LayersControl.Overlay name={filters.zone.properties?.name || 'Observations'} checked>
-              <ObservationsLayer query={query} setValidating={setValidating} />
-            </LayersControl.Overlay>
-            }
+            {filters.zone && (
+              <LayersControl.Overlay
+                name={filters.zone.properties?.name || "Observations"}
+                checked
+              >
+                <ObservationsLayer
+                  query={query}
+                  setValidating={setValidating}
+                />
+              </LayersControl.Overlay>
+            )}
           </LayersControl>
         </BaseMap>
       </div>

@@ -3,12 +3,12 @@ import dynamic from "next/dynamic";
 
 import { Loader } from "components/utilities";
 
-const BaseMap = dynamic(() => import("components/map/BaseMap"), {
+const ZoneMap = dynamic(() => import("components/views/ZoneMap"), {
   ssr: false,
   loading: () => <Loader />,
 });
 
-export default function Home() {
+export default function ZonesPage() {
   return (
     <div style={{ height: "100%", width: "100%" }}>
       <Head>
@@ -17,7 +17,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <BaseMap />
+      <ZoneMap />
     </div>
   );
 }

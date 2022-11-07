@@ -1,8 +1,9 @@
 import React, { Dispatch, FC, SetStateAction, useEffect } from "react";
 import useSWR from "swr";
 import { GeoJSON } from "react-leaflet";
-import { Feature, FeatureCollection, Point } from "geojson";
+import { Feature, FeatureCollection, Point, Polygon } from "geojson";
 import { LatLng, Layer, CircleMarker, CircleMarkerOptions } from "leaflet";
+import { bbox, featureCollection, bboxPolygon } from "@turf/turf";
 
 import "leaflet/dist/leaflet.css";
 
@@ -19,6 +20,16 @@ interface BaseResponse extends FeatureCollection<any> {
   previous?: string;
   count?: number;
 } // TODO make more specific
+
+export type LayerStatus = {
+  isValidating?: boolean;
+  hasData?: boolean;
+  bboxPolygon?: Feature<Polygon>;
+};
+
+export type LayerStatuses = {
+  [name: string]: LayerStatus;
+};
 
 const observationPointToLayer = (feature: Feature<Point>, latlng: LatLng) => {
   var pointMarkerOptions: CircleMarkerOptions = defaultPointMarkerOptions;
@@ -56,14 +67,43 @@ const observationOnEachFeature = (feature: any, layer: Layer) => {
 const OBSERVATIONS_URL = `${process.env.NEXT_PUBLIC_API_BASE}/geojson/observations/`;
 
 const ObservationsLayer: FC<{
+  name: string;
   query?: string;
-  setValidating: Dispatch<SetStateAction<boolean>>;
-}> = ({ query, setValidating }) => {
+  setLayerStatuses: Dispatch<SetStateAction<LayerStatuses>>;
+}> = ({ name, query, setLayerStatuses }) => {
   const url = query ? `${OBSERVATIONS_URL}${query}` : OBSERVATIONS_URL;
 
   const { data, error, isValidating } = useSWR<BaseResponse>(url);
 
-  useEffect(() => setValidating(isValidating));
+  // Update loading
+  useEffect(() => {
+    setLayerStatuses((prevState) => ({
+      ...prevState,
+      [name]: { ...prevState[name], isValidating: isValidating },
+    }));
+  }, [name, isValidating]);
+
+  // Update has data
+  useEffect(() => {
+    setLayerStatuses((prevState) => ({
+      ...prevState,
+      [name]: { ...prevState[name], hasData: !!data },
+    }));
+  }, [name, data]);
+
+  // Create a polygon representing the bounding box
+  useEffect(() => {
+    if (data?.features) {
+      const featuresBboxPolygon = bboxPolygon(
+        bbox(featureCollection(data.features))
+      );
+
+      setLayerStatuses((prevState) => ({
+        ...prevState,
+        [name]: { ...prevState[name], bboxPolygon: featuresBboxPolygon },
+      }));
+    }
+  }, [name, data]);
 
   if (isValidating) return null;
   else if (error) return <span>Error</span>;

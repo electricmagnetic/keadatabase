@@ -14,11 +14,16 @@ const zoneFilterInitialValues = {
 
 export const ZoneFilter: FC = () => {
   const router = useRouter();
+  const initialValues = Object.assign(
+    {},
+    zoneFilterInitialValues,
+    router.query?.zone && { zoneId: router.query.zone }
+  );
 
   return (
     <div>
       <Formik
-        initialValues={zoneFilterInitialValues}
+        initialValues={initialValues}
         onSubmit={(values, { setSubmitting }: FormikHelpers<ZoneFilter>) => {
           if (values.zoneId) {
             router.push({

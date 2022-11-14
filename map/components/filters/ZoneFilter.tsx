@@ -1,26 +1,30 @@
 import { FC } from "react";
+import { useRouter } from "next/router";
 import { Formik, Field, Form, FormikHelpers } from "formik";
 
 import keaZones from "public/geo/kea-zones_2022-10-31.json";
-import { Filters, SetFilters } from "./filters";
 
-interface ZoneForm {
+interface ZoneFilter {
   zoneId?: string;
 }
 
-export const ZoneFilter: FC<{
-  filters: Filters;
-  setFilters: SetFilters<Filters>;
-}> = ({ filters, setFilters }) => {
+const zoneFilterInitialValues = {
+  zoneId: "",
+};
+
+export const ZoneFilter: FC = () => {
+  const router = useRouter();
+
   return (
     <div>
       <Formik
-        initialValues={filters}
-        onSubmit={(values, { setSubmitting }: FormikHelpers<ZoneForm>) => {
-          const zone = keaZones.features.filter(
-            (keaZone) => keaZone.id === values.zoneId
-          )[0];
-          if (zone) setFilters({ zone: zone });
+        initialValues={zoneFilterInitialValues}
+        onSubmit={(values, { setSubmitting }: FormikHelpers<ZoneFilter>) => {
+          if (values.zoneId) {
+            router.push({
+              query: Object.assign({}, router.query, { zone: values.zoneId }),
+            });
+          }
           setSubmitting(false);
         }}
       >

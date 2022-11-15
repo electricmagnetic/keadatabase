@@ -9,8 +9,7 @@
     "start": "next start",
     "lint": "next lint",
     "export": "next export",
-    "predeploy": "npm run build && npm run export",
-    "deploy": "firebase deploy"
+    "deploy": "npm run build && npm run export && firebase deploy"
   },
   "dependencies": {
     "@turf/turf": "^6.5.0",

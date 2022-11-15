@@ -16,8 +16,7 @@
     "swr": "^1.0.0"
   },
   "scripts": {
-    "predeploy": "npm run build",
-    "deploy": "firebase deploy",
+    "deploy": "npm run build && firebase deploy",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

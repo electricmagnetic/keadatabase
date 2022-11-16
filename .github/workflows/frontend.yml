@@ -37,6 +37,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
+          cache-dependency-path: frontend/pnpm-lock.yaml
       - run: npx prettier --check src/ public/
       - run: pnpm install
       - run: pnpm run build --if-present

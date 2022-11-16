@@ -30,8 +30,7 @@ jobs:
         with:
           version: 7
           run_install: |
-            - recursive: true
-              cwd: frontend
+            - cwd: frontend
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:

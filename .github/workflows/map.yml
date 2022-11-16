@@ -39,5 +39,5 @@ jobs:
           cache-dependency-path: map/pnpm-lock.yaml
       - run: npx prettier --check components/ public/ pages/ styles/
       - run: pnpm install
-      - run: pnpm run build --if-present
+      - run: pnpm run build
       - run: pnpm test

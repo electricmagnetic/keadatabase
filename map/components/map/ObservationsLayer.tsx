@@ -81,7 +81,7 @@ const ObservationsLayer: FC<{
       ...prevState,
       [name]: { ...prevState[name], isValidating: isValidating },
     }));
-  }, [name, isValidating]);
+  }, [name, setLayerStatuses, isValidating]);
 
   // Update has data
   useEffect(() => {
@@ -89,7 +89,7 @@ const ObservationsLayer: FC<{
       ...prevState,
       [name]: { ...prevState[name], hasData: !!data },
     }));
-  }, [name, data]);
+  }, [name, setLayerStatuses, data]);
 
   // Create a polygon representing the bounding box
   useEffect(() => {
@@ -103,7 +103,7 @@ const ObservationsLayer: FC<{
         [name]: { ...prevState[name], bboxPolygon: featuresBboxPolygon },
       }));
     }
-  }, [name, data]);
+  }, [name, setLayerStatuses, data]);
 
   if (isValidating) return null;
   else if (error) return <span>Error</span>;

@@ -12,7 +12,6 @@ const defaultPointMarkerOptions = {
   weight: 1,
   opacity: 1,
   fillOpacity: 0.8,
-  filColor: "#df5206",
 };
 
 interface BaseResponse extends FeatureCollection<any> {
@@ -46,6 +45,8 @@ const observationPointToLayer = (feature: Feature<Point>, latlng: LatLng) => {
     case "radio":
       pointMarkerOptions.fillColor = "#00ff00";
       break;
+    default:
+      pointMarkerOptions.fillColor = "#df5206";
   }
 
   // Radius based on number

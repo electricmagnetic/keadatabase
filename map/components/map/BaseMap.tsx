@@ -1,23 +1,18 @@
-import { LatLngBoundsExpression } from "leaflet";
-import { FC, PropsWithChildren } from "react";
+import { FC, PropsWithChildren, useEffect, useState } from "react";
 
-import { MapContainer, TileLayer } from "react-leaflet";
+import { MapContainer, TileLayer, useMap } from "react-leaflet";
 
 import { DEFAULT_BOUNDS, MAX_BOUNDS } from "./constants";
 
 import "leaflet/dist/leaflet.css";
 
-type BaseMapProps = {
-  bounds?: LatLngBoundsExpression;
-};
-
-const BaseMap: FC<PropsWithChildren<BaseMapProps>> = ({ bounds, children }) => {
+const BaseMap: FC<PropsWithChildren> = ({ children }) => {
   return (
     <MapContainer
       minZoom={6}
-      maxZoom={17}
+      maxZoom={16}
+      bounds={DEFAULT_BOUNDS}
       maxBounds={MAX_BOUNDS}
-      bounds={bounds ? bounds : DEFAULT_BOUNDS}
       style={{ height: "100%", width: "100%" }}
     >
       {children}

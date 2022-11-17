@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { stringify } from "qs";
-import { LayersControl } from "react-leaflet";
+import { LayersControl, GeoJSON } from "react-leaflet";
+import { FeatureCollection } from "geojson";
 
 import BaseMap from "components/map/BaseMap";
 import ObservationsLayer, {
@@ -9,9 +10,13 @@ import ObservationsLayer, {
 } from "components/map/ObservationsLayer";
 import { ZoneFilter } from "components/filters/ZoneFilter";
 import { Filters } from "components/filters/filters";
-import { MapLoader, TitleControl } from "components/map/utilities";
+import {
+  MapLoader,
+  TitleControl,
+  SetBoundsToLayers,
+} from "components/map/utilities";
 
-import keaZones from "public/geo/kea-zones_2022-10-31.json";
+const keaZones: FeatureCollection = require("public/geo/kea-zones_2022-10-31.json");
 
 export default function ZoneMap() {
   const { query } = useRouter();
@@ -60,13 +65,21 @@ export default function ZoneMap() {
             checked
           >
             <ObservationsLayer
-              name="zones"
+              name="zonesLayer"
               query={apiQuery}
               setLayerStatuses={setLayerStatuses}
             />
           </LayersControl.Overlay>
+          <LayersControl.Overlay name="Zone Boundary" checked>
+            <GeoJSON
+              data={filters.zone}
+              key={filters.zone.id}
+              style={{ fill: false, color: "#000000" }}
+            />
+          </LayersControl.Overlay>
         </LayersControl>
       )}
+      <SetBoundsToLayers layerStatuses={layerStatuses} />
       {loadedLayers != totalLayers && <MapLoader />}
     </BaseMap>
   );

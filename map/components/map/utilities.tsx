@@ -1,6 +1,10 @@
 import { CSSProperties, FC, PropsWithChildren } from "react";
+import { latLng, latLngBounds, LatLngBoundsExpression } from "leaflet";
+import { useMap } from "react-leaflet";
+import { featureCollection, bbox } from "@turf/turf";
 
 import { Loader } from "components/utilities";
+import { LayerStatuses } from "./ObservationsLayer";
 
 const controlStyle: CSSProperties = {
   backgroundColor: "#fff",
@@ -33,3 +37,41 @@ export const MapLoader: FC = () => (
     <Loader />
   </CustomControl>
 );
+
+/**
+ * Simple bounds setter (used as a child component of MapContainer)
+ */
+export const SetBounds: FC<{ bounds?: LatLngBoundsExpression }> = ({
+  bounds,
+}) => {
+  const map = useMap();
+  if (bounds) map.fitBounds(bounds);
+  return null;
+};
+
+/**
+ * Given a set of layer statuses, calculate the overall bounding box and then set the bounds (if valid)
+ */
+export const SetBoundsToLayers: FC<{ layerStatuses: LayerStatuses }> = ({
+  layerStatuses,
+}) => {
+  const bboxPolygons = featureCollection(
+    Object.entries(layerStatuses)
+      .map(([key, value]) => value.bboxPolygon)
+      .filter((bboxPolygon) => !!bboxPolygon)
+      .map((bboxPolygon) => bboxPolygon!)
+  ); // TODO improve weird TypeScript
+
+  const layersBbox = bboxPolygons.features.length > 0 && bbox(bboxPolygons);
+  const layersBboxIsValid =
+    layersBbox && !layersBbox.some((coordinate) => coordinate === Infinity);
+
+  const bounds = layersBboxIsValid
+    ? latLngBounds(
+        latLng(layersBbox[1], layersBbox[0]),
+        latLng(layersBbox[3], layersBbox[2])
+      )
+    : undefined;
+
+  return <SetBounds bounds={bounds} />;
+};

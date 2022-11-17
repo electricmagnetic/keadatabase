@@ -25,6 +25,7 @@ export type LayerStatus = {
   isValidating?: boolean;
   hasData?: boolean;
   bboxPolygon?: Feature<Polygon>;
+  key?: string;
 };
 
 export type LayerStatuses = {
@@ -111,6 +112,7 @@ const ObservationsLayer: FC<{
     return (
       <GeoJSON
         data={data}
+        key={url}
         pointToLayer={observationPointToLayer}
         onEachFeature={observationOnEachFeature}
         attribution="Data: KSP, KCT"

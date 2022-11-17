@@ -5,7 +5,11 @@ import BaseMap from "components/map/BaseMap";
 import ObservationsLayer, {
   LayerStatuses,
 } from "components/map/ObservationsLayer";
-import { TitleControl, MapLoader } from "components/map/utilities";
+import {
+  TitleControl,
+  MapLoader,
+  SetBoundsToLayers,
+} from "components/map/utilities";
 
 export default function HomeMap() {
   const [layerStatuses, setLayerStatuses] = useState<LayerStatuses>({});
@@ -25,26 +29,27 @@ export default function HomeMap() {
         </TitleControl>
         <LayersControl.Overlay name={"Public Observations"} checked>
           <ObservationsLayer
-            name="public"
+            name="publicLayer"
             query={`?status=public`}
             setLayerStatuses={setLayerStatuses}
           />
         </LayersControl.Overlay>
         <LayersControl.Overlay name={"New Observations"} checked>
           <ObservationsLayer
-            name="new"
+            name="newLayer"
             query={`?status=new`}
             setLayerStatuses={setLayerStatuses}
           />
         </LayersControl.Overlay>
         <LayersControl.Overlay name={"Radio Observations"} checked>
           <ObservationsLayer
-            name="radio"
+            name="radioLayer"
             query={`?status=radio`}
             setLayerStatuses={setLayerStatuses}
           />
         </LayersControl.Overlay>
       </LayersControl>
+      <SetBoundsToLayers layerStatuses={layerStatuses} />
       {loadedLayers != totalLayers && <MapLoader />}
     </BaseMap>
   );

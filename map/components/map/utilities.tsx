@@ -75,3 +75,17 @@ export const SetBoundsToLayers: FC<{ layerStatuses: LayerStatuses }> = ({
 
   return <SetBounds bounds={bounds} />;
 };
+
+/**
+ * Given a set of layer statuses, show a loader so long as at least one layer hasn't finished loading.
+ */
+export const LayersLoader: FC<{ layerStatuses: LayerStatuses }> = ({
+  layerStatuses,
+}) => {
+  const loadedLayers = Object.entries(layerStatuses).filter(
+    ([key, value]) => value.hasData === true
+  ).length;
+  const totalLayers = Object.entries(layerStatuses).length;
+
+  return loadedLayers != totalLayers ? <MapLoader /> : null;
+};

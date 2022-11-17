@@ -11,9 +11,9 @@ import ObservationsLayer, {
 import { ZoneFilter } from "components/filters/ZoneFilter";
 import { Filters } from "components/filters/filters";
 import {
-  MapLoader,
   TitleControl,
   SetBoundsToLayers,
+  LayersLoader,
 } from "components/map/utilities";
 
 const keaZones: FeatureCollection = require("public/geo/kea-zones_2022-10-31.json");
@@ -23,11 +23,6 @@ export default function ZoneMap() {
   const [filters, setFilters] = useState<Filters>({});
   const [apiQuery, setApiQuery] = useState("");
   const [layerStatuses, setLayerStatuses] = useState<LayerStatuses>({});
-
-  const loadedLayers = Object.entries(layerStatuses).filter(
-    ([key, value]) => value.hasData === true
-  ).length; // TODO abstract, de-duplicate and simplify
-  const totalLayers = Object.entries(layerStatuses).length;
 
   // Convert filters into API query
   useEffect(() => {
@@ -80,7 +75,7 @@ export default function ZoneMap() {
         </LayersControl>
       )}
       <SetBoundsToLayers layerStatuses={layerStatuses} />
-      {loadedLayers != totalLayers && <MapLoader />}
+      <LayersLoader layerStatuses={layerStatuses} />
     </BaseMap>
   );
 }

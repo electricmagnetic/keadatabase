@@ -12,7 +12,7 @@ const defaultPointMarkerOptions = {
   weight: 1,
   opacity: 1,
   fillOpacity: 0.8,
-  filColor: "#000",
+  filColor: "#df5206",
 };
 
 interface BaseResponse extends FeatureCollection<any> {
@@ -37,8 +37,8 @@ const observationPointToLayer = (feature: Feature<Point>, latlng: LatLng) => {
 
   // Color based on status
   switch (feature.properties?.status) {
-    case "public":
-      pointMarkerOptions.fillColor = "#df5206";
+    case "fwf":
+      pointMarkerOptions.fillColor = "#df9306";
       break;
     case "new":
       pointMarkerOptions.fillColor = "#ffffff";

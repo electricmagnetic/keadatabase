@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { LayersControl, GeoJSON } from "react-leaflet";
-import { FeatureCollection } from "geojson";
+import { Feature, FeatureCollection, Point } from "geojson";
+import { Layer } from "leaflet";
 
 import BaseMap from "components/map/BaseMap";
 import ObservationsLayer, {
@@ -17,6 +18,15 @@ const fwfBlocks: FeatureCollection = require("public/geo/fwf-blocks_2022-10-31.j
 export default function FWFMap() {
   const [layerStatuses, setLayerStatuses] = useState<LayerStatuses>({});
 
+  const blockOnEachFeature = (feature: Feature<Point>, layer: Layer) => {
+    layer.bindTooltip(
+      `
+      ${feature?.properties?.HuntBlockN || "Unknown"}
+    `,
+      { direction: "center" }
+    );
+  };
+
   return (
     <BaseMap>
       <LayersControl position="topright" collapsed={false}>
@@ -31,7 +41,16 @@ export default function FWFMap() {
           />
         </LayersControl.Overlay>
         <LayersControl.Overlay name={"FWF Blocks"} checked>
-          <GeoJSON data={fwfBlocks} />
+          <GeoJSON
+            data={fwfBlocks}
+            style={{
+              color: "#222222",
+              weight: 2,
+              opacity: 0.6,
+              fillOpacity: 0,
+            }}
+            onEachFeature={blockOnEachFeature}
+          />
         </LayersControl.Overlay>
       </LayersControl>
       <SetBoundsToLayers layerStatuses={layerStatuses} />

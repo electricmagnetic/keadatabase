@@ -1,7 +1,7 @@
 import { CSSProperties, FC, PropsWithChildren } from "react";
 import { latLng, latLngBounds, LatLngBoundsExpression } from "leaflet";
 import { useMap } from "react-leaflet";
-import { featureCollection, bbox } from "@turf/turf";
+import { featureCollection, bbox, BBox } from "@turf/turf";
 
 import { Loader } from "components/utilities";
 import { LayerStatuses } from "./ObservationsLayer";
@@ -49,6 +49,13 @@ export const SetBounds: FC<{ bounds?: LatLngBoundsExpression }> = ({
   return null;
 };
 
+export const convertBboxToLeafletBounds = (inputBbox: BBox) => {
+  return latLngBounds(
+    latLng(inputBbox[1], inputBbox[0]),
+    latLng(inputBbox[3], inputBbox[2])
+  );
+};
+
 /**
  * Given a set of layer statuses, calculate the overall bounding box and then set the bounds (if valid)
  */
@@ -67,10 +74,7 @@ export const SetBoundsToLayers: FC<{ layerStatuses: LayerStatuses }> = ({
     layersBbox && !layersBbox.some((coordinate) => coordinate === Infinity);
 
   const bounds = layersBboxIsValid
-    ? latLngBounds(
-        latLng(layersBbox[1], layersBbox[0]),
-        latLng(layersBbox[3], layersBbox[2])
-      )
+    ? convertBboxToLeafletBounds(layersBbox)
     : undefined;
 
   return <SetBounds bounds={bounds} />;

@@ -11,9 +11,12 @@ import {
   TitleControl,
   SetBoundsToLayers,
   LayersLoader,
+  convertBboxToLeafletBounds,
 } from "components/map/utilities";
+import { bbox } from "@turf/turf";
 
 const fwfBlocks: FeatureCollection = require("public/geo/fwf-blocks_2022-10-31.json");
+const fwfBlocksBbox = bbox(fwfBlocks);
 
 export default function FWFMap() {
   const [layerStatuses, setLayerStatuses] = useState<LayerStatuses>({});
@@ -28,7 +31,7 @@ export default function FWFMap() {
   };
 
   return (
-    <BaseMap>
+    <BaseMap bounds={convertBboxToLeafletBounds(fwfBlocksBbox)}>
       <LayersControl position="topright" collapsed={false}>
         <TitleControl>
           <h1>FWF Observations</h1>

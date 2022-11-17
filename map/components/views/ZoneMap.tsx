@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { stringify } from "qs";
 import { LayersControl, GeoJSON } from "react-leaflet";

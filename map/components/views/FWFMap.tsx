@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { LayersControl } from "react-leaflet";
+import { LayersControl, GeoJSON } from "react-leaflet";
+import { FeatureCollection } from "geojson";
 
 import BaseMap from "components/map/BaseMap";
 import ObservationsLayer, {
@@ -11,7 +12,9 @@ import {
   SetBoundsToLayers,
 } from "components/map/utilities";
 
-export default function HomeMap() {
+const fwfBlocks: FeatureCollection = require("public/geo/fwf-blocks_2022-10-31.json");
+
+export default function FWFMap() {
   const [layerStatuses, setLayerStatuses] = useState<LayerStatuses>({});
   const loadedLayers = Object.entries(layerStatuses).filter(
     ([key, value]) => value.hasData === true
@@ -22,31 +25,20 @@ export default function HomeMap() {
     <BaseMap>
       <LayersControl position="topright" collapsed={false}>
         <TitleControl>
-          <h1>Recent Observations</h1>
+          <h1>FWF Observations</h1>
           <span>
             Loaded {loadedLayers} of {totalLayers}
           </span>
         </TitleControl>
-        <LayersControl.Overlay name={"Public Observations"} checked>
+        <LayersControl.Overlay name={"FWF Observations"} checked>
           <ObservationsLayer
             name="publicLayer"
-            query={`?status=public`}
+            query={`?status=fwf`}
             setLayerStatuses={setLayerStatuses}
           />
         </LayersControl.Overlay>
-        <LayersControl.Overlay name={"New Observations"} checked>
-          <ObservationsLayer
-            name="newLayer"
-            query={`?status=new`}
-            setLayerStatuses={setLayerStatuses}
-          />
-        </LayersControl.Overlay>
-        <LayersControl.Overlay name={"Radio Observations"} checked>
-          <ObservationsLayer
-            name="radioLayer"
-            query={`?status=radio`}
-            setLayerStatuses={setLayerStatuses}
-          />
+        <LayersControl.Overlay name={"FWF Blocks"} checked>
+          <GeoJSON data={fwfBlocks} />
         </LayersControl.Overlay>
       </LayersControl>
       <SetBoundsToLayers layerStatuses={layerStatuses} />

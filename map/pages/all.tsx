@@ -7,7 +7,7 @@ const BigMap = dynamic(() => import("components/views/BigMap"), {
   loading: () => <Loader />,
 });
 
-export default function FWFPage() {
+export default function BigMapPage() {
   return (
     <>
       <BigMap />

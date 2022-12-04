@@ -23,12 +23,6 @@ export const CustomControl: FC<PropsWithChildren<{ className: string }>> = ({
   </div>
 );
 
-export const TitleControl: FC<PropsWithChildren> = ({ children }) => (
-  <CustomControl className="leaflet-top leaflet-left avoidZoomControl">
-    {children}
-  </CustomControl>
-);
-
 /**
  * Basic map loading component
  */

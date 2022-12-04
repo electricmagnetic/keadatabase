@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { stringify } from "qs";
 import { LayersControl } from "react-leaflet";
@@ -9,13 +9,13 @@ import ObservationsLayer, {
 } from "components/map/ObservationsLayer";
 import { BirdFilter } from "components/filters/BirdFilter";
 import { Filters } from "components/filters/filters";
-import {
-  TitleControl,
-  SetBoundsToLayers,
-  LayersLoader,
-} from "components/map/utilities";
+import { SetBoundsToLayers, LayersLoader } from "components/map/utilities";
+import Menu from "components/Menu";
+import { ShowMenuContext } from "components/context";
 
 export default function TrackMap() {
+  const showMenu = useContext(ShowMenuContext);
+
   const { query } = useRouter();
   const [filters, setFilters] = useState<Filters>({});
   const [apiQuery, setApiQuery] = useState("");
@@ -39,24 +39,28 @@ export default function TrackMap() {
   }, [query]);
 
   return (
-    <BaseMap>
-      <TitleControl>
-        <BirdFilter />
-      </TitleControl>
-      {filters.birdId && (
-        <LayersControl position="topright" collapsed={false}>
-          <LayersControl.Overlay name="Bird Observations" checked>
-            <ObservationsLayer
-              name="birdLayer"
-              query={apiQuery}
-              setLayerStatuses={setLayerStatuses}
-              birdObservations
-            />
-          </LayersControl.Overlay>
-        </LayersControl>
+    <>
+      {showMenu && (
+        <Menu title="Track Bird">
+          <BirdFilter />
+        </Menu>
       )}
-      <SetBoundsToLayers layerStatuses={layerStatuses} />
-      <LayersLoader layerStatuses={layerStatuses} />
-    </BaseMap>
+      <BaseMap>
+        {filters.birdId && (
+          <LayersControl position="topright" collapsed={false}>
+            <LayersControl.Overlay name="Bird Observations" checked>
+              <ObservationsLayer
+                name="birdLayer"
+                query={apiQuery}
+                setLayerStatuses={setLayerStatuses}
+                birdObservations
+              />
+            </LayersControl.Overlay>
+          </LayersControl>
+        )}
+        <SetBoundsToLayers layerStatuses={layerStatuses} />
+        <LayersLoader layerStatuses={layerStatuses} />
+      </BaseMap>
+    </>
   );
 }

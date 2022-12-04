@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { stringify } from "qs";
 import { LayersControl } from "react-leaflet";
@@ -9,13 +9,13 @@ import ObservationsLayer, {
 } from "components/map/ObservationsLayer";
 import { PageSizeFilter } from "components/filters/PageSizeFilter";
 import { Filters } from "components/filters/filters";
-import {
-  TitleControl,
-  SetBoundsToLayers,
-  LayersLoader,
-} from "components/map/utilities";
+import { SetBoundsToLayers, LayersLoader } from "components/map/utilities";
+import Menu from "components/Menu";
+import { ShowMenuContext } from "components/context";
 
 export default function BigMap() {
+  const showMenu = useContext(ShowMenuContext);
+
   const { query } = useRouter();
   const [filters, setFilters] = useState<Filters>({});
   const [apiQuery, setApiQuery] = useState("");
@@ -39,23 +39,27 @@ export default function BigMap() {
   }, [query]);
 
   return (
-    <BaseMap>
-      <TitleControl>
-        <PageSizeFilter />
-      </TitleControl>
-      {filters.pageSize && (
-        <LayersControl position="topright" collapsed={false}>
-          <LayersControl.Overlay name="Recent Observations" checked>
-            <ObservationsLayer
-              name="observationsLayer"
-              query={apiQuery}
-              setLayerStatuses={setLayerStatuses}
-            />
-          </LayersControl.Overlay>
-        </LayersControl>
+    <>
+      {showMenu && (
+        <Menu title="Recent Observations (page)">
+          <PageSizeFilter />
+        </Menu>
       )}
-      <SetBoundsToLayers layerStatuses={layerStatuses} />
-      <LayersLoader layerStatuses={layerStatuses} />
-    </BaseMap>
+      <BaseMap>
+        {filters.pageSize && (
+          <LayersControl position="topright" collapsed={false}>
+            <LayersControl.Overlay name="Recent Observations" checked>
+              <ObservationsLayer
+                name="observationsLayer"
+                query={apiQuery}
+                setLayerStatuses={setLayerStatuses}
+              />
+            </LayersControl.Overlay>
+          </LayersControl>
+        )}
+        <SetBoundsToLayers layerStatuses={layerStatuses} />
+        <LayersLoader layerStatuses={layerStatuses} />
+      </BaseMap>
+    </>
   );
 }

@@ -11,7 +11,7 @@ import {
   LayersLoader,
 } from "components/map/utilities";
 
-export default function HomeMap() {
+export default function DefaultMap() {
   const [layerStatuses, setLayerStatuses] = useState<LayerStatuses>({});
 
   return (
@@ -38,6 +38,13 @@ export default function HomeMap() {
           <ObservationsLayer
             name="radioLayer"
             query={`?status=radio`}
+            setLayerStatuses={setLayerStatuses}
+          />
+        </LayersControl.Overlay>
+        <LayersControl.Overlay name={"KCT Observations"} checked>
+          <ObservationsLayer
+            name="kctLayer"
+            query={`?status=kct`}
             setLayerStatuses={setLayerStatuses}
           />
         </LayersControl.Overlay>

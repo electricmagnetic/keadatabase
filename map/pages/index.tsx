@@ -3,7 +3,7 @@ import dynamic from "next/dynamic";
 
 import { Loader } from "components/utilities";
 
-const HomeMap = dynamic(() => import("components/views/HomeMap"), {
+const DefaultMap = dynamic(() => import("components/views/DefaultMap"), {
   ssr: false,
   loading: () => <Loader />,
 });
@@ -17,7 +17,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <HomeMap />
+      <DefaultMap />
     </>
   );
 }

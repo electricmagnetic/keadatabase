@@ -41,6 +41,7 @@ export default function FWFMap() {
             name="publicLayer"
             query={`?status=fwf`}
             setLayerStatuses={setLayerStatuses}
+            fwfObservations
           />
         </LayersControl.Overlay>
         <LayersControl.Overlay name={"FWF Blocks"} checked>

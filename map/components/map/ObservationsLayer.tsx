@@ -58,24 +58,53 @@ const observationPointToLayer = (feature: Feature<Point>, latlng: LatLng) => {
   return new CircleMarker(latlng, pointMarkerOptions);
 };
 
-const observationOnEachFeature = (feature: any, layer: Layer) => {
-  layer.bindPopup(`
-    <a href="https://keadatabase.nz/observations/${feature.id}" rel="noopener noreferrer" target="_blank">
-      <strong>${feature.id}</strong>: ${feature.properties.get_sighting_type_display} ${feature.properties.number} on ${feature.properties.date_sighted}
-    </a>
-  `);
-};
-
 const OBSERVATIONS_URL = `${process.env.NEXT_PUBLIC_API_BASE}/geojson/observations/`;
+const BIRD_OBSERVATIONS_URL = `${process.env.NEXT_PUBLIC_API_BASE}/geojson/bird_observations/`;
 
 const ObservationsLayer: FC<{
   name: string;
   query?: string;
   setLayerStatuses: Dispatch<SetStateAction<LayerStatuses>>;
-}> = ({ name, query, setLayerStatuses }) => {
-  const url = query ? `${OBSERVATIONS_URL}${query}` : OBSERVATIONS_URL;
+  birdObservations?: boolean;
+  fwfObservations?: boolean;
+}> = ({
+  name,
+  query,
+  setLayerStatuses,
+  birdObservations = false,
+  fwfObservations = false,
+}) => {
+  const url = `${birdObservations ? BIRD_OBSERVATIONS_URL : OBSERVATIONS_URL}${
+    query ? query : ""
+  }`;
 
   const { data, error, isValidating } = useSWR<BaseResponse>(url);
+
+  // Create popup based on data type (FWF, Bird Observation or Observation)
+  const createPopup = (feature: any, layer: Layer) => {
+    if (fwfObservations) {
+      // TODO replace with 'periods' data
+      layer.bindPopup(`
+        <a href="https://keadatabase.nz/observations/${feature.id}" rel="noopener noreferrer" target="_blank">
+          <strong>FWF ${feature.id}</strong>: ${feature.properties.get_sighting_type_display} ${feature.properties.number} on ${feature.properties.date_sighted}
+        </a>
+      `);
+      return;
+    }
+    if (birdObservations) {
+      layer.bindPopup(`
+      <a href="https://keadatabase.nz/observations/${feature.properties.sighting.id}" rel="noopener noreferrer" target="_blank">
+        <strong>${feature.properties.sighting.date_sighted}</strong> (#${feature.properties.sighting.id})
+      </a>
+    `);
+      return;
+    }
+    layer.bindPopup(`
+      <a href="https://keadatabase.nz/observations/${feature.id}" rel="noopener noreferrer" target="_blank">
+        <strong>${feature.id}</strong>: ${feature.properties.get_sighting_type_display} ${feature.properties.number} on ${feature.properties.date_sighted}
+      </a>
+    `);
+  };
 
   // Update loading
   useEffect(() => {
@@ -115,7 +144,7 @@ const ObservationsLayer: FC<{
         data={data}
         key={url}
         pointToLayer={observationPointToLayer}
-        onEachFeature={observationOnEachFeature}
+        onEachFeature={createPopup}
         attribution="Data: KSP, KCT"
       />
     );
@@ -123,3 +152,5 @@ const ObservationsLayer: FC<{
 };
 
 export default ObservationsLayer;
+
+/*(birdObservations && birdObservationOnEachFeature) || (fwfObservations && fwfObservationOnEachFeature) || observationOnEachFeature*/

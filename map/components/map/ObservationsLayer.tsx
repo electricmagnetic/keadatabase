@@ -7,7 +7,7 @@ import { bbox, featureCollection, bboxPolygon } from "@turf/turf";
 
 import { BaseResponse, LayerStatuses } from "./types";
 
-const defaultPointMarkerOptions = {
+const DEFAULT_MARKER_OPTIONS = {
   color: "#000",
   weight: 1,
   opacity: 1,
@@ -15,7 +15,7 @@ const defaultPointMarkerOptions = {
 };
 
 const observationPointToLayer = (feature: Feature<Point>, latlng: LatLng) => {
-  var pointMarkerOptions: CircleMarkerOptions = defaultPointMarkerOptions;
+  var pointMarkerOptions: CircleMarkerOptions = DEFAULT_MARKER_OPTIONS;
 
   // Color based on status
   switch (feature.properties?.status) {

@@ -61,7 +61,7 @@ export const SetBoundsToLayers: FC<{ layerStatuses: LayerStatuses }> = ({
       .map(([key, value]) => value.bboxPolygon)
       .filter((bboxPolygon) => !!bboxPolygon)
       .map((bboxPolygon) => bboxPolygon!)
-  ); // TODO improve weird TypeScript
+  ); // TODO remove TypeScript assertion?
 
   const layersBbox = bboxPolygons.features.length > 0 && bbox(bboxPolygons);
   const layersBboxIsValid =

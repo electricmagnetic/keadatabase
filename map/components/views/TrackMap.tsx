@@ -10,6 +10,7 @@ import { Filters } from "components/filters/filters";
 import { SetBoundsToLayers, LayersLoader } from "components/map/utilities";
 import Menu from "components/Menu";
 import { ShowMenuContext } from "components/context";
+import BirdPathLayer from "components/map/BirdPathLayer";
 import { LayerStatuses } from "components/map/types";
 
 export default function TrackMap() {
@@ -53,6 +54,13 @@ export default function TrackMap() {
                 query={apiQuery}
                 setLayerStatuses={setLayerStatuses}
                 birdObservations
+              />
+            </LayersControl.Overlay>
+            <LayersControl.Overlay name="Bird Path">
+              <BirdPathLayer
+                name="pathLayer"
+                query={apiQuery}
+                setLayerStatuses={setLayerStatuses}
               />
             </LayersControl.Overlay>
           </LayersControl>

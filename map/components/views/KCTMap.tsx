@@ -4,18 +4,10 @@ import { FeatureCollection } from "geojson";
 
 import BaseMap from "components/map/BaseMap";
 import ObservationsLayer from "components/map/ObservationsLayer";
-import {
-  SetBoundsToLayers,
-  LayersLoader,
-  convertBboxToLeafletBounds,
-} from "components/map/utilities";
-import { bbox } from "@turf/turf";
+import { SetBoundsToLayers, LayersLoader } from "components/map/utilities";
 import Menu from "components/Menu";
 import { ShowMenuContext } from "components/context";
 import { LayerStatuses } from "components/map/types";
-
-const fwfBlocks: FeatureCollection = require("public/geo/fwf-blocks_2022-10-31.json");
-const fwfBlocksBbox = bbox(fwfBlocks);
 
 export default function FWFMap() {
   const showMenu = useContext(ShowMenuContext);
@@ -25,7 +17,7 @@ export default function FWFMap() {
   return (
     <>
       {showMenu && <Menu title="KCT Observations" />}
-      <BaseMap bounds={convertBboxToLeafletBounds(fwfBlocksBbox)}>
+      <BaseMap>
         <LayersControl position="topright" collapsed={false}>
           <LayersControl.Overlay name={"KCT Observations"} checked>
             <ObservationsLayer

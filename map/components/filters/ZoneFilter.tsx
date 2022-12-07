@@ -18,7 +18,7 @@ export const ZoneFilter: FC = () => {
     {},
     zoneFilterInitialValues,
     router.query?.zone && { zoneId: router.query.zone }
-  );
+  ); // TODO fix initialisation via router (doesn't work on prod)
 
   return (
     <div>

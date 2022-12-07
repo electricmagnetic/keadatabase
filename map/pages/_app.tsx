@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import type { AppProps } from "next/app";
-import Head from "next/head";
 import { SWRConfig } from "swr";
 import { useRouter } from "next/router";
 import axios from "axios";
@@ -32,11 +31,6 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <SWRConfig value={SWR_CONFIG}>
-      <Head>
-        <title>Map (Kea Database)</title>
-        <meta name="description" content="Map utility for the Kea Database" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
       <ShowMenuContext.Provider value={showMenu}>
         <Component {...pageProps} />
       </ShowMenuContext.Provider>

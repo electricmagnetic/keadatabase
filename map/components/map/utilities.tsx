@@ -6,18 +6,20 @@ import { featureCollection, bbox, BBox } from "@turf/turf";
 import { Loader } from "components/utilities";
 import { LayerStatuses } from "./types";
 
-const controlStyle: CSSProperties = {
+const CONTROL_STYLE: CSSProperties = {
   backgroundColor: "#fff",
   padding: "0.5rem",
   fontSize: "1rem",
 };
+
+const BOUNDS_PADDING = 0.5;
 
 export const CustomControl: FC<PropsWithChildren<{ className: string }>> = ({
   className,
   children,
 }) => (
   <div className={className}>
-    <div className="leaflet-control leaflet-bar" style={controlStyle}>
+    <div className="leaflet-control leaflet-bar" style={CONTROL_STYLE}>
       {children}
     </div>
   </div>
@@ -47,7 +49,7 @@ export const convertBboxToLeafletBounds = (inputBbox: BBox) => {
   return latLngBounds(
     latLng(inputBbox[1], inputBbox[0]),
     latLng(inputBbox[3], inputBbox[2])
-  );
+  ).pad(BOUNDS_PADDING);
 };
 
 /**

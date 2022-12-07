@@ -2,12 +2,11 @@ import { useContext, useState } from "react";
 import { LayersControl } from "react-leaflet";
 
 import BaseMap from "components/map/BaseMap";
-import ObservationsLayer, {
-  LayerStatuses,
-} from "components/map/ObservationsLayer";
+import ObservationsLayer from "components/map/ObservationsLayer";
 import { SetBoundsToLayers, LayersLoader } from "components/map/utilities";
 import Menu from "components/Menu";
 import { ShowMenuContext } from "components/context";
+import { LayerStatuses } from "components/map/types";
 
 export default function DefaultMap() {
   const showMenu = useContext(ShowMenuContext);

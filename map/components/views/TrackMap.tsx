@@ -4,14 +4,13 @@ import { stringify } from "qs";
 import { LayersControl } from "react-leaflet";
 
 import BaseMap from "components/map/BaseMap";
-import ObservationsLayer, {
-  LayerStatuses,
-} from "components/map/ObservationsLayer";
+import ObservationsLayer from "components/map/ObservationsLayer";
 import { BirdFilter } from "components/filters/BirdFilter";
 import { Filters } from "components/filters/filters";
 import { SetBoundsToLayers, LayersLoader } from "components/map/utilities";
 import Menu from "components/Menu";
 import { ShowMenuContext } from "components/context";
+import { LayerStatuses } from "components/map/types";
 
 export default function TrackMap() {
   const showMenu = useContext(ShowMenuContext);
@@ -50,7 +49,7 @@ export default function TrackMap() {
           <LayersControl position="topright" collapsed={false}>
             <LayersControl.Overlay name="Bird Observations" checked>
               <ObservationsLayer
-                name="birdLayer"
+                name="observationLayer"
                 query={apiQuery}
                 setLayerStatuses={setLayerStatuses}
                 birdObservations

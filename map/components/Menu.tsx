@@ -51,6 +51,11 @@ const Menu: FC<PropsWithChildren<{ title?: string }>> = ({
               </Link>
             </li>
             <li className="nav-item">
+              <Link className="nav-link" href="/kct">
+                KCT Observations
+              </Link>
+            </li>
+            <li className="nav-item">
               <Link className="nav-link" href="/track">
                 Track Bird
               </Link>

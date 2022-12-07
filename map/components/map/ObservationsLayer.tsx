@@ -1,34 +1,17 @@
 import React, { Dispatch, FC, SetStateAction, useEffect } from "react";
 import useSWR from "swr";
 import { GeoJSON } from "react-leaflet";
-import { Feature, FeatureCollection, Point, Polygon } from "geojson";
+import { Feature, Point } from "geojson";
 import { LatLng, Layer, CircleMarker, CircleMarkerOptions } from "leaflet";
 import { bbox, featureCollection, bboxPolygon } from "@turf/turf";
 
-import "leaflet/dist/leaflet.css";
+import { BaseResponse, LayerStatuses } from "./types";
 
 const defaultPointMarkerOptions = {
   color: "#000",
   weight: 1,
   opacity: 1,
   fillOpacity: 0.8,
-};
-
-interface BaseResponse extends FeatureCollection<any> {
-  next?: string;
-  previous?: string;
-  count?: number;
-} // TODO make more specific
-
-export type LayerStatus = {
-  isValidating?: boolean;
-  hasData?: boolean;
-  bboxPolygon?: Feature<Polygon>;
-  key?: string;
-};
-
-export type LayerStatuses = {
-  [name: string]: LayerStatus;
 };
 
 const observationPointToLayer = (feature: Feature<Point>, latlng: LatLng) => {
@@ -152,5 +135,3 @@ const ObservationsLayer: FC<{
 };
 
 export default ObservationsLayer;
-
-/*(birdObservations && birdObservationOnEachFeature) || (fwfObservations && fwfObservationOnEachFeature) || observationOnEachFeature*/

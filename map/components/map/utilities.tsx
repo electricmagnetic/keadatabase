@@ -4,7 +4,7 @@ import { useMap } from "react-leaflet";
 import { featureCollection, bbox, BBox } from "@turf/turf";
 
 import { Loader } from "components/utilities";
-import { LayerStatuses } from "./ObservationsLayer";
+import { LayerStatuses } from "./types";
 
 const controlStyle: CSSProperties = {
   backgroundColor: "#fff",

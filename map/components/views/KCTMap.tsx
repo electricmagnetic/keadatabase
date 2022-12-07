@@ -1,7 +1,6 @@
 import { useContext, useState } from "react";
-import { LayersControl, GeoJSON } from "react-leaflet";
-import { Feature, FeatureCollection, Point } from "geojson";
-import { Layer } from "leaflet";
+import { LayersControl } from "react-leaflet";
+import { FeatureCollection } from "geojson";
 
 import BaseMap from "components/map/BaseMap";
 import ObservationsLayer from "components/map/ObservationsLayer";
@@ -23,38 +22,16 @@ export default function FWFMap() {
 
   const [layerStatuses, setLayerStatuses] = useState<LayerStatuses>({});
 
-  const blockOnEachFeature = (feature: Feature<Point>, layer: Layer) => {
-    layer.bindTooltip(
-      `
-      ${feature?.properties?.HuntBlockN || "Unknown"}
-    `,
-      { direction: "center" }
-    );
-  };
-
   return (
     <>
-      {showMenu && <Menu title="FWF Observations" />}
+      {showMenu && <Menu title="KCT Observations" />}
       <BaseMap bounds={convertBboxToLeafletBounds(fwfBlocksBbox)}>
         <LayersControl position="topright" collapsed={false}>
-          <LayersControl.Overlay name={"FWF Observations"} checked>
+          <LayersControl.Overlay name={"KCT Observations"} checked>
             <ObservationsLayer
-              name="fwfLayer"
-              query={`?status=fwf`}
+              name="kctLayer"
+              query={`?status=kct`}
               setLayerStatuses={setLayerStatuses}
-              fwfObservations
-            />
-          </LayersControl.Overlay>
-          <LayersControl.Overlay name={"FWF Blocks"} checked>
-            <GeoJSON
-              data={fwfBlocks}
-              style={{
-                color: "#222222",
-                weight: 2,
-                opacity: 0.6,
-                fillOpacity: 0,
-              }}
-              onEachFeature={blockOnEachFeature}
             />
           </LayersControl.Overlay>
         </LayersControl>

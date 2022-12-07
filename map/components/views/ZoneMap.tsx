@@ -5,14 +5,13 @@ import { LayersControl, GeoJSON } from "react-leaflet";
 import { FeatureCollection } from "geojson";
 
 import BaseMap from "components/map/BaseMap";
-import ObservationsLayer, {
-  LayerStatuses,
-} from "components/map/ObservationsLayer";
+import ObservationsLayer from "components/map/ObservationsLayer";
 import { ZoneFilter } from "components/filters/ZoneFilter";
 import { Filters } from "components/filters/filters";
 import { SetBoundsToLayers, LayersLoader } from "components/map/utilities";
 import Menu from "components/Menu";
 import { ShowMenuContext } from "components/context";
+import { LayerStatuses } from "components/map/types";
 
 const keaZones: FeatureCollection = require("public/geo/kea-zones_2022-10-31.json");
 

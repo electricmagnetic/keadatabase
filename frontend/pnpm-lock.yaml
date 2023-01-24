@@ -1,44 +1,55 @@
 lockfileVersion: 5.4
 
+overrides:
+  nth-check@<2.0.1: '>=2.0.1'
+  loader-utils@>=3.0.0 <3.2.1: '>=3.2.1'
+  loader-utils@>=2.0.0 <2.0.4: '>=2.0.4'
+  loader-utils@>=2.0.0 <2.0.3: '>=2.0.3'
+  decode-uri-component@<0.2.1: '>=0.2.1'
+  json5@<1.0.2: '>=1.0.2'
+  json5@>=2.0.0 <2.2.2: '>=2.2.2'
+  terser@>=5.0.0 <5.14.2: '>=5.14.2'
+  minimatch@<3.0.5: '>=3.0.5'
+
 specifiers:
-  '@fortawesome/fontawesome-free': ^5.15.2
+  '@fortawesome/fontawesome-free': ^5.15.4
   '@sentry/react': ^5.30.0
   '@sentry/tracing': ^5.30.0
   '@testing-library/jest-dom': ^5.16.5
-  '@testing-library/react': ^12.1.2
+  '@testing-library/react': ^12.1.5
   '@testing-library/user-event': ^13.5.0
   axios: ^0.27.2
   bootstrap: ^4.6.1
   classnames: ^2.3.2
   core-js: ^3.25.0
-  formik: ^2.2.6
+  formik: ^2.2.9
   history: 4.9.0
   husky: ^6.0.0
   jquery: ^3.6.1
-  leaflet: ^1.7.1
-  lint-staged: ^11.0.0
+  leaflet: ^1.8.0
+  lint-staged: ^11.2.6
   moment: ^2.29.4
   prettier: ^2.7.1
-  proj4: ^2.7.5
-  prop-types: ^15.7.2
+  proj4: ^2.8.0
+  prop-types: ^15.8.1
   qs: ^6.11.0
   query-string: ^7.1.1
   react: ^17.0.2
   react-app-polyfill: ^1.0.6
-  react-bootstrap-typeahead: ^5.1.4
+  react-bootstrap-typeahead: ^5.2.2
   react-dom: ^17.0.2
   react-ga: ^3.3.1
   react-helmet: ^6.1.0
   react-leaflet: ^2.8.0
-  react-moment: ^1.1.1
+  react-moment: ^1.1.2
   react-query: ^3.39.2
-  react-router-dom: ^5.2.0
+  react-router-dom: ^5.3.3
   react-scripts: 5.0.1
   react-truncate-markup: ^5.1.2
-  regenerator-runtime: ^0.13.7
+  regenerator-runtime: ^0.13.9
   sass: ^1.54.8
   use-query-params: ^1.2.3
-  yup: ^0.32.9
+  yup: ^0.32.11
 
 dependencies:
   '@fortawesome/fontawesome-free': 5.15.4
@@ -3172,7 +3183,7 @@ packages:
       postcss: ^8.1.0
     dependencies:
       browserslist: 4.20.4
-      caniuse-lite: 1.0.30001354
+      caniuse-lite: 1.0.30001447
       fraction.js: 4.2.0
       normalize-range: 0.1.2
       picocolors: 1.0.0
@@ -3491,7 +3502,7 @@ packages:
     engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
     hasBin: true
     dependencies:
-      caniuse-lite: 1.0.30001354
+      caniuse-lite: 1.0.30001447
       electron-to-chromium: 1.4.155
       escalade: 3.1.1
       node-releases: 2.0.5
@@ -3560,13 +3571,13 @@ packages:
     resolution: {integrity: sha512-bsTwuIg/BZZK/vreVTYYbSWoe2F+71P7K5QGEX+pT250DZbfU1MQ5prOKpPR+LL6uWKK3KMwMCAS74QB3Um1uw==}
     dependencies:
       browserslist: 4.20.4
-      caniuse-lite: 1.0.30001354
+      caniuse-lite: 1.0.30001447
       lodash.memoize: 4.1.2
       lodash.uniq: 4.5.0
     dev: false
 
-  /caniuse-lite/1.0.30001354:
-    resolution: {integrity: sha512-mImKeCkyGDAHNywYFA4bqnLAzTUvVkqPvhY4DV47X+Gl2c5Z8c3KNETnXp14GQt11LvxE8AwjzGxJ+rsikiOzg==}
+  /caniuse-lite/1.0.30001447:
+    resolution: {integrity: sha512-bdKU1BQDPeEXe9A39xJnGtY0uRq/z5osrnXUw0TcK+EYno45Y+U7QU9HhHEyzvMDffpYadFXi3idnSNkcwLkTw==}
     dev: false
 
   /case-sensitive-paths-webpack-plugin/2.4.0:
@@ -3984,7 +3995,7 @@ packages:
       boolbase: 1.0.0
       css-what: 3.4.2
       domutils: 1.7.0
-      nth-check: 1.0.2
+      nth-check: 2.1.1
     dev: false
 
   /css-select/4.3.0:
@@ -7037,12 +7048,6 @@ packages:
     resolution: {integrity: sha512-UtJcAD4yEaGtjPezWuO9wC4nwUnVH/8/Im3yEHQP4b67cXlD/Qr9hdITCU1xDbSEXg2XKNaP8jsReV7vQd00/A==}
     dev: false
 
-  /minimatch/3.0.4:
-    resolution: {integrity: sha512-yJHVQEhyqPLUTgt9B83PXu6W3rx4MvvHvSUvToogpwoGDOUQ+yDrR0HRot+yOCdCO7u4hX3pWft6kWBBcqh0UA==}
-    dependencies:
-      brace-expansion: 1.1.11
-    dev: false
-
   /minimatch/3.1.2:
     resolution: {integrity: sha512-J7p63hRiAjw1NDEww1W7i37+ByIrOWO5XQQAzZ3VOcL0PNybwpfmV/N05zFAzwQ9USyEcX6t3UO+K5aqBQOIHw==}
     dependencies:
@@ -7158,12 +7163,6 @@ packages:
     engines: {node: '>=8'}
     dependencies:
       path-key: 3.1.1
-
-  /nth-check/1.0.2:
-    resolution: {integrity: sha512-WeBOdju8SnzPN5vTUJYxYUxLeXpCaVP5i5e0LF8fg7WORF2Wd7wFX/pk0tYZk7s8T+J7VLy0Da6J1+wCT0AtHg==}
-    dependencies:
-      boolbase: 1.0.0
-    dev: false
 
   /nth-check/2.1.1:
     resolution: {integrity: sha512-lqjrjmaOoAnWfMmBPL+XNnynZh2+swxiX3WUE0s4yEHI6m+AwrK2UZOimIRl3X/4QctVqS8AiZjFqyOGrMXb/w==}
@@ -8882,7 +8881,7 @@ packages:
     resolution: {integrity: sha512-nRCcW9Sj7NuZwa2XvH9co8NPeXUBhZP7CRKJtU+cS6PW9FpCIFoI5ib0NT1ZrbNuPoRy0ylyCaUL8Gih4LSyFg==}
     engines: {node: '>=0.10.0'}
     dependencies:
-      minimatch: 3.0.4
+      minimatch: 5.1.0
     dev: false
 
   /redent/3.0.0:

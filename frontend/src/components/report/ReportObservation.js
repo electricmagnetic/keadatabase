@@ -196,9 +196,9 @@ const ReportObservation = () => {
         >
           {props => (
             <Form>
+              <ContributorFieldset {...props} options={options} />
               <ObservationDetailsFieldset {...props} options={options} />
               <ObservationBirdsFieldset {...props} options={options} />
-              <ContributorFieldset {...props} options={options} />
               <FurtherInformationFieldset {...props} options={options} />
               <SubmitFieldset
                 {...props}

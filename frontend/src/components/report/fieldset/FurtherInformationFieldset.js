@@ -7,10 +7,7 @@ import { RenderField } from '../../helpers/RenderField';
 const FurtherInformationFieldset = ({ options }) => {
   return (
     <fieldset>
-      <legend>4. Further Information (Optional)</legend>
-      <p>
-        <em>All of these fields are optional</em>
-      </p>
+      <legend>4. Comments (optional)</legend>
 
       <Field
         component={RenderField}
@@ -19,38 +16,6 @@ const FurtherInformationFieldset = ({ options }) => {
         type="textarea"
         placeholder="Any comments?"
       />
-
-      <div className="row">
-        <div className="col-md-4">
-          <Field
-            component={RenderField}
-            options={options.contributor.children.activity}
-            name="contributor.activity"
-            type="choice"
-            label="I'm a..."
-          />
-        </div>
-
-        <div className="col-md-4">
-          <Field
-            component={RenderField}
-            options={options.contributor.children.heard}
-            name="contributor.heard"
-            type="choice"
-            label="How did you hear about this?"
-          />
-        </div>
-
-        <div className="col-md-4">
-          <Field
-            component={RenderField}
-            options={options.contributor.children.phone}
-            name="contributor.phone"
-            type="text"
-            placeholder="Phone number"
-          />
-        </div>
-      </div>
 
       <div className="form-check">
         <Field

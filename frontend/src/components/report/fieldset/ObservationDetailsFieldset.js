@@ -107,7 +107,7 @@ const CoordinateConverter = ({ setFieldValue }) => {
 const ObservationDetailsFieldset = ({ options, values, setFieldValue }) => {
   return (
     <fieldset>
-      <legend>1. Observation Details</legend>
+      <legend>2. Observation Details</legend>
 
       <div className="form-group">
         <div className="row">

@@ -7,7 +7,7 @@ import { RenderField } from '../../helpers/RenderField';
 const ContributorFieldset = ({ options }) => {
   return (
     <fieldset>
-      <legend>3. About You</legend>
+      <legend>1. About You</legend>
 
       <p>We need to know who is reporting the observation.</p>
 

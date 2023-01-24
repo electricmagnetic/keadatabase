@@ -88,7 +88,7 @@ const RenderBirds = ({ arrayHelpers, options }) => {
 const ObservationBirdsFieldset = ({ options, values }) => {
   return (
     <fieldset>
-      <legend>2. Birds</legend>
+      <legend>3. Birds</legend>
       <p>
         If you heard birds, or only saw them in the distance (e.g. flying overhead) choose 'Sighted
         (distant)' or 'Heard'. Otherwise pick 'Sighted'.

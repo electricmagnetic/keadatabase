@@ -18,7 +18,7 @@ import NoMatchPage from './views/nomatch';
 const AboutPage = lazy(() => import('./views/about'));
 const TermsPage = lazy(() => import('./views/terms'));
 const LicencePage = lazy(() => import('./views/licence'));
-const SponsorPage = lazy(() => import('./views/sponsor'));
+const DonationsPage = lazy(() => import('./views/donations'));
 const HelpPage = lazy(() => import('./views/help'));
 
 const BirdsPage = lazy(() => import('./views/birds/index'));
@@ -61,7 +61,7 @@ class App extends Component {
                       <Route exact path="/about" component={AboutPage} />
                       <Route exact path="/terms" component={TermsPage} />
                       <Route exact path="/licence" component={LicencePage} />
-                      <Route exact path="/sponsor" component={SponsorPage} />
+                      <Route exact path="/donations" component={DonationsPage} />
                       <Route exact path="/help" component={HelpPage} />
 
                       <Route exact path="/birds" component={BirdsPage} />
@@ -86,6 +86,7 @@ class App extends Component {
                       <Redirect exact from="/sightings" to="/observations" />
                       <Redirect exact from="/sightings/:id" to="/observations/:id" />
                       <Redirect exact from="/report/sighting" to="/report" />
+                      <Redirect exact from="/sponsor" to="/donations" />
 
                       <Route component={NoMatchPage} />
                     </Switch>

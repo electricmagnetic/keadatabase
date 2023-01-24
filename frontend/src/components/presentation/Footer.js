@@ -32,7 +32,7 @@ const Footer = props => {
                     </NavLink>
                   </li>
                   <li>
-                    <NavLink to="/sponsor">Sponsor Kea</NavLink>
+                    <NavLink to="/donations">Donations</NavLink>
                   </li>
                   <li>
                     <NavLink to="/help">Help</NavLink>

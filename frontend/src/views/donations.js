@@ -4,13 +4,13 @@ import { Helmet } from 'react-helmet';
 import Banner from '../components/presentation/Banner';
 import Page from '../components/presentation/Page';
 
-const SponsorPage = props => {
+const DonationsPage = props => {
   return (
-    <div className="SponsorPage">
-      <Helmet title="Sponsor A Kea" />
+    <div className="DonationsPage">
+      <Helmet title="Donations" />
       <section className="mb-4">
         <Banner size="small">
-          <h1>Sponsor A Kea</h1>
+          <h1>Donations</h1>
         </Banner>
       </section>
       <section className="mb-4">
@@ -22,4 +22,4 @@ const SponsorPage = props => {
   );
 };
 
-export default SponsorPage;
+export default DonationsPage;

@@ -37,8 +37,7 @@ const BannerButtons = ({ className }) => {
           <div className="col-sm-6 col-md-3 my-2 banner-button">
             <Link to="/sponsor" className="btn btn-lg btn-transparent">
               <i className="fa-fw fas fa-hands-helping mr-1" />
-              Sponsor
-              <span className="d-md-none d-lg-inline"> a Kea</span>
+              Donations
             </Link>
           </div>
         </div>

@@ -54,7 +54,7 @@ const validationSchema = yup.object().shape({
   number: yup.number().required(requiredMessage),
   contributor: yup.object().shape({
     name: yup.string().required(requiredMessage),
-    email: yup.string().email('Invalid email address.').required(requiredMessage),
+    email: yup.string().trim().email('Invalid email address.').required(requiredMessage),
   }),
 });
 

@@ -39,7 +39,7 @@ if env.bool('IS_PRODUCTION', False):
 
     ALLOWED_HOSTS = [
         '.keadatabase.nz',
-        '.electricmagnetic.io',
+        '.electricmagnetic.net',
     ]
 
 # Specify geo libraries (if necessary)
@@ -246,7 +246,7 @@ if not DEBUG:
 
     CORS_ALLOWED_ORIGIN_REGEXES = (
         r'^https?://\w*\.?keadatabase.nz$',
-        r'^https?://\w*\.?electricmagnetic.io$',
+        r'^https?://\w*\.?electricmagnetic.net$',
         r'^https?://\w*\.?maps.net.nz$',
         r'^https?://localhost:3000$',
         r'^https?://localhost:8000$',

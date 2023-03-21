@@ -16,6 +16,6 @@ djangorestframework-csv==2.1.0
 django-leaflet==0.27.1
 django-storage-swift==1.2.19
 environs[django]==7.3.0
-sentry-sdk==0.19.5
+sentry-sdk==1.14.0
 yapf==0.30.0
 djangorestframework-simplejwt==4.8.0

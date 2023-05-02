@@ -1,0 +1,21 @@
+{
+"type": "FeatureCollection",
+"name": "kea-zones_2023-05-02",
+"features": [
+{ "type": "Feature", "id": "mt-hutt", "properties": { "name": "Mt Hutt Ski Area" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ 171.5023, -43.5222 ], [ 171.5765, -43.5232 ], [ 171.5778, -43.4692 ], [ 171.5036, -43.4682 ], [ 171.5023, -43.5222 ] ] ] } },
+{ "type": "Feature", "id": "remarkables", "properties": { "name": "The Remarkables Ski Area" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ 168.7743, -45.0796 ], [ 168.8504, -45.0824 ], [ 168.8543, -45.0285 ], [ 168.7783, -45.0257 ], [ 168.7743, -45.0796 ] ] ] } },
+{ "type": "Feature", "id": "rainbow", "properties": { "name": "Rainbow Ski Area" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ 172.8253, -41.9016 ], [ 172.8977, -41.9016 ], [ 172.8978, -41.8476 ], [ 172.8255, -41.8475 ], [ 172.8253, -41.9016 ] ] ] } },
+{ "type": "Feature", "id": "ben-lomond", "properties": { "name": "Ben Lomond" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ 168.575, -45.033 ], [ 168.6509, -45.0359 ], [ 168.655, -44.982 ], [ 168.5791, -44.9791 ], [ 168.575, -45.033 ] ] ] } },
+{ "type": "Feature", "id": "mt-olympus", "properties": { "name": "Mount Olympus" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ 171.5691, -43.2199 ], [ 171.643, -43.2208 ], [ 171.6442, -43.1668 ], [ 171.5704, -43.1659 ], [ 171.5691, -43.2199 ] ] ] } },
+{ "type": "Feature", "id": "temple-basin", "properties": { "name": "Temple Basin Ski Area" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ 171.5386, -42.9354 ], [ 171.6121, -42.9363 ], [ 171.6133, -42.8823 ], [ 171.5398, -42.8814 ], [ 171.5386, -42.9354 ] ] ] } },
+{ "type": "Feature", "id": "broken-river", "properties": { "name": "Broken River Ski Area" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ 171.6463, -43.1522 ], [ 171.7201, -43.153 ], [ 171.7212, -43.099 ], [ 171.6475, -43.0982 ], [ 171.6463, -43.1522 ] ] ] } },
+{ "type": "Feature", "id": "craigieburn-valley", "properties": { "name": "Craigieburn Valley Ski Area" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ 171.67, -43.1421 ], [ 171.7437, -43.1429 ], [ 171.7448, -43.0889 ], [ 171.6711, -43.0881 ], [ 171.67, -43.1421 ] ] ] } },
+{ "type": "Feature", "id": "porters", "properties": { "name": "Porters Alpine Resort" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ 171.6053, -43.3 ], [ 171.6793, -43.3008 ], [ 171.6804, -43.2468 ], [ 171.6066, -43.2459 ], [ 171.6053, -43.3 ] ] ] } },
+{ "type": "Feature", "id": "mt-cheeseman", "properties": { "name": "Mt Cheeseman Ski Area" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ 171.6316, -43.1837 ], [ 171.7054, -43.1845 ], [ 171.7065, -43.1305 ], [ 171.6328, -43.1297 ], [ 171.6316, -43.1837 ] ] ] } },
+{ "type": "Feature", "id": "treble-cone", "properties": { "name": "Treble Cone Ski Area" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ 168.8564, -44.6591 ], [ 168.9319, -44.6618 ], [ 168.9356, -44.6079 ], [ 168.8602, -44.6052 ], [ 168.8564, -44.6591 ] ] ] } },
+{ "type": "Feature", "id": "routeburn-track", "properties": { "name": "Routeburn Track" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ 168.0773, -44.8504 ], [ 168.2944, -44.8596 ], [ 168.3086, -44.6849 ], [ 168.0922, -44.6758 ], [ 168.0773, -44.8504 ] ] ] } },
+{ "type": "Feature", "id": "matukituki-valley", "properties": { "name": "Matukituki Valley" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ 168.6147, -44.6501 ], [ 169.0607, -44.6664 ], [ 169.0845, -44.313 ], [ 168.6411, -44.2969 ], [ 168.6147, -44.6501 ] ] ] } },
+{ "type": "Feature", "id": "milford-track", "properties": { "name": "Milford Track" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ 167.699, -44.9485 ], [ 167.9657, -44.9606 ], [ 167.9917, -44.6608 ], [ 167.7264, -44.6488 ], [ 167.699, -44.9485 ] ] ] } },
+{ "type": "Feature", "id": "christchurch", "properties": { "name": "Greater Christchurch" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ 172.3346, -43.3430 ], [ 172.3346, -43.9321 ], [ 173.1725, -43.9321 ], [ 173.1725, -43.3430 ], [ 172.3346, -43.3430 ] ] ] } }
+]
+}

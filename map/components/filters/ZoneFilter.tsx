@@ -2,7 +2,7 @@ import { FC } from "react";
 import { useRouter } from "next/router";
 import { Formik, Field, Form, FormikHelpers } from "formik";
 
-import keaZones from "public/geo/kea-zones_2022-10-31.json";
+import keaZones from "public/geo/kea-zones_2023-05-02.json";
 
 interface ZoneFilter {
   zoneId?: string;

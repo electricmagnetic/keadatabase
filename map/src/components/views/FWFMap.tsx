@@ -3,17 +3,17 @@ import { LayersControl, GeoJSON } from "react-leaflet";
 import { Feature, FeatureCollection, Point } from "geojson";
 import { Layer } from "leaflet";
 
-import BaseMap from "components/map/BaseMap";
-import ObservationsLayer from "components/map/ObservationsLayer";
+import BaseMap from "@/components/map/BaseMap";
+import ObservationsLayer from "@/components/map/ObservationsLayer";
 import {
   SetBoundsToLayers,
   LayersLoader,
   convertBboxToLeafletBounds,
-} from "components/map/utilities";
+} from "@/components/map/utilities";
 import { bbox } from "@turf/turf";
-import Menu from "components/Menu";
-import { ShowMenuContext } from "components/context";
-import { LayerStatuses } from "components/map/types";
+import Menu from "@/components/Menu";
+import { ShowMenuContext } from "@/components/context";
+import { LayerStatuses } from "@/components/map/types";
 
 const fwfBlocks: FeatureCollection = require("public/geo/fwf-blocks_2022-10-31.json");
 const fwfBlocksBbox = bbox(fwfBlocks);

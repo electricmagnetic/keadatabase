@@ -4,10 +4,10 @@ import { SWRConfig } from "swr";
 import { useRouter } from "next/router";
 import axios from "axios";
 
-import { ShowMenuContext } from "components/context";
+import { ShowMenuContext } from "@/components/context";
 
 import "bootstrap/dist/css/bootstrap.min.css";
-import "styles/base.css";
+import "@/styles/base.css";
 
 const SWR_CONFIG = {
   dedupingInterval: 24 * 60 * 60 * 1000,

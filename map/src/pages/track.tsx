@@ -1,9 +1,9 @@
 import dynamic from "next/dynamic";
 import Head from "next/head";
 
-import { Loader } from "components/utilities";
+import { Loader } from "@/components/utilities";
 
-const TrackMap = dynamic(() => import("components/views/TrackMap"), {
+const TrackMap = dynamic(() => import("@/components/views/TrackMap"), {
   ssr: false,
   loading: () => <Loader />,
 });

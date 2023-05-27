@@ -1,9 +1,9 @@
 import dynamic from "next/dynamic";
 import Head from "next/head";
 
-import { Loader } from "components/utilities";
+import { Loader } from "@/components/utilities";
 
-const DefaultMap = dynamic(() => import("components/views/DefaultMap"), {
+const DefaultMap = dynamic(() => import("@/components/views/DefaultMap"), {
   ssr: false,
   loading: () => <Loader />,
 });

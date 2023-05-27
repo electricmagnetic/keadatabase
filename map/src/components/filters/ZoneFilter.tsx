@@ -1,8 +1,9 @@
 import { FC } from "react";
 import { useRouter } from "next/router";
+import { FeatureCollection } from "geojson";
 import { Formik, Field, Form, FormikHelpers } from "formik";
 
-import keaZones from "public/geo/kea-zones_2023-05-02.json";
+const keaZones: FeatureCollection = require("public/geo/kea-zones_2023-05-02.json");
 
 interface ZoneFilter {
   zoneId?: string;
@@ -40,7 +41,7 @@ export const ZoneFilter: FC = () => {
               <option value=""></option>
               {keaZones.features.map((feature) => (
                 <option value={feature.id} key={feature.id}>
-                  {feature.properties.name}
+                  {feature.properties?.name}
                 </option>
               ))}
             </Field>

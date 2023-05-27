@@ -3,15 +3,15 @@ import { useRouter } from "next/router";
 import { stringify } from "qs";
 import { LayersControl } from "react-leaflet";
 
-import BaseMap from "components/map/BaseMap";
-import ObservationsLayer from "components/map/ObservationsLayer";
-import { BirdFilter } from "components/filters/BirdFilter";
-import { Filters } from "components/filters/filters";
-import { SetBoundsToLayers, LayersLoader } from "components/map/utilities";
-import Menu from "components/Menu";
-import { ShowMenuContext } from "components/context";
-import BirdPathLayer from "components/map/BirdPathLayer";
-import { LayerStatuses } from "components/map/types";
+import BaseMap from "@/components/map/BaseMap";
+import ObservationsLayer from "@/components/map/ObservationsLayer";
+import { BirdFilter } from "@/components/filters/BirdFilter";
+import { Filters } from "@/components/filters/filters";
+import { SetBoundsToLayers, LayersLoader } from "@/components/map/utilities";
+import Menu from "@/components/Menu";
+import { ShowMenuContext } from "@/components/context";
+import BirdPathLayer from "@/components/map/BirdPathLayer";
+import { LayerStatuses } from "@/components/map/types";
 
 export default function TrackMap() {
   const showMenu = useContext(ShowMenuContext);

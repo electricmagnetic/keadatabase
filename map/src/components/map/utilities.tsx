@@ -3,7 +3,7 @@ import { latLng, latLngBounds, LatLngBoundsExpression } from "leaflet";
 import { useMap } from "react-leaflet";
 import { featureCollection, bbox, BBox } from "@turf/turf";
 
-import { Loader } from "components/utilities";
+import { Loader } from "@/components/utilities";
 import { LayerStatuses } from "./types";
 
 const CONTROL_STYLE: CSSProperties = {

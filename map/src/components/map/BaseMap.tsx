@@ -2,7 +2,7 @@ import { FC, PropsWithChildren, useContext } from "react";
 import { LatLngBounds } from "leaflet";
 import { MapContainer, TileLayer } from "react-leaflet";
 
-import { ShowMenuContext } from "components/context";
+import { ShowMenuContext } from "@/components/context";
 import { DEFAULT_BOUNDS, MAX_BOUNDS } from "./constants";
 
 import "leaflet/dist/leaflet.css";

@@ -34,7 +34,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: "pnpm"
           cache-dependency-path: survey/pnpm-lock.yaml
-      - run: npx prettier --check src/ public/
       - run: pnpm install
+      - run: pnpm dlx prettier@latest --check src/ public/
       - run: pnpm run build
       - run: pnpm test

@@ -23,7 +23,8 @@ const Statistic = ({ valueKey, label, endpoint }) => {
   } else return null;
 };
 
-const Statistics = ({ statistics, className }) => <div className={['Statistics', className].join(' ')}>
+const Statistics = ({ statistics, className }) => (
+  <div className={['Statistics', className].join(' ')}>
     <div className="row">
       {statistics.map((statistic) => (
         <div className="col-md" key={statistic.endpoint}>
@@ -31,6 +32,7 @@ const Statistics = ({ statistics, className }) => <div className={['Statistics',
         </div>
       ))}
     </div>
-  </div>;
+  </div>
+);
 
 export default Statistics;

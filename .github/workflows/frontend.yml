@@ -1,7 +1,4 @@
-# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
-# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
-
-name: Front-end Tests
+name: frontend
 
 defaults:
   run:
@@ -11,7 +8,7 @@ on:
   push:
     branches: [main]
     paths:
-      - 'frontend/**'
+      - "frontend/**"
   pull_request:
     branches: [main]
   workflow_dispatch:
@@ -35,7 +32,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'pnpm'
+          cache: "pnpm"
           cache-dependency-path: frontend/pnpm-lock.yaml
       - run: npx prettier --check src/ public/
       - run: pnpm install

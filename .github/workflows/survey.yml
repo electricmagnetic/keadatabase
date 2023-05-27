@@ -1,13 +1,17 @@
-# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
-# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+name: survey
 
-name: Tests
+defaults:
+  run:
+    working-directory: survey
 
 on:
   push:
     branches: [main]
+    paths:
+      - "survey/**"
   pull_request:
     branches: [main]
+  workflow_dispatch:
 
 jobs:
   build:
@@ -22,12 +26,15 @@ jobs:
       - uses: pnpm/action-setup@v2.2.4
         with:
           version: 7
+          run_install: |
+            - cwd: survey
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'pnpm'
+          cache: "pnpm"
+          cache-dependency-path: survey/pnpm-lock.yaml
       - run: npx prettier --check src/ public/
       - run: pnpm install
-      - run: pnpm run build --if-present
+      - run: pnpm run build
       - run: pnpm test

@@ -11,7 +11,7 @@ on:
   push:
     branches: [main]
     paths:
-      - 'map/**'
+      - "map/**"
   pull_request:
     branches: [main]
   workflow_dispatch:
@@ -35,7 +35,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'pnpm'
+          cache: "pnpm"
           cache-dependency-path: map/pnpm-lock.yaml
       - run: npx prettier --check components/ public/ pages/ styles/
       - run: pnpm install

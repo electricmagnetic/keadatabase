@@ -5,12 +5,15 @@ Canonical monorepo for the [Kea Database](https://keadatabase.nz).
 
 Structure
 ---------
-* `about/` Simple summary site
-* `backend/` Django-based back-end
-* `frontend/` React-based front-end
-* `map/` Mapping utility site (for embedding, specific queries etc)
-* `scripts/` Helper scripts in R for data management
 
+* Front-ends
+  * `about/` Simple summary site
+  * `frontend/` Main citizen science front-end
+  * `map/` Mapping utility site (for embedding, specific queries etc)
+  * `scripts/` Helper scripts in R for data management
+  * `survey/` Survey tool for population and distribution studies
+* Back-end
+  * `backend/` Django-based back-end
 
 Getting started
 ---------------
@@ -40,7 +43,7 @@ docker-compose run --rm backend python3 src/manage.py createsuperuser
 Licence
 -------
 Kea Database  
-Copyright (C) 2022 Electric Magnetic Limited  
+Copyright (C) 2023 Electric Magnetic Limited  
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as published by

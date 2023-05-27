@@ -1,5 +1,5 @@
-import { Component } from 'react';
-import { withRouter } from 'react-router-dom';
+import { Component } from "react";
+import { withRouter } from "react-router-dom";
 
 class ScrollToTop extends Component {
   /* Scrolls to top of page when location changes to mimic typical web behaviour */

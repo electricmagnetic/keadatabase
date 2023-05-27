@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
-import { Circle } from 'react-leaflet';
-import { latLng } from 'leaflet';
+import React, { Component } from "react";
+import { Circle } from "react-leaflet";
+import { latLng } from "leaflet";
 
-import BaseMap from '../map/BaseMap';
-import { DEFAULT_BOUNDS, POINT_ZOOM } from '../map/defaults';
+import BaseMap from "../map/BaseMap";
+import { DEFAULT_BOUNDS, POINT_ZOOM } from "../map/defaults";
 
-import './MapSelector.scss';
+import "./MapSelector.scss";
 
 /**
   Enables the selection of longitude and latitude via a map interface.
@@ -20,16 +20,17 @@ class MapSelector extends Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
-  handleClick = event => {
-    this.props.setFieldValue('longitude', event.latlng.lng.toFixed(6));
-    this.props.setFieldValue('latitude', event.latlng.lat.toFixed(6));
+  handleClick = (event) => {
+    this.props.setFieldValue("longitude", event.latlng.lng.toFixed(6));
+    this.props.setFieldValue("latitude", event.latlng.lat.toFixed(6));
   };
 
   render() {
     const { latitude, longitude } = this.props.values;
     const pointSpecified = !isNaN(latitude) && !isNaN(longitude);
     const latlng =
-      pointSpecified && latLng(this.props.values.latitude, this.props.values.longitude);
+      pointSpecified &&
+      latLng(this.props.values.latitude, this.props.values.longitude);
     const isWithinBounds = latlng && DEFAULT_BOUNDS.contains(latlng);
 
     return (
@@ -41,7 +42,11 @@ class MapSelector extends Component {
           zoom={isWithinBounds && POINT_ZOOM}
         >
           {isWithinBounds && (
-            <Circle center={latlng} radius={parseInt(this.props.values.precision)} color="orange" />
+            <Circle
+              center={latlng}
+              radius={parseInt(this.props.values.precision)}
+              color="orange"
+            />
           )}
         </BaseMap>
       </div>

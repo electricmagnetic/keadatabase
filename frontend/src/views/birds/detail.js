@@ -1,6 +1,6 @@
-import React from 'react';
+import React from "react";
 
-import Bird from '../../components/birds/Bird';
+import Bird from "../../components/birds/Bird";
 
 const BirdDetailPage = ({ match }) => {
   const slug = match.params.slug;

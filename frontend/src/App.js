@@ -1,34 +1,36 @@
-import React, { Component, Suspense, lazy } from 'react';
-import { Route, Switch, Redirect, Router } from 'react-router-dom';
-import { QueryClientProvider, QueryClient } from 'react-query';
-import { QueryParamProvider } from 'use-query-params';
+import React, { Component, Suspense, lazy } from "react";
+import { Route, Switch, Redirect, Router } from "react-router-dom";
+import { QueryClientProvider, QueryClient } from "react-query";
+import { QueryParamProvider } from "use-query-params";
 
-import initGa from './analytics';
-import history from './history';
+import initGa from "./analytics";
+import history from "./history";
 
-import { getQueryFn } from './components/api';
-import Loader from './components/helpers/Loader';
-import ScrollToTop from './components/helpers/ScrollToTop';
-import Header from './components/presentation/Header';
-import Footer from './components/presentation/Footer';
+import { getQueryFn } from "./components/api";
+import Loader from "./components/helpers/Loader";
+import ScrollToTop from "./components/helpers/ScrollToTop";
+import Header from "./components/presentation/Header";
+import Footer from "./components/presentation/Footer";
 
-import HomePage from './views/index';
-import NoMatchPage from './views/nomatch';
+import HomePage from "./views/index";
+import NoMatchPage from "./views/nomatch";
 
-const AboutPage = lazy(() => import('./views/about'));
-const TermsPage = lazy(() => import('./views/terms'));
-const LicencePage = lazy(() => import('./views/licence'));
-const DonationsPage = lazy(() => import('./views/donations'));
-const HelpPage = lazy(() => import('./views/help'));
+const AboutPage = lazy(() => import("./views/about"));
+const TermsPage = lazy(() => import("./views/terms"));
+const LicencePage = lazy(() => import("./views/licence"));
+const DonationsPage = lazy(() => import("./views/donations"));
+const HelpPage = lazy(() => import("./views/help"));
 
-const BirdsPage = lazy(() => import('./views/birds/index'));
-const BirdDetailPage = lazy(() => import('./views/birds/detail'));
+const BirdsPage = lazy(() => import("./views/birds/index"));
+const BirdDetailPage = lazy(() => import("./views/birds/detail"));
 
-const ObservationsPage = lazy(() => import('./views/observations/index'));
-const ObservationDetailPage = lazy(() => import('./views/observations/detail'));
+const ObservationsPage = lazy(() => import("./views/observations/index"));
+const ObservationDetailPage = lazy(() => import("./views/observations/detail"));
 
-const ReportObservationPage = lazy(() => import('./views/report/index'));
-const ReportObservationSuccessPage = lazy(() => import('./views/report/success'));
+const ReportObservationPage = lazy(() => import("./views/report/index"));
+const ReportObservationSuccessPage = lazy(() =>
+  import("./views/report/success")
+);
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -61,16 +63,36 @@ class App extends Component {
                       <Route exact path="/about" component={AboutPage} />
                       <Route exact path="/terms" component={TermsPage} />
                       <Route exact path="/licence" component={LicencePage} />
-                      <Route exact path="/donations" component={DonationsPage} />
+                      <Route
+                        exact
+                        path="/donations"
+                        component={DonationsPage}
+                      />
                       <Route exact path="/help" component={HelpPage} />
 
                       <Route exact path="/birds" component={BirdsPage} />
-                      <Route exact path="/birds/:slug" component={BirdDetailPage} />
+                      <Route
+                        exact
+                        path="/birds/:slug"
+                        component={BirdDetailPage}
+                      />
 
-                      <Route exact path="/observations" component={ObservationsPage} />
-                      <Route exact path="/observations/:id" component={ObservationDetailPage} />
+                      <Route
+                        exact
+                        path="/observations"
+                        component={ObservationsPage}
+                      />
+                      <Route
+                        exact
+                        path="/observations/:id"
+                        component={ObservationDetailPage}
+                      />
 
-                      <Route exact path="/report" component={ReportObservationPage} />
+                      <Route
+                        exact
+                        path="/report"
+                        component={ReportObservationPage}
+                      />
                       <Route
                         exact
                         path="/report/success"
@@ -84,7 +106,11 @@ class App extends Component {
 
                       {/* Deprecated but retained to prevent broken URLs */}
                       <Redirect exact from="/sightings" to="/observations" />
-                      <Redirect exact from="/sightings/:id" to="/observations/:id" />
+                      <Redirect
+                        exact
+                        from="/sightings/:id"
+                        to="/observations/:id"
+                      />
                       <Redirect exact from="/report/sighting" to="/report" />
                       <Redirect exact from="/sponsor" to="/donations" />
 

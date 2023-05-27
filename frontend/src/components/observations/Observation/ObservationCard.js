@@ -1,11 +1,11 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import React from "react";
+import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
-import FormatDateTime from '../../helpers/FormatDateTime';
-import generateSummary from './helpers/generateSummary';
+import FormatDateTime from "../../helpers/FormatDateTime";
+import generateSummary from "./helpers/generateSummary";
 
-import './ObservationCard.scss';
+import "./ObservationCard.scss";
 
 const ListItem = ({ icon, children, className }) => (
   <li className={`list-group-item ${className}`}>
@@ -23,11 +23,11 @@ const ListItem = ({ icon, children, className }) => (
  */
 const ObservationCard = ({ observation, ...others }) => {
   const { className } = others;
-  const classNames = ['ObservationCard'];
+  const classNames = ["ObservationCard"];
   if (className) classNames.push(className);
 
   return (
-    <div className={classNames.join(' ')}>
+    <div className={classNames.join(" ")}>
       <div className="card card-dull">
         <h2 className="sr-only">Observation {observation.id}</h2>
         <ul className="list-group list-group-flush">
@@ -41,7 +41,9 @@ const ObservationCard = ({ observation, ...others }) => {
               {observation.date_sighted} {observation.time_sighted}
             </FormatDateTime>
           </ListItem>
-          <ListItem icon="fa-feather-alt">{generateSummary(observation)}</ListItem>
+          <ListItem icon="fa-feather-alt">
+            {generateSummary(observation)}
+          </ListItem>
           <ListItem icon="fa-user">{observation.contributor}</ListItem>
           <ListItem icon="fa-info-circle" className="bg-white">
             <Link to={`/observations/${observation.id}`}>

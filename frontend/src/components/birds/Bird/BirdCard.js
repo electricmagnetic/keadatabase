@@ -1,30 +1,30 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import React from "react";
+import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
-import generateSummary from './helpers/generateSummary';
-import getPicture from './helpers/getPicture';
-import birdLink from './helpers/birdLink';
-import PrettyBandCombo from './helpers/PrettyBandCombo';
+import generateSummary from "./helpers/generateSummary";
+import getPicture from "./helpers/getPicture";
+import birdLink from "./helpers/birdLink";
+import PrettyBandCombo from "./helpers/PrettyBandCombo";
 
-import './BirdCard.scss';
+import "./BirdCard.scss";
 
 /**
   Presents a nicely formatted card for a given bird.
  */
 const BirdCard = ({ bird, ...others }) => {
   const { className } = others;
-  const classNames = ['BirdCard'];
+  const classNames = ["BirdCard"];
   if (className) classNames.push(className);
 
   return (
-    <div className={classNames.join(' ')}>
+    <div className={classNames.join(" ")}>
       <div className="card card-dull">
         <Link to={birdLink(bird)}>
           <img
             src={getPicture(bird)}
             alt={bird.name}
-            className={`card-img-top ${bird.status === 'Dead' && 'isDead'}`}
+            className={`card-img-top ${bird.status === "Dead" && "isDead"}`}
           />
         </Link>
         <ul className="list-group list-group-flush">

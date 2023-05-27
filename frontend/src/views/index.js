@@ -1,17 +1,17 @@
-import React from 'react';
-import { Helmet } from 'react-helmet';
+import React from "react";
+import { Helmet } from "react-helmet";
 
-import Page from '../components/presentation/Page';
-import Posts from '../components/presentation/Posts';
-import Banner from '../components/presentation/Banner';
-import BannerButtons from '../components/presentation/BannerButtons';
-import BirdObservations from '../components/observations/BirdObservations';
-import Birds from '../components/birds/Birds';
-import Sponsors from '../components/presentation/Sponsors';
+import Page from "../components/presentation/Page";
+import Posts from "../components/presentation/Posts";
+import Banner from "../components/presentation/Banner";
+import BannerButtons from "../components/presentation/BannerButtons";
+import BirdObservations from "../components/observations/BirdObservations";
+import Birds from "../components/birds/Birds";
+import Sponsors from "../components/presentation/Sponsors";
 
-import banner from '../assets/img/banners/home.jpg';
+import banner from "../assets/img/banners/home.jpg";
 
-const HomePage = props => {
+const HomePage = (props) => {
   return (
     <div className="HomePage">
       <Helmet title="Kea Database" />

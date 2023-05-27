@@ -1,11 +1,11 @@
-import React from 'react';
-import { useQuery } from 'react-query';
-import Moment from 'react-moment';
+import React from "react";
+import { useQuery } from "react-query";
+import Moment from "react-moment";
 
-import Loader from '../helpers/Loader';
-import Error from '../helpers/Error';
+import Loader from "../helpers/Loader";
+import Error from "../helpers/Error";
 
-import './Posts.scss';
+import "./Posts.scss";
 
 const API_PATH = `posts/?per_page=1`;
 
@@ -13,7 +13,10 @@ const Post = ({ post }) => {
   return (
     <li className="Post mb-3">
       <a href={post.link}>
-        <h3 className="h5 mb-2" dangerouslySetInnerHTML={{ __html: post.title.rendered }} />
+        <h3
+          className="h5 mb-2"
+          dangerouslySetInnerHTML={{ __html: post.title.rendered }}
+        />
       </a>
       <h4 className="h6">
         <Moment format="dddd DD MMMM YYYY [at] h:mm a">{post.date}</Moment>
@@ -23,7 +26,7 @@ const Post = ({ post }) => {
   );
 };
 
-const Posts = props => {
+const Posts = (props) => {
   const { isLoading, data, error } = useQuery([
     `${API_PATH}`,
     {},
@@ -36,7 +39,7 @@ const Posts = props => {
     return (
       <div className="Posts">
         <ul className="list-unstyled">
-          {data.results.map(post => (
+          {data.results.map((post) => (
             <Post post={post} key={post.id} />
           ))}
         </ul>

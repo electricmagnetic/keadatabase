@@ -1,11 +1,11 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { useQuery } from 'react-query';
+import React from "react";
+import PropTypes from "prop-types";
+import { useQuery } from "react-query";
 
-import Bird from './Bird';
+import Bird from "./Bird";
 
-import Loader from '../helpers/Loader';
-import Error from '../helpers/Error';
+import Loader from "../helpers/Loader";
+import Error from "../helpers/Error";
 
 const API_PATH = `birds`;
 
@@ -22,7 +22,9 @@ const Birds = ({ queryString, ...others }) => {
   } else if (data) {
     const birds = data.results.results;
 
-    return birds.map(bird => <Bird bird={bird} key={bird.slug} {...others} />);
+    return birds.map((bird) => (
+      <Bird bird={bird} key={bird.slug} {...others} />
+    ));
   } else return null;
 };
 
@@ -32,8 +34,8 @@ Birds.propTypes = {
 };
 
 Birds.defaultProps = {
-  type: 'card',
-  queryString: '',
+  type: "card",
+  queryString: "",
 };
 
 export default Birds;

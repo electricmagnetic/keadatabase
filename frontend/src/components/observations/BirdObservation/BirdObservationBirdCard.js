@@ -1,8 +1,8 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
-import Bird from '../../birds/Bird';
-import getPicture from '../../birds/Bird/helpers/getPicture';
+import Bird from "../../birds/Bird";
+import getPicture from "../../birds/Bird/helpers/getPicture";
 
 /**
   If bird is unknown/unmoderated, present information that is currently known.
@@ -24,7 +24,7 @@ const UnknownBirdCard = ({ birdObservation }) => (
               <>{birdObservation.band_combo}</>
             ) : (
               <>
-                {birdObservation.get_life_stage_guess_display}{' '}
+                {birdObservation.get_life_stage_guess_display}{" "}
                 {birdObservation.get_sex_guess_display}
               </>
             )}
@@ -41,11 +41,11 @@ const UnknownBirdCard = ({ birdObservation }) => (
   */
 const BirdObservationBirdCard = ({ birdObservation, ...others }) => {
   const { className } = others;
-  const classNames = ['BirdObservationBirdCard'];
+  const classNames = ["BirdObservationBirdCard"];
   if (className) classNames.push(className);
 
   return (
-    <div className={classNames.join(' ')}>
+    <div className={classNames.join(" ")}>
       {birdObservation.bird ? (
         <Bird bird={birdObservation.bird} type="card" />
       ) : (

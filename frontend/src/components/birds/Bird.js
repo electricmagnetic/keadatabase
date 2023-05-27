@@ -1,13 +1,13 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { useQuery } from 'react-query';
+import React from "react";
+import PropTypes from "prop-types";
+import { useQuery } from "react-query";
 
-import BirdPage from './Bird/BirdPage';
-import BirdCard from './Bird/BirdCard';
-import BirdFeature from './Bird/BirdFeature';
+import BirdPage from "./Bird/BirdPage";
+import BirdCard from "./Bird/BirdCard";
+import BirdFeature from "./Bird/BirdFeature";
 
-import Loader from '../helpers/Loader';
-import Error from '../helpers/Error';
+import Loader from "../helpers/Loader";
+import Error from "../helpers/Error";
 
 const API_PATH = `birds`;
 
@@ -18,9 +18,9 @@ const RenderBird = ({ bird, type, ...others }) => {
   if (!bird) return <Error message="Invalid grid tile" />;
 
   switch (type) {
-    case 'feature':
+    case "feature":
       return <BirdFeature bird={bird} {...others} />;
-    case 'card':
+    case "card":
       return <BirdCard bird={bird} {...others} />;
     default:
       return <BirdPage bird={bird} {...others} />;
@@ -33,7 +33,9 @@ const RenderBird = ({ bird, type, ...others }) => {
   - Fetches a bird using the given id and renders as a specified type
   */
 const Bird = ({ id, bird, ...others }) => {
-  const { isLoading, data, error } = useQuery([`${API_PATH}/${id}/`], { enabled: !!id });
+  const { isLoading, data, error } = useQuery([`${API_PATH}/${id}/`], {
+    enabled: !!id,
+  });
 
   if (id) {
     if (isLoading) {
@@ -55,7 +57,7 @@ Bird.propTypes = {
 };
 
 Bird.defaultProps = {
-  type: 'page',
+  type: "page",
 };
 
 export default Bird;

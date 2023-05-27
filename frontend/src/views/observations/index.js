@@ -1,10 +1,10 @@
-import React from 'react';
-import { Helmet } from 'react-helmet';
+import React from "react";
+import { Helmet } from "react-helmet";
 
-import Observations from '../../components/observations/Observations';
-import Banner from '../../components/presentation/Banner';
+import Observations from "../../components/observations/Observations";
+import Banner from "../../components/presentation/Banner";
 
-const ObservationsPage = props => {
+const ObservationsPage = (props) => {
   return (
     <div className="ObservationsPage">
       <Helmet title="View Observations" />
@@ -20,7 +20,10 @@ const ObservationsPage = props => {
       <section className="mb-5">
         <div className="container">
           <div className="row">
-            <Observations type="card" className="col-sm-6 col-md-4 col-lg-3 mb-3" />
+            <Observations
+              type="card"
+              className="col-sm-6 col-md-4 col-lg-3 mb-3"
+            />
           </div>
         </div>
       </section>

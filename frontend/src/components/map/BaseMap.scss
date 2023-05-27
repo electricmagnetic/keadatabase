@@ -1,4 +1,4 @@
-@import 'src/assets/css/_variables.scss';
+@import "src/assets/css/_variables.scss";
 
 .map {
   width: 100%;
@@ -20,8 +20,8 @@
     label {
       margin: map-get($spacers, 1) 0;
     }
-    input[type='radio'],
-    input[type='checkbox'] {
+    input[type="radio"],
+    input[type="checkbox"] {
       margin-right: map-get($spacers, 1);
     }
   }

@@ -1,25 +1,25 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import { Field } from 'formik';
-import proj4 from 'proj4';
+import React, { useState } from "react";
+import PropTypes from "prop-types";
+import { Field } from "formik";
+import proj4 from "proj4";
 
-import epsg2193 from '../../map/epsg2193';
-import MapSelector from '../../helpers/MapSelector';
-import { RenderField } from '../../helpers/RenderField';
+import epsg2193 from "../../map/epsg2193";
+import MapSelector from "../../helpers/MapSelector";
+import { RenderField } from "../../helpers/RenderField";
 
 /** One-way converter from NZTM (NZGD2000) to WGS84 */
 const CoordinateConverter = ({ setFieldValue }) => {
-  const [easting, setEasting] = useState('');
-  const [northing, setNorthing] = useState('');
+  const [easting, setEasting] = useState("");
+  const [northing, setNorthing] = useState("");
 
-  const gridToCoordinates = grid =>
+  const gridToCoordinates = (grid) =>
     grid[0] && grid[1]
       ? proj4(
           epsg2193,
-          'EPSG:4326',
-          grid.map(value => parseFloat(value))
+          "EPSG:4326",
+          grid.map((value) => parseFloat(value))
         )
-      : ['', ''];
+      : ["", ""];
 
   return (
     <>
@@ -59,7 +59,7 @@ const CoordinateConverter = ({ setFieldValue }) => {
                       className="form-control"
                       type="number"
                       value={easting}
-                      onChange={event => setEasting(event.target.value)}
+                      onChange={(event) => setEasting(event.target.value)}
                     />
                     <div className="input-group-append">
                       <span className="input-group-text text-monospace">E</span>
@@ -77,7 +77,7 @@ const CoordinateConverter = ({ setFieldValue }) => {
                       className="form-control"
                       type="number"
                       value={northing}
-                      onChange={event => setNorthing(event.target.value)}
+                      onChange={(event) => setNorthing(event.target.value)}
                     />
                     <div className="input-group-append">
                       <span className="input-group-text text-monospace">N</span>
@@ -85,11 +85,14 @@ const CoordinateConverter = ({ setFieldValue }) => {
                   </div>
                   <button
                     className="btn btn-primary btn-sm btn-block"
-                    onClick={event => {
+                    onClick={(event) => {
                       event.preventDefault();
-                      const [longitude, latitude] = gridToCoordinates([easting, northing]);
-                      setFieldValue('latitude', latitude.toFixed(6));
-                      setFieldValue('longitude', longitude.toFixed(6));
+                      const [longitude, latitude] = gridToCoordinates([
+                        easting,
+                        northing,
+                      ]);
+                      setFieldValue("latitude", latitude.toFixed(6));
+                      setFieldValue("longitude", longitude.toFixed(6));
                     }}
                   >
                     Convert
@@ -136,15 +139,22 @@ const ObservationDetailsFieldset = ({ options, values, setFieldValue }) => {
         <div className="card-header">Location</div>
 
         <div className="card-body">
-          <p>Click/tap on the map to set a point, or alternatively enter the coordinates below.</p>
+          <p>
+            Click/tap on the map to set a point, or alternatively enter the
+            coordinates below.
+          </p>
 
           <div className="map-container mb-3">
-            <MapSelector options={options} values={values} setFieldValue={setFieldValue} />
+            <MapSelector
+              options={options}
+              values={values}
+              setFieldValue={setFieldValue}
+            />
           </div>
 
           <p>
-            Use the precision dropdown to give us an indication of how accurate the location is (in
-            metres).
+            Use the precision dropdown to give us an indication of how accurate
+            the location is (in metres).
           </p>
 
           <div className="form-row">
@@ -187,7 +197,10 @@ const ObservationDetailsFieldset = ({ options, values, setFieldValue }) => {
               />
             </div>
             <div className="offset-md-1 col-md-3">
-              <CoordinateConverter values={values} setFieldValue={setFieldValue} />
+              <CoordinateConverter
+                values={values}
+                setFieldValue={setFieldValue}
+              />
             </div>
           </div>
         </div>

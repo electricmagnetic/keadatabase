@@ -1,50 +1,60 @@
-import React, { useEffect, useRef } from 'react';
-import { Formik, Form } from 'formik';
-import moment from 'moment';
-import * as yup from 'yup';
-import { useQuery, useMutation, useQueryClient } from 'react-query';
-import { useHistory } from 'react-router-dom';
+import React, { useEffect, useRef } from "react";
+import { Formik, Form } from "formik";
+import moment from "moment";
+import * as yup from "yup";
+import { useQuery, useMutation, useQueryClient } from "react-query";
+import { useHistory } from "react-router-dom";
 
-import { optionsFn, postMutationFn } from '../api';
-import Loader from '../helpers/Loader';
-import Error from '../helpers/Error';
+import { optionsFn, postMutationFn } from "../api";
+import Loader from "../helpers/Loader";
+import Error from "../helpers/Error";
 
-import ObservationDetailsFieldset from './fieldset/ObservationDetailsFieldset';
-import ObservationBirdsFieldset from './fieldset/ObservationBirdsFieldset';
-import ContributorFieldset from './fieldset/ContributorFieldset';
-import FurtherInformationFieldset from './fieldset/FurtherInformationFieldset';
-import SubmitFieldset from './fieldset/SubmitFieldset';
+import ObservationDetailsFieldset from "./fieldset/ObservationDetailsFieldset";
+import ObservationBirdsFieldset from "./fieldset/ObservationBirdsFieldset";
+import ContributorFieldset from "./fieldset/ContributorFieldset";
+import FurtherInformationFieldset from "./fieldset/FurtherInformationFieldset";
+import SubmitFieldset from "./fieldset/SubmitFieldset";
 
 const initialValues = {
-  date_sighted: moment().format('YYYY-MM-DD'),
-  time_sighted: moment().format('HH:mm'),
-  precision: '200',
-  longitude: '',
-  latitude: '',
-  location_details: '',
-  sighting_type: '',
+  date_sighted: moment().format("YYYY-MM-DD"),
+  time_sighted: moment().format("HH:mm"),
+  precision: "200",
+  longitude: "",
+  latitude: "",
+  location_details: "",
+  sighting_type: "",
   birds: [],
   number: 1,
-  behaviour: '',
+  behaviour: "",
   contributor: {
-    name: '',
-    email: '',
-    phone: '',
-    activity: '',
-    heard: '',
+    name: "",
+    email: "",
+    phone: "",
+    activity: "",
+    heard: "",
     communications: false,
   },
-  comments: '',
+  comments: "",
 };
 
-const requiredMessage = 'This field is required.';
-const notNumber = 'This field must be a number.';
+const requiredMessage = "This field is required.";
+const notNumber = "This field must be a number.";
 const validationSchema = yup.object().shape({
   date_sighted: yup.string().required(requiredMessage),
   time_sighted: yup.string().required(requiredMessage),
   precision: yup.string().required(requiredMessage),
-  longitude: yup.number().min(-180).max(180).required(requiredMessage).typeError(notNumber),
-  latitude: yup.number().min(-90).max(90).required(requiredMessage).typeError(notNumber),
+  longitude: yup
+    .number()
+    .min(-180)
+    .max(180)
+    .required(requiredMessage)
+    .typeError(notNumber),
+  latitude: yup
+    .number()
+    .min(-90)
+    .max(90)
+    .required(requiredMessage)
+    .typeError(notNumber),
   sighting_type: yup.string().required(requiredMessage),
   birds: yup.array().of(
     yup.object().shape({
@@ -54,22 +64,26 @@ const validationSchema = yup.object().shape({
   number: yup.number().required(requiredMessage),
   contributor: yup.object().shape({
     name: yup.string().required(requiredMessage),
-    email: yup.string().trim().email('Invalid email address.').required(requiredMessage),
+    email: yup
+      .string()
+      .trim()
+      .email("Invalid email address.")
+      .required(requiredMessage),
   }),
 });
 
-const API_PATH = 'report/observation';
+const API_PATH = "report/observation";
 
 const formatObservation = (values = {}) => {
   const observation = {};
 
   // Add challenge (basic spam prevention)
-  observation.challenge = 'kea';
+  observation.challenge = "kea";
 
   // Format coordinates into numbers with 'Point' type
   if (values.longitude && values.latitude) {
     observation.point_location = {
-      type: 'Point',
+      type: "Point",
       coordinates: [parseFloat(values.longitude), parseFloat(values.latitude)],
     };
   }
@@ -79,7 +93,7 @@ const formatObservation = (values = {}) => {
     observation.birds = [];
     values.birds.forEach((bird, i) => {
       const formattedBird = {};
-      Object.keys(bird).forEach(key => {
+      Object.keys(bird).forEach((key) => {
         if (bird[key]) formattedBird[key] = bird[key];
       });
       observation.birds.push(formattedBird);
@@ -91,7 +105,7 @@ const formatObservation = (values = {}) => {
 
   // For 'sighted' sighting_type only (where number field is not defined), get length of array for number
   if (values.sighting_type) {
-    if (values.sighting_type === 'sighted') {
+    if (values.sighting_type === "sighted") {
       observation.number = observation.birds.length;
     } else {
       observation.number = values.number;
@@ -100,21 +114,22 @@ const formatObservation = (values = {}) => {
 
   if (values.contributor) {
     observation.contributor = {};
-    Object.keys(values.contributor).forEach(key => {
-      if (values.contributor[key]) observation.contributor[key] = values.contributor[key];
+    Object.keys(values.contributor).forEach((key) => {
+      if (values.contributor[key])
+        observation.contributor[key] = values.contributor[key];
     });
   }
 
   // Copy other parameters if exist
   [
-    'date_sighted',
-    'time_sighted',
-    'precision',
-    'location_details',
-    'sighting_type',
-    'behaviour',
-    'comments',
-  ].forEach(key => {
+    "date_sighted",
+    "time_sighted",
+    "precision",
+    "location_details",
+    "sighting_type",
+    "behaviour",
+    "comments",
+  ].forEach((key) => {
     if (values[key]) {
       observation[key] = values[key];
     }
@@ -137,14 +152,15 @@ const ReportObservation = () => {
   });
   const mutation = useMutation(postMutationFn, {
     onSuccess: () => {
-      queryClient.invalidateQueries('observations');
+      queryClient.invalidateQueries("observations");
     },
   });
 
   useEffect(() => {
     // Redirect on success
 
-    if (mutation.data?.results) history.push(`/report/success/${mutation.data.results.id}`);
+    if (mutation.data?.results)
+      history.push(`/report/success/${mutation.data.results.id}`);
   }, [mutation.data, history]);
 
   useEffect(() => {
@@ -194,7 +210,7 @@ const ReportObservation = () => {
             }
           }}
         >
-          {props => (
+          {(props) => (
             <Form>
               <ContributorFieldset {...props} options={options} />
               <ObservationDetailsFieldset {...props} options={options} />

@@ -1,10 +1,10 @@
-import React from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import React from "react";
+import { Link, NavLink } from "react-router-dom";
 
-import logo from '../../assets/img/logo.svg';
-import './Header.scss';
+import logo from "../../assets/img/logo.svg";
+import "./Header.scss";
 
-const Header = props => {
+const Header = (props) => {
   return (
     <nav className="navbar navbar-expand-md navbar-dark bg-dark">
       <div className="container">

@@ -1,11 +1,11 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
+import React from "react";
+import { NavLink } from "react-router-dom";
 
-import logo_grey from '../../assets/img/logo_grey.svg';
+import logo_grey from "../../assets/img/logo_grey.svg";
 
-import './Footer.scss';
+import "./Footer.scss";
 
-const Footer = props => {
+const Footer = (props) => {
   return (
     <footer className="d-print-none">
       <div className="constrainer">
@@ -13,7 +13,7 @@ const Footer = props => {
           <div className="row align-items-center">
             <div className="col-md-8">
               <p className="footer-sponsor">
-                Kea Database data hosted in New Zealand on{' '}
+                Kea Database data hosted in New Zealand on{" "}
                 <a
                   href="https://www.catalyst.net.nz/products/gis-core"
                   target="_blank"

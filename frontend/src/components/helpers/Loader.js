@@ -1,6 +1,6 @@
-import React from 'react';
+import React from "react";
 
-const Loader = ({ message = '' }) => (
+const Loader = ({ message = "" }) => (
   <div className="text-center m-5">
     <div className="text-primary m-1">
       <div className="spinner-border" role="status">

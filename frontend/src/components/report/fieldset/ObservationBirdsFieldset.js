@@ -1,21 +1,21 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Field, FieldArray } from 'formik';
+import React from "react";
+import PropTypes from "prop-types";
+import { Field, FieldArray } from "formik";
 
-import { RenderField } from '../../helpers/RenderField';
+import { RenderField } from "../../helpers/RenderField";
 
 const RenderBirds = ({ arrayHelpers, options }) => {
   const { values } = arrayHelpers.form;
   const initialBirdValues = {
-    banded: '',
-    band_combo: '',
-    sex_guess: '',
-    life_stage_guess: '',
+    banded: "",
+    band_combo: "",
+    sex_guess: "",
+    life_stage_guess: "",
   };
 
   return (
     <div>
-      <div style={{ marginBottom: '1rem' }}>
+      <div style={{ marginBottom: "1rem" }}>
         <button
           type="button"
           className="btn btn-primary"
@@ -90,8 +90,9 @@ const ObservationBirdsFieldset = ({ options, values }) => {
     <fieldset>
       <legend>3. Birds</legend>
       <p>
-        If you heard birds, or only saw them in the distance (e.g. flying overhead) choose 'Sighted
-        (distant)' or 'Heard'. Otherwise pick 'Sighted'.
+        If you heard birds, or only saw them in the distance (e.g. flying
+        overhead) choose 'Sighted (distant)' or 'Heard'. Otherwise pick
+        'Sighted'.
       </p>
 
       <div className="row">
@@ -105,18 +106,24 @@ const ObservationBirdsFieldset = ({ options, values }) => {
           />
         </div>
 
-        {(values.sighting_type === 'heard' || values.sighting_type === 'distant') && (
+        {(values.sighting_type === "heard" ||
+          values.sighting_type === "distant") && (
           <div className="col-md-4 col-lg-3">
-            <Field component={RenderField} options={options.number} name="number" type="number" />
+            <Field
+              component={RenderField}
+              options={options.number}
+              name="number"
+              type="number"
+            />
           </div>
         )}
       </div>
 
-      {values.sighting_type === 'sighted' && (
+      {values.sighting_type === "sighted" && (
         <React.Fragment>
           <p>
-            Please create the number of birds you saw, regardless of whether they were banded or
-            not.
+            Please create the number of birds you saw, regardless of whether
+            they were banded or not.
           </p>
 
           <div className="card">
@@ -125,8 +132,11 @@ const ObservationBirdsFieldset = ({ options, values }) => {
             <div className="card-body">
               <FieldArray
                 name="birds"
-                render={arrayHelpers => (
-                  <RenderBirds arrayHelpers={arrayHelpers} options={options.birds.child.children} />
+                render={(arrayHelpers) => (
+                  <RenderBirds
+                    arrayHelpers={arrayHelpers}
+                    options={options.birds.child.children}
+                  />
                 )}
               />
             </div>
@@ -134,7 +144,7 @@ const ObservationBirdsFieldset = ({ options, values }) => {
         </React.Fragment>
       )}
 
-      {values.sighting_type !== '' && (
+      {values.sighting_type !== "" && (
         <Field
           component={RenderField}
           options={options.behaviour}

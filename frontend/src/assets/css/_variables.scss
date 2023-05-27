@@ -1,5 +1,5 @@
-@import '~bootstrap/scss/_functions.scss';
-@import '~bootstrap/scss/_mixins.scss';
+@import "~bootstrap/scss/_functions.scss";
+@import "~bootstrap/scss/_mixins.scss";
 
 // Custom
 
@@ -8,7 +8,7 @@ $green-dark: #6a7029;
 $brown-dull: #dfd4ba;
 $brown-faded: #e6dfcc;
 
-$font-family-serif: 'Playfair Display', Georgia, 'Times New Roman', Times, serif;
+$font-family-serif: "Playfair Display", Georgia, "Times New Roman", Times, serif;
 
 $font-size-md: 0.925rem;
 
@@ -25,7 +25,7 @@ $secondary: $green-dark;
 $dark: #231f20;
 $light: #e9ecef;
 
-$font-family-sans-serif: 'Open Sans', Roboto, Arial, sans-serif;
+$font-family-sans-serif: "Open Sans", Roboto, Arial, sans-serif;
 $headings-font-family: $font-family-serif;
 
 $spacer: 1rem !default;
@@ -44,4 +44,4 @@ $list-group-item-padding-y: 0.5rem;
 
 $card-border-radius: 0;
 
-@import '~bootstrap/scss/_variables.scss';
+@import "~bootstrap/scss/_variables.scss";

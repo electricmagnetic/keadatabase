@@ -1,9 +1,14 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
-import Page from '../../presentation/Page';
+import Page from "../../presentation/Page";
 
-const SubmitFieldset = ({ submitCount, isValid, response, submissionPending }) => {
+const SubmitFieldset = ({
+  submitCount,
+  isValid,
+  response,
+  submissionPending,
+}) => {
   const showInvalid = (submitCount > 0 && !isValid) || response.isError;
 
   return (
@@ -12,7 +17,11 @@ const SubmitFieldset = ({ submitCount, isValid, response, submissionPending }) =
       <Page id={185} hideTitle />
 
       <p>
-        <button type="submit" className="btn btn-primary" disabled={submissionPending}>
+        <button
+          type="submit"
+          className="btn btn-primary"
+          disabled={submissionPending}
+        >
           Submit
         </button>
         {submissionPending && <span className="mx-2">Submitting</span>}
@@ -20,9 +29,9 @@ const SubmitFieldset = ({ submitCount, isValid, response, submissionPending }) =
 
       {showInvalid && (
         <div className="alert alert-danger" role="alert">
-          <div style={{ marginBottom: '1rem' }}>
-            Hmm, it seems there were some errors. Please scroll up and check the data you've
-            entered.
+          <div style={{ marginBottom: "1rem" }}>
+            Hmm, it seems there were some errors. Please scroll up and check the
+            data you've entered.
           </div>
           {response.isError && <small>{response.error.message}</small>}
         </div>

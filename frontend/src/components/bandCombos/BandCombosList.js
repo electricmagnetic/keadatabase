@@ -1,9 +1,9 @@
-import React from 'react';
-import { useQuery } from 'react-query';
+import React from "react";
+import { useQuery } from "react-query";
 
-import Loader from '../helpers/Loader';
-import Error from '../helpers/Error';
-import Bird from '../birds/Bird';
+import Loader from "../helpers/Loader";
+import Error from "../helpers/Error";
+import Bird from "../birds/Bird";
 
 const API_PATH = `band_combos`;
 
@@ -11,7 +11,7 @@ const API_PATH = `band_combos`;
 
 const BandCombosList = ({ queryObject }) => {
   const baseQuery = {
-    ordering: 'bird__bird_extended,bird__name',
+    ordering: "bird__bird_extended,bird__name",
   };
 
   const { isLoading, data, error } = useQuery([
@@ -32,8 +32,11 @@ const BandCombosList = ({ queryObject }) => {
               <h3>No birds found with that search criteria.</h3>
             </div>
           )}
-          {bandCombos.map(bandCombo => (
-            <div className="col-6 col-sm-4 col-lg-3 mb-3" key={bandCombo.bird.slug}>
+          {bandCombos.map((bandCombo) => (
+            <div
+              className="col-6 col-sm-4 col-lg-3 mb-3"
+              key={bandCombo.bird.slug}
+            >
               <Bird bird={bandCombo.bird} type="card" />
             </div>
           ))}

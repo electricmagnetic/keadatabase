@@ -1,30 +1,30 @@
-import React, { useState } from 'react';
-import 'react-bootstrap-typeahead/css/Typeahead.css';
+import React, { useState } from "react";
+import "react-bootstrap-typeahead/css/Typeahead.css";
 
-import ColourInput from './ColourInput';
+import ColourInput from "./ColourInput";
 
 const BandComboSearchForm = ({ queryObject, setQueryObject }) => {
   const [form, setForm] = useState(queryObject);
 
-  const handleChange = event => {
+  const handleChange = (event) => {
     const { name, value } = event.target;
 
     switch (name) {
-      case 'symbols':
-        setForm(prevState => ({
+      case "symbols":
+        setForm((prevState) => ({
           ...prevState,
           [name]: value.toUpperCase(),
         }));
         break;
       default:
-        setForm(prevState => ({
+        setForm((prevState) => ({
           ...prevState,
           [name]: value,
         }));
     }
   };
 
-  const handleSubmit = event => {
+  const handleSubmit = (event) => {
     event.preventDefault();
 
     setQueryObject(form);
@@ -53,7 +53,12 @@ const BandComboSearchForm = ({ queryObject, setQueryObject }) => {
           </div>
         </div>
       </div>
-      <a data-toggle="collapse" href="#advanced" aria-expanded="false" aria-controls="advanced">
+      <a
+        data-toggle="collapse"
+        href="#advanced"
+        aria-expanded="false"
+        aria-controls="advanced"
+      >
         Advanced Search +
       </a>
       <div id="advanced" className="collapse">
@@ -72,8 +77,8 @@ const BandComboSearchForm = ({ queryObject, setQueryObject }) => {
           <div className="col">
             <ColourInput
               selected={form.colours}
-              onChange={selected =>
-                setForm(prevState => ({
+              onChange={(selected) =>
+                setForm((prevState) => ({
                   ...prevState,
                   colours: selected,
                 }))

@@ -1,17 +1,17 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
 
-import './BannerButtons.scss';
+import "./BannerButtons.scss";
 
 const BannerButtons = ({ className }) => {
   // Add classes
-  var classNames = ['BannerButtons'];
+  var classNames = ["BannerButtons"];
 
   // Add additional classes
   classNames.push(className);
 
   return (
-    <div className={classNames.join(' ')}>
+    <div className={classNames.join(" ")}>
       <div className="container">
         <div className="form-row my-n2">
           <div className="col-sm-6 col-md-3 my-2 banner-button">

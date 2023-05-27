@@ -1,13 +1,13 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { useQuery } from 'react-query';
+import React from "react";
+import PropTypes from "prop-types";
+import { useQuery } from "react-query";
 
-import Observation from './Observation';
-import BirdObservationBirdCard from './BirdObservation/BirdObservationBirdCard';
-import BirdObservationFeature from './BirdObservation/BirdObservationFeature';
+import Observation from "./Observation";
+import BirdObservationBirdCard from "./BirdObservation/BirdObservationBirdCard";
+import BirdObservationFeature from "./BirdObservation/BirdObservationFeature";
 
-import Loader from '../helpers/Loader';
-import Error from '../helpers/Error';
+import Loader from "../helpers/Loader";
+import Error from "../helpers/Error";
 
 const API_PATH = `bird_observations`;
 
@@ -15,12 +15,25 @@ const RenderBirdObservation = ({ birdObservation, type, ...others }) => {
   if (!birdObservation) return <Error message="Invalid bird observation" />;
 
   switch (type) {
-    case 'observationCard':
-      return <Observation observation={birdObservation.sighting} type="card" {...others} />;
-    case 'feature':
-      return <BirdObservationFeature birdObservation={birdObservation} {...others} />;
+    case "observationCard":
+      return (
+        <Observation
+          observation={birdObservation.sighting}
+          type="card"
+          {...others}
+        />
+      );
+    case "feature":
+      return (
+        <BirdObservationFeature birdObservation={birdObservation} {...others} />
+      );
     default:
-      return <BirdObservationBirdCard birdObservation={birdObservation} {...others} />;
+      return (
+        <BirdObservationBirdCard
+          birdObservation={birdObservation}
+          {...others}
+        />
+      );
   }
 };
 
@@ -30,7 +43,9 @@ const RenderBirdObservation = ({ birdObservation, type, ...others }) => {
   - Fetches a bird observation using the given id and renders as a specified type
   */
 const BirdObservation = ({ id, birdObservation, ...others }) => {
-  const { isLoading, data, error } = useQuery([`${API_PATH}/${id}/`], { enabled: !!id });
+  const { isLoading, data, error } = useQuery([`${API_PATH}/${id}/`], {
+    enabled: !!id,
+  });
 
   if (id) {
     if (isLoading) {
@@ -38,10 +53,14 @@ const BirdObservation = ({ id, birdObservation, ...others }) => {
     } else if (error) {
       return <Error message="Error fetching birdObservation" />;
     } else if (data) {
-      return <RenderBirdObservation birdObservation={data.results} {...others} />;
+      return (
+        <RenderBirdObservation birdObservation={data.results} {...others} />
+      );
     } else return null;
   } else if (birdObservation) {
-    return <RenderBirdObservation birdObservation={birdObservation} {...others} />;
+    return (
+      <RenderBirdObservation birdObservation={birdObservation} {...others} />
+    );
   } else return null;
 };
 
@@ -52,7 +71,7 @@ BirdObservation.propTypes = {
 };
 
 BirdObservation.defaultProps = {
-  type: 'birdCard',
+  type: "birdCard",
 };
 
 export default BirdObservation;

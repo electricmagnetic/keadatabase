@@ -1,14 +1,14 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Helmet } from 'react-helmet';
+import React from "react";
+import PropTypes from "prop-types";
+import { Helmet } from "react-helmet";
 
-import Banner from '../../presentation/Banner';
-import generateSummary from './helpers/generateSummary';
-import getPicture from './helpers/getPicture';
-import BirdObservations from '../../observations/BirdObservations';
-import PrettyBandCombo from './helpers/PrettyBandCombo';
+import Banner from "../../presentation/Banner";
+import generateSummary from "./helpers/generateSummary";
+import getPicture from "./helpers/getPicture";
+import BirdObservations from "../../observations/BirdObservations";
+import PrettyBandCombo from "./helpers/PrettyBandCombo";
 
-import './BirdPage.scss';
+import "./BirdPage.scss";
 
 /**
   Presents a nicely formatted page for a given bird.
@@ -25,9 +25,11 @@ const BirdPage = ({ bird }) => {
             <div className="col-md-4 order-md-9 profile-picture">
               <figure>
                 <img
-                  src={getPicture(bird, 'large')}
+                  src={getPicture(bird, "large")}
                   alt={bird.name}
-                  className={`img-fluid img-thumbnail ${bird.status === 'Dead' && 'isDead'}`}
+                  className={`img-fluid img-thumbnail ${
+                    bird.status === "Dead" && "isDead"
+                  }`}
                 />
                 {bird_extended && (
                   <>
@@ -46,10 +48,12 @@ const BirdPage = ({ bird }) => {
               <h1 className="mb-3">{bird.name}</h1>
               <ul className="list-unstyled mb-3">
                 <li>
-                  <i className="fas fa-fw fa-info-circle" /> {generateSummary(bird)}
+                  <i className="fas fa-fw fa-info-circle" />{" "}
+                  {generateSummary(bird)}
                 </li>
                 <li>
-                  <i className="fas fa-fw fa-map-marker-alt" /> {bird.study_area}
+                  <i className="fas fa-fw fa-map-marker-alt" />{" "}
+                  {bird.study_area}
                 </li>
                 {bird.band_combo && (
                   <li>
@@ -95,7 +99,10 @@ const BirdPage = ({ bird }) => {
         <section>
           <h2>Recent observations</h2>
           <section className="mb-3">
-            <BirdObservations queryString={`?bird=${bird.slug}&page_size=24`} type="map" />
+            <BirdObservations
+              queryString={`?bird=${bird.slug}&page_size=24`}
+              type="map"
+            />
           </section>
           <section className="mb-5">
             <div className="row">

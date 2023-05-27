@@ -1,14 +1,14 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Helmet } from 'react-helmet';
+import React from "react";
+import PropTypes from "prop-types";
+import { Helmet } from "react-helmet";
 
-import FormatDateTime from '../../helpers/FormatDateTime';
-import Banner from '../../presentation/Banner';
-import generateSummary from './helpers/generateSummary';
-import BirdObservations from '../BirdObservations';
-import ObservationsMap from './ObservationsMap';
+import FormatDateTime from "../../helpers/FormatDateTime";
+import Banner from "../../presentation/Banner";
+import generateSummary from "./helpers/generateSummary";
+import BirdObservations from "../BirdObservations";
+import ObservationsMap from "./ObservationsMap";
 
-import './ObservationPage.scss';
+import "./ObservationPage.scss";
 
 /**
   Presents a nicely formatted page for a given observation.

@@ -1,13 +1,19 @@
-import React, { Component } from 'react';
-import { FeatureGroup, ScaleControl, Circle, CircleMarker, Popup } from 'react-leaflet';
-import { GeoJSON as LeafletGeoJSON } from 'leaflet';
-import PropTypes from 'prop-types';
+import React, { Component } from "react";
+import {
+  FeatureGroup,
+  ScaleControl,
+  Circle,
+  CircleMarker,
+  Popup,
+} from "react-leaflet";
+import { GeoJSON as LeafletGeoJSON } from "leaflet";
+import PropTypes from "prop-types";
 
-import BaseMap from '../../map/BaseMap';
-import { DEFAULT_BOUNDS } from '../../map/defaults';
-import Observation from '../Observation';
+import BaseMap from "../../map/BaseMap";
+import { DEFAULT_BOUNDS } from "../../map/defaults";
+import Observation from "../Observation";
 
-import './ObservationsMap.scss';
+import "./ObservationsMap.scss";
 
 /**
   Presents a nicely formatted map of given observations:
@@ -38,9 +44,11 @@ class ObservationsMap extends Component {
   /**
     Generate CircleMarker and associated Tooltip for a given observation.
     */
-  createCircleMarker = observation => (
+  createCircleMarker = (observation) => (
     <CircleMarker
-      center={LeafletGeoJSON.coordsToLatLng(observation.point_location.coordinates)}
+      center={LeafletGeoJSON.coordsToLatLng(
+        observation.point_location.coordinates
+      )}
       color="orange"
       key={observation.id}
       radius={10}
@@ -54,9 +62,11 @@ class ObservationsMap extends Component {
   /**
     Generate single Circle without Tooltip, better used for single observations
     */
-  createCircle = observation => (
+  createCircle = (observation) => (
     <Circle
-      center={LeafletGeoJSON.coordsToLatLng(observation.point_location.coordinates)}
+      center={LeafletGeoJSON.coordsToLatLng(
+        observation.point_location.coordinates
+      )}
       color="red"
       key={observation.id}
       radius={observation.precision}
@@ -86,10 +96,14 @@ class ObservationsMap extends Component {
           bounds={this.state.featureBounds}
           {...(single && disableInteractivityProperties)}
         >
-          <FeatureGroup onAdd={event => this.updateFeatureBounds(event)}>
+          <FeatureGroup onAdd={(event) => this.updateFeatureBounds(event)}>
             {single
-              ? observations.map(observation => this.createCircle(observation))
-              : observations.map(observation => this.createCircleMarker(observation))}
+              ? observations.map((observation) =>
+                  this.createCircle(observation)
+                )
+              : observations.map((observation) =>
+                  this.createCircleMarker(observation)
+                )}
           </FeatureGroup>
           <ScaleControl />
         </BaseMap>

@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import { Helmet } from 'react-helmet';
-import { Link } from 'react-router-dom';
+import React, { Component } from "react";
+import { Helmet } from "react-helmet";
+import { Link } from "react-router-dom";
 
-import Page from '../../components/presentation/Page';
-import Banner from '../../components/presentation/Banner';
+import Page from "../../components/presentation/Page";
+import Banner from "../../components/presentation/Banner";
 
 class ReportObservationSuccessPage extends Component {
   render() {
@@ -22,7 +22,7 @@ class ReportObservationSuccessPage extends Component {
               </Link>
               {id && (
                 <Link
-                  to={'/observations/' + this.props.match.params.id}
+                  to={"/observations/" + this.props.match.params.id}
                   className="btn btn-outline-primary"
                   role="button"
                 >

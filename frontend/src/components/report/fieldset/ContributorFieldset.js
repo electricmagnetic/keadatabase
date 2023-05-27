@@ -1,8 +1,8 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Field } from 'formik';
+import React from "react";
+import PropTypes from "prop-types";
+import { Field } from "formik";
 
-import { RenderField } from '../../helpers/RenderField';
+import { RenderField } from "../../helpers/RenderField";
 
 const ContributorFieldset = ({ options }) => {
   return (
@@ -32,8 +32,8 @@ const ContributorFieldset = ({ options }) => {
 
         <div className="col-md-5 offset-md-1">
           <p className="text-muted">
-            Your name will be public (as part of your observation), but any contact information you
-            provide will not be.
+            Your name will be public (as part of your observation), but any
+            contact information you provide will not be.
           </p>
         </div>
       </div>

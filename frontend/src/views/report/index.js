@@ -1,10 +1,10 @@
-import React from 'react';
-import { Helmet } from 'react-helmet';
+import React from "react";
+import { Helmet } from "react-helmet";
 
-import Banner from '../../components/presentation/Banner';
-import ReportObservation from '../../components/report/ReportObservation';
+import Banner from "../../components/presentation/Banner";
+import ReportObservation from "../../components/report/ReportObservation";
 
-const ReportObservationPage = props => {
+const ReportObservationPage = (props) => {
   return (
     <div className="ReportObservationPage">
       <Helmet title="Report Observation" />

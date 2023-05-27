@@ -1,12 +1,17 @@
-import React, { Component } from 'react';
-import { Map as LeafletMap, TileLayer, LayersControl, LayerGroup } from 'react-leaflet';
+import React, { Component } from "react";
+import {
+  Map as LeafletMap,
+  TileLayer,
+  LayersControl,
+  LayerGroup,
+} from "react-leaflet";
 
-import 'leaflet/dist/leaflet.css';
-import 'leaflet/dist/leaflet';
+import "leaflet/dist/leaflet.css";
+import "leaflet/dist/leaflet";
 
-import { DEFAULT_ZOOM, DEFAULT_BOUNDS } from './defaults';
+import { DEFAULT_ZOOM, DEFAULT_BOUNDS } from "./defaults";
 
-import './BaseMap.scss';
+import "./BaseMap.scss";
 
 /**
   Creates a Leaflet map using Mapbox (lowest zoom levels), and the LINZ Data Service (Topo250, Topo50).
@@ -47,13 +52,13 @@ class BaseMap extends Component {
                 url={`https://tiles-{s}.data-cdn.linz.govt.nz/services;key=${process.env.REACT_APP_LINZ_DATA_API_KEY}/tiles/v4/layer=50798/EPSG:3857/{z}/{x}/{y}.png`}
                 minZoom={10}
                 maxZoom={12}
-                subdomains={'abcd'}
+                subdomains={"abcd"}
               />
               <TileLayer
                 url={`https://tiles-{s}.data-cdn.linz.govt.nz/services;key=${process.env.REACT_APP_LINZ_DATA_API_KEY}/tiles/v4/layer=50767/EPSG:3857/{z}/{x}/{y}.png`}
                 attribution="LINZ, licensed for reuse (CC BY 4.0)."
                 minZoom={12}
-                subdomains={'abcd'}
+                subdomains={"abcd"}
               />
             </LayerGroup>
           </LayersControl.BaseLayer>

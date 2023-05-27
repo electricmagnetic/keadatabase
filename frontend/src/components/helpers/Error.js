@@ -1,7 +1,7 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
-const Error = props => {
+const Error = (props) => {
   return (
     <div className="Error">
       <div className="alert alert-danger" role="alert">
@@ -17,7 +17,7 @@ Error.propTypes = {
 };
 
 Error.defaultProps = {
-  reason: '',
+  reason: "",
 };
 
 export default Error;

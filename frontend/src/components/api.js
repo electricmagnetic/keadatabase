@@ -1,5 +1,5 @@
-import axios from 'axios';
-import { stringify } from 'qs';
+import axios from "axios";
+import { stringify } from "qs";
 
 const makeRequest = async ({
   method,
@@ -11,7 +11,7 @@ const makeRequest = async ({
     method: method,
     url: `${apiPath}/${path}`,
     ...(values && { data: values }),
-    headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+    headers: { Accept: "application/json", "Content-Type": "application/json" },
   });
 
   // Substitute 'data' with 'results' to avoid clashing with react-query 'data' variable
@@ -23,11 +23,13 @@ const makeRequest = async ({
 // Read (queryKey[0] expects a path, optional queryKey[1] is additional parameters
 export const getQueryFn = async ({ queryKey }) => {
   const [basePath, params, apiPath] = queryKey;
-  const queryString = !!queryKey[1] ? stringify(params, { addQueryPrefix: true }) : null;
-  const path = [basePath, queryString].join('');
+  const queryString = !!queryKey[1]
+    ? stringify(params, { addQueryPrefix: true })
+    : null;
+  const path = [basePath, queryString].join("");
 
   return await makeRequest({
-    method: 'get',
+    method: "get",
     path: path,
     ...(apiPath && { apiPath: apiPath }),
   });
@@ -36,10 +38,14 @@ export const getQueryFn = async ({ queryKey }) => {
 export const optionsFn = async ({ queryKey }) => {
   const [basePath] = queryKey;
 
-  return await makeRequest({ method: 'options', path: basePath });
+  return await makeRequest({ method: "options", path: basePath });
 };
 
 // Create
 export const postMutationFn = async ({ mutationPath, values }) => {
-  return await makeRequest({ method: 'post', path: mutationPath, values: values });
+  return await makeRequest({
+    method: "post",
+    path: mutationPath,
+    values: values,
+  });
 };

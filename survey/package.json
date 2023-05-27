@@ -1,0 +1,83 @@
+{
+  "name": "keadatabase-survey",
+  "version": "1.4.2",
+  "private": true,
+  "homepage": "https://survey.keadatabase.nz",
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.15.4",
+    "@sentry/react": "^5.30.0",
+    "@sentry/tracing": "^5.30.0",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^11.2.7",
+    "@testing-library/user-event": "^13.5.0",
+    "@turf/turf": "^6.5.0",
+    "bootstrap": "^4.6.2",
+    "classnames": "^2.3.2",
+    "core-js": "^3.30.2",
+    "formik": "^1.5.8",
+    "jquery": "^3.7.0",
+    "leaflet": "^1.9.4",
+    "moment": "^2.29.4",
+    "prop-types": "^15.8.1",
+    "qs": "^6.11.2",
+    "react": "^16.14.0",
+    "react-app-polyfill": "^1.0.6",
+    "react-bootstrap-typeahead": "^3.4.7",
+    "react-dom": "^16.14.0",
+    "react-helmet": "^5.2.1",
+    "react-leaflet": "^2.8.0",
+    "react-moment": "^0.9.7",
+    "react-refetch": "^3.0.1",
+    "react-router-dom": "^5.3.4",
+    "react-scripts": "^5.0.1",
+    "react-typeahead": "2.0.0-alpha.8",
+    "recharts": "^1.8.6",
+    "swr": "^0.5.7",
+    "yup": "^1.2.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "prepare": "husky install",
+    "deploy": "npm run build && firebase deploy"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not ie < 10",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "husky": "^6.0.0",
+    "lint-staged": "^11.2.6",
+    "prettier": "^2.8.8",
+    "sass": "^1.62.1"
+  },
+  "prettier": {
+    "endOfLine": "lf",
+    "semi": true,
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "es5",
+    "printWidth": 100,
+    "arrowParens": "avoid"
+  },
+  "lint-staged": {
+    "*.{yml,js,css,md}": "prettier --write"
+  }
+}

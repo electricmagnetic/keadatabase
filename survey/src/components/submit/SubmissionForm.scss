@@ -1,0 +1,36 @@
+@import 'src/assets/css/_variables';
+
+/* Height has to be specified so the appropriate margin can be added to the footer. Vertical alignment achieved with flexbox */
+$submit-bar-height: 3rem;
+$footer-margin-height: $submit-bar-height + ($spacer * 2);
+
+.SubmissionPage {
+  .container-fluid {
+    padding: 0;
+
+    @include media-breakpoint-down(sm) {
+      // Add spacer to enable scrolling past map on mobile devices
+      padding: $spacer;
+    }
+    .Error {
+      margin: 0 $spacer;
+    }
+  }
+
+  .submit-bar {
+    background-color: rgba($brown-faded, 0.9);
+    padding: $spacer;
+    border-top: 1px solid $brown-dull;
+    .container {
+      height: $submit-bar-height;
+      .row {
+        height: 100%;
+      }
+    }
+  }
+}
+
+/* Adding extra margin to footer to accomodate submission bar */
+footer.on-submit-page {
+  margin-bottom: $footer-margin-height;
+}

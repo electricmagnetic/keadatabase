@@ -1,0 +1,17 @@
+@import 'src/assets/css/_variables';
+
+.GridTileCard {
+  h2 {
+    font-size: $h5-font-size;
+  }
+  &.hideDetails {
+    h2 {
+      font-size: $font-size-sm;
+      font-family: $font-family-base;
+      margin: 0;
+    }
+  }
+  .card-text {
+    font-size: $font-size-sm;
+  }
+}

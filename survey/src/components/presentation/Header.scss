@@ -1,0 +1,32 @@
+@import 'src/assets/css/_variables';
+
+header {
+  &.on-home {
+    position: absolute;
+    top: 0;
+    width: 100%;
+
+    @include media-breakpoint-down(md) {
+      .navbar-collapse {
+        background-color: rgba($light, 0.95);
+        padding: $spacer;
+      }
+      .navbar-toggler {
+        background-color: rgba($light, 0.95);
+      }
+    }
+  }
+
+  nav {
+    .navbar-brand {
+      font-family: $headings-font-family;
+      img {
+        height: 48px;
+
+        @include media-breakpoint-up(sm) {
+          height: 64px;
+        }
+      }
+    }
+  }
+}

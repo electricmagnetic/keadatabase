@@ -1,0 +1,22 @@
+@import 'src/assets/css/_variables';
+
+.SelectedGridTilesMap {
+  height: 480px;
+  width: 100%;
+  .leaflet-tooltip {
+    font-weight: bolder;
+    a {
+      color: $link-color;
+    }
+    &.neighbour {
+      font-weight: normal;
+      font-style: italic;
+      padding: 3px;
+    }
+  }
+  .leaflet-control-layers {
+    label {
+      margin-bottom: 0;
+    }
+  }
+}

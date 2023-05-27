@@ -1,0 +1,44 @@
+@import './_variables';
+@import '~bootstrap/scss/bootstrap';
+
+$constrainer-width: map-get($container-max-widths, 'xl') + 280px;
+
+#root {
+  background-color: $gray-100;
+}
+
+.constrainer {
+  background-color: $white;
+  overflow: hidden;
+
+  @media (min-width: $constrainer-width+1px) {
+    border: 1px solid rgba($black, 0.125);
+    border-top: 0;
+    border-bottom: 0;
+    margin: auto;
+    width: $constrainer-width;
+    &::before,
+    &::after {
+      content: '';
+      display: table;
+      clear: both;
+    }
+  }
+}
+
+table .form-group {
+  margin-bottom: 0;
+}
+
+.control-label {
+  font-weight: bold;
+}
+
+.bg-faded {
+  background-color: rgba($brown-faded, 0.5);
+}
+
+.alert-faded {
+  background-color: rgba($brown-faded, 0.5);
+  border-color: $brown-faded;
+}

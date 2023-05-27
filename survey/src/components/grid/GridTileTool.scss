@@ -1,0 +1,27 @@
+@import 'src/assets/css/_variables';
+
+.GridTileTool {
+  h2 {
+    margin-top: 0;
+  }
+
+  .container-fluid {
+    padding: 0;
+
+    @include media-breakpoint-down(sm) {
+      // Add spacer to enable scrolling past map on mobile devices
+      padding: $spacer;
+    }
+  }
+
+  .InformationBox {
+    @media screen {
+      margin: $spacer;
+      padding: $spacer;
+      border: 1px solid $brown-faded;
+    }
+    @media print {
+      margin: -$spacer $spacer;
+    }
+  }
+}

@@ -1,0 +1,30 @@
+@import 'src/assets/css/_variables';
+
+.GridTileMap {
+  height: 860px;
+
+  @include media-breakpoint-down(sm) {
+    height: 640px;
+  }
+
+  width: 100%;
+
+  .tile-tooltip,
+  .tile-popup {
+    h2 {
+      font-size: $font-size-base;
+    }
+    dl,
+    dt,
+    dd {
+      margin-bottom: 0;
+    }
+  }
+  .tile-popup {
+    min-width: 96px;
+
+    .leaflet-popup-content {
+      margin: calc($spacer / 2);
+    }
+  }
+}

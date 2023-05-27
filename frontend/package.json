@@ -40,12 +40,11 @@
     "yup": "^0.32.11"
   },
   "scripts": {
-    "deploy": "npm run build && firebase deploy",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "prepare": "cd .. && husky install frontend/.husky"
+    "deploy": "npm run build && firebase deploy"
   },
   "eslintConfig": {
     "extends": [
@@ -66,22 +65,7 @@
     ]
   },
   "devDependencies": {
-    "husky": "^6.0.0",
-    "lint-staged": "^11.2.6",
-    "prettier": "^2.7.1",
     "sass": "^1.54.8"
-  },
-  "prettier": {
-    "endOfLine": "lf",
-    "semi": true,
-    "singleQuote": true,
-    "tabWidth": 2,
-    "trailingComma": "es5",
-    "printWidth": 100,
-    "arrowParens": "avoid"
-  },
-  "lint-staged": {
-    "*.{yml,js,scss,md}": "prettier --write"
   },
   "pnpm": {
     "overrides": {

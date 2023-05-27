@@ -1,11 +1,11 @@
-import React from 'react';
-import useSWR from 'swr';
-import PropTypes from 'prop-types';
+import React from "react";
+import useSWR from "swr";
+import PropTypes from "prop-types";
 
-import Loader from '../helpers/Loader';
-import Error from '../helpers/Error';
+import Loader from "../helpers/Loader";
+import Error from "../helpers/Error";
 
-import GridTileAnalysisItem from './GridTileAnalysis/GridTileAnalysisItem';
+import GridTileAnalysisItem from "./GridTileAnalysis/GridTileAnalysisItem";
 
 const API_URL = `${process.env.REACT_APP_API_BASE}/analysis/grid_tiles/`;
 
@@ -17,7 +17,9 @@ const RenderGridTileAnalysis = ({ gridTileAnalysis, type, ...others }) => {
 
   switch (type) {
     default:
-      return <GridTileAnalysisItem gridTileAnalysis={gridTileAnalysis} {...others} />;
+      return (
+        <GridTileAnalysisItem gridTileAnalysis={gridTileAnalysis} {...others} />
+      );
   }
 };
 
@@ -42,7 +44,9 @@ const GridTileAnalysis = ({ id, gridTileAnalysis, ...others }) => {
       return <RenderGridTileAnalysis gridTileAnalysis={data} {...others} />;
     } else return null;
   } else if (gridTileAnalysis) {
-    return <RenderGridTileAnalysis gridTileAnalysis={gridTileAnalysis} {...others} />;
+    return (
+      <RenderGridTileAnalysis gridTileAnalysis={gridTileAnalysis} {...others} />
+    );
   } else return null;
 };
 
@@ -53,7 +57,7 @@ GridTileAnalysis.propTypes = {
 };
 
 GridTileAnalysis.defaultProps = {
-  type: 'item',
+  type: "item",
 };
 
 export default GridTileAnalysis;

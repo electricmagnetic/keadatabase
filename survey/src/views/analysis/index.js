@@ -1,10 +1,10 @@
-import React from 'react';
-import Helmet from 'react-helmet';
+import React from "react";
+import Helmet from "react-helmet";
 
-import Banner from '../../components/presentation/Banner';
-import GridTileAnalyses from '../../components/analysis/GridTileAnalyses';
+import Banner from "../../components/presentation/Banner";
+import GridTileAnalyses from "../../components/analysis/GridTileAnalyses";
 
-const AnalysisPage = props => {
+const AnalysisPage = (props) => {
   return (
     <div className="AnalysisPage">
       <Helmet title="Analysis" />
@@ -12,10 +12,12 @@ const AnalysisPage = props => {
         <Banner size="small">
           <h1>Analysis</h1>
           <p>
-            Orange tiles: surveyed, kea observed.{' '}
-            <small>Darker orange denotes higher proportion of kea to hours surveyed.</small>
+            Orange tiles: surveyed, kea observed.{" "}
+            <small>
+              Darker orange denotes higher proportion of kea to hours surveyed.
+            </small>
             <br />
-            Grey tiles: surveyed, kea not observed.{' '}
+            Grey tiles: surveyed, kea not observed.{" "}
             <small>Darker grey denotes greater than ten hours surveyed.</small>
           </p>
         </Banner>

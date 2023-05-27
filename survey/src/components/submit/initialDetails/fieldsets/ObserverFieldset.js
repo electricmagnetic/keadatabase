@@ -1,7 +1,7 @@
-import React from 'react';
-import { Field } from 'formik';
+import React from "react";
+import { Field } from "formik";
 
-import RenderField from '../../../form/RenderField';
+import RenderField from "../../../form/RenderField";
 
 /**
   Fieldset for the two observer fields.

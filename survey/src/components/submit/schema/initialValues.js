@@ -3,8 +3,8 @@
   See also: observerValidationSchema.
  */
 export const initialObserverValues = {
-  name: '',
-  email: '',
+  name: "",
+  email: "",
 };
 
 /**
@@ -21,8 +21,8 @@ export const initialInitialValues = {
   grid_tile will always be an array of one due to the use of the typeahead field.
  */
 export const initialHourValues = {
-  hour: '',
-  activity: '',
+  hour: "",
+  activity: "",
   kea: false,
   grid_tile: [],
 };
@@ -33,10 +33,10 @@ export const initialHourValues = {
  */
 export const initialFullValues = {
   observer: initialObserverValues,
-  date: '',
+  date: "",
   hours: [],
-  max_flock_size: '',
-  comments: '',
-  purpose: '',
-  challenge: 'kea',
+  max_flock_size: "",
+  comments: "",
+  purpose: "",
+  challenge: "kea",
 };

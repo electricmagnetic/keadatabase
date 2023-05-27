@@ -1,15 +1,15 @@
-import React from 'react';
-import useSWR from 'swr';
-import PropTypes from 'prop-types';
+import React from "react";
+import useSWR from "swr";
+import PropTypes from "prop-types";
 
-import GridTilePage from './GridTile/GridTilePage';
-import GridTileItem from './GridTile/GridTileItem';
-import GridTileCard from './GridTile/GridTileCard';
+import GridTilePage from "./GridTile/GridTilePage";
+import GridTileItem from "./GridTile/GridTileItem";
+import GridTileCard from "./GridTile/GridTileCard";
 
-import Loader from '../helpers/Loader';
-import Error from '../helpers/Error';
+import Loader from "../helpers/Loader";
+import Error from "../helpers/Error";
 
-import tiles from '../../assets/geo/tiles.json';
+import tiles from "../../assets/geo/tiles.json";
 
 const API_URL = `${process.env.REACT_APP_API_BASE}/surveys/grid_tiles/`;
 
@@ -20,9 +20,9 @@ const RenderGridTile = ({ gridTile, type, ...others }) => {
   if (!gridTile) return <Error message="Invalid grid tile" />;
 
   switch (type) {
-    case 'card':
+    case "card":
       return <GridTileCard gridTile={gridTile} {...others} />;
-    case 'item':
+    case "item":
       return <GridTileItem gridTile={gridTile} {...others} />;
     default:
       return <GridTilePage gridTile={gridTile} {...others} />;
@@ -33,9 +33,12 @@ const RenderGridTile = ({ gridTile, type, ...others }) => {
   Displays a grid tile using a local source, a fetch or a provided object.
 */
 const GridTile = ({ id, gridTile, api, ...others }) => {
-  const { data, error, isValidating } = useSWR(api && id ? `${API_URL}${id}/` : null, {
-    dedupingInterval: 0,
-  });
+  const { data, error, isValidating } = useSWR(
+    api && id ? `${API_URL}${id}/` : null,
+    {
+      dedupingInterval: 0,
+    }
+  );
 
   if (api) {
     if (isValidating) {
@@ -48,7 +51,12 @@ const GridTile = ({ id, gridTile, api, ...others }) => {
   } else if (gridTile) {
     return <RenderGridTile gridTile={gridTile} {...others} />;
   } else if (id) {
-    return <RenderGridTile gridTile={tiles.features.find(tile => tile.id === id)} {...others} />;
+    return (
+      <RenderGridTile
+        gridTile={tiles.features.find((tile) => tile.id === id)}
+        {...others}
+      />
+    );
   } else return null;
 };
 
@@ -60,7 +68,7 @@ GridTile.propTypes = {
 };
 
 GridTile.defaultProps = {
-  type: 'item',
+  type: "item",
   api: false,
 };
 

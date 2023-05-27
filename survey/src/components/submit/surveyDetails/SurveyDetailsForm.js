@@ -1,21 +1,24 @@
-import React, { Component } from 'react';
-import Helmet from 'react-helmet';
-import { connect } from 'react-refetch';
-import { Form, withFormik } from 'formik';
-import { withRouter } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import React, { Component } from "react";
+import Helmet from "react-helmet";
+import { connect } from "react-refetch";
+import { Form, withFormik } from "formik";
+import { withRouter } from "react-router-dom";
+import PropTypes from "prop-types";
 
-import Error from '../../helpers/Error';
+import Error from "../../helpers/Error";
 
-import Messages from './fieldsets/Messages';
-import SurveyHourFieldset from './fieldsets/SurveyHourFieldset';
-import TripFieldset from './fieldsets/TripFieldset';
-import FurtherInformationFieldset from './fieldsets/FurtherInformationFieldset';
-import SubmitFieldset from './fieldsets/SubmitFieldset';
+import Messages from "./fieldsets/Messages";
+import SurveyHourFieldset from "./fieldsets/SurveyHourFieldset";
+import TripFieldset from "./fieldsets/TripFieldset";
+import FurtherInformationFieldset from "./fieldsets/FurtherInformationFieldset";
+import SubmitFieldset from "./fieldsets/SubmitFieldset";
 
-import { surveyHours } from '../schema/surveyParameters';
-import { initialFullValues, initialHourValues } from '../schema/initialValues';
-import { fullValidationSchema, initialValidationSchema } from '../schema/validationSchemas';
+import { surveyHours } from "../schema/surveyParameters";
+import { initialFullValues, initialHourValues } from "../schema/initialValues";
+import {
+  fullValidationSchema,
+  initialValidationSchema,
+} from "../schema/validationSchemas";
 
 const API_URL = `${process.env.REACT_APP_API_BASE}/report/survey/`;
 
@@ -35,7 +38,8 @@ class FormComponent extends Component {
       const { postSubmissionResponse } = this.props;
       const isSettled =
         postSubmissionResponse.settled &&
-        prevProps.postSubmissionResponse.settled !== postSubmissionResponse.settled;
+        prevProps.postSubmissionResponse.settled !==
+          postSubmissionResponse.settled;
 
       // Conclude isSubmitting if either rejected or fulfilled
       if (
@@ -48,7 +52,9 @@ class FormComponent extends Component {
       if (postSubmissionResponse.rejected && isSettled)
         this.props.setStatus(postSubmissionResponse.reason.cause);
       else if (postSubmissionResponse.fulfilled && isSettled)
-        this.props.history.push(`/submit/success/${postSubmissionResponse.value.id}`);
+        this.props.history.push(
+          `/submit/success/${postSubmissionResponse.value.id}`
+        );
     }
   }
 
@@ -68,7 +74,10 @@ class FormComponent extends Component {
               <Messages {...this.props} />
               <TripFieldset {...this.props} fieldOptions={fieldOptions} />
               <SurveyHourFieldset {...this.props} fieldOptions={fieldOptions} />
-              <FurtherInformationFieldset {...this.props} fieldOptions={fieldOptions} />
+              <FurtherInformationFieldset
+                {...this.props}
+                fieldOptions={fieldOptions}
+              />
 
               <div className="submit-bar fixed-bottom">
                 <div className="container">
@@ -91,9 +100,10 @@ class FormComponent extends Component {
   Computes initial values for the form, based on gridTiles provided via the queryString.
  */
 const computeInitialValues = ({ queryString }) => {
-  const singleGridTile = queryString.gridTiles.length === 1 ? queryString.gridTiles[0] : false;
+  const singleGridTile =
+    queryString.gridTiles.length === 1 ? queryString.gridTiles[0] : false;
 
-  const hours = surveyHours.summer.map(hour =>
+  const hours = surveyHours.summer.map((hour) =>
     Object.assign(
       {},
       initialHourValues,
@@ -108,8 +118,8 @@ const computeInitialValues = ({ queryString }) => {
 /**
   Transforms survey hour grid_tiles from an array of one (as provided by the typeahead) to a string
 */
-const transformSurveyHours = values =>
-  values.hours.map(surveyHour =>
+const transformSurveyHours = (values) =>
+  values.hours.map((surveyHour) =>
     Object.assign({}, surveyHour, { grid_tile: surveyHour.grid_tile[0] })
   );
 
@@ -117,7 +127,7 @@ const transformSurveyHours = values =>
   Primary submission form, using formik, yup and react-refetch
 */
 const SurveyDetailsForm = withFormik({
-  mapPropsToValues: props => computeInitialValues(props),
+  mapPropsToValues: (props) => computeInitialValues(props),
   validationSchema: fullValidationSchema,
   handleSubmit: (values, actions) => {
     actions.props.postSubmission(
@@ -134,11 +144,11 @@ SurveyDetailsForm.propTypes = {
 };
 
 export default withRouter(
-  connect(props => ({
-    postSubmission: values => ({
+  connect((props) => ({
+    postSubmission: (values) => ({
       postSubmissionResponse: {
         url: API_URL,
-        method: 'POST',
+        method: "POST",
         body: JSON.stringify(values),
       },
     }),

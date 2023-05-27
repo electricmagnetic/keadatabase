@@ -1,11 +1,14 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Field } from 'formik';
+import React from "react";
+import PropTypes from "prop-types";
+import { Field } from "formik";
 
-import RenderField from '../../../form/RenderField';
+import RenderField from "../../../form/RenderField";
 
-const atLeastOneKeaObserved = values =>
-  values.hours.reduce((accumulator, current) => accumulator || current.kea, false);
+const atLeastOneKeaObserved = (values) =>
+  values.hours.reduce(
+    (accumulator, current) => accumulator || current.kea,
+    false
+  );
 
 const FurtherInformationFieldset = ({ fieldOptions, values }) => (
   <fieldset className="mb-3">

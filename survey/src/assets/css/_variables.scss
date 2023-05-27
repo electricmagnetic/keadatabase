@@ -1,12 +1,12 @@
-@import '~bootstrap/scss/functions';
-@import '~bootstrap/scss/mixins';
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/mixins";
 
 // Custom variables go here
 
-$font-family-sans-serif: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-  'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-  'Segoe UI Symbol', 'Noto Color Emoji';
-$headings-font-family: 'Zilla Slab', serif;
+$font-family-sans-serif: "Open Sans", -apple-system, BlinkMacSystemFont,
+  "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif,
+  "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+$headings-font-family: "Zilla Slab", serif;
 $headings-font-weight: 500;
 
 $orange-dark: #df5206;
@@ -35,4 +35,4 @@ $navbar-light-hover-color: rgba($black, 0.6);
 
 $navbar-nav-link-padding-x: 1rem;
 
-@import '~bootstrap/scss/variables';
+@import "~bootstrap/scss/variables";

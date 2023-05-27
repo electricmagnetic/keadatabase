@@ -1,11 +1,11 @@
-import React from 'react';
-import Helmet from 'react-helmet';
+import React from "react";
+import Helmet from "react-helmet";
 
-import Banner from '../../components/presentation/Banner';
-import Surveys from '../../components/surveys/Surveys';
-import GridTilesFromSurveyHours from '../../components/grid/GridTilesFromSurveyHours';
+import Banner from "../../components/presentation/Banner";
+import Surveys from "../../components/surveys/Surveys";
+import GridTilesFromSurveyHours from "../../components/grid/GridTilesFromSurveyHours";
 
-const SurveyPage = props => {
+const SurveyPage = (props) => {
   return (
     <div className="SurveyPage">
       <Helmet title="Browse Surveys" />

@@ -1,9 +1,9 @@
-import React from 'react';
-import Helmet from 'react-helmet';
-import { Link } from 'react-router-dom';
+import React from "react";
+import Helmet from "react-helmet";
+import { Link } from "react-router-dom";
 
-import Banner from '../../components/presentation/Banner';
-import Page from '../../components/presentation/Page';
+import Banner from "../../components/presentation/Banner";
+import Page from "../../components/presentation/Page";
 
 const SubmissionSuccessPage = ({ match }) => {
   const slug = match.params.slug;
@@ -21,7 +21,11 @@ const SubmissionSuccessPage = ({ match }) => {
             Report Another
           </Link>
           {slug && (
-            <Link to={'/surveys/' + slug} className="btn btn-light mr-3" role="button">
+            <Link
+              to={"/surveys/" + slug}
+              className="btn btn-light mr-3"
+              role="button"
+            >
               View Survey
             </Link>
           )}

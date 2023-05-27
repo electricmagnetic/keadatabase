@@ -1,17 +1,17 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import Moment from 'react-moment';
+import React from "react";
+import PropTypes from "prop-types";
+import Moment from "react-moment";
 
 const FormatDate = ({ format, calendar, children }) => {
-  const momentParse = 'YYYY-MM-DD HH:mm:ss';
+  const momentParse = "YYYY-MM-DD HH:mm:ss";
 
   const momentCalendarStrings = {
-    lastDay: '[Yesterday at] LT',
-    sameDay: '[Today at] LT',
-    nextDay: '[Tomorrow at] LT',
-    lastWeek: '[Last] dddd [at] LT',
-    nextWeek: 'dddd [at] LT',
-    sameElse: 'ddd DD MMM YYYY[,] LT',
+    lastDay: "[Yesterday at] LT",
+    sameDay: "[Today at] LT",
+    nextDay: "[Tomorrow at] LT",
+    lastWeek: "[Last] dddd [at] LT",
+    nextWeek: "dddd [at] LT",
+    sameElse: "ddd DD MMM YYYY[,] LT",
   };
 
   if (calendar) {
@@ -21,20 +21,20 @@ const FormatDate = ({ format, calendar, children }) => {
       </Moment>
     );
   } else {
-    var momentFormat = '';
+    var momentFormat = "";
 
     switch (format) {
-      case 'short':
-        momentFormat = 'DD/MM/YY';
+      case "short":
+        momentFormat = "DD/MM/YY";
         break;
-      case 'medium':
-        momentFormat = 'ddd DD MMM';
+      case "medium":
+        momentFormat = "ddd DD MMM";
         break;
-      case 'long':
-        momentFormat = 'dddd DD MMMM YYYY';
+      case "long":
+        momentFormat = "dddd DD MMMM YYYY";
         break;
       default:
-        momentFormat = 'ddd DD MMMM';
+        momentFormat = "ddd DD MMMM";
     }
 
     return (
@@ -52,7 +52,7 @@ FormatDate.propTypes = {
 };
 
 FormatDate.defaultProps = {
-  format: 'long',
+  format: "long",
   calendar: false,
 };
 

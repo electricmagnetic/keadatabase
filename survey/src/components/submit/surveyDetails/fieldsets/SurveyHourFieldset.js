@@ -1,17 +1,18 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { Field, FieldArray } from 'formik';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { Field, FieldArray } from "formik";
 
-import RenderField from '../../../form/RenderField';
+import RenderField from "../../../form/RenderField";
 
-import { initialHourValues } from '../../schema/initialValues';
-import { surveyHours } from '../../schema/surveyParameters';
+import { initialHourValues } from "../../schema/initialValues";
+import { surveyHours } from "../../schema/surveyParameters";
 
-import './SurveyHourFieldset.scss';
+import "./SurveyHourFieldset.scss";
 
-const isWinter = hour => surveyHours.winter.includes(hour);
-const hasSingleGridTile = values => values.gridTiles && values.gridTiles.length === 1;
-const isNotSurveying = surveyHour => surveyHour.activity === 'X';
+const isWinter = (hour) => surveyHours.winter.includes(hour);
+const hasSingleGridTile = (values) =>
+  values.gridTiles && values.gridTiles.length === 1;
+const isNotSurveying = (surveyHour) => surveyHour.activity === "X";
 
 class RenderHour extends Component {
   componentDidUpdate(prevProps) {
@@ -19,7 +20,7 @@ class RenderHour extends Component {
       if (isNotSurveying(this.props.surveyHour)) {
         const { form, index } = this.props;
         if (!hasSingleGridTile(form.values)) {
-          form.setFieldValue(`hours.${index}.grid_tile`, '');
+          form.setFieldValue(`hours.${index}.grid_tile`, "");
         }
         form.setFieldValue(`hours.${index}.kea`, false);
       }
@@ -77,7 +78,10 @@ class RenderHour extends Component {
     })();
 
     return (
-      <tr key={index} className={isWinter(surveyHour.hour) ? 'winter' : 'summer'}>
+      <tr
+        key={index}
+        className={isWinter(surveyHour.hour) ? "winter" : "summer"}
+      >
         <td>
           <Field
             component={RenderField}
@@ -124,13 +128,14 @@ class RenderHours extends Component {
       <div className="RenderHours">
         {hasSingleGridTile(values) && (
           <div className="alert alert-info">
-            Only one grid tile has been selected, so this has been added to every hour.
+            Only one grid tile has been selected, so this has been added to
+            every hour.
           </div>
         )}
         <table className="table table-bordered">
           <thead>
             <tr>
-              <th style={{ width: '10%' }}>Hour</th>
+              <th style={{ width: "10%" }}>Hour</th>
               <th>Activity</th>
               <th>Kea?</th>
               <th>Grid Tile</th>
@@ -161,8 +166,11 @@ const HourFieldset = ({ fieldOptions }) => {
       <FieldArray
         initialValues={initialHourValues}
         name="hours"
-        render={arrayHelpers => (
-          <RenderHours fieldOptions={fieldOptions.hours.child.children} {...arrayHelpers} />
+        render={(arrayHelpers) => (
+          <RenderHours
+            fieldOptions={fieldOptions.hours.child.children}
+            {...arrayHelpers}
+          />
         )}
       />
     </fieldset>

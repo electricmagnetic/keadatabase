@@ -1,7 +1,7 @@
-@import './_variables';
-@import '~bootstrap/scss/bootstrap';
+@import "./_variables";
+@import "~bootstrap/scss/bootstrap";
 
-$constrainer-width: map-get($container-max-widths, 'xl') + 280px;
+$constrainer-width: map-get($container-max-widths, "xl") + 280px;
 
 #root {
   background-color: $gray-100;
@@ -19,7 +19,7 @@ $constrainer-width: map-get($container-max-widths, 'xl') + 280px;
     width: $constrainer-width;
     &::before,
     &::after {
-      content: '';
+      content: "";
       display: table;
       clear: both;
     }

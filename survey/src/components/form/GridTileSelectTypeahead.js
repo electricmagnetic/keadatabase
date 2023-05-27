@@ -1,7 +1,7 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
-import GridTileTypeahead from '../grid/GridTileTypeahead';
+import GridTileTypeahead from "../grid/GridTileTypeahead";
 
 /**
   Field component for grid tile selection. Using react-bootstrap-typeahead.
@@ -11,8 +11,8 @@ const GridTileSelectTypeahead = ({ name, form, ...field }) => {
   return (
     <GridTileTypeahead
       {...field}
-      onChange={selected => form.setFieldValue(name, selected)}
-      onBlur={event => form.setFieldTouched(name, true)}
+      onChange={(selected) => form.setFieldValue(name, selected)}
+      onBlur={(event) => form.setFieldTouched(name, true)}
       selected={form.values[name]}
     />
   );

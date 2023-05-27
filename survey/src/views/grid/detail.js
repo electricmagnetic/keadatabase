@@ -1,8 +1,8 @@
-import React from 'react';
-import Helmet from 'react-helmet';
+import React from "react";
+import Helmet from "react-helmet";
 
-import GridTile from '../../components/grid/GridTile';
-import Banner from '../../components/presentation/Banner';
+import GridTile from "../../components/grid/GridTile";
+import Banner from "../../components/presentation/Banner";
 
 const GridDetailPage = ({ match }) => {
   const slug = match.params.slug;

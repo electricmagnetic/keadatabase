@@ -1,9 +1,9 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Field } from 'formik';
+import React from "react";
+import PropTypes from "prop-types";
+import { Field } from "formik";
 
-import RenderField from '../../../form/RenderField';
-import SelectedGridTilesMap from '../../../map/SelectedGridTilesMap';
+import RenderField from "../../../form/RenderField";
+import SelectedGridTilesMap from "../../../map/SelectedGridTilesMap";
 
 const TripFieldset = ({ fieldOptions, values, setFieldValue }) => (
   <fieldset className="mb-3">

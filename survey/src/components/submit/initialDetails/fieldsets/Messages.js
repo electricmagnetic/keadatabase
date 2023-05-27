@@ -1,6 +1,6 @@
-import React from 'react';
+import React from "react";
 
-import Error from '../../../helpers/Error';
+import Error from "../../../helpers/Error";
 
 /**
   Area for displaying error messages
@@ -14,7 +14,9 @@ const Messages = ({ isValid, submitCount, errors }) => {
     <div className="messages">
       {yupRejected > 0 && errors && !isValid && (
         <Error message="Invalid data">
-          <p className="m-0">Invalid data provided. Please double-check the form for errors.</p>
+          <p className="m-0">
+            Invalid data provided. Please double-check the form for errors.
+          </p>
         </Error>
       )}
     </div>

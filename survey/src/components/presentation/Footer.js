@@ -1,22 +1,22 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
+import React from "react";
+import { NavLink } from "react-router-dom";
 
-import './Footer.scss';
+import "./Footer.scss";
 
 /**
   Main footer. Different CSS/functionality behaviour can be toggled by prop `onSubmitPage`.
   */
 const Footer = ({ onSubmitPage }) => {
-  const footerClassNames = ['d-print-none', onSubmitPage && 'on-submit-page'];
+  const footerClassNames = ["d-print-none", onSubmitPage && "on-submit-page"];
 
   return (
-    <footer className={footerClassNames.join(' ')}>
+    <footer className={footerClassNames.join(" ")}>
       <div className="constrainer">
         <div className="container py-4">
           <div className="row align-items-center">
             <div className="col-md-8">
               <p className="footer-sponsor">
-                Kea Database data hosted in New Zealand on{' '}
+                Kea Database data hosted in New Zealand on{" "}
                 <a
                   href="https://www.catalyst.net.nz/products/gis-core"
                   target="_blank"

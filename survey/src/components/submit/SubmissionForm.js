@@ -1,17 +1,17 @@
-import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
-import { connect } from 'react-refetch';
-import qs from 'qs';
-import PropTypes from 'prop-types';
+import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
+import { connect } from "react-refetch";
+import qs from "qs";
+import PropTypes from "prop-types";
 
-import Loader from '../helpers/Loader';
-import Error from '../helpers/Error';
+import Loader from "../helpers/Loader";
+import Error from "../helpers/Error";
 
-import { qsOptions } from './schema/surveyParameters';
-import InitialDetailsForm from './initialDetails/InitialDetailsForm';
-import SurveyDetailsForm from './surveyDetails/SurveyDetailsForm';
+import { qsOptions } from "./schema/surveyParameters";
+import InitialDetailsForm from "./initialDetails/InitialDetailsForm";
+import SurveyDetailsForm from "./surveyDetails/SurveyDetailsForm";
 
-import './SubmissionForm.scss';
+import "./SubmissionForm.scss";
 
 const API_URL = `${process.env.REACT_APP_API_BASE}/report/survey/`;
 
@@ -37,7 +37,8 @@ class SubmissionForm extends Component {
 
   componentDidUpdate(prevProps) {
     // If location changes, update state accordingly
-    if (this.props.location !== prevProps.location) this.updateStateFromQueryString();
+    if (this.props.location !== prevProps.location)
+      this.updateStateFromQueryString();
   }
 
   render() {
@@ -53,7 +54,8 @@ class SubmissionForm extends Component {
       return (
         <div className="container mb-5">
           <Error message="Error">
-            {submissionOptions.reason.cause && `(${submissionOptions.reason.cause.detail})`}
+            {submissionOptions.reason.cause &&
+              `(${submissionOptions.reason.cause.detail})`}
           </Error>
         </div>
       );
@@ -63,7 +65,10 @@ class SubmissionForm extends Component {
       return (
         <div className="SubmissionForm">
           {this.state.queryString.gridTiles ? (
-            <SurveyDetailsForm queryString={this.state.queryString} fieldOptions={fieldOptions} />
+            <SurveyDetailsForm
+              queryString={this.state.queryString}
+              fieldOptions={fieldOptions}
+            />
           ) : (
             <InitialDetailsForm fieldOptions={fieldOptions} />
           )}
@@ -74,14 +79,14 @@ class SubmissionForm extends Component {
 }
 
 SubmissionForm.propTypes = {
-  'location.search': PropTypes.string,
+  "location.search": PropTypes.string,
 };
 
 export default withRouter(
-  connect(props => ({
+  connect((props) => ({
     submissionOptions: {
       url: API_URL,
-      method: 'OPTIONS',
+      method: "OPTIONS",
     },
   }))(SubmissionForm)
 );

@@ -1,20 +1,20 @@
-import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
-import Helmet from 'react-helmet';
-import { Form, withFormik } from 'formik';
-import qs from 'qs';
-import PropTypes from 'prop-types';
+import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
+import Helmet from "react-helmet";
+import { Form, withFormik } from "formik";
+import qs from "qs";
+import PropTypes from "prop-types";
 
-import Messages from './fieldsets/Messages';
-import ObserverFieldset from './fieldsets/ObserverFieldset';
-import GridTileFieldset from './fieldsets/GridTileFieldset';
-import SubmitFieldset from './fieldsets/SubmitFieldset';
-import SelectedGridTiles from './fieldsets/SelectedGridTiles';
-import GridTileSelectMap from '../../map/GridTileSelectMap';
+import Messages from "./fieldsets/Messages";
+import ObserverFieldset from "./fieldsets/ObserverFieldset";
+import GridTileFieldset from "./fieldsets/GridTileFieldset";
+import SubmitFieldset from "./fieldsets/SubmitFieldset";
+import SelectedGridTiles from "./fieldsets/SelectedGridTiles";
+import GridTileSelectMap from "../../map/GridTileSelectMap";
 
-import { qsOptions } from '../schema/surveyParameters';
-import { initialInitialValues } from '../schema/initialValues';
-import { initialValidationSchema } from '../schema/validationSchemas';
+import { qsOptions } from "../schema/surveyParameters";
+import { initialInitialValues } from "../schema/initialValues";
+import { initialValidationSchema } from "../schema/validationSchemas";
 
 /**
   Enables user to select a set of gridTiles as specified in `tiles.json`.
@@ -60,7 +60,7 @@ class InitialDetailsFormComponent extends Component {
 }
 
 const InitialDetailsForm = withFormik({
-  mapPropsToValues: props => initialInitialValues,
+  mapPropsToValues: (props) => initialInitialValues,
   validationSchema: initialValidationSchema,
   handleSubmit: (values, actions) => {
     const queryString = `${qs.stringify(values, qsOptions)}`;

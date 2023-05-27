@@ -1,8 +1,8 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
-import { calculateEncounterRate } from './calculations/gridTileCalculations';
-import HoursPerQuarterGraph from './graphs/HoursPerQuarterGraph';
+import { calculateEncounterRate } from "./calculations/gridTileCalculations";
+import HoursPerQuarterGraph from "./graphs/HoursPerQuarterGraph";
 
 /**
   Display analyses as an item

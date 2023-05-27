@@ -1,9 +1,9 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import React from "react";
+import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
-import FormatDate from '../../helpers/FormatDate';
-import getUniqueGridTiles from '../../helpers/getUniqueGridTiles';
+import FormatDate from "../../helpers/FormatDate";
+import getUniqueGridTiles from "../../helpers/getUniqueGridTiles";
 
 /**
   Presents a nicely formatted list item for a given survey.
@@ -30,8 +30,12 @@ const SurveyItem = ({ survey }) => {
           </div>
           <div className="col-md-4 field-gridTile">
             <i className="fa-fw fas fa-map mr-3"></i>
-            {gridTileIds.slice(0, 3).map(gridTileId => (
-              <Link to={`/grid/${gridTileId}`} key={gridTileId} className="mr-3">
+            {gridTileIds.slice(0, 3).map((gridTileId) => (
+              <Link
+                to={`/grid/${gridTileId}`}
+                key={gridTileId}
+                className="mr-3"
+              >
                 {gridTileId}
               </Link>
             ))}

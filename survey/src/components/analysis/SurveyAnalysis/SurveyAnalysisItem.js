@@ -1,7 +1,7 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
-import { calculateEncounterRate } from './calculations/surveyCalculations';
+import { calculateEncounterRate } from "./calculations/surveyCalculations";
 
 /**
   Display analyses as an item

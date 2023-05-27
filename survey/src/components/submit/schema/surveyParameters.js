@@ -24,7 +24,7 @@ export const maximumGridTiles = 15;
   */
 export const qsOptions = {
   encode: false,
-  arrayFormat: 'brackets',
+  arrayFormat: "brackets",
   ignoreQueryPrefix: true,
   addQueryPrefix: true,
   allowDots: true,

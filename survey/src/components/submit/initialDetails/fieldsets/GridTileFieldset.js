@@ -1,8 +1,8 @@
-import React from 'react';
+import React from "react";
 
-import { Field } from 'formik';
+import { Field } from "formik";
 
-import RenderField from '../../../form/RenderField';
+import RenderField from "../../../form/RenderField";
 
 /**
   Fieldset for grid tile selection (wrapper around GridTilesSelectTypeahead).

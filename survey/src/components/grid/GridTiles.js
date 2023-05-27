@@ -1,16 +1,18 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import useSWR from 'swr';
+import React from "react";
+import PropTypes from "prop-types";
+import useSWR from "swr";
 
-import GridTile from './GridTile';
+import GridTile from "./GridTile";
 
-import Loader from '../helpers/Loader';
-import Error from '../helpers/Error';
+import Loader from "../helpers/Loader";
+import Error from "../helpers/Error";
 
 const API_URL = `${process.env.REACT_APP_API_BASE}/surveys/grid_tiles/`;
 
 const Surveys = ({ queryString, ...others }) => {
-  const { data, error, isValidating } = useSWR(`${API_URL}${queryString}`, { dedupingInterval: 0 });
+  const { data, error, isValidating } = useSWR(`${API_URL}${queryString}`, {
+    dedupingInterval: 0,
+  });
 
   if (isValidating) {
     return <Loader />;
@@ -19,7 +21,7 @@ const Surveys = ({ queryString, ...others }) => {
   } else if (data) {
     const gridTiles = data.results;
 
-    return gridTiles.map(gridTile => (
+    return gridTiles.map((gridTile) => (
       <GridTile gridTile={gridTile} key={gridTile.id} {...others} />
     ));
   } else return null;
@@ -31,8 +33,8 @@ GridTiles.propTypes = {
 };
 
 GridTiles.defaultProps = {
-  type: 'item',
-  queryString: '',
+  type: "item",
+  queryString: "",
 };
 
 export default GridTiles;

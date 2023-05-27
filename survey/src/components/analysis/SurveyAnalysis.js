@@ -1,11 +1,11 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import useSWR from 'swr';
+import React from "react";
+import PropTypes from "prop-types";
+import useSWR from "swr";
 
-import Loader from '../helpers/Loader';
-import Error from '../helpers/Error';
+import Loader from "../helpers/Loader";
+import Error from "../helpers/Error";
 
-import SurveyAnalysisItem from './SurveyAnalysis/SurveyAnalysisItem';
+import SurveyAnalysisItem from "./SurveyAnalysis/SurveyAnalysisItem";
 
 const API_URL = `${process.env.REACT_APP_API_BASE}/analysis/surveys/`;
 
@@ -13,7 +13,9 @@ const API_URL = `${process.env.REACT_APP_API_BASE}/analysis/surveys/`;
   Obtain analyses for a given survey
  */
 const SurveyAnalysis = ({ id }) => {
-  const { data, error, isValidating } = useSWR(`${API_URL}${id}/`, { dedupingInterval: 0 });
+  const { data, error, isValidating } = useSWR(`${API_URL}${id}/`, {
+    dedupingInterval: 0,
+  });
 
   if (isValidating) {
     return <Loader />;

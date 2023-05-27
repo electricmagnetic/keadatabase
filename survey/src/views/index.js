@@ -1,14 +1,14 @@
-import React from 'react';
-import Helmet from 'react-helmet';
-import { Link } from 'react-router-dom';
+import React from "react";
+import Helmet from "react-helmet";
+import { Link } from "react-router-dom";
 
-import GridTilesFromSurveyHours from '../components/grid/GridTilesFromSurveyHours';
-import Banner from '../components/presentation/Banner';
-import Page from '../components/presentation/Page';
+import GridTilesFromSurveyHours from "../components/grid/GridTilesFromSurveyHours";
+import Banner from "../components/presentation/Banner";
+import Page from "../components/presentation/Page";
 
-import banner from '../assets/img/banner.jpg';
+import banner from "../assets/img/banner.jpg";
 
-const HomePage = props => {
+const HomePage = (props) => {
   return (
     <div className="HomePage">
       <Helmet title="Kea Survey Tool" />

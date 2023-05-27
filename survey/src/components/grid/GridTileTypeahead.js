@@ -1,11 +1,11 @@
-import React from 'react';
-import { Typeahead, MenuItem, Menu } from 'react-bootstrap-typeahead';
+import React from "react";
+import { Typeahead, MenuItem, Menu } from "react-bootstrap-typeahead";
 
-import 'react-bootstrap-typeahead/css/Typeahead.css';
-import 'react-bootstrap-typeahead/css/Typeahead-bs4.css';
+import "react-bootstrap-typeahead/css/Typeahead.css";
+import "react-bootstrap-typeahead/css/Typeahead-bs4.css";
 
-import './GridTileTypeahead.scss';
-import tiles from '../../assets/geo/tiles.json';
+import "./GridTileTypeahead.scss";
+import tiles from "../../assets/geo/tiles.json";
 
 /**
   Displays a label (if given) otherwise display grid tile result itself.
@@ -23,7 +23,10 @@ const renderMenuItem = (result, index) => {
       <MenuItem option={result} position={index} key={result}>
         <div className="MenuItemTileImage mr-3">
           <img
-            src={tiles.features.find(tile => tile.id === result).properties.get_small_image}
+            src={
+              tiles.features.find((tile) => tile.id === result).properties
+                .get_small_image
+            }
             alt={`Tile of ${result}`}
           />
         </div>
@@ -39,7 +42,7 @@ const renderMenuItem = (result, index) => {
 const GridTileTypeahead = ({ ...props }) => (
   <Typeahead
     className="GridTileTypeahead"
-    options={tiles.features.map(feature => feature.id)}
+    options={tiles.features.map((feature) => feature.id)}
     minLength={3}
     selectHintOnEnter
     highlightOnlyResult
@@ -50,7 +53,9 @@ const GridTileTypeahead = ({ ...props }) => (
     maxResults={8}
     paginationText="Display more…"
     renderMenu={(results, menuProps) => (
-      <Menu {...menuProps}>{results.map((result, index) => renderMenuItem(result, index))}</Menu>
+      <Menu {...menuProps}>
+        {results.map((result, index) => renderMenuItem(result, index))}
+      </Menu>
     )}
     {...props}
   />

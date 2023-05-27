@@ -1,15 +1,15 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-import { GeoJSON as LeafletGeoJSON } from 'leaflet';
-import { FeatureGroup, ScaleControl, Polygon, Tooltip } from 'react-leaflet';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
+import { GeoJSON as LeafletGeoJSON } from "leaflet";
+import { FeatureGroup, ScaleControl, Polygon, Tooltip } from "react-leaflet";
 
-import Error from '../helpers/Error';
-import BaseMap from './BaseMap';
-import { DEFAULT_BOUNDS } from '../map/defaults';
+import Error from "../helpers/Error";
+import BaseMap from "./BaseMap";
+import { DEFAULT_BOUNDS } from "../map/defaults";
 
-import './SelectedGridTilesMap.scss';
-import tiles from '../../assets/geo/tiles.json';
+import "./SelectedGridTilesMap.scss";
+import tiles from "../../assets/geo/tiles.json";
 
 /**
   Non-interactive map component for displaying a given set of grid tiles.
@@ -30,9 +30,10 @@ class SelectedGridTilesMap extends Component {
   /**
     Obtain bounds of gridTiles (and neighbours) from either an event (onAdd/onRemove) or the featureGroup object
    */
-  getBounds = event =>
+  getBounds = (event) =>
     (event && event.target.getBounds()) ||
-    (this.refs.featureGroup && this.refs.featureGroup.leafletElement.getBounds());
+    (this.refs.featureGroup &&
+      this.refs.featureGroup.leafletElement.getBounds());
 
   /**
     Update the gridBounds in state. Designed for use with an event (e.g. from a FeatureGroup)
@@ -58,8 +59,10 @@ class SelectedGridTilesMap extends Component {
   createSelectedGridTile = (gridTileId, isNeighbour = false) => (
     <Polygon
       positions={tiles.features
-        .find(tile => tile.id === gridTileId)
-        .geometry.coordinates.map(coordinate => LeafletGeoJSON.coordsToLatLngs(coordinate))}
+        .find((tile) => tile.id === gridTileId)
+        .geometry.coordinates.map((coordinate) =>
+          LeafletGeoJSON.coordsToLatLngs(coordinate)
+        )}
       key={gridTileId}
       color="black"
       weight={isNeighbour ? 1 : 3}
@@ -69,11 +72,15 @@ class SelectedGridTilesMap extends Component {
     >
       <Tooltip
         direction="center"
-        className={isNeighbour && 'neighbour'}
+        className={isNeighbour && "neighbour"}
         permanent
         interactive={isNeighbour}
       >
-        {isNeighbour ? <Link to={`/grid/${gridTileId}`}>{gridTileId}</Link> : gridTileId}
+        {isNeighbour ? (
+          <Link to={`/grid/${gridTileId}`}>{gridTileId}</Link>
+        ) : (
+          gridTileId
+        )}
       </Tooltip>
     </Polygon>
   );
@@ -81,14 +88,16 @@ class SelectedGridTilesMap extends Component {
   /**
     Foo
    */
-  getNeighbours = gridTileIds => [
+  getNeighbours = (gridTileIds) => [
     ...new Set(
       gridTileIds
         .map(
-          gridTileId => tiles.features.find(tile => tile.id === gridTileId).properties.neighbours
+          (gridTileId) =>
+            tiles.features.find((tile) => tile.id === gridTileId).properties
+              .neighbours
         )
         .flat()
-        .filter(neighbourId => !gridTileIds.includes(neighbourId))
+        .filter((neighbourId) => !gridTileIds.includes(neighbourId))
     ),
   ];
 
@@ -118,13 +127,15 @@ class SelectedGridTilesMap extends Component {
             ref="map"
           >
             <FeatureGroup
-              onAdd={event => this.updateGridBounds(event)}
-              onRemove={event => this.updateGridBounds(event)}
+              onAdd={(event) => this.updateGridBounds(event)}
+              onRemove={(event) => this.updateGridBounds(event)}
               ref="featureGroup"
             >
-              {gridTileIds.map(gridTileId => this.createSelectedGridTile(gridTileId))}
+              {gridTileIds.map((gridTileId) =>
+                this.createSelectedGridTile(gridTileId)
+              )}
               {showNeighbours &&
-                this.getNeighbours(gridTileIds).map(neighbourId =>
+                this.getNeighbours(gridTileIds).map((neighbourId) =>
                   this.createSelectedGridTile(neighbourId, true)
                 )}
             </FeatureGroup>

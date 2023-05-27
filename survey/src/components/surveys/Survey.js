@@ -1,12 +1,12 @@
-import React from 'react';
-import useSWR from 'swr';
-import PropTypes from 'prop-types';
+import React from "react";
+import useSWR from "swr";
+import PropTypes from "prop-types";
 
-import Loader from '../helpers/Loader';
-import Error from '../helpers/Error';
+import Loader from "../helpers/Loader";
+import Error from "../helpers/Error";
 
-import SurveyPage from './Survey/SurveyPage';
-import SurveyItem from './Survey/SurveyItem';
+import SurveyPage from "./Survey/SurveyPage";
+import SurveyItem from "./Survey/SurveyItem";
 
 const API_URL = `${process.env.REACT_APP_API_BASE}/surveys/surveys/`;
 
@@ -17,7 +17,7 @@ const RenderSurvey = ({ survey, type, ...others }) => {
   if (!survey) return <Error message="Invalid survey" />;
 
   switch (type) {
-    case 'item':
+    case "item":
       return <SurveyItem survey={survey} {...others} />;
     default:
       return <SurveyPage survey={survey} {...others} />;
@@ -49,7 +49,7 @@ Survey.propTypes = {
 };
 
 Survey.defaultProps = {
-  type: 'page',
+  type: "page",
 };
 
 export default Survey;

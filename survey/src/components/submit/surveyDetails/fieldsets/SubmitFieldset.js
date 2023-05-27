@@ -1,7 +1,7 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
-import Loader from '../../../helpers/Loader';
+import Loader from "../../../helpers/Loader";
 
 const SubmitFieldset = ({ isValid, isSubmitting, postSubmissionResponse }) => {
   const isLoading =
@@ -9,7 +9,8 @@ const SubmitFieldset = ({ isValid, isSubmitting, postSubmissionResponse }) => {
     (postSubmissionResponse && postSubmissionResponse.refreshing) ||
     isSubmitting;
   const isRejected = postSubmissionResponse && postSubmissionResponse.rejected;
-  const isFulfilled = postSubmissionResponse && postSubmissionResponse.fulfilled;
+  const isFulfilled =
+    postSubmissionResponse && postSubmissionResponse.fulfilled;
 
   return (
     <fieldset>
@@ -17,14 +18,20 @@ const SubmitFieldset = ({ isValid, isSubmitting, postSubmissionResponse }) => {
       <div className="row align-items-center">
         <div className="col-8">
           {!isValid && (
-            <small className="d-inline-block">Form can be submitted once data entered.</small>
+            <small className="d-inline-block">
+              Form can be submitted once data entered.
+            </small>
           )}
           {isRejected && <span>Error</span>}
           {isLoading && <Loader />}
           {isFulfilled && <span>Success</span>}
         </div>
         <div className="col-4 text-right">
-          <button type="submit" className="btn btn-primary mr-3" disabled={isLoading || !isValid}>
+          <button
+            type="submit"
+            className="btn btn-primary mr-3"
+            disabled={isLoading || !isValid}
+          >
             Submit
           </button>
         </div>

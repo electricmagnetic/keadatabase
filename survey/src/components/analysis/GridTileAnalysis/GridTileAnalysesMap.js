@@ -1,13 +1,13 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-import { ScaleControl, Popup, Polygon } from 'react-leaflet';
-import { GeoJSON as LeafletGeoJSON } from 'leaflet';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
+import { ScaleControl, Popup, Polygon } from "react-leaflet";
+import { GeoJSON as LeafletGeoJSON } from "leaflet";
 
-import BaseMap from '../../map/BaseMap';
+import BaseMap from "../../map/BaseMap";
 
-import tiles from '../../../assets/geo/tiles.json';
-import '../../map/GridTileMap.scss';
+import tiles from "../../../assets/geo/tiles.json";
+import "../../map/GridTileMap.scss";
 
 /**
   Map component for analysis of tiles.
@@ -16,14 +16,17 @@ class GridTileAnalysisMap extends Component {
   /**
     Generate colouring based on hours with/without kea.
    */
-  analysisTileStyle = gridTileAnalysis => {
+  analysisTileStyle = (gridTileAnalysis) => {
     const hasKea = gridTileAnalysis.hours_total.with_kea > 0;
     const manyHours = gridTileAnalysis.hours_total.total > 10;
 
-    const colour = hasKea ? '#df5206' : '#111111';
+    const colour = hasKea ? "#df5206" : "#111111";
 
     const fillOpacity = hasKea
-      ? 0.3 + (gridTileAnalysis.hours_total.with_kea / gridTileAnalysis.hours_total.total) * 0.4
+      ? 0.3 +
+        (gridTileAnalysis.hours_total.with_kea /
+          gridTileAnalysis.hours_total.total) *
+          0.4
       : manyHours
       ? 0.7
       : 0.3;
@@ -39,11 +42,13 @@ class GridTileAnalysisMap extends Component {
   /**
     Create a Polygon for each gridTileAnalysis. Retrieve coordinates from raw GeoJSON, then convert (due to differing conventions).
   */
-  createGridTile = gridTileAnalysis => (
+  createGridTile = (gridTileAnalysis) => (
     <Polygon
       positions={tiles.features
-        .find(tile => tile.id === gridTileAnalysis.id)
-        .geometry.coordinates.map(coordinate => LeafletGeoJSON.coordsToLatLngs(coordinate))}
+        .find((tile) => tile.id === gridTileAnalysis.id)
+        .geometry.coordinates.map((coordinate) =>
+          LeafletGeoJSON.coordsToLatLngs(coordinate)
+        )}
       key={gridTileAnalysis.id}
       id={gridTileAnalysis.id}
       {...this.analysisTileStyle(gridTileAnalysis)}
@@ -67,7 +72,9 @@ class GridTileAnalysisMap extends Component {
     return (
       <div className="GridTileMap">
         <BaseMap hideGridTiles>
-          {gridTileAnalyses.map(gridTileAnalysis => this.createGridTile(gridTileAnalysis))}
+          {gridTileAnalyses.map((gridTileAnalysis) =>
+            this.createGridTile(gridTileAnalysis)
+          )}
           <ScaleControl />
         </BaseMap>
       </div>

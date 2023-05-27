@@ -1,9 +1,9 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
-import SurveyHours from '../../surveys/SurveyHours';
-import SelectedGridTilesMap from '../../map/SelectedGridTilesMap';
-import GridTileAnalysis from '../../analysis/GridTileAnalysis';
+import SurveyHours from "../../surveys/SurveyHours";
+import SelectedGridTilesMap from "../../map/SelectedGridTilesMap";
+import GridTileAnalysis from "../../analysis/GridTileAnalysis";
 
 /**
   Presents a nicely formatted page for a given grid tile.
@@ -59,7 +59,10 @@ const GridTilePage = ({ gridTile, ...others }) => {
         <h2>
           Recent Hours <small>(last 25)</small>
         </h2>
-        <SurveyHours queryString={`?grid_tile=${gridTile.id}&page_size=25`} swapGridTileSurvey />
+        <SurveyHours
+          queryString={`?grid_tile=${gridTile.id}&page_size=25`}
+          swapGridTileSurvey
+        />
       </section>
     </div>
   );

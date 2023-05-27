@@ -1,11 +1,11 @@
-import React from 'react';
-import useSWR from 'swr';
-import PropTypes from 'prop-types';
+import React from "react";
+import useSWR from "swr";
+import PropTypes from "prop-types";
 
-import Loader from '../helpers/Loader';
-import Error from '../helpers/Error';
+import Loader from "../helpers/Loader";
+import Error from "../helpers/Error";
 
-import SurveyHourItem from './SurveyHour/SurveyHourItem';
+import SurveyHourItem from "./SurveyHour/SurveyHourItem";
 
 const API_URL = `${process.env.REACT_APP_API_BASE}/surveys/hours/`;
 
@@ -49,7 +49,7 @@ SurveyHour.propTypes = {
 };
 
 SurveyHour.defaultProps = {
-  type: 'item',
+  type: "item",
 };
 
 export default SurveyHour;

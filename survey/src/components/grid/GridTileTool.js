@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
 
-import GridTileTypeahead from './GridTileTypeahead';
-import GridTileSelectMap from '../map/GridTileSelectMap';
-import GridTile from './GridTile';
-import Error from '../helpers/Error';
+import GridTileTypeahead from "./GridTileTypeahead";
+import GridTileSelectMap from "../map/GridTileSelectMap";
+import GridTile from "./GridTile";
+import Error from "../helpers/Error";
 
-import './GridTileTool.scss';
+import "./GridTileTool.scss";
 
 /**
   Provides a typeahead interface, returning a single GridTile.
@@ -40,7 +40,7 @@ class GridTileTool extends Component {
           <h2 className="d-none d-print-block my-5">
             <small>Grid Tiles, Kea Survey Tool</small>
             <br />
-            {this.state.gridTiles.join(' ')}
+            {this.state.gridTiles.join(" ")}
           </h2>
         )}
         <div className="container-fluid">
@@ -54,11 +54,16 @@ class GridTileTool extends Component {
             </div>
             <div className="col-md-3">
               <div className="InformationBox bg-faded">
-                <form onSubmit={this.handleSubmit} className="form d-print-none mb-3">
+                <form
+                  onSubmit={this.handleSubmit}
+                  className="form d-print-none mb-3"
+                >
                   <div className="form-group">
                     <label htmlFor="gridTile">Select grid tiles to view</label>
                     <GridTileTypeahead
-                      onChange={selected => this.setGridTiles('gridTiles', selected)}
+                      onChange={(selected) =>
+                        this.setGridTiles("gridTiles", selected)
+                      }
                       autoFocus
                       selected={this.state.gridTiles}
                       multiple
@@ -67,15 +72,25 @@ class GridTileTool extends Component {
                 </form>
                 <div className="result">
                   {hasTile ? (
-                    this.state.gridTiles.map(gridTileId => (
-                      <GridTile id={gridTileId} key={gridTileId} type="card" hideImage addLink />
+                    this.state.gridTiles.map((gridTileId) => (
+                      <GridTile
+                        id={gridTileId}
+                        key={gridTileId}
+                        type="card"
+                        hideImage
+                        addLink
+                      />
                     ))
                   ) : (
                     <Error message="No grid tiles selected" info />
                   )}
                 </div>
                 <div className="print d-print-none">
-                  <button type="button" className="btn btn-primary" onClick={() => window.print()}>
+                  <button
+                    type="button"
+                    className="btn btn-primary"
+                    onClick={() => window.print()}
+                  >
                     <i className="fa-fw fas fa-print mr-2"></i>
                     Print
                   </button>

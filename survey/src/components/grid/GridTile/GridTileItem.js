@@ -1,5 +1,5 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
 /**
   Presents a nicely formatted list item for a given grid tile.
@@ -14,7 +14,11 @@ const GridTileItem = ({ gridTile, ...others }) => {
       <div className="card-body">
         <div className="row">
           <div className="col-md-3">
-            <img src={tileData.get_large_image} alt="Map grid tile" className="img-fluid" />
+            <img
+              src={tileData.get_large_image}
+              alt="Map grid tile"
+              className="img-fluid"
+            />
           </div>
           <div className="col-md-9">
             <h2 className="card-title">{id}</h2>
@@ -26,7 +30,8 @@ const GridTileItem = ({ gridTile, ...others }) => {
                       SW <small>NZTM</small>
                     </dt>
                     <dd>
-                      {tileData.min.coordinates[0]}, {tileData.min.coordinates[1]}
+                      {tileData.min.coordinates[0]},{" "}
+                      {tileData.min.coordinates[1]}
                     </dd>
                   </div>
                   <div className="col-6">
@@ -34,7 +39,8 @@ const GridTileItem = ({ gridTile, ...others }) => {
                       NE <small>NZTM</small>
                     </dt>
                     <dd>
-                      {tileData.max.coordinates[0]}, {tileData.max.coordinates[1]}
+                      {tileData.max.coordinates[0]},{" "}
+                      {tileData.max.coordinates[1]}
                     </dd>
                   </div>
                 </div>

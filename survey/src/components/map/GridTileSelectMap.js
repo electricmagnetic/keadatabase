@@ -1,14 +1,14 @@
-import React, { Component } from 'react';
-import { ScaleControl, Polygon, Tooltip, FeatureGroup } from 'react-leaflet';
-import { latLngBounds, GeoJSON as LeafletGeoJSON } from 'leaflet';
+import React, { Component } from "react";
+import { ScaleControl, Polygon, Tooltip, FeatureGroup } from "react-leaflet";
+import { latLngBounds, GeoJSON as LeafletGeoJSON } from "leaflet";
 
-import BaseMap from './BaseMap';
-import { DEFAULT_ZOOM, DEFAULT_BOUNDS, SELECT_ZOOM } from './defaults';
-import { getGridTile } from './helpers';
+import BaseMap from "./BaseMap";
+import { DEFAULT_ZOOM, DEFAULT_BOUNDS, SELECT_ZOOM } from "./defaults";
+import { getGridTile } from "./helpers";
 
-import { selectedGridTileStyle } from './style';
-import './GridTileMap.scss';
-import tiles from '../../assets/geo/tiles.json';
+import { selectedGridTileStyle } from "./style";
+import "./GridTileMap.scss";
+import tiles from "../../assets/geo/tiles.json";
 
 /**
   Map component for grid tile selection. Using base map with some added logic.
@@ -51,8 +51,12 @@ class GridTileSelectMap extends Component {
     if (this.state.gridBounds !== prevState.gridBounds) {
       const isValid = this.state.gridBounds.isValid();
       const zoom =
-        this.state.viewport.zoom === DEFAULT_ZOOM ? SELECT_ZOOM : this.state.viewport.zoom;
-      const center = isValid ? this.state.gridBounds.getCenter() : this.state.viewport.center;
+        this.state.viewport.zoom === DEFAULT_ZOOM
+          ? SELECT_ZOOM
+          : this.state.viewport.zoom;
+      const center = isValid
+        ? this.state.gridBounds.getCenter()
+        : this.state.viewport.center;
 
       this.setState({ viewport: { center: center, zoom: zoom } });
     }
@@ -61,11 +65,13 @@ class GridTileSelectMap extends Component {
   /**
     Create a Polygon for each selected gridTile. Retrieve coordinates from raw GeoJSON, then convert (due to differing conventions).
   */
-  createSelectedGridTile = selectedTile => (
+  createSelectedGridTile = (selectedTile) => (
     <Polygon
       positions={tiles.features
-        .find(tile => tile.id === selectedTile)
-        .geometry.coordinates.map(coordinate => LeafletGeoJSON.coordsToLatLngs(coordinate))}
+        .find((tile) => tile.id === selectedTile)
+        .geometry.coordinates.map((coordinate) =>
+          LeafletGeoJSON.coordsToLatLngs(coordinate)
+        )}
       key={selectedTile}
       {...selectedGridTileStyle}
       onClick={this.gridTileSelected}
@@ -82,15 +88,22 @@ class GridTileSelectMap extends Component {
    */
   handleClick(event) {
     const currentGridTiles = this.props.values.gridTiles;
-    const selectedGridTile = getGridTile(event.latlng.lat, event.latlng.lng)?.id;
+    const selectedGridTile = getGridTile(
+      event.latlng.lat,
+      event.latlng.lng
+    )?.id;
 
     if (selectedGridTile) {
       if (currentGridTiles.includes(selectedGridTile))
         this.props.setFieldValue(
-          'gridTiles',
-          currentGridTiles.filter(gridTile => gridTile !== selectedGridTile)
+          "gridTiles",
+          currentGridTiles.filter((gridTile) => gridTile !== selectedGridTile)
         );
-      else this.props.setFieldValue('gridTiles', currentGridTiles.concat([selectedGridTile]));
+      else
+        this.props.setFieldValue(
+          "gridTiles",
+          currentGridTiles.concat([selectedGridTile])
+        );
     }
   }
 
@@ -107,10 +120,10 @@ class GridTileSelectMap extends Component {
         >
           {this.props.values.gridTiles && (
             <FeatureGroup
-              onLayerAdd={event => this.updateGridBounds(event)}
-              onLayerRemove={event => this.updateGridBounds(event)}
+              onLayerAdd={(event) => this.updateGridBounds(event)}
+              onLayerRemove={(event) => this.updateGridBounds(event)}
             >
-              {this.props.values.gridTiles.map(selectedTile =>
+              {this.props.values.gridTiles.map((selectedTile) =>
                 this.createSelectedGridTile(selectedTile)
               )}
             </FeatureGroup>

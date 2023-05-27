@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import Helmet from 'react-helmet';
+import React, { Component } from "react";
+import Helmet from "react-helmet";
 
-import Banner from '../../components/presentation/Banner';
-import SubmissionForm from '../../components/submit/SubmissionForm';
+import Banner from "../../components/presentation/Banner";
+import SubmissionForm from "../../components/submit/SubmissionForm";
 
 class SubmissionPage extends Component {
   render() {

@@ -1,7 +1,7 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
-import Error from '../../../helpers/Error';
+import Error from "../../../helpers/Error";
 
 const Messages = ({ isValid, submitCount, errors, postSubmissionResponse }) => {
   const apiRejected = postSubmissionResponse && postSubmissionResponse.rejected;
@@ -14,18 +14,22 @@ const Messages = ({ isValid, submitCount, errors, postSubmissionResponse }) => {
       {apiRejected && (
         <Error message="Submission error">
           <p className="m-0">
-            An error was encountered when submitting the data. Please double-check the form for
-            errors and try again.
+            An error was encountered when submitting the data. Please
+            double-check the form for errors and try again.
             <br />
             If this error persists please contact us.
           </p>
-          {postSubmissionResponse.reason.cause && `(${postSubmissionResponse.reason.cause.detail})`}
-          {postSubmissionResponse.reason.message && `(${postSubmissionResponse.reason.message})`}
+          {postSubmissionResponse.reason.cause &&
+            `(${postSubmissionResponse.reason.cause.detail})`}
+          {postSubmissionResponse.reason.message &&
+            `(${postSubmissionResponse.reason.message})`}
         </Error>
       )}
       {yupRejected && (
         <Error message="Invalid data">
-          <p className="m-0">Invalid data provided. Please double-check the form for errors.</p>
+          <p className="m-0">
+            Invalid data provided. Please double-check the form for errors.
+          </p>
         </Error>
       )}
     </div>

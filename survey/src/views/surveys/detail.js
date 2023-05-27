@@ -1,8 +1,8 @@
-import React from 'react';
-import Helmet from 'react-helmet';
+import React from "react";
+import Helmet from "react-helmet";
 
-import Banner from '../../components/presentation/Banner';
-import Survey from '../../components/surveys/Survey';
+import Banner from "../../components/presentation/Banner";
+import Survey from "../../components/surveys/Survey";
 
 const SurveyDetailPage = ({ match }) => {
   const slug = match.params.slug;

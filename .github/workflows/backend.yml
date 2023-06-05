@@ -85,6 +85,8 @@ jobs:
         uses: docker/metadata-action@v4
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-backend
+          tags: |
+            type=sha
       - name: Build and push
         uses: docker/build-push-action@v4
         with:

@@ -33,7 +33,7 @@
     "react-typeahead": "2.0.0-alpha.8",
     "recharts": "^1.8.6",
     "swr": "^0.5.7",
-    "yup": "^1.2.0"
+    "yup": "0.27.0"
   },
   "scripts": {
     "start": "react-scripts start",

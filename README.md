@@ -9,12 +9,13 @@ Structure
 * React (CRA)
   * `about/` Simple summary site
   * `frontend/` Main citizen science front-end
-  * `scripts/` Helper scripts in R for data management
   * `survey/` Survey tool for population and distribution studies
 * React (Next.js)
   * `map/` Mapping utility site (for embedding, specific queries etc)
 * Back-end
   * `backend/` Django-based back-end
+* Other
+  * `scripts/` Helper scripts in R for data management
 
 Getting started
 ---------------

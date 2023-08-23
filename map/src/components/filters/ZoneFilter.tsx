@@ -18,7 +18,7 @@ export const ZoneFilter: FC = () => {
   const initialValues = Object.assign(
     {},
     zoneFilterInitialValues,
-    router.query?.zone && { zoneId: router.query.zone }
+    router.query?.zone && { zoneId: router.query.zone },
   ); // TODO fix initialisation via router (doesn't work on prod)
 
   return (

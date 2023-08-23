@@ -15,7 +15,7 @@ export const PageSizeFilter: FC = () => {
   const initialValues = Object.assign(
     {},
     pageSizeFilterInitialValues,
-    router.query?.pageSize && { pageSize: router.query.pageSize }
+    router.query?.pageSize && { pageSize: router.query.pageSize },
   );
 
   return (
@@ -24,7 +24,7 @@ export const PageSizeFilter: FC = () => {
         initialValues={initialValues}
         onSubmit={(
           values,
-          { setSubmitting }: FormikHelpers<PageSizeFilter>
+          { setSubmitting }: FormikHelpers<PageSizeFilter>,
         ) => {
           if (values.pageSize) {
             router.push({

@@ -27,7 +27,7 @@ export default function TrackMap() {
       setApiQuery(
         stringify(Object.assign({}, { bird: filters.birdId }), {
           addQueryPrefix: true,
-        })
+        }),
       );
     }
   }, [filters]);

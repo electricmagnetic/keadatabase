@@ -50,8 +50,8 @@ const BirdPathLayer: FC<{
     if (data?.features) {
       setBirdPath(
         data.features.map((feature) =>
-          LeafletGeoJSON.coordsToLatLng(feature.geometry.coordinates)
-        )
+          LeafletGeoJSON.coordsToLatLng(feature.geometry.coordinates),
+        ),
       );
     }
   }, [name, setBirdPath, data]);

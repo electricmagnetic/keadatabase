@@ -109,7 +109,7 @@ const ObservationsLayer: FC<{
   useEffect(() => {
     if (data?.features) {
       const featuresBboxPolygon = bboxPolygon(
-        bbox(featureCollection(data.features))
+        bbox(featureCollection(data.features)),
       );
 
       setLayerStatuses((prevState) => ({

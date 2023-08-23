@@ -26,7 +26,7 @@ export default function BigMap() {
       setApiQuery(
         stringify(Object.assign({}, { page_size: filters.pageSize }), {
           addQueryPrefix: true,
-        })
+        }),
       );
     }
   }, [filters]);

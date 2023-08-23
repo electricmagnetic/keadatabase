@@ -48,7 +48,7 @@ export const SetBounds: FC<{ bounds?: LatLngBoundsExpression }> = ({
 export const convertBboxToLeafletBounds = (inputBbox: BBox) => {
   return latLngBounds(
     latLng(inputBbox[1], inputBbox[0]),
-    latLng(inputBbox[3], inputBbox[2])
+    latLng(inputBbox[3], inputBbox[2]),
   ).pad(BOUNDS_PADDING);
 };
 
@@ -62,7 +62,7 @@ export const SetBoundsToLayers: FC<{ layerStatuses: LayerStatuses }> = ({
     Object.entries(layerStatuses)
       .map(([key, value]) => value.bboxPolygon)
       .filter((bboxPolygon) => !!bboxPolygon)
-      .map((bboxPolygon) => bboxPolygon!)
+      .map((bboxPolygon) => bboxPolygon!),
   ); // TODO remove TypeScript assertion?
 
   const layersBbox = bboxPolygons.features.length > 0 && bbox(bboxPolygons);
@@ -83,7 +83,7 @@ export const LayersLoader: FC<{ layerStatuses: LayerStatuses }> = ({
   layerStatuses,
 }) => {
   const loadedLayers = Object.entries(layerStatuses).filter(
-    ([key, value]) => value.hasData === true
+    ([key, value]) => value.hasData === true,
   ).length;
   const totalLayers = Object.entries(layerStatuses).length;
 

@@ -15,7 +15,7 @@ export const BirdFilter: FC = () => {
   const initialValues = Object.assign(
     {},
     birdFilterInitialValues,
-    router.query?.bird && { birdId: router.query.bird }
+    router.query?.bird && { birdId: router.query.bird },
   );
 
   return (

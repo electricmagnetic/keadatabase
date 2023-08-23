@@ -31,7 +31,7 @@ export default function ZoneMap() {
         setApiQuery(
           stringify(Object.assign({}, { point_location: zoneGeometryString }), {
             addQueryPrefix: true,
-          })
+          }),
         );
     }
   }, [filters]);
@@ -40,7 +40,7 @@ export default function ZoneMap() {
   useEffect(() => {
     if (query.zone) {
       const zone = keaZones.features.filter(
-        (keaZone) => keaZone.id === query.zone
+        (keaZone) => keaZone.id === query.zone,
       )[0];
 
       if (zone) setFilters({ zone: zone });

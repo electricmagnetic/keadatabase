@@ -28,7 +28,7 @@ export default function FWFMap() {
       `
       ${feature?.properties?.HuntBlockN || "Unknown"}
     `,
-      { direction: "center" }
+      { direction: "center" },
     );
   };
 

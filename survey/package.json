@@ -1,21 +1,21 @@
 {
   "name": "keadatabase-survey",
-  "version": "1.4.3",
+  "version": "1.4.4",
   "private": true,
   "homepage": "https://survey.keadatabase.nz",
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.15.4",
     "@sentry/react": "^5.30.0",
     "@sentry/tracing": "^5.30.0",
-    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^13.5.0",
     "@turf/turf": "^6.5.0",
     "bootstrap": "^4.6.2",
     "classnames": "^2.3.2",
-    "core-js": "^3.30.2",
+    "core-js": "^3.32.2",
     "formik": "^1.5.8",
-    "jquery": "^3.7.0",
+    "jquery": "^3.7.1",
     "leaflet": "^1.9.4",
     "moment": "^2.29.4",
     "prop-types": "^15.8.1",
@@ -62,6 +62,6 @@
     ]
   },
   "devDependencies": {
-    "sass": "^1.62.1"
+    "sass": "^1.66.1"
   }
 }

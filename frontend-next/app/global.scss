@@ -4,6 +4,7 @@ $custom-orange-dark: #df5207;
 $custom-green-dark: #6a7029;
 $custom-brown-dull: #dfd4ba;
 $custom-brown-faded: #e6dfcc;
+$custom-brown-lightest: #f7f4ee;
 
 // TODO: remove duplication
 :root {
@@ -11,6 +12,7 @@ $custom-brown-faded: #e6dfcc;
   --custom-green-dark: #6a7029;
   --custom-brown-dull: #dfd4ba;
   --custom-brown-faded: #e6dfcc;
+  --custom-brown-lightest: #f7f4ee;
 }
 
 $font-family-serif: var(--font-playfairDisplay), Georgia, "Times New Roman", Times, serif;
@@ -59,11 +61,12 @@ $card-border-radius: 0;
 @import "bootstrap";
 
 // Constrainer
-$constrainer-offset: 768px;
+$constrainer-offset: 512px;
 $constrainer-width: map-get($container-max-widths, "xl") + $constrainer-offset;
 
 .constrainer {
   @media (min-width: ($constrainer-width+1px)) {
+    border: 1px solid $custom-brown-dull;
     border-top: 0;
     border-bottom: 0;
     margin: auto;
@@ -76,6 +79,35 @@ $constrainer-width: map-get($container-max-widths, "xl") + $constrainer-offset;
     }
   }
 }
+
+/* Specific Custom Styles (copied from the original V2 frontend */
+
+// Sponsors
+.Sponsors {
+  ul {
+    padding-left: 0;
+    list-style: none;
+
+    li {
+      padding-bottom: map-get($spacers, 1);
+      a {
+        color: $body-color;
+
+        &:hover {
+          color: $body-color;
+        }
+      }
+    }
+  }
+
+  h3 {
+    font-size: $font-size-base;
+    font-weight: 600;
+    font-family: $font-family-base;
+    text-transform: uppercase;
+  }
+}
+
 
 // Footer
 footer {
@@ -91,9 +123,6 @@ footer {
       margin-left: calc($grid-gutter-width/2);
       margin-right: calc($grid-gutter-width/2);
       display: inline-block;
-      a {
-        text-decoration: none;
-      }
     }
   }
 

@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 export default function Donations() {
   return (
     <Page>
-      <Page.Section type="faded">
+      <Page.Section background="faded">
         <Page.Heading>Donations</Page.Heading>
       </Page.Section>
       <Page.Section>

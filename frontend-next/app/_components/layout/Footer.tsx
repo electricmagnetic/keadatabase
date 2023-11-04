@@ -52,10 +52,11 @@ export default function Footer() {
                 <div className="d-inline-block text-right">
                   <Logo alt="Kea Database" className="logo" height={24} />
                   <p className="m-0 version">
-                    {" "}
+                    (
                     {process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA
-                      ? ` (${process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA})`
-                      : null}
+                      ? `${process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA}`
+                      : `local`}
+                    )
                   </p>
                 </div>
               </div>

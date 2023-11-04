@@ -1,6 +1,8 @@
+import classNames from "classnames";
 import type { PropsWithChildren } from "react";
 
-type BackgroundTypes = "primary" | "secondary" | "light" | "faded";
+type BackgroundTypes = "primary" | "secondary" | "light" | "faded" | "lightest";
+type SizeTypes = "small" | "medium" | "large";
 
 const getStyle = (type?: BackgroundTypes) => {
   switch (type) {
@@ -10,6 +12,10 @@ const getStyle = (type?: BackgroundTypes) => {
       return {
         backgroundColor: "var(--bs-secondary)",
         color: "var(--bs-white)",
+      };
+    case "lightest":
+      return {
+        backgroundColor: "var(--custom-brown-lightest)",
       };
     case "faded":
       return {
@@ -23,11 +29,20 @@ const getStyle = (type?: BackgroundTypes) => {
 };
 
 function PageSection({
-  type,
+  background,
   children,
-}: PropsWithChildren<{ type?: BackgroundTypes }>) {
+  size = "medium",
+}: PropsWithChildren<{ background?: BackgroundTypes; size?: SizeTypes }>) {
   return (
-    <section className="py-5" style={getStyle(type)}>
+    <section
+      className={classNames(
+        "position-relative",
+        size === "large" && "py-8",
+        size === "medium" && "py-5",
+        size === "small" && "py-4",
+      )}
+      style={getStyle(background)}
+    >
       <div className="container">{children}</div>
     </section>
   );

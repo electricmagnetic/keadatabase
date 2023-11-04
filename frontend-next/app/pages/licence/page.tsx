@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 export default function Licence() {
   return (
     <Page>
-      <Page.Section type="faded">
+      <Page.Section background="faded">
         <Page.Heading>Licence/Copyright</Page.Heading>
       </Page.Section>
       <Page.Section>

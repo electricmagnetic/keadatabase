@@ -1,6 +1,8 @@
 import Image, { type StaticImageData } from "next/image";
 import type { PropsWithChildren } from "react";
 
+import Page from "./Page";
+
 export default function SectionHero({
   children,
   imageAlt,
@@ -10,13 +12,7 @@ export default function SectionHero({
   imageAlt: string;
 }>) {
   return (
-    <section
-      className="position-relative py-8"
-      style={{
-        backgroundColor: "var(--bs-secondary)",
-        color: "var(--bs-white)",
-      }}
-    >
+    <Page.Section background="secondary" size="large">
       <Image
         alt={imageAlt}
         fill
@@ -28,7 +24,7 @@ export default function SectionHero({
           objectFit: "cover",
         }}
       />
-      <div className="container position-relative">{children}</div>
-    </section>
+      <div className="position-relative">{children}</div>
+    </Page.Section>
   );
 }

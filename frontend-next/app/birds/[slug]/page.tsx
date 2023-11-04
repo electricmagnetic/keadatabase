@@ -3,13 +3,17 @@ import { type Metadata } from "next";
 import Page from "@/app/_components/layout/Page";
 
 export const metadata: Metadata = {
-  title: "Search Birds",
+  title: "View Bird",
 };
 
-export default function Birds() {
+export default function Bird({
+  params: { slug },
+}: {
+  params: { slug: string };
+}) {
   return (
     <Page>
-      <Page.Heading>Birds</Page.Heading>
+      <Page.Heading>Bird: {slug}</Page.Heading>
     </Page>
   );
 }

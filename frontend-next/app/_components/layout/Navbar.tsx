@@ -35,9 +35,9 @@ export default function Navbar() {
             <NavLink exact href="/">
               Home
             </NavLink>
-            <NavLink href="/birds">Birds</NavLink>
-            <NavLink href="/observations">Observations</NavLink>
-            <NavLink href="/report">Report</NavLink>
+            <NavLink href="/birds">Search Birds</NavLink>
+            <NavLink href="/observations">View Observations</NavLink>
+            <NavLink href="/report">Report Observation</NavLink>
           </ul>
         </div>
       </div>

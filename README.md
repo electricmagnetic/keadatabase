@@ -12,6 +12,7 @@ Structure
   * `survey/` Survey tool for population and distribution studies
 * React (Next.js)
   * `map/` Mapping utility site (for embedding, specific queries etc)
+  * `frontend-next` Version 3 of the front-end, to replace the CRA version
 * Back-end
   * `backend/` Django-based back-end
 * Other

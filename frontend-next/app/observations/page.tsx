@@ -1,7 +1,15 @@
+import { type Metadata } from "next";
+
+import Page from "@/app/_components/layout/Page";
+
+export const metadata: Metadata = {
+  title: "View Observations",
+};
+
 export default function Observations() {
   return (
-    <main>
-      <h1>Observations</h1>
-    </main>
+    <Page>
+      <Page.Heading>Observations</Page.Heading>
+    </Page>
   );
 }

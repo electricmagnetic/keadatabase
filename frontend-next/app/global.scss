@@ -1,0 +1,121 @@
+// Custom Colours and Fonts
+
+$custom-orange-dark: #df5207;
+$custom-green-dark: #6a7029;
+$custom-brown-dull: #dfd4ba;
+$custom-brown-faded: #e6dfcc;
+
+// TODO: remove duplication
+:root {
+  --custom-orange-dark: #df5206;
+  --custom-green-dark: #6a7029;
+  --custom-brown-dull: #dfd4ba;
+  --custom-brown-faded: #e6dfcc;
+}
+
+$font-family-serif: var(--font-playfairDisplay), Georgia, "Times New Roman", Times, serif;
+
+$footer-outer: lighten($custom-brown-faded, 5%);
+$footer-inner: $custom-brown-faded;
+$footer-border: darken($custom-brown-faded, 5%);
+
+// Spacers
+$spacer: 1rem !default;
+
+$spacers: (
+  0: 0,
+  1: $spacer * 0.25,
+  2: $spacer * 0.5,
+  3: $spacer,
+  4: $spacer * 1.5,
+  5: $spacer * 3,
+  6: $spacer * 6,
+  7: $spacer * 9,
+  8: $spacer * 12,
+  9: $spacer * 18,
+  10: $spacer * 24,
+);
+
+// Custom Bootstrap Variables
+
+$body-bg: #f5f5f5;
+
+$primary: $custom-orange-dark;
+$secondary: $custom-green-dark;
+$dark: #231f20;
+$light: #e9ecef;
+
+$font-family-sans-serif: var(--font-openSans), Roboto, Arial, sans-serif;
+$headings-font-family: $font-family-serif;
+
+$navbar-padding-y: $spacer;
+
+$list-group-item-padding-x: $spacer;
+$list-group-item-padding-y: map-get($spacers, 2);
+
+$card-border-radius: 0;
+
+/* Bootstrap */
+@import "bootstrap";
+
+// Constrainer
+$constrainer-offset: 768px;
+$constrainer-width: map-get($container-max-widths, "xl") + $constrainer-offset;
+
+.constrainer {
+  @media (min-width: ($constrainer-width+1px)) {
+    border-top: 0;
+    border-bottom: 0;
+    margin: auto;
+    width: $constrainer-width;
+    &::before,
+    &::after {
+      content: "";
+      display: table;
+      clear: both;
+    }
+  }
+}
+
+// Footer
+footer {
+  background-color: $footer-inner;
+
+  ul.footer-links {
+    padding-left: 0;
+    list-style: none;
+    margin-bottom: 0;
+    margin-left: calc(-1 * $grid-gutter-width/2);
+
+    li {
+      margin-left: calc($grid-gutter-width/2);
+      margin-right: calc($grid-gutter-width/2);
+      display: inline-block;
+      a {
+        text-decoration: none;
+      }
+    }
+  }
+
+  .footer-sponsor {
+    font-size: $font-size-sm;
+  }
+  .footer-attribution {
+    font-size: $font-size-sm * 0.9;
+
+    @include media-breakpoint-up(md) {
+      text-align: right;
+    }
+
+    .version {
+      color: #807e77;
+    }
+  }
+  .catalyst {
+    color: #212b17;
+  }
+  .constrainer {
+    background-color: $footer-outer;
+    border-color: $footer-border;
+  }
+}

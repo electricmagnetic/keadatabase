@@ -10,9 +10,7 @@ export const metadata: Metadata = {
 export default function Licence() {
   return (
     <Page>
-      <Page.Section background="faded">
-        <Page.Heading>Licence/Copyright</Page.Heading>
-      </Page.Section>
+      <Page.Heading>Licence/Copyright</Page.Heading>
       <Page.Section>
         <WordPressPage id={53} />
       </Page.Section>

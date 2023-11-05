@@ -10,9 +10,7 @@ export const metadata: Metadata = {
 export default function Terms() {
   return (
     <Page>
-      <Page.Section background="faded">
-        <Page.Heading>Terms of Use/Privacy Policy</Page.Heading>
-      </Page.Section>
+      <Page.Heading>Terms of Use/Privacy Policy</Page.Heading>
       <Page.Section>
         <WordPressPage id={3} />
       </Page.Section>

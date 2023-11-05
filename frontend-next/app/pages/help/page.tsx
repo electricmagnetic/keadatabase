@@ -10,9 +10,7 @@ export const metadata: Metadata = {
 export default function Help() {
   return (
     <Page>
-      <Page.Section background="faded">
-        <Page.Heading>Help</Page.Heading>
-      </Page.Section>
+      <Page.Heading>Help</Page.Heading>
       <Page.Section>
         <WordPressPage id={286} />
       </Page.Section>

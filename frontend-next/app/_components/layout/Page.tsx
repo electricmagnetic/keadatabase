@@ -53,7 +53,11 @@ function PageContainer({ children }: PropsWithChildren) {
 }
 
 function PageHeading({ children }: PropsWithChildren) {
-  return <h1>{children}</h1>;
+  return (
+    <PageSection background="faded" size="small">
+      <h1>{children}</h1>
+    </PageSection>
+  );
 }
 
 function Page({ children }: PropsWithChildren) {

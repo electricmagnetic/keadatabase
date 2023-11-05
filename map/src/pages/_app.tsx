@@ -3,6 +3,7 @@ import type { AppProps } from "next/app";
 import { SWRConfig } from "swr";
 import { useRouter } from "next/router";
 import axios from "axios";
+import { Analytics } from "@vercel/analytics/react";
 
 import { ShowMenuContext } from "@/components/context";
 
@@ -33,6 +34,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     <SWRConfig value={SWR_CONFIG}>
       <ShowMenuContext.Provider value={showMenu}>
         <Component {...pageProps} />
+        <Analytics />
       </ShowMenuContext.Provider>
     </SWRConfig>
   );

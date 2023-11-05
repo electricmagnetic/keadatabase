@@ -9,10 +9,12 @@
     "start": "next start",
     "lint": "next lint",
     "export": "next export",
-    "deploy": "npm run build && firebase deploy"
+    "deploy": "npm run build && firebase deploy",
+    "format": "prettier --write \"**/*.{ts,tsx,md,js}\""
   },
   "dependencies": {
     "@turf/turf": "^6.5.0",
+    "@vercel/analytics": "^1.1.1",
     "axios": "^1.5.0",
     "bootstrap": "^5.3.1",
     "formik": "^2.4.4",
@@ -35,6 +37,7 @@
     "@types/react-leaflet": "^2.8.3",
     "eslint": "8.26.0",
     "eslint-config-next": "13.0.0",
+    "prettier": "^3.0.3",
     "typescript": "4.8.4"
   }
 }

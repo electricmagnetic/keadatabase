@@ -31,5 +31,6 @@ module.exports = {
     "import/no-extraneous-dependencies": "off",
     "unicorn/filename-case": "off",
     "@typescript-eslint/explicit-function-return-type": "off",
+    camelcase: "off",
   },
 };

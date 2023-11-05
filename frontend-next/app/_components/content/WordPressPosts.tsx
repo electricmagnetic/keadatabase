@@ -1,6 +1,7 @@
+import { getData } from "@/app/_components/api";
 import DateTime from "@/app/_components/ui/DateTime";
 
-interface WordpressPost {
+interface Post {
   id: number;
   title: {
     rendered: string;
@@ -12,15 +13,7 @@ interface WordpressPost {
   link: string;
 }
 
-async function getData() {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_WORDPRESS_API}/posts/?per_page=1`,
-  );
-  if (!res.ok) throw new Error("Failed to fetch data");
-  return res.json() as Promise<WordpressPost[]>;
-}
-
-function Post({ post }: { post: WordpressPost }) {
+function WordPressPost({ post }: { post: Post }) {
   return (
     <li className="Post mb-3">
       <a href={post.link}>
@@ -38,14 +31,16 @@ function Post({ post }: { post: WordpressPost }) {
 }
 
 export default async function WordPressPosts() {
-  const posts = await getData();
+  const posts = await getData<Post[]>(
+    `${process.env.NEXT_PUBLIC_WORDPRESS_API}/posts/?per_page=1`,
+  );
 
   if (posts.length === 0) return null;
 
   return (
     <ul className="list-unstyled">
       {posts.map((post) => (
-        <Post key={post.id} post={post} />
+        <WordPressPost key={post.id} post={post} />
       ))}
     </ul>
   );

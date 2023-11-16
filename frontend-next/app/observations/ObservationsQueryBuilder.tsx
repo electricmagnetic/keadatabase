@@ -2,7 +2,7 @@
 
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { type SubmitHandler, useForm } from "react-hook-form";
+import { type SubmitHandler, useForm, FormProvider } from "react-hook-form";
 
 import {
   ObservationsFilterSchema,
@@ -11,17 +11,14 @@ import {
 import { getValuesFromSearchParam, searchParamsAsObject } from "./helpers";
 
 import Page from "@/app/_components/layout/Page";
+import FieldSelect from "@/app/_components/form/FieldSelect";
 
 export default function ObservationsQueryBuilder() {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<ObservationsFilters>({
+  const form = useForm<ObservationsFilters>({
     resolver: zodResolver(ObservationsFilterSchema),
     defaultValues: getValuesFromSearchParam<ObservationsFilters>(
       searchParams,
@@ -38,14 +35,28 @@ export default function ObservationsQueryBuilder() {
   };
 
   return (
-    <Page.Section background="light">
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <input className="form-control" {...register("sighting_type")} />
-        {errors.sighting_type ? errors.sighting_type.message : null}
-        <input className="form-control" {...register("status")} />
-        {errors.status ? errors.status.message : null}
-        <button type="submit">Submit</button>
-      </form>
-    </Page.Section>
+    <FormProvider {...form}>
+      <Page.Section background="light">
+        <form onSubmit={form.handleSubmit(onSubmit)}>
+          <div className="row">
+            <div className="col-sm">
+              <FieldSelect
+                label="Sighting Type"
+                name="sighting_type"
+                options={[{ id: "sighted", name: "Sighted" }]}
+              />
+            </div>
+            <div className="col-sm">
+              <FieldSelect
+                label="Status"
+                name="status"
+                options={[{ id: "public", name: "Public" }]}
+              />
+            </div>
+          </div>
+          <button type="submit">Submit</button>
+        </form>
+      </Page.Section>
+    </FormProvider>
   );
 }

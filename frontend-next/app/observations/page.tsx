@@ -12,6 +12,7 @@ import ObservationsList from "./ObservationsList";
 
 import Page from "@/app/_components/layout/Page";
 import Loading from "@/app/loading";
+import ObservationsPagination from "./ObservationsPagination";
 
 export const metadata: Metadata = {
   title: "View Observations",
@@ -32,6 +33,7 @@ export default function Observations({
     <Page>
       <Page.Heading>Observations</Page.Heading>
       <ObservationsQueryBuilder />
+      <ObservationsPagination />
       <Suspense fallback={<Loading />} key={valuesAsString}>
         <ObservationsList query={valuesAsString} />
       </Suspense>

@@ -1,5 +1,3 @@
-import ObservationsPagination from "./ObservationsPagination";
-
 import Page from "@/app/_components/layout/Page";
 import { getData, type PaginatedResponse } from "@/app/_components/api";
 
@@ -21,7 +19,6 @@ export default async function ObservationsList({ query }: { query: string }) {
           <li key={observation.id}>{observation.id}</li>
         ))}
       </ul>
-      <ObservationsPagination />
     </Page.Section>
   );
 }

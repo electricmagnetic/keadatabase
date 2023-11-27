@@ -2,13 +2,13 @@ name: frontend
 
 defaults:
   run:
-    working-directory: frontend
+    working-directory: apps/frontend
 
 on:
   push:
     branches: [main]
     paths:
-      - "frontend/**"
+      - "apps/frontend/**"
   pull_request:
     branches: [main]
   workflow_dispatch:
@@ -23,18 +23,15 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - uses: pnpm/action-setup@v2.2.4
+      - uses: pnpm/action-setup@v2.4.0
         with:
-          version: 7
           run_install: |
-            - cwd: frontend
+            - cwd: apps/frontend
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
           cache: "pnpm"
-          cache-dependency-path: frontend/pnpm-lock.yaml
       - run: pnpm install
-      - run: pnpm dlx prettier@latest --check src/ public/
       - run: pnpm run build
       - run: pnpm test

@@ -4,12 +4,12 @@ version: '3'
 services:
   frontend:
     image: electricmagnetic/keadatabase_frontend
-    build: ./frontend
+    build: ./apps/frontend
     working_dir: /home/node
     ports:
       - 3000:3000
     volumes:
-      - './frontend:/home/node'
+      - './apps/frontend:/home/node'
       - '/home/node/node_modules'
     stdin_open: true
     environment:
@@ -19,12 +19,12 @@ services:
 
   about:
     image: electricmagnetic/keadatabase_about
-    build: ./about
+    build: ./apps/about
     working_dir: /home/node
     ports:
       - 3001:3001
     volumes:
-      - './about:/home/node'
+      - './apps/about:/home/node'
       - '/home/node/node_modules'
     stdin_open: true
     environment:

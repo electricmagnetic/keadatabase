@@ -1,6 +1,6 @@
 # Kea Database
 
-Canonical monorepo for the [Kea Database](https://keadatabase.nz).
+Canonical monorepo for the [Kea Database](https://keadatabase.nz). Turborepo is used to help manage packages and dependencies between the JavaScript/TypeScript apps.
 
 ## Structure
 

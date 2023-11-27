@@ -9,12 +9,16 @@ export default function DateTime({
 }) {
   if (!datetime) return null;
 
-  return relative
-    ? LuxonDateTime.fromISO(datetime).toRelative()
-    : LuxonDateTime.fromISO(datetime).toLocaleString(
+  return relative ? (
+    <>{LuxonDateTime.fromISO(datetime).toRelative()}</>
+  ) : (
+    <>
+      {LuxonDateTime.fromISO(datetime).toLocaleString(
         LuxonDateTime.DATETIME_MED,
         {
           locale: process.env.NEXT_PUBLIC_LOCALE,
         },
-      );
+      )}
+    </>
+  );
 }

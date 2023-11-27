@@ -1,7 +1,11 @@
 {
   "private": true,
   "scripts": {
-    "format": "prettier --write \"**/*.{ts,tsx,md,js}\""
+    "build": "turbo build",
+    "dev": "turbo dev",
+    "lint": "turbo lint",
+    "clean": "turbo clean",
+    "format": "prettier --write \"**/*.{ts,tsx,md,js,jsx}\""
   },
   "devDependencies": {
     "prettier": "^3.1.0"

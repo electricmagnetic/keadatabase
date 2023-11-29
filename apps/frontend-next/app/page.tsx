@@ -5,8 +5,10 @@ import { type PropsWithChildren } from "react";
 import { SITE_NAME } from "./layout";
 
 import Page from "@/app/_components/layout/Page";
-import WordPressPage from "@/app/_components/content/WordPressPage";
-import WordPressPosts from "@/app/_components/content/WordPressPosts";
+import {
+  WordPressPage,
+  WordPressPosts,
+} from "@/app/_components/content/wordpress";
 import SectionHero from "@/app/_components/layout/SectionHero";
 import banner from "@/public/images/banner.jpg";
 

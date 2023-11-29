@@ -1,6 +1,6 @@
 import { type Metadata } from "next";
 
-import WordPressPage from "@/app/_components/content/WordPressPage";
+import { WordPressPage } from "@/app/_components/content/wordpress";
 import Page from "@/app/_components/layout/Page";
 
 export const metadata: Metadata = {

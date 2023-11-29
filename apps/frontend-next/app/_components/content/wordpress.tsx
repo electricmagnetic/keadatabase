@@ -1,6 +1,16 @@
 import { getData } from "@/app/_components/api";
 import DateTime from "@/app/_components/ui/DateTime";
 
+interface Page {
+  id: number;
+  title: {
+    rendered: string;
+  };
+  content: {
+    rendered: string;
+  };
+}
+
 interface Post {
   id: number;
   title: {
@@ -11,6 +21,32 @@ interface Post {
     rendered: string;
   };
   link: string;
+}
+
+export async function WordPressPage({
+  id,
+  showTitle,
+}: {
+  id: number;
+  showTitle?: boolean;
+}) {
+  const pages = await getData<Page[]>(
+    `${process.env.NEXT_PUBLIC_WORDPRESS_API}/pages/?per_page=100`,
+  );
+  const selectedPage = pages.find((page) => page.id === id);
+
+  if (!selectedPage) return null;
+
+  return (
+    <div>
+      {showTitle ? (
+        <h2 dangerouslySetInnerHTML={{ __html: selectedPage.title.rendered }} />
+      ) : null}
+      <div
+        dangerouslySetInnerHTML={{ __html: selectedPage.content.rendered }}
+      />
+    </div>
+  );
 }
 
 function WordPressPost({ post }: { post: Post }) {
@@ -30,7 +66,7 @@ function WordPressPost({ post }: { post: Post }) {
   );
 }
 
-export default async function WordPressPosts() {
+export async function WordPressPosts() {
   const posts = await getData<Post[]>(
     `${process.env.NEXT_PUBLIC_WORDPRESS_API}/posts/?per_page=1`,
   );

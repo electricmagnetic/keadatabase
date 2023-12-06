@@ -1,0 +1,34 @@
+import * as z from "zod";
+
+export const ObservationSchema = z.object({
+  id: z.number(),
+  contributor: z.string(),
+  get_status_display: z.string(),
+  get_sighting_type_display: z.string(),
+  date_sighted: z.string(),
+  time_sighted: z.string(),
+  region: z.string().nullable(),
+  comments: z.string(),
+  status: z.string(),
+  date_created: z.string(),
+  date_updated: z.string(),
+  sighting_type: z.string(),
+  point_location: z.object({
+    type: z.literal("Point"),
+    coordinates: z.array(z.number()).length(2),
+  }),
+  precision: z.number(),
+  number: z.number(),
+  location_details: z.string(),
+  behaviour: z.string(),
+  favourite: z.boolean(),
+  confirmed: z.boolean(),
+  geocode: z.string(),
+});
+
+export const ApiListResponse = z.object({
+  count: z.number(),
+  next: z.string().url().nullable(),
+  previous: z.string().url().nullable(),
+  results: z.array(z.unknown()),
+});

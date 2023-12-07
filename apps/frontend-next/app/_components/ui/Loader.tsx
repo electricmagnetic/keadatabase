@@ -1,11 +1,11 @@
 import classNames from "classnames";
 
-export default function Loader({ isButton = false }: { isButton?: boolean }) {
+export default function Loader({ small = false }: { small?: boolean }) {
   return (
     <div
       className={classNames(
         "spinner-border",
-        isButton ? "spinner-border-sm" : "text-primary m-1",
+        small ? "spinner-border-sm" : "text-primary m-1",
       )}
       role="status"
     >

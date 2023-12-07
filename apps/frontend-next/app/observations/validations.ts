@@ -1,5 +1,7 @@
 import * as z from "zod";
 
+const SightingTypeEnum = z.enum(["sighted", "distant", "heard"]);
+
 export const ObservationSchema = z.object({
   id: z.number(),
   contributor: z.string(),
@@ -12,7 +14,7 @@ export const ObservationSchema = z.object({
   status: z.string(),
   date_created: z.string(),
   date_updated: z.string(),
-  sighting_type: z.string(),
+  sighting_type: SightingTypeEnum,
   point_location: z.object({
     type: z.literal("Point"),
     coordinates: z.array(z.number()).length(2),
@@ -26,9 +28,13 @@ export const ObservationSchema = z.object({
   geocode: z.string(),
 });
 
-export const ApiListResponse = z.object({
+export const ApiListResponseSchema = z.object({
   count: z.number(),
   next: z.string().url().nullable(),
   previous: z.string().url().nullable(),
   results: z.array(z.unknown()),
+});
+
+export const ObservationsFilterSchema = z.object({
+  sighting_type: SightingTypeEnum.or(z.literal("")).default(""),
 });

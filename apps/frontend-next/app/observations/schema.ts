@@ -28,13 +28,6 @@ export const ObservationSchema = z.object({
   geocode: z.string(),
 });
 
-export const ApiListResponseSchema = z.object({
-  count: z.number(),
-  next: z.string().url().nullable(),
-  previous: z.string().url().nullable(),
-  results: z.array(z.unknown()),
-});
-
 export const ObservationsFilterSchema = z.object({
   sighting_type: SightingTypeEnum.or(z.literal("")).default(""),
 });

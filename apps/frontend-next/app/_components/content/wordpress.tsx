@@ -1,27 +1,28 @@
-import { getData } from "@/app/_components/api";
+import * as z from "zod";
+
+import { getData } from "@/app/_components/api/actions";
 import DateTime from "@/app/_components/ui/DateTime";
 
-interface Page {
-  id: number;
-  title: {
-    rendered: string;
-  };
-  content: {
-    rendered: string;
-  };
-}
+const WordPressCommonSchema = z.object({
+  id: z.number(),
+  title: z.object({
+    rendered: z.string(),
+  }),
+});
 
-interface Post {
-  id: number;
-  title: {
-    rendered: string;
-  };
-  date: string;
-  excerpt: {
-    rendered: string;
-  };
-  link: string;
-}
+const WordPressPageSchema = WordPressCommonSchema.extend({
+  content: z.object({
+    rendered: z.string(),
+  }),
+});
+
+const WordPressPostSchema = WordPressCommonSchema.extend({
+  date: z.string(), // non-standard date format, so just treat as string
+  excerpt: z.object({
+    rendered: z.string(),
+  }),
+  link: z.string(),
+});
 
 export async function WordPressPage({
   id,
@@ -30,9 +31,11 @@ export async function WordPressPage({
   id: number;
   showTitle?: boolean;
 }) {
-  const pages = await getData<Page[]>(
+  const pages = await getData(
     `${process.env.NEXT_PUBLIC_WORDPRESS_API}/pages/?per_page=100`,
+    z.array(WordPressPageSchema),
   );
+
   const selectedPage = pages.find((page) => page.id === id);
 
   if (!selectedPage) return null;
@@ -49,7 +52,11 @@ export async function WordPressPage({
   );
 }
 
-function WordPressPost({ post }: { post: Post }) {
+function WordPressPost({
+  post,
+}: {
+  post: z.infer<typeof WordPressPostSchema>;
+}) {
   return (
     <li className="Post mb-3">
       <a href={post.link}>
@@ -67,8 +74,9 @@ function WordPressPost({ post }: { post: Post }) {
 }
 
 export async function WordPressPosts() {
-  const posts = await getData<Post[]>(
+  const posts = await getData(
     `${process.env.NEXT_PUBLIC_WORDPRESS_API}/posts/?per_page=1`,
+    z.array(WordPressPostSchema),
   );
 
   if (posts.length === 0) return null;

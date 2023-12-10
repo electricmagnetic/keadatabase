@@ -1,5 +1,7 @@
 import { type Metadata } from "next";
 
+import ObservationSuccessAlert from "./ObservationSuccessAlert";
+
 import Page from "@/app/_components/layout/Page";
 
 export const metadata: Metadata = {
@@ -9,11 +11,12 @@ export const metadata: Metadata = {
 export default function Observation({
   params: { id },
 }: {
-  params: { id: number };
+  params: { id: string };
 }) {
   return (
     <Page>
       <Page.Heading>Observation {id}</Page.Heading>
+      <ObservationSuccessAlert />
     </Page>
   );
 }

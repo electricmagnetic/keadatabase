@@ -1,5 +1,7 @@
 import { type Metadata } from "next";
 
+import ReportForm from "./form";
+
 import Page from "@/app/_components/layout/Page";
 
 export const metadata: Metadata = {
@@ -9,7 +11,10 @@ export const metadata: Metadata = {
 export default function Report() {
   return (
     <Page>
-      <Page.Heading>Report</Page.Heading>
+      <Page.Heading>Report Observation</Page.Heading>
+      <Page.Section>
+        <ReportForm />
+      </Page.Section>
     </Page>
   );
 }

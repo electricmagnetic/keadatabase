@@ -1,3 +1,5 @@
+"use server";
+
 import * as z from "zod";
 
 import { getData } from "@/app/_components/api/actions";

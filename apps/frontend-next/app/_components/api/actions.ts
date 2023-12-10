@@ -15,3 +15,19 @@ export async function getData<Schema extends z.Schema<unknown>>(
     })
     .then((rawData) => schema.parseAsync(rawData));
 }
+
+export async function postData<Schema extends z.Schema<unknown>>(
+  url: string,
+  schema: Schema,
+  data: unknown,
+): Promise<z.infer<Schema>> {
+  return fetch(url, {
+    method: "POST",
+    body: JSON.stringify(data),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then((result) => result.json())
+    .then((rawData) => schema.parseAsync(rawData));
+}

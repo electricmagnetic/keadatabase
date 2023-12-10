@@ -1,6 +1,6 @@
 import * as z from "zod";
 
-const SightingTypeEnum = z.enum(["sighted", "distant", "heard"]);
+import { SightingTypeEnum, StatusType } from "@/app/_components/enums";
 
 export const ObservationSchema = z.object({
   id: z.number(),
@@ -11,7 +11,7 @@ export const ObservationSchema = z.object({
   time_sighted: z.string(),
   region: z.string().nullable(),
   comments: z.string(),
-  status: z.string(),
+  status: StatusType,
   date_created: z.string(),
   date_updated: z.string(),
   sighting_type: SightingTypeEnum,
@@ -19,7 +19,7 @@ export const ObservationSchema = z.object({
     type: z.literal("Point"),
     coordinates: z.array(z.number()).length(2),
   }),
-  precision: z.number(),
+  precision: z.coerce.number(),
   number: z.number(),
   location_details: z.string(),
   behaviour: z.string(),
@@ -27,6 +27,8 @@ export const ObservationSchema = z.object({
   confirmed: z.boolean(),
   geocode: z.string(),
 });
+
+export type ObservationSchemaType = z.infer<typeof ObservationSchema>;
 
 export const ObservationsFilterSchema = z.object({
   sighting_type: SightingTypeEnum.or(z.literal("")).default(""),

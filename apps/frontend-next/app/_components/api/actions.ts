@@ -30,4 +30,5 @@ export async function postData<Schema extends z.Schema<unknown>>(
   })
     .then((result) => result.json())
     .then((rawData) => schema.parseAsync(rawData));
+  // TODO add cache revalidation
 }

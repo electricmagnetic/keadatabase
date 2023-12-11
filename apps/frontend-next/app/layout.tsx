@@ -36,6 +36,8 @@ export const metadata: Metadata = {
     "A citizen science initiative helping to support kea conservation in Aotearoa, New Zealand.",
 };
 
+export const revalidate = 86400; // Ensure all pages are cached for a day maximum (to allow for changes to birds/band combos/observations/WordPress etc at API level). TODO: optimise back-end to signal changes to front-end.
+
 export default function RootLayout({
   children,
 }: {

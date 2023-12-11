@@ -21,21 +21,21 @@ const locationErrorMessage = (type: string, reason: string) => ({
 
 /* Common to form and DTO */
 
+const InlineBirdSchema = z.object({
+  banded: BandedEnum,
+  band_combo: z.string().optional(),
+  sex_guess: SexEnum,
+  life_stage_guess: LifeStageEnum,
+});
+
+type InlineBirdType = z.infer<typeof InlineBirdSchema>;
+
 const ReportCommonSchema = z.object({
   date_sighted: z.coerce.string(), // TODO change to date type, check date validity
   time_sighted: z.coerce.string(),
   precision: PrecisionEnum,
   sighting_type: SightingTypeEnum,
-  birds: z
-    .array(
-      z.object({
-        banded: BandedEnum,
-        band_combo: z.string().optional(),
-        sex_guess: SexEnum,
-        life_stage_guess: LifeStageEnum,
-      }),
-    )
-    .min(0),
+  birds: z.array(InlineBirdSchema).min(0),
   number: z.coerce.number().min(1),
   contributor: z.object({
     name: z.string().min(2, { message: "Your name is required" }),
@@ -90,6 +90,13 @@ export const emptyValues: ReportFormInput = {
   location_details: "",
   behaviour: "",
   comments: "",
+};
+
+export const emptyInlineBirdValues: InlineBirdType = {
+  banded: "unknown",
+  band_combo: "",
+  sex_guess: "",
+  life_stage_guess: "",
 };
 
 /* DTO */

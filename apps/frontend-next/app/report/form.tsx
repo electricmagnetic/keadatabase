@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { type SubmitHandler, useForm } from "react-hook-form";
+import { type SubmitHandler, useForm, useFieldArray } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import {
@@ -10,6 +10,7 @@ import {
   emptyValues,
   ReportFormSchema,
   formToDto,
+  emptyInlineBirdValues,
 } from "./schema";
 import { createReport } from "./actions";
 
@@ -22,11 +23,13 @@ import { PrecisionEnum, SightingTypeEnum } from "@/app/_components/enums";
 // TODO birds/array implementation
 // TODO map selection
 // TODO add helper text
+// TODO implement count functionality based on type/inline objects
 
 export default function ReportForm() {
   const router = useRouter();
 
   const {
+    control,
     register,
     handleSubmit,
     setError,
@@ -34,6 +37,11 @@ export default function ReportForm() {
   } = useForm<ReportFormInput, unknown, ReportFormOutput>({
     defaultValues: emptyValues,
     resolver: zodResolver(ReportFormSchema),
+  });
+
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "birds",
   });
 
   const onSubmit: SubmitHandler<ReportFormOutput> = async (rawData) => {
@@ -190,6 +198,36 @@ export default function ReportForm() {
               label="Number of birds observed"
             />
           </div>
+        </div>
+        <div>
+          <ul>
+            {fields.map((item, index) => (
+              <li key={item.id}>
+                <input {...register(`birds.${index}.banded`)} />
+                <input {...register(`birds.${index}.band_combo`)} />
+                <input {...register(`birds.${index}.sex_guess`)} />
+                <input {...register(`birds.${index}.life_stage_guess`)} />
+                <button
+                  className="btn btn-danger"
+                  onClick={() => {
+                    remove(index);
+                  }}
+                  type="button"
+                >
+                  Delete
+                </button>
+              </li>
+            ))}
+          </ul>
+          <button
+            className="btn btn-success"
+            onClick={() => {
+              append(emptyInlineBirdValues);
+            }}
+            type="button"
+          >
+            append
+          </button>
         </div>
       </fieldset>
       <fieldset>

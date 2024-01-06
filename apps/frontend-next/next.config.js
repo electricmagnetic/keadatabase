@@ -7,6 +7,7 @@ const nextConfig = {
     });
     return config;
   },
+  transpilePackages: ["geospatial"],
   async redirects() {
     return [
       // Deprecated but retained to prevent broken URLs (from original database)

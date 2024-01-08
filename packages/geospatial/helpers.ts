@@ -1,4 +1,5 @@
 import { feature, featureCollection } from "@turf/turf";
+import { type Geometry } from "geojson";
 
 /**
  * Function to transform a regular array of data (objects) into a GeoJSON feature collection.
@@ -13,6 +14,6 @@ export const generateGeoJson = (idKey: string, geometryKey: string, data: Record
 
     if(!(typeof id == "string" || typeof id === "number")) throw new Error("Unexpected ID format");
 
-    return feature(geometry, datum, { id });
+    return feature(geometry as Geometry, datum, { id }); // TODO assertion
   }));
 }

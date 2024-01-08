@@ -14,7 +14,7 @@
     "typescript": "^5.3.3"
   },
   "dependencies": {
-    "@turf/turf": "^6.5.0",
+    "@turf/turf": "7.0.0-alpha.110",
     "maplibre-gl": "^3.6.2",
     "react-map-gl": "^7.1.7"
   }

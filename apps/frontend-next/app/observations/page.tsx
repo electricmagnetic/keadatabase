@@ -1,9 +1,12 @@
 import { type Metadata } from "next";
+import { GeoJSONLayer } from "geospatial/layers";
+import { generateGeoJson } from "geospatial/helpers";
 
 import { getObservations } from "./actions";
 
 import Page from "@/app/_components/layout/Page";
 import { Paginator } from "@/app/_components/api/paginator";
+import BaseMap from "@/app/_components/geospatial/BaseMap";
 
 export const metadata: Metadata = {
   title: "View Observations",
@@ -15,6 +18,9 @@ export default async function ObservationsPage({
   searchParams: Record<string, string>;
 }) {
   const observations = await getObservations(searchParams);
+  const observationsAsGeoJson = JSON.stringify(
+    generateGeoJson("id", "point_location", observations),
+  );
 
   return (
     <Page>
@@ -22,6 +28,11 @@ export default async function ObservationsPage({
       <Page.Section>
         <Paginator />
       </Page.Section>
+      <div style={{ height: "640px" }}>
+        <BaseMap>
+          <GeoJSONLayer geoJsonString={observationsAsGeoJson} zoomToLayer />
+        </BaseMap>
+      </div>
       <Page.Section>
         <div className="row">
           {observations.map((observation) => (

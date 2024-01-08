@@ -30,7 +30,7 @@ export const SITE_NAME = "Kea Database";
 export const metadata: Metadata = {
   title: {
     template: `%s | ${SITE_NAME}`,
-    default: `${SITE_NAME}`,
+    default: SITE_NAME,
   },
   description:
     "A citizen science initiative helping to support kea conservation in Aotearoa, New Zealand.",

@@ -8,19 +8,14 @@ import { Source, Layer, useMap, type LayerProps } from "react-map-gl/maplibre";
 const PADDING = 100;
 const DURATION = 500;
 
-export const FillLayerProps: LayerProps = {
-  type: "fill",
-  paint: { "fill-color": "rgba(255,0,0,0.4)" },
-};
-
 export const PointLayerProps: LayerProps = {
   type: "circle",
-  paint: { "circle-color": "rgba(0,0,255,0.9)" },
+  paint: { "circle-color": "rgba(223, 82, 7, 0.2)", "circle-stroke-color": "rgba(223, 82, 7, 1)", "circle-stroke-width": 2 },
 };
 
 export function GeoJSONLayer({
   geoJsonString,
-  layerProps = FillLayerProps,
+  layerProps = PointLayerProps,
   zoomToLayer = false,
 }: {
   geoJsonString: string;
@@ -117,6 +112,21 @@ export function RasterLayer({
   return (
     <Source maxzoom={maxzoom} type="raster" url={url}>
       <Layer type="raster" />
+    </Source>
+  );
+}
+
+export function VectorLayer({
+  url,
+}: {
+  url: string;
+}) {
+  return (
+    <Source
+      type="vector"
+      url={url}
+    >
+      {/* <Layer  /> */}
     </Source>
   );
 }

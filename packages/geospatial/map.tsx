@@ -11,12 +11,18 @@ import {
 
 import "maplibre-gl/dist/maplibre-gl.css";
 
-export default function Map({ children }: PropsWithChildren) {
+import { MAP_INITIAL_VIEW } from "./constants";
+
+type MapStyle = React.ComponentProps<typeof MapLibreMap>["mapStyle"];
+
+export default function Map({ mapStyle, children }: PropsWithChildren<{ mapStyle?: MapStyle}>) {
   const mapRef = useRef<MapRef>(null);
 
   return (
     <MapProvider>
       <MapLibreMap
+        initialViewState={MAP_INITIAL_VIEW}
+        mapStyle={mapStyle}
         maxZoom={20}
         minZoom={1}
         ref={mapRef}

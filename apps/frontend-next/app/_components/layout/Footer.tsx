@@ -54,7 +54,7 @@ export default function Footer() {
                   <p className="m-0 version">
                     (
                     {process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA
-                      ? `${process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA}`
+                      ? process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA
                       : `local`}
                     )
                   </p>

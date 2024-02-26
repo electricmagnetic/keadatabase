@@ -19,7 +19,7 @@ export default function ObservationSuccessAlert() {
   const [showAlert, setShowAlert] = useState(isSuccess);
 
   useEffect(() => {
-    window.history.replaceState(null, '', pathname);
+    window.history.replaceState(null, "", pathname);
   });
 
   return showAlert ? (

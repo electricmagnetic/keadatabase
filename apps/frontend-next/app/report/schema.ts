@@ -74,7 +74,7 @@ export type ReportFormInput = z.input<typeof ReportFormSchema>;
 export type ReportFormOutput = z.output<typeof ReportFormSchema>;
 
 export const emptyValues: ReportFormInput = {
-  date_sighted: `${DateTime.now().toISODate()}`,
+  date_sighted: DateTime.now().toISODate(),
   time_sighted: DateTime.now().toFormat("HH:mm"),
   precision: "200",
   latitude: "",

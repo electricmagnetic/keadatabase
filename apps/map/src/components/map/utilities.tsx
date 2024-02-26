@@ -1,10 +1,11 @@
 import { CSSProperties, FC, PropsWithChildren } from "react";
 import { latLng, latLngBounds, LatLngBoundsExpression } from "leaflet";
 import { useMap } from "react-leaflet";
-import { featureCollection, bbox, BBox } from "@turf/turf";
+import { featureCollection, bbox } from "@turf/turf";
 
 import { Loader } from "@/components/utilities";
 import { LayerStatuses } from "./types";
+import { BBox } from "geojson";
 
 const CONTROL_STYLE: CSSProperties = {
   backgroundColor: "#fff",

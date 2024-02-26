@@ -8,7 +8,7 @@
     "format": "prettier --write \"**/*.{ts,tsx,md,js,jsx}\""
   },
   "devDependencies": {
-    "prettier": "^3.1.0"
+    "prettier": "^3.2.5"
   },
   "packageManager": "pnpm@8.6.10",
   "pnpm": {

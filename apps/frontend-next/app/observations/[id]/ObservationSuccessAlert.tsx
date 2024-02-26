@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { useRouter, usePathname, useSearchParams } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import * as z from "zod";
 
 import Alert from "@/app/_components/ui/Alert";
@@ -10,7 +10,6 @@ import Alert from "@/app/_components/ui/Alert";
 // TODO add more text here
 
 export default function ObservationSuccessAlert() {
-  const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
@@ -20,7 +19,7 @@ export default function ObservationSuccessAlert() {
   const [showAlert, setShowAlert] = useState(isSuccess);
 
   useEffect(() => {
-    router.replace(pathname, { shallow: true });
+    window.history.replaceState(null, '', pathname);
   });
 
   return showAlert ? (

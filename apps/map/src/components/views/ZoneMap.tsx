@@ -13,7 +13,7 @@ import Menu from "@/components/Menu";
 import { ShowMenuContext } from "@/components/context";
 import { LayerStatuses } from "@/components/map/types";
 
-const keaZones: FeatureCollection = require("public/geo/kea-zones_2023-05-02.json");
+const keaZones: FeatureCollection = require("@/geo/kea-zones_2023-05-02.json");
 
 export default function ZoneMap() {
   const showMenu = useContext(ShowMenuContext);

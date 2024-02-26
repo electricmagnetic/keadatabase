@@ -15,7 +15,7 @@ import Menu from "@/components/Menu";
 import { ShowMenuContext } from "@/components/context";
 import { LayerStatuses } from "@/components/map/types";
 
-const fwfBlocks: FeatureCollection = require("public/geo/fwf-blocks_2022-10-31.json");
+const fwfBlocks: FeatureCollection = require("@/geo/fwf-blocks_2022-10-31.json");
 const fwfBlocksBbox = bbox(fwfBlocks);
 
 export default function FWFMap() {

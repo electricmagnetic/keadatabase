@@ -13,31 +13,31 @@
     "format": "prettier --write \"**/*.{ts,tsx,md,js}\""
   },
   "dependencies": {
-    "@turf/turf": "^6.5.0",
-    "@vercel/analytics": "^1.1.1",
-    "axios": "^1.6.2",
-    "bootstrap": "^5.3.2",
+    "@turf/turf": "6.5.0",
+    "@vercel/analytics": "^1.2.2",
+    "axios": "^1.6.7",
+    "bootstrap": "^5.3.3",
     "formik": "^2.4.5",
     "leaflet": "^1.9.4",
-    "next": "14.0.3",
+    "next": "14.1.0",
     "qs": "^6.11.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-leaflet": "^4.2.1",
-    "swr": "^2.2.4"
+    "swr": "^2.2.5"
   },
   "devDependencies": {
     "@types/bootstrap": "^5.2.10",
-    "@types/geojson": "^7946.0.13",
+    "@types/geojson": "^7946.0.14",
     "@types/leaflet": "^1.9.8",
-    "@types/node": "20.10.0",
-    "@types/qs": "^6.9.10",
-    "@types/react": "18.2.39",
-    "@types/react-dom": "18.2.17",
+    "@types/node": "20.11.20",
+    "@types/qs": "^6.9.11",
+    "@types/react": "18.2.59",
+    "@types/react-dom": "18.2.19",
     "@types/react-leaflet": "^3.0.0",
-    "eslint": "8.54.0",
-    "eslint-config-next": "14.0.3",
-    "prettier": "^3.1.0",
-    "typescript": "5.3.2"
+    "eslint": "8.57.0",
+    "eslint-config-next": "14.1.0",
+    "prettier": "^3.2.5",
+    "typescript": "5.3.3"
   }
 }

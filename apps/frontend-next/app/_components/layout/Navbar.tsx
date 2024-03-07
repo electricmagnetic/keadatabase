@@ -13,7 +13,10 @@ export default function Navbar() {
   }, []);
 
   return (
-    <nav className="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
+    <nav
+      className="navbar navbar-expand-lg bg-dark fixed-top"
+      data-bs-theme="dark"
+    >
       <div className="container">
         <Link className="navbar-brand" href="/">
           <Logo alt="Kea Database" height={30} />

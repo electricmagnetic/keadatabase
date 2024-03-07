@@ -48,8 +48,15 @@ function PageSection({
   );
 }
 
-function PageContainer({ children }: PropsWithChildren) {
-  return <div className="container">{children}</div>;
+function PageContainer({
+  fullWidth,
+  children,
+}: PropsWithChildren<{ fullWidth?: boolean }>) {
+  return (
+    <div className={classNames(fullWidth ? "container-fluid" : "container")}>
+      {children}
+    </div>
+  );
 }
 
 function PageHeading({ children }: PropsWithChildren) {

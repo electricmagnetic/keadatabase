@@ -159,3 +159,20 @@ input[type=number]{
   -moz-appearance: textfield;
   appearance: textfield;
 }
+
+// Navbar height approximation
+$navbar-height: 4rem;
+.navbar {
+  height: $navbar-height;
+}
+body {
+  padding-top: $navbar-height;
+}
+
+/* Fixed/Scroll */
+.split-fixed {
+  position: fixed;
+  top: $navbar-height;
+  right: 0;
+  bottom: 0;
+}

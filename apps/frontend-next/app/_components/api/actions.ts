@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import type * as z from "zod";
+import { z } from "zod";
 
 export async function getData<Schema extends z.Schema<unknown>>(
   url: string,
@@ -15,3 +15,11 @@ export async function getData<Schema extends z.Schema<unknown>>(
     })
     .then((rawData) => schema.parseAsync(rawData));
 }
+
+export const validateSlug = (slug: unknown) => {
+  try {
+    return z.string().parse(slug);
+  } catch {
+    throw new Error("Error parsing provided slug (ID)");
+  }
+};

@@ -159,3 +159,22 @@ input[type=number]{
   -moz-appearance: textfield;
   appearance: textfield;
 }
+
+// Allow new lines in text
+.whitespace-pre-line {
+  white-space: pre-line
+}
+
+// Allow image overhang on bird profile pages
+@include media-breakpoint-up(lg) {
+  .overhang-container {
+    position: relative;
+
+    .overhang-image {
+      position: absolute;
+      z-index: 10;
+      right: 0;
+      top: 0;
+    }
+  }
+}

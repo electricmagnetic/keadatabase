@@ -36,5 +36,6 @@ module.exports = {
       "error",
       { checksVoidReturn: false },
     ],
+    "@next/next/no-img-element": "off", // TODO don't care about front-end image optimisation right now
   },
 };

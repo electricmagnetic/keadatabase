@@ -1,4 +1,6 @@
+import { z } from "zod";
+
 const DEFAULT_PAGE = 1;
 
-export const validPage = (page: number | string | null | undefined) =>
-  Number(page) >= 1 ? Number(page) : DEFAULT_PAGE;
+export const validPage = (page: unknown) =>
+  z.coerce.number().gte(1).catch(DEFAULT_PAGE).parse(page);

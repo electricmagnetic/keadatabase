@@ -10,7 +10,11 @@ const DURATION = 500;
 
 export const PointLayerProps: LayerProps = {
   type: "circle",
-  paint: { "circle-color": "rgba(223, 82, 7, 0.2)", "circle-stroke-color": "rgba(223, 82, 7, 1)", "circle-stroke-width": 2 },
+  paint: {
+    "circle-color": "rgba(223, 82, 7, 0.2)",
+    "circle-stroke-color": "rgba(223, 82, 7, 1)",
+    "circle-stroke-width": 2,
+  },
 };
 
 export function GeoJSONLayer({
@@ -116,16 +120,9 @@ export function RasterLayer({
   );
 }
 
-export function VectorLayer({
-  url,
-}: {
-  url: string;
-}) {
+export function VectorLayer({ url }: { url: string }) {
   return (
-    <Source
-      type="vector"
-      url={url}
-    >
+    <Source type="vector" url={url}>
       {/* <Layer  /> */}
     </Source>
   );

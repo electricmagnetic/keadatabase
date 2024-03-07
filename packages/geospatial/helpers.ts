@@ -8,12 +8,19 @@ import { type Geometry } from "geojson";
  * @param data -- dataset
  * @returns -- FeatureCollection
  */
-export const generateGeoJson = (idKey: string, geometryKey: string, data: Record<string, unknown>[]) => {
-  return featureCollection(data.map(datum => {
-    const { [idKey]: id, [geometryKey]: geometry } = datum;
+export const generateGeoJson = (
+  idKey: string,
+  geometryKey: string,
+  data: Record<string, unknown>[],
+) => {
+  return featureCollection(
+    data.map((datum) => {
+      const { [idKey]: id, [geometryKey]: geometry } = datum;
 
-    if(!(typeof id === "string" || typeof id === "number")) throw new Error("Unexpected ID format");
+      if (!(typeof id === "string" || typeof id === "number"))
+        throw new Error("Unexpected ID format");
 
-    return feature(geometry as Geometry, datum, { id }); // TODO assertion
-  }));
-}
+      return feature(geometry as Geometry, datum, { id }); // TODO assertion
+    }),
+  );
+};

@@ -11,11 +11,14 @@ import {
 
 import "maplibre-gl/dist/maplibre-gl.css";
 
-import { MAP_INITIAL_VIEW } from "./constants";
+import { MAP_INITIAL_VIEW, NZ_BOUNDS_BUFFERED } from "./constants";
 
 type MapStyle = React.ComponentProps<typeof MapLibreMap>["mapStyle"];
 
-export default function Map({ mapStyle, children }: PropsWithChildren<{ mapStyle?: MapStyle}>) {
+export default function Map({
+  mapStyle,
+  children,
+}: PropsWithChildren<{ mapStyle?: MapStyle }>) {
   const mapRef = useRef<MapRef>(null);
 
   return (
@@ -23,6 +26,7 @@ export default function Map({ mapStyle, children }: PropsWithChildren<{ mapStyle
       <MapLibreMap
         initialViewState={MAP_INITIAL_VIEW}
         mapStyle={mapStyle}
+        maxBounds={NZ_BOUNDS_BUFFERED}
         maxZoom={20}
         minZoom={1}
         ref={mapRef}

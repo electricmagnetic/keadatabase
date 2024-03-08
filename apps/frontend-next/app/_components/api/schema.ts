@@ -9,3 +9,11 @@ export const ApiListResponseSchema = z.object({
   previous: z.string().url().nullable(),
   results: z.array(z.unknown()),
 });
+
+export interface PageWithSlugProps {
+  params: { slug: unknown };
+}
+
+export interface PageWithIdProps {
+  params: { id: unknown };
+}

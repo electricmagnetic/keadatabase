@@ -6,21 +6,20 @@ import { MediaSchema } from "../schema";
 import Page from "@/app/_components/layout/Page";
 import Properties from "@/app/_components/layout/Properties";
 import Breadcrumbs from "@/app/_components/layout/Breadcrumbs";
-
-interface PageProps {
-  params: { slug: unknown };
-}
+import { type PageWithSlugProps } from "@/app/_components/api/schema";
 
 export async function generateMetadata({
   params: { slug },
-}: PageProps): Promise<Metadata> {
+}: PageWithSlugProps): Promise<Metadata> {
   const bird = await getBird(slug);
   return {
-    title: bird.name,
+    title: `${bird.name} (Bird)`,
   };
 }
 
-export default async function BirdPage({ params: { slug } }: PageProps) {
+export default async function BirdPage({
+  params: { slug },
+}: PageWithSlugProps) {
   const { bird_extended, ...bird } = await getBird(slug);
 
   const checkMedia = MediaSchema.safeParse(bird_extended?.profile_picture);
@@ -71,8 +70,9 @@ export default async function BirdPage({ params: { slug } }: PageProps) {
           </div>
         </div>
       </Page.Section>
-      {bird_extended ? (
-        <Page.Section>
+
+      <Page.Section>
+        {bird_extended ? (
           <div className="row">
             <div className="col-lg-6">
               <p className="whitespace-pre-line">{bird_extended.description}</p>
@@ -95,10 +95,10 @@ export default async function BirdPage({ params: { slug } }: PageProps) {
               ) : null}
             </div>
           </div>
-        </Page.Section>
-      ) : (
-        <em>No additional information on this kea can be found.</em>
-      )}
+        ) : (
+          <em>No additional information on this kea can be found.</em>
+        )}
+      </Page.Section>
     </Page>
   );
 }

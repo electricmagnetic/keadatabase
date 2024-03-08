@@ -1,4 +1,5 @@
 import { type Metadata } from "next";
+import Link from "next/link";
 import { GeoJSONLayer } from "geospatial/layers";
 import { generateGeoJson } from "geospatial/helpers";
 
@@ -39,7 +40,11 @@ export default async function ObservationsPage({
             <div className="col col-md-3 p-2 border" key={observation.id}>
               <dl>
                 <dt>ID</dt>
-                <dd>{observation.id}</dd>
+                <dd>
+                  <Link href={`/observations/${observation.id}`}>
+                    {observation.id}
+                  </Link>
+                </dd>
                 <dt>Type</dt>
                 <dd>
                   {observation.get_sighting_type_display} {observation.number}

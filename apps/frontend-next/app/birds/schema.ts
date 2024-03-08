@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/naming-convention -- Enum naming fixed by back-end */
 import { z } from "zod";
 
+/* Enums */
+
 export enum StatusEnum {
   unknown = "Unknown",
   alive = "Alive",
@@ -19,6 +21,8 @@ export enum LifeStageEnum {
   "sub-adult" = "Sub-Adult",
   adult = "Adult",
 }
+
+/* Objects */
 
 export const MediaSchema = z
   .object({
@@ -57,3 +61,7 @@ export const BirdSchema = z.object({
   date_modified: z.coerce.date(),
   date_imported: z.coerce.date(),
 });
+
+/* Filters */
+
+export const BirdsFilterSchema = z.object({});

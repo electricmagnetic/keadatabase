@@ -20,6 +20,14 @@ export const validateSlug = (slug: unknown) => {
   try {
     return z.string().parse(slug);
   } catch {
-    throw new Error("Error parsing provided slug (ID)");
+    throw new Error("Error parsing provided slug");
+  }
+};
+
+export const validateId = (id: unknown) => {
+  try {
+    return z.coerce.number().parse(id);
+  } catch {
+    throw new Error("Error parsing provided ID");
   }
 };

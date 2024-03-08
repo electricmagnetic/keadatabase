@@ -26,7 +26,7 @@ export default async function ObservationsPage({
   return (
     <Page>
       <Page.Heading>Observations</Page.Heading>
-      <Page.Section>
+      <Page.Section size="tiny">
         <Paginator />
       </Page.Section>
       <div style={{ height: "640px" }}>

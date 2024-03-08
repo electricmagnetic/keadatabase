@@ -62,6 +62,8 @@ export const BirdSchema = z.object({
   date_imported: z.coerce.date(),
 });
 
+export type Bird = z.infer<typeof BirdSchema>;
+
 /* Filters */
 
 export const BirdsFilterSchema = z.object({});

@@ -2,6 +2,7 @@ import { type Metadata } from "next";
 
 import { getBird } from "../actions";
 import { MediaSchema } from "../schema";
+import { generateAltText, generateSummary } from "../helpers";
 
 import Page from "@/app/_components/layout/Page";
 import Properties from "@/app/_components/layout/Properties";
@@ -22,8 +23,7 @@ export default async function BirdPage({
 }: PageWithSlugProps) {
   const { bird_extended, ...bird } = await getBird(slug);
 
-  const checkMedia = MediaSchema.safeParse(bird_extended?.profile_picture);
-  const media = checkMedia.success ? checkMedia.data : null;
+  const media = MediaSchema.parse(bird_extended?.profile_picture);
 
   return (
     <Page>
@@ -38,13 +38,7 @@ export default async function BirdPage({
             <h1>{bird.name}</h1>
             <Properties>
               <Properties.Item name="Key Details">
-                {[
-                  bird.get_life_stage
-                    ? `${bird.status} (${bird.get_life_stage})`
-                    : bird.status,
-                  bird.sex,
-                  bird.primary_band,
-                ].join(", ")}
+                {generateSummary(bird)}
               </Properties.Item>
               <Properties.Item name="Area">{bird.study_area}</Properties.Item>
               <Properties.Item name="Band Combo">
@@ -53,20 +47,18 @@ export default async function BirdPage({
             </Properties>
           </div>
           <div className="col-md-6 col-lg-5 overhang-container order-1 order-md-2">
-            {media ? (
-              <figure className="figure overhang-image">
-                <img
-                  alt={`A ${bird.sex} kea`}
-                  className="figure-img img-fluid rounded"
-                  src={media.large}
-                />
-                {bird_extended?.profile_picture_attribution ? (
-                  <figcaption className="figure-caption text-end">
-                    Photo by {bird_extended.profile_picture_attribution}
-                  </figcaption>
-                ) : null}
-              </figure>
-            ) : null}
+            <figure className="figure overhang-image">
+              <img
+                alt={generateAltText(bird)}
+                className="figure-img img-fluid rounded"
+                src={media.large}
+              />
+              {bird_extended?.profile_picture_attribution ? (
+                <figcaption className="figure-caption text-end">
+                  Photo by {bird_extended.profile_picture_attribution}
+                </figcaption>
+              ) : null}
+            </figure>
           </div>
         </div>
       </Page.Section>
@@ -96,7 +88,7 @@ export default async function BirdPage({
             </div>
           </div>
         ) : (
-          <em>No additional information on this kea can be found.</em>
+          <em>No additional information on this bird can be found.</em>
         )}
       </Page.Section>
     </Page>

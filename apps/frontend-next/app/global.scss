@@ -50,6 +50,7 @@ $font-family-sans-serif: var(--font-openSans), Roboto, Arial, sans-serif;
 $headings-font-family: $font-family-serif;
 $headings-font-weight: 500;
 
+$navbar-nav-link-padding-x: map-get($spacers, 3);
 $navbar-padding-y: map-get($spacers, 1);
 
 $list-group-item-padding-x: $spacer;

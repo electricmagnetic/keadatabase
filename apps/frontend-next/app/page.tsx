@@ -3,7 +3,6 @@ import { type Metadata } from "next";
 import { type PropsWithChildren } from "react";
 
 import { SITE_NAME } from "./layout";
-import { FeaturedBirds } from "./birds/partials/FeaturedBirds";
 
 import Page from "@/app/_components/layout/Page";
 import {
@@ -11,6 +10,7 @@ import {
   WordPressPosts,
 } from "@/app/_components/content/wordpress";
 import SectionHero from "@/app/_components/layout/SectionHero";
+import Icon from "@/app/_components/ui/Icon";
 import banner from "@/public/images/banner.jpg";
 
 export const metadata: Metadata = {
@@ -49,10 +49,22 @@ export default function Home() {
       <Page.Section background="secondary" size="small">
         <nav>
           <div className="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-2">
-            <HomeLink href="/report">Report Observation</HomeLink>
-            <HomeLink href="/birds">Search Birds</HomeLink>
-            <HomeLink href="/observations">View Observations</HomeLink>
-            <HomeLink href="/pages/donations">Make a Donation</HomeLink>
+            <HomeLink href="/report">
+              <Icon name="send" />
+              Report Observation
+            </HomeLink>
+            <HomeLink href="/birds">
+              <Icon name="search" />
+              Search Birds
+            </HomeLink>
+            <HomeLink href="/observations">
+              <Icon name="map" />
+              View Observations
+            </HomeLink>
+            <HomeLink href="/pages/donations">
+              <Icon name="feather" />
+              Make a Donation
+            </HomeLink>
           </div>
         </nav>
       </Page.Section>

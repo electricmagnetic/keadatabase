@@ -6,6 +6,7 @@ import Link from "next/link";
 import NavLink from "./NavLink";
 
 import Logo from "@/public/logo.svg";
+import Icon from "@/app/_components/ui/Icon";
 
 export default function Navbar() {
   useEffect(() => {
@@ -37,11 +38,21 @@ export default function Navbar() {
         <div className="collapse navbar-collapse" id="navbar">
           <ul className="navbar-nav ms-auto">
             <NavLink exact href="/">
+              <Icon name="house-door" />
               Home
             </NavLink>
-            <NavLink href="/birds">Search Birds</NavLink>
-            <NavLink href="/observations">View Observations</NavLink>
-            <NavLink href="/report">Report Observation</NavLink>
+            <NavLink href="/birds">
+              <Icon name="search" />
+              Search Birds
+            </NavLink>
+            <NavLink href="/observations">
+              <Icon name="map" />
+              View Observations
+            </NavLink>
+            <NavLink href="/report">
+              <Icon name="send" />
+              Report Observation
+            </NavLink>
           </ul>
         </div>
       </div>

@@ -7,6 +7,7 @@ import {
 import Navbar from "@/app/_components/layout/Navbar";
 import Footer from "@/app/_components/layout/Footer";
 
+import "bootstrap-icons/font/bootstrap-icons.scss";
 import "./global.scss";
 
 const playfairDisplay = PlayfairDisplay({

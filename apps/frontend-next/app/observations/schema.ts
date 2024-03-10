@@ -76,6 +76,8 @@ export const ObservationSchema = z.object({
   geocode: z.string(),
 });
 
+export type Observation = z.infer<typeof ObservationSchema>;
+
 export const BirdObservationSchema = z.object({
   id: z.number(),
   get_banded_display: z.string(),
@@ -90,6 +92,8 @@ export const BirdObservationSchema = z.object({
   life_stage_guess: z.nativeEnum(LifeStageGuessEnum).nullable(),
   revisit: z.boolean(),
 });
+
+export type BirdObservation = z.infer<typeof BirdObservationSchema>;
 
 /* Filters */
 

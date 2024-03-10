@@ -1,13 +1,15 @@
 import { type Metadata } from "next";
-import Link from "next/link";
 import { GeoJSONLayer } from "geospatial/layers";
 import { generateGeoJson } from "geospatial/helpers";
 
 import { getObservations } from "./actions";
+import { ObservationAsBlock } from "./templates";
 
+import Icon from "@/app/_components/ui/Icon";
 import Page from "@/app/_components/layout/Page";
 import { Paginator } from "@/app/_components/api/paginator";
 import BaseMap from "@/app/_components/geospatial/BaseMap";
+import Split from "@/app/_components/layout/Split";
 
 export const metadata: Metadata = {
   title: "View Observations",
@@ -24,44 +26,44 @@ export default async function ObservationsPage({
   );
 
   return (
-    <Page>
-      <Page.Heading>Observations</Page.Heading>
-      <Page.Section size="tiny">
-        <Paginator />
-      </Page.Section>
-      <div style={{ height: "640px" }}>
-        <BaseMap>
-          <GeoJSONLayer geoJsonString={observationsAsGeoJson} zoomToLayer />
-        </BaseMap>
-      </div>
-      <Page.Section>
-        <div className="row">
-          {observations.map((observation) => (
-            <div className="col col-md-3 p-2 border" key={observation.id}>
-              <dl>
-                <dt>ID</dt>
-                <dd>
-                  <Link href={`/observations/${observation.id}`}>
-                    {observation.id}
-                  </Link>
-                </dd>
-                <dt>Type</dt>
-                <dd>
-                  {observation.get_sighting_type_display} {observation.number}
-                </dd>
-                <dt>Date/Time</dt>
-                <dd>
-                  {observation.date_sighted} {observation.time_sighted}
-                </dd>
-                <dt>Location</dt>
-                <dd>
-                  {observation.geocode} ({observation.region})
-                </dd>
-              </dl>
-            </div>
-          ))}
-        </div>
-      </Page.Section>
+    <Page noConstrainer>
+      <Page.Container fullWidth>
+        <Split
+          whenFixed={
+            <>
+              <Icon name="card-list" />
+              Show List
+            </>
+          }
+          whenScroll={
+            <>
+              <Icon name="map" />
+              Show Map
+            </>
+          }
+        >
+          <Split.Scroll>
+            <Page.Heading>Observations</Page.Heading>
+            <Page.Section>
+              <ul className="list-unstyled row g-3">
+                {observations.map((observation) => (
+                  <li className="col-sm-6 col-lg-4" key={observation.id}>
+                    <ObservationAsBlock observation={observation} />
+                  </li>
+                ))}
+              </ul>
+            </Page.Section>
+            <Page.Section size="tiny">
+              <Paginator />
+            </Page.Section>
+          </Split.Scroll>
+          <Split.Fixed>
+            <BaseMap>
+              <GeoJSONLayer geoJsonString={observationsAsGeoJson} zoomToLayer />
+            </BaseMap>
+          </Split.Fixed>
+        </Split>
+      </Page.Container>
     </Page>
   );
 }

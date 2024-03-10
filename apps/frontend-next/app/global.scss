@@ -145,6 +145,58 @@ footer {
   }
 }
 
+// Split (fixed/scroll) view
+
+.split-toggler {
+  display: none;
+  position: fixed;
+  right: 0;
+  left: 0;
+  bottom: map-get($spacers, 6);
+  z-index: 50;
+  margin: auto;
+}
+
+.split-container {
+  display: flex;
+  position: relative;
+
+  .split-scroll {
+    .container {
+      padding: 0 var(--bs-gutter-x/2);
+    }
+  }
+  
+  .split-fixed {
+    position: sticky;
+    top: $navbar-height;
+    height: calc(100vh - $navbar-height);
+    right: 0;
+    bottom: 0;
+  }
+}
+
+@include media-breakpoint-down(lg) {
+  .split-toggler {
+    display: block;
+  }
+
+  .split-container {
+    .split-scroll {
+      width: 100%;
+    }
+    .split-fixed {
+      width: 100%;
+    }
+
+    .split-hide {
+      display: none;
+    }
+  }
+}
+
+/* Global tweaks */
+
 // Hide arrows on number fields
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {

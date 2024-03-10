@@ -41,7 +41,7 @@ export async function WordPressPage({
   if (!selectedPage) return null;
 
   return (
-    <div>
+    <div className="content">
       {showTitle ? (
         <h2 dangerouslySetInnerHTML={{ __html: selectedPage.title.rendered }} />
       ) : null}

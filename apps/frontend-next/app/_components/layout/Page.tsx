@@ -59,8 +59,15 @@ function PageSection({
   );
 }
 
-function PageContainer({ children }: PropsWithChildren) {
-  return <div className="container">{children}</div>;
+function PageContainer({
+  fullWidth,
+  children,
+}: PropsWithChildren<{ fullWidth?: boolean }>) {
+  return (
+    <div className={classNames(fullWidth ? "container-fluid" : "container")}>
+      {children}
+    </div>
+  );
 }
 
 function PageHeading({ children }: PropsWithChildren) {
@@ -71,8 +78,13 @@ function PageHeading({ children }: PropsWithChildren) {
   );
 }
 
-function Page({ children }: PropsWithChildren) {
-  return <main>{children}</main>;
+function Page({
+  noConstrainer,
+  children,
+}: PropsWithChildren<{ noConstrainer?: boolean }>) {
+  const main = <main>{children}</main>;
+
+  return noConstrainer ? main : <div className="constrainer">{main}</div>;
 }
 
 Page.Container = PageContainer;

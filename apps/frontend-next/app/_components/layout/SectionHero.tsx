@@ -22,6 +22,7 @@ export default function SectionHero({
         src={image}
         style={{
           objectFit: "cover",
+          objectPosition: "bottom",
         }}
       />
       <div className="position-relative">{children}</div>

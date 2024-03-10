@@ -10,7 +10,7 @@ import Footer from "@/app/_components/layout/Footer";
 import "./global.scss";
 
 const playfairDisplay = PlayfairDisplay({
-  weight: ["400", "700"],
+  weight: ["400", "500"],
   style: ["normal"],
   subsets: ["latin", "latin-ext"],
   display: "swap",
@@ -48,7 +48,7 @@ export default function RootLayout({
     >
       <body>
         <Navbar />
-        <div className="constrainer">{children}</div>
+        {children}
         <Footer />
       </body>
     </html>

@@ -13,10 +13,14 @@ export default function Navbar() {
   }, []);
 
   return (
-    <nav className="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
+    <nav
+      className="navbar navbar-expand-lg bg-dark fixed-top"
+      data-bs-theme="dark"
+    >
       <div className="container">
-        <Link className="navbar-brand" href="/">
-          <Logo alt="Kea Database" height={30} />
+        <Link className="navbar-brand d-flex align-items-center" href="/">
+          <Logo alt="" className="me-2" height={35} />
+          <span className="text-light-emphasis">Kea Database</span>
         </Link>
 
         <button

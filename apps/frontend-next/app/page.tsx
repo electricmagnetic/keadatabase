@@ -3,6 +3,7 @@ import { type Metadata } from "next";
 import { type PropsWithChildren } from "react";
 
 import { SITE_NAME } from "./layout";
+import { FeaturedBirds } from "./birds/partials/FeaturedBirds";
 
 import Page from "@/app/_components/layout/Page";
 import {
@@ -19,7 +20,7 @@ export const metadata: Metadata = {
 function HomeLink({ children, href }: PropsWithChildren<{ href: string }>) {
   return (
     <div className="col">
-      <Link className="btn btn-outline-light btn-lg w-100" href={href}>
+      <Link className="btn btn-home btn-lg w-100" href={href}>
         {children}
       </Link>
     </div>
@@ -66,7 +67,7 @@ export default function Home() {
         </div>
       </Page.Section>
       <Page.Section background="primary">
-        <h2>Featured Birds</h2>
+        <h2>Featured birds</h2>
         {/*TODO*/}
       </Page.Section>
       <Page.Section>

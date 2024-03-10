@@ -1,4 +1,4 @@
-// Custom Colours and Fonts
+/* Custom Colours and Fonts */
 
 $custom-orange-dark: #df5207;
 $custom-green-dark: #6a7029;
@@ -21,7 +21,8 @@ $footer-outer: lighten($custom-brown-faded, 5%);
 $footer-inner: $custom-brown-faded;
 $footer-border: darken($custom-brown-faded, 5%);
 
-// Spacers
+/* Bootstrap Customisations */
+
 $spacer: 1rem !default;
 
 $spacers: (
@@ -38,8 +39,6 @@ $spacers: (
   10: $spacer * 24,
 );
 
-// Custom Bootstrap Variables
-
 $body-bg: #f5f5f5;
 
 $primary: $custom-orange-dark;
@@ -49,8 +48,9 @@ $light: #e9ecef;
 
 $font-family-sans-serif: var(--font-openSans), Roboto, Arial, sans-serif;
 $headings-font-family: $font-family-serif;
+$headings-font-weight: 500;
 
-$navbar-padding-y: $spacer;
+$navbar-padding-y: map-get($spacers, 1);
 
 $list-group-item-padding-x: $spacer;
 $list-group-item-padding-y: map-get($spacers, 2);
@@ -58,14 +58,29 @@ $list-group-item-padding-y: map-get($spacers, 2);
 $card-border-radius: 0;
 
 /* Bootstrap */
+
 @import "bootstrap";
 
+/* Custom global elements */
+
+$navbar-height: 3.5rem; // TODO approximation, check
+
+// Parent elements
+body {
+  padding-top: $navbar-height;
+}
+
+main {
+  min-height: calc(100vh - $navbar-height);
+}
+
 // Constrainer
-$constrainer-offset: 512px;
-$constrainer-width: map-get($container-max-widths, "xl") + $constrainer-offset;
+$constrainer-offset: 384px;
+$constrainer-width: map-get($container-max-widths, "xxl") + $constrainer-offset;
 
 .constrainer {
   @media (min-width: ($constrainer-width+1px)) {
+    background-color: var(--bs-white);
     border: 1px solid $custom-brown-dull;
     border-top: 0;
     border-bottom: 0;
@@ -80,34 +95,14 @@ $constrainer-width: map-get($container-max-widths, "xl") + $constrainer-offset;
   }
 }
 
-/* Specific Custom Styles (copied from the original V2 frontend */
-
-// Sponsors
-.Sponsors {
-  ul {
-    padding-left: 0;
-    list-style: none;
-
-    li {
-      padding-bottom: map-get($spacers, 1);
-      a {
-        color: $body-color;
-
-        &:hover {
-          color: $body-color;
-        }
-      }
-    }
-  }
-
-  h3 {
-    font-size: $font-size-base;
-    font-weight: 600;
-    font-family: $font-family-base;
-    text-transform: uppercase;
+// Navbar
+.navbar {
+  height: $navbar-height;
+  .navbar-brand {
+    font-family: $headings-font-family;
+    font-weight: $headings-font-weight;
   }
 }
-
 
 // Footer
 footer {
@@ -165,7 +160,59 @@ input[type=number]{
   white-space: pre-line
 }
 
-// Allow image overhang on bird profile pages
+// Stop image overflow in content (e.g. from WordPress)
+.content {
+  img {
+    max-width: 100%;
+  }
+}
+
+/* Specific pages */
+
+// Home
+.btn-home {
+  @include button-variant(
+    $background: rgba(255,255,255,0.2),
+    $border: transparent,
+    $color: $white,
+    $hover-background: rgba(255,255,255,0.3),
+    $hover-border: transparent,
+    $hover-color: $white,
+    $active-background: rgba(255,255,255,0.4),
+    $active-border: $white,
+    $active-color: $white,
+    $disabled-background: $gray-300,
+    $disabled-border: transparent,
+    $disabled-color: $white
+  )
+}
+
+.Sponsors {
+  ul {
+    padding-left: 0;
+    list-style: none;
+
+    li {
+      padding-bottom: map-get($spacers, 1);
+      a {
+        color: $body-color;
+
+        &:hover {
+          color: $body-color;
+        }
+      }
+    }
+  }
+
+  h3 {
+    font-size: $font-size-base;
+    font-weight: 600;
+    font-family: $font-family-base;
+    text-transform: uppercase;
+  }
+}
+
+// Bird page (allow image overhang)
 @include media-breakpoint-up(lg) {
   .overhang-container {
     position: relative;

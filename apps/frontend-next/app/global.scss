@@ -64,7 +64,8 @@ $card-border-radius: 0;
 
 /* Custom global elements */
 
-$navbar-height: 3.5rem; // TODO approximation, check
+$navbar-brand-img-height: 2.5rem;
+$navbar-height: ($navbar-brand-padding-y * 2) + ($navbar-padding-y * 2) + $navbar-brand-img-height;
 
 // Parent elements
 body {
@@ -80,8 +81,9 @@ $constrainer-offset: 384px;
 $constrainer-width: map-get($container-max-widths, "xxl") + $constrainer-offset;
 
 .constrainer {
+  background-color: var(--bs-white);
+
   @media (min-width: ($constrainer-width+1px)) {
-    background-color: var(--bs-white);
     border: 1px solid $custom-brown-dull;
     border-top: 0;
     border-bottom: 0;
@@ -98,10 +100,13 @@ $constrainer-width: map-get($container-max-widths, "xxl") + $constrainer-offset;
 
 // Navbar
 .navbar {
-  height: $navbar-height;
+  min-height: $navbar-height;
   .navbar-brand {
     font-family: $headings-font-family;
     font-weight: $headings-font-weight;
+    .navbar-brand-img {
+      height: $navbar-brand-img-height;
+    }
   }
 }
 
@@ -155,6 +160,7 @@ footer {
   bottom: map-get($spacers, 6);
   z-index: 50;
   margin: auto;
+  width: fit-content;
 }
 
 .split-container {
@@ -166,7 +172,7 @@ footer {
       padding: 0 var(--bs-gutter-x/2);
     }
   }
-  
+
   .split-fixed {
     position: sticky;
     top: $navbar-height;
@@ -200,17 +206,17 @@ footer {
 // Hide arrows on number fields
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
+  -webkit-appearance: none;
+  margin: 0;
 }
-input[type=number]{
+input[type="number"] {
   -moz-appearance: textfield;
   appearance: textfield;
 }
 
 // Allow new lines in text
 .whitespace-pre-line {
-  white-space: pre-line
+  white-space: pre-line;
 }
 
 // Stop image overflow in content (e.g. from WordPress)
@@ -225,19 +231,19 @@ input[type=number]{
 // Home
 .btn-home {
   @include button-variant(
-    $background: rgba(255,255,255,0.2),
+    $background: rgba(255, 255, 255, 0.2),
     $border: transparent,
     $color: $white,
-    $hover-background: rgba(255,255,255,0.3),
+    $hover-background: rgba(255, 255, 255, 0.3),
     $hover-border: transparent,
     $hover-color: $white,
-    $active-background: rgba(255,255,255,0.4),
+    $active-background: rgba(255, 255, 255, 0.4),
     $active-border: $white,
     $active-color: $white,
     $disabled-background: $gray-300,
     $disabled-border: transparent,
     $disabled-color: $white
-  )
+  );
 }
 
 .Sponsors {

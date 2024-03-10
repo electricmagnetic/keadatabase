@@ -1,8 +1,11 @@
 import Link from "next/link";
+import Image from "next/image";
 
 import { MediaSchema, type Bird } from "./schema";
 import { generateAltText, generateSummary } from "./helpers";
 
+const IMAGE_HEIGHT = 250;
+const IMAGE_WIDTH = 350;
 export function BirdAsBlock({
   bird: { bird_extended, ...bird },
 }: {
@@ -12,10 +15,13 @@ export function BirdAsBlock({
 
   return (
     <div className="card">
-      <img
+      <Image
         alt={generateAltText(bird)}
-        className="card-img-top"
+        className="card-img-top img-fluid"
+        height={IMAGE_HEIGHT}
         src={media.thumbnail}
+        unoptimized
+        width={IMAGE_WIDTH}
       />
       <div className="card-body">
         <h3 className="card-title h5">{bird.name}</h3>

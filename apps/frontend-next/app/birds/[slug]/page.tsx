@@ -1,4 +1,5 @@
 import { type Metadata } from "next";
+import Image from "next/image";
 
 import { getBird } from "../actions";
 import { MediaSchema } from "../schema";
@@ -8,6 +9,9 @@ import Page from "@/app/_components/layout/Page";
 import Properties from "@/app/_components/layout/Properties";
 import Breadcrumbs from "@/app/_components/layout/Breadcrumbs";
 import { type PageWithSlugProps } from "@/app/_components/api/schema";
+
+const IMAGE_HEIGHT = 500;
+const IMAGE_WIDTH = 500;
 
 export async function generateMetadata({
   params: { slug },
@@ -48,10 +52,13 @@ export default async function BirdPage({
           </div>
           <div className="col-md-6 col-lg-5 overhang-container order-1 order-md-2">
             <figure className="figure overhang-image">
-              <img
+              <Image
                 alt={generateAltText(bird)}
-                className="figure-img img-fluid rounded"
+                className="rounded figure-img img-fluid bg-body-secondary"
+                height={IMAGE_HEIGHT}
                 src={media.large}
+                unoptimized
+                width={IMAGE_WIDTH}
               />
               {bird_extended?.profile_picture_attribution ? (
                 <figcaption className="figure-caption text-end">

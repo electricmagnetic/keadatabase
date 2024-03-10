@@ -20,7 +20,7 @@ export default function Navbar() {
     >
       <div className="container">
         <Link className="navbar-brand d-flex align-items-center" href="/">
-          <Logo alt="" className="me-2" height={35} />
+          <Logo alt="" className="me-2 navbar-brand-img" />
           <span className="text-light-emphasis">Kea Database</span>
         </Link>
 

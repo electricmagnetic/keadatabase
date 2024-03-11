@@ -1,12 +1,19 @@
 import { type PropsWithChildren } from "react";
 
+import Icon from "@/app/_components/ui/Icon";
+
 function PropertiesItem({
+  className,
   name,
+  iconName,
   children,
-}: PropsWithChildren<{ name: string }>) {
+}: PropsWithChildren<{ className?: string; iconName?: string; name: string }>) {
   return (
-    <div>
-      <dt>{name}</dt>
+    <div className={className}>
+      <dt>
+        {iconName ? <Icon name={iconName} /> : null}
+        {name}
+      </dt>
       <dd>{children || "-"}</dd>
     </div>
   );

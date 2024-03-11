@@ -13,25 +13,30 @@ import "maplibre-gl/dist/maplibre-gl.css";
 
 import { MAP_INITIAL_VIEW, NZ_BOUNDS_BUFFERED } from "./constants";
 
-type MapStyle = React.ComponentProps<typeof MapLibreMap>["mapStyle"];
+type MapLibreMapProps = React.ComponentProps<typeof MapLibreMap>;
+
+const DEFAULT_MAP_PROPS = {
+  initialViewState: MAP_INITIAL_VIEW,
+  maxBounds: NZ_BOUNDS_BUFFERED,
+  maxZoom: 20,
+  minZoom: 1,
+  reuseMaps: true,
+} as MapLibreMapProps;
 
 export default function Map({
-  mapStyle,
   children,
-}: PropsWithChildren<{ mapStyle?: MapStyle }>) {
+  ...others
+}: PropsWithChildren<MapLibreMapProps>) {
   const mapRef = useRef<MapRef>(null);
+
+  const mapProps = { ...DEFAULT_MAP_PROPS, ...others };
 
   return (
     <MapProvider>
       <MapLibreMap
-        initialViewState={MAP_INITIAL_VIEW}
-        mapStyle={mapStyle}
-        maxBounds={NZ_BOUNDS_BUFFERED}
-        maxZoom={20}
-        minZoom={1}
         ref={mapRef}
-        reuseMaps
         style={{ width: "100%", height: "100%" }}
+        {...mapProps}
       >
         <FullscreenControl />
         <NavigationControl />

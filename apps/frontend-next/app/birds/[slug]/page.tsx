@@ -9,6 +9,7 @@ import Page from "@/app/_components/layout/Page";
 import Properties from "@/app/_components/layout/Properties";
 import Breadcrumbs from "@/app/_components/layout/Breadcrumbs";
 import { type PageWithSlugProps } from "@/app/_components/api/schema";
+import Figure from "@/app/_components/layout/Figure";
 
 const IMAGE_HEIGHT = 500;
 const IMAGE_WIDTH = 500;
@@ -31,11 +32,9 @@ export default async function BirdPage({
 
   return (
     <Page>
-      <Page.Section background="faded" size="tiny">
-        <Breadcrumbs
-          breadcrumbs={[{ name: "Birds", href: "/birds" }, { name: bird.name }]}
-        />
-      </Page.Section>
+      <Breadcrumbs
+        breadcrumbs={[{ name: "Birds", href: "/birds" }, { name: bird.name }]}
+      />
       <Page.Section background="dull" size="medium">
         <div className="row">
           <div className="col-md-6 col-lg-7 order-2 order-md-1">
@@ -51,21 +50,23 @@ export default async function BirdPage({
             </Properties>
           </div>
           <div className="col-md-6 col-lg-5 overhang-container order-1 order-md-2">
-            <figure className="figure overhang-image">
+            <Figure
+              caption={
+                bird_extended?.profile_picture_attribution
+                  ? `Photo by ${bird_extended.profile_picture_attribution}`
+                  : undefined
+              }
+              className="overhang-image"
+            >
               <Image
                 alt={generateAltText(bird)}
-                className="rounded figure-img img-fluid bg-body-secondary"
+                className="rounded img-fluid bg-body-secondary"
                 height={IMAGE_HEIGHT}
                 src={media.large}
                 unoptimized
                 width={IMAGE_WIDTH}
               />
-              {bird_extended?.profile_picture_attribution ? (
-                <figcaption className="figure-caption text-end">
-                  Photo by {bird_extended.profile_picture_attribution}
-                </figcaption>
-              ) : null}
-            </figure>
+            </Figure>
           </div>
         </div>
       </Page.Section>

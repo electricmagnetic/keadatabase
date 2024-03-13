@@ -5,6 +5,7 @@ import { BirdAsBlock } from "./templates";
 
 import { Paginator } from "@/app/_components/api/paginator";
 import Page from "@/app/_components/layout/Page";
+import Breadcrumbs from "@/app/_components/layout/Breadcrumbs";
 
 export const metadata: Metadata = {
   title: "Search Birds",
@@ -19,7 +20,8 @@ export default async function BirdsPage({
 
   return (
     <Page>
-      <Page.Heading>Birds</Page.Heading>
+      <Breadcrumbs breadcrumbs={[{ name: "Birds" }]} />
+      <Page.Heading>Search Birds</Page.Heading>
       <Page.Section size="tiny">
         <Paginator />
       </Page.Section>

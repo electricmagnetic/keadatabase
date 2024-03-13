@@ -20,12 +20,13 @@ export async function generateMetadata({
   };
 }
 
-function OptionalTextBlock({ name, text }: { name: string; text: string }) {
-  return text ? (
-    <>
-      <h2>{name}</h2> <p className="whitespace-pre-line">{text}</p>
-    </>
-  ) : null;
+function TextBlock({ name, text }: { name: string; text: string }) {
+  return (
+    <div className="mb-3">
+      <h3 className="h4 font-sans-serif">{name}</h3>
+      <p className="whitespace-pre-line">{text ? text : <em>-</em>}</p>
+    </div>
+  );
 }
 
 export default async function ObservationPage({
@@ -39,35 +40,29 @@ export default async function ObservationPage({
 
   return (
     <Page>
-      <Page.Section background="faded" size="tiny">
-        <Breadcrumbs
-          breadcrumbs={[
-            { name: "Observations", href: "/observations" },
-            { name: `#${observation.id}` },
-          ]}
-        />
-      </Page.Section>
-      <Page.Section background="dull" size="medium">
+      <Breadcrumbs
+        breadcrumbs={[
+          { name: "Observations", href: "/observations" },
+          { name: `#${observation.id}` },
+        ]}
+      />
+      <Page.Section background="contours" size="medium">
         <h1>Observation {`#${observation.id}`}</h1>
-        <Properties className="row g-2">
-          <Properties.Item className="col-md-4" iconName="calendar" name="When">
+        <Properties className="row g-2 row-cols-1 row-cols-md-3">
+          <Properties.Item iconName="calendar" name="When">
             {observation.date_sighted} {observation.time_sighted}
           </Properties.Item>
-          <Properties.Item className="col-md-4" iconName="geo-alt" name="Where">
+          <Properties.Item iconName="geo-alt" name="Where">
             {observation.geocode}, {observation.region}
           </Properties.Item>
-          <Properties.Item className="col-md-4" iconName="feather" name="What">
+          <Properties.Item iconName="feather" name="What">
             {observation.get_sighting_type_display} {observation.number}{" "}
             {observation.number === 1 ? "bird" : "birds"}
           </Properties.Item>
-          <Properties.Item
-            className="col-md-4"
-            iconName="patch-check-fill"
-            name="Status"
-          >
+          <Properties.Item iconName="patch-check-fill" name="Status">
             {observation.get_status_display}
           </Properties.Item>
-          <Properties.Item className="col-md-4" iconName="person" name="Who">
+          <Properties.Item iconName="person" name="Who">
             {observation.contributor}
           </Properties.Item>
         </Properties>
@@ -75,12 +70,13 @@ export default async function ObservationPage({
       <Page.Section>
         <div className="row">
           <div className="col-md-6">
-            <OptionalTextBlock name="Comments" text={observation.comments} />
-            <OptionalTextBlock
+            <h2>Details</h2>
+            <TextBlock
               name="Location Details"
               text={observation.location_details}
             />
-            <OptionalTextBlock name="Behaviour" text={observation.behaviour} />
+            <TextBlock name="Comments" text={observation.comments} />
+            <TextBlock name="Behaviour" text={observation.behaviour} />
           </div>
           <div className="col-md-6">
             <Figure caption={`Map around ${observation.geocode}`}>

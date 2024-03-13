@@ -7,7 +7,8 @@ type BackgroundTypes =
   | "light"
   | "faded"
   | "lightest"
-  | "dull";
+  | "dull"
+  | "contours";
 type SizeTypes = "tiny" | "small" | "medium" | "large";
 
 const getStyle = (type?: BackgroundTypes) => {
@@ -31,6 +32,14 @@ const getStyle = (type?: BackgroundTypes) => {
       return {
         backgroundColor: "var(--custom-brown-faded)",
       };
+    case "contours":
+      return {
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "cover",
+        backgroundColor: "var(--custom-brown-dull)",
+        backgroundImage: "url(/motifs/contours.svg)",
+        backgroundPosition: "center bottom",
+      };
     case "light":
       return { backgroundColor: "var(--bs-light)" };
     default:
@@ -38,10 +47,14 @@ const getStyle = (type?: BackgroundTypes) => {
   }
 };
 
+interface PageContainerProps {
+  fullWidth?: boolean;
+}
+
 function PageContainer({
   fullWidth,
   children,
-}: PropsWithChildren<{ fullWidth?: boolean }>) {
+}: PropsWithChildren<PageContainerProps>) {
   return (
     <div className={classNames(fullWidth ? "container-fluid" : "container")}>
       {children}
@@ -49,30 +62,34 @@ function PageContainer({
   );
 }
 
+const pageSectionSize = {
+  large: "py-8",
+  medium: "py-5",
+  small: "py-4",
+  tiny: "py-2",
+};
+
 function PageSection({
   background,
   children,
+  fullWidth,
   size = "medium",
-}: PropsWithChildren<{ background?: BackgroundTypes; size?: SizeTypes }>) {
+}: PropsWithChildren<
+  { background?: BackgroundTypes; size?: SizeTypes } & PageContainerProps
+>) {
   return (
     <section
-      className={classNames(
-        "position-relative",
-        size === "large" && "py-8",
-        size === "medium" && "py-5",
-        size === "small" && "py-4",
-        size === "tiny" && "py-2",
-      )}
+      className={classNames("position-relative", pageSectionSize[size])}
       style={getStyle(background)}
     >
-      <PageContainer>{children}</PageContainer>
+      <PageContainer fullWidth={fullWidth}>{children}</PageContainer>
     </section>
   );
 }
 
 function PageHeading({ children }: PropsWithChildren) {
   return (
-    <PageSection background="faded" size="small">
+    <PageSection background="dull" size="small">
       <h1>{children}</h1>
     </PageSection>
   );

@@ -10,6 +10,7 @@ import Page from "@/app/_components/layout/Page";
 import { Paginator } from "@/app/_components/api/paginator";
 import BaseMap from "@/app/_components/geospatial/BaseMap";
 import Split from "@/app/_components/layout/Split";
+import Breadcrumbs from "@/app/_components/layout/Breadcrumbs";
 
 export const metadata: Metadata = {
   title: "View Observations",
@@ -43,7 +44,8 @@ export default async function ObservationsPage({
           }
         >
           <Split.Scroll>
-            <Page.Heading>Observations</Page.Heading>
+            <Breadcrumbs breadcrumbs={[{ name: "Observations" }]} />
+            <Page.Heading>View Observations</Page.Heading>
             <Page.Section>
               <ul className="list-unstyled row g-3">
                 {observations.map((observation) => (

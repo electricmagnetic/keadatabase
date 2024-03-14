@@ -1,17 +1,21 @@
 import { type Metadata } from "next";
-import { GeoJSONLayer } from "geospatial/layers";
-import { generateGeoJson } from "geospatial/helpers";
 import { notFound } from "next/navigation";
 
 import { getObservation } from "../actions";
+import { ObservationsAsMap } from "../templates";
 
 import Page from "@/app/_components/layout/Page";
-import { type PageWithIdProps } from "@/app/_components/api/schema";
+import {
+  type PageWithSearchParams,
+  type PageWithIdProps,
+} from "@/app/_components/api/schema";
 import Breadcrumbs from "@/app/_components/layout/Breadcrumbs";
 import Properties from "@/app/_components/layout/Properties";
-import BaseMap from "@/app/_components/geospatial/BaseMap";
 import Figure from "@/app/_components/layout/Figure";
 import { validateId } from "@/app/_components/api/actions";
+import { getBirdObservations } from "@/app/birdObservations/actions";
+import { BirdObservationAsBirdBlock } from "@/app/birdObservations/templates";
+import { Paginator } from "@/app/_components/api/paginator";
 
 export async function generateMetadata({
   params: { id: rawId },
@@ -34,16 +38,23 @@ function TextBlock({ name, text }: { name: string; text: string }) {
 }
 
 export default async function ObservationPage({
+  searchParams,
   params: { id: rawId },
-}: PageWithIdProps) {
+}: PageWithIdProps & PageWithSearchParams) {
   const id = validateId(rawId);
   if (!id) notFound();
 
   const observation = await getObservation(id);
 
-  const observationAsGeoJson = JSON.stringify(
-    generateGeoJson("id", "point_location", [observation]),
-  );
+  const {
+    results: birdObservations,
+    isMore,
+    count,
+    total,
+  } = await getBirdObservations({
+    ...searchParams,
+    sighting: id,
+  });
 
   return (
     <Page>
@@ -75,29 +86,46 @@ export default async function ObservationPage({
         </Properties>
       </Page.Section>
       <Page.Section>
-        <div className="row">
-          <div className="col-md-6">
-            <h2>Details</h2>
-            <TextBlock
-              name="Location Details"
-              text={observation.location_details}
-            />
-            <TextBlock name="Comments" text={observation.comments} />
-            <TextBlock name="Behaviour" text={observation.behaviour} />
-          </div>
-          <div className="col-md-6">
-            <Figure caption={`Map around ${observation.geocode}`}>
-              <div style={{ height: "720px" }}>
-                <BaseMap interactive={false}>
-                  <GeoJSONLayer
-                    geoJsonString={observationAsGeoJson}
-                    zoomToLayer
+        <h2>Details</h2>
+        <TextBlock
+          name="Location Details"
+          text={observation.location_details}
+        />
+        <TextBlock name="Comments" text={observation.comments} />
+        <TextBlock name="Behaviour" text={observation.behaviour} />
+      </Page.Section>
+      <Page.Section>
+        <Figure caption={`Map around ${observation.geocode}`}>
+          <ObservationsAsMap observations={[observation]} />
+        </Figure>
+      </Page.Section>
+      <Page.Section>
+        <h2>Birds</h2>
+        {birdObservations.length > 0 ? (
+          <>
+            <ul className="list-unstyled row g-3">
+              {birdObservations.map((birdObservation) => (
+                <li
+                  className="col-sm-6 col-md-4 col-lg-3"
+                  key={birdObservation.id}
+                >
+                  <BirdObservationAsBirdBlock
+                    birdObservation={birdObservation}
+                    key={birdObservation.id}
                   />
-                </BaseMap>
-              </div>
-            </Figure>
-          </div>
-        </div>
+                </li>
+              ))}
+            </ul>
+            <Paginator
+              count={count}
+              isMore={isMore}
+              scroll={false}
+              total={total}
+            />
+          </>
+        ) : (
+          <em>No specific birds were recorded with this observation.</em>
+        )}
       </Page.Section>
     </Page>
   );

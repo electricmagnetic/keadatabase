@@ -99,7 +99,7 @@ function Page({
   noConstrainer,
   children,
 }: PropsWithChildren<{ noConstrainer?: boolean }>) {
-  const main = <main>{children}</main>;
+  const main = <main className="d-flex flex-column">{children}</main>;
 
   return noConstrainer ? main : <div className="constrainer">{main}</div>;
 }

@@ -34,3 +34,7 @@ export type PageWithSlugProps<P = unknown> = P & {
 export type PageWithIdProps<P = unknown> = P & {
   params: { id: unknown };
 };
+
+export type PageWithSearchParams<P = unknown> = P & {
+  searchParams: Record<string, unknown>;
+};

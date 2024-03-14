@@ -1,7 +1,10 @@
 import Link from "next/link";
+import { generateGeoJson } from "geospatial/helpers";
+import { GeoJSONLayer } from "geospatial/layers";
 
 import { type Observation } from "./schema";
 
+import BaseMap from "@/app/_components/geospatial/BaseMap";
 import Icon from "@/app/_components/ui/Icon";
 
 export function ObservationAsBlock({
@@ -38,5 +41,23 @@ export function ObservationAsBlock({
         </Link>
       </div>
     </div>
+  );
+}
+
+export function ObservationsAsMap({
+  observations,
+}: {
+  observations: Observation[];
+}) {
+  const birdObservationsAsGeoJson = generateGeoJson(
+    "id",
+    "point_location",
+    observations,
+  );
+
+  return (
+    <BaseMap interactive={false}>
+      <GeoJSONLayer geoJson={birdObservationsAsGeoJson} zoomToLayer />
+    </BaseMap>
   );
 }

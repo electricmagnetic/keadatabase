@@ -18,28 +18,28 @@ export const PointLayerProps: LayerProps = {
 };
 
 export function GeoJSONLayer({
-  geoJsonString,
+  geoJson,
   layerProps = PointLayerProps,
   zoomToLayer = false,
 }: {
-  geoJsonString: string;
+  geoJson: GeoJSON;
   layerProps?: LayerProps;
   zoomToLayer?: boolean;
 }) {
   return (
     <>
-      <Source data={JSON.parse(geoJsonString) as GeoJSON} type="geojson">
+      <Source data={geoJson} type="geojson">
         <Layer {...layerProps} />
       </Source>
-      {zoomToLayer ? <ZoomToGeoJSON geoJsonString={geoJsonString} /> : null}
+      {zoomToLayer ? <ZoomToGeoJSON geoJson={geoJson} /> : null}
     </>
   );
 }
 
 export function ZoomToGeoJSON({
-  geoJsonString,
+  geoJson,
 }: {
-  geoJsonString: string | null;
+  geoJson: GeoJSON | null;
 }) {
   const { current: map } = useMap();
 
@@ -59,9 +59,8 @@ export function ZoomToGeoJSON({
 
   useEffect(() => {
     const zoomMap = () => {
-      if (!map || !geoJsonString) return;
+      if (!map || !geoJson) return;
 
-      const geoJson = JSON.parse(geoJsonString) as GeoJSON; // TODO assertion, maybe should check this
       const bbox = TurfBbox(geoJson);
 
       if (bbox.some((coordinate) => coordinate === Infinity)) return; // checks that bounds are valid
@@ -77,10 +76,10 @@ export function ZoomToGeoJSON({
       );
     };
 
-    if (loaded && geoJsonString) {
+    if (loaded && geoJson) {
       zoomMap();
     }
-  }, [geoJsonString, map, loaded]);
+  }, [geoJson, map, loaded]);
 
   return null;
 }

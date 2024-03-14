@@ -1,14 +1,11 @@
 import { type Metadata } from "next";
-import { GeoJSONLayer } from "geospatial/layers";
-import { generateGeoJson } from "geospatial/helpers";
 
 import { getObservations } from "./actions";
-import { ObservationAsBlock } from "./templates";
+import { ObservationAsBlock, ObservationsAsMap } from "./templates";
 
 import Icon from "@/app/_components/ui/Icon";
 import Page from "@/app/_components/layout/Page";
 import { Paginator } from "@/app/_components/api/paginator";
-import BaseMap from "@/app/_components/geospatial/BaseMap";
 import Split from "@/app/_components/layout/Split";
 import Breadcrumbs from "@/app/_components/layout/Breadcrumbs";
 
@@ -27,9 +24,6 @@ export default async function ObservationsPage({
     count,
     total,
   } = await getObservations(searchParams);
-  const observationsAsGeoJson = JSON.stringify(
-    generateGeoJson("id", "point_location", observations),
-  );
 
   return (
     <Page noConstrainer>
@@ -65,9 +59,7 @@ export default async function ObservationsPage({
             </Page.Section>
           </Split.Scroll>
           <Split.Fixed>
-            <BaseMap>
-              <GeoJSONLayer geoJsonString={observationsAsGeoJson} zoomToLayer />
-            </BaseMap>
+            <ObservationsAsMap observations={observations} />
           </Split.Fixed>
         </Split>
       </Page.Container>

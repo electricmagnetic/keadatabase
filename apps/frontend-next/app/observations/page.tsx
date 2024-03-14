@@ -19,7 +19,7 @@ export const metadata: Metadata = {
 export default async function ObservationsPage({
   searchParams,
 }: {
-  searchParams: Record<string, string>;
+  searchParams: Record<string, unknown>;
 }) {
   const observations = await getObservations(searchParams);
   const observationsAsGeoJson = JSON.stringify(

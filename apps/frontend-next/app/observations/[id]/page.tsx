@@ -1,6 +1,7 @@
 import { type Metadata } from "next";
 import { GeoJSONLayer } from "geospatial/layers";
 import { generateGeoJson } from "geospatial/helpers";
+import { notFound } from "next/navigation";
 
 import { getObservation } from "../actions";
 
@@ -10,10 +11,13 @@ import Breadcrumbs from "@/app/_components/layout/Breadcrumbs";
 import Properties from "@/app/_components/layout/Properties";
 import BaseMap from "@/app/_components/geospatial/BaseMap";
 import Figure from "@/app/_components/layout/Figure";
+import { validateId } from "@/app/_components/api/actions";
 
 export async function generateMetadata({
-  params: { id },
+  params: { id: rawId },
 }: PageWithIdProps): Promise<Metadata> {
+  const id = validateId(rawId);
+  if (!id) return {};
   const observation = await getObservation(id);
   return {
     title: `#${observation.id} (Observation)`,
@@ -30,8 +34,11 @@ function TextBlock({ name, text }: { name: string; text: string }) {
 }
 
 export default async function ObservationPage({
-  params: { id },
+  params: { id: rawId },
 }: PageWithIdProps) {
+  const id = validateId(rawId);
+  if (!id) notFound();
+
   const observation = await getObservation(id);
 
   const observationAsGeoJson = JSON.stringify(

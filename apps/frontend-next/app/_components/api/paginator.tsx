@@ -9,7 +9,7 @@ import Loader from "@/app/_components/ui/Loader";
 
 type Direction = "increase" | "decrease";
 
-export function Paginator() {
+export function Paginator({ scroll }: { scroll?: boolean }) {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();
@@ -29,7 +29,7 @@ export function Paginator() {
       page: `${newPage}`,
     });
     startTransition(() => {
-      router.replace(`${pathname}?${params.toString()}`);
+      router.push(`${pathname}?${params.toString()}`, { scroll });
     });
   };
 

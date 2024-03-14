@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/naming-convention -- Enum naming fixed by back-end */
 import { z } from "zod";
 
+import { MediaSchema } from "@/app/_components/api/schema";
+
 /* Enums */
 
 export enum StatusEnum {
@@ -23,18 +25,6 @@ export enum LifeStageEnum {
 }
 
 /* Objects */
-
-export const MediaSchema = z
-  .object({
-    thumbnail: z.string().url(),
-    full_size: z.string().url(),
-    large: z.string().url(),
-  })
-  .catch({
-    thumbnail: "/placeholders/thumbnail.png",
-    full_size: "/placeholders/large.png", // TODO one day replace this with a better placeholder
-    large: "/placeholders/large.png",
-  });
 
 export const BirdExtendedSchema = z.object({
   description: z.string(),
@@ -66,4 +56,8 @@ export type Bird = z.infer<typeof BirdSchema>;
 
 /* Filters */
 
-export const BirdsFilterSchema = z.object({});
+export const BirdsFilterSchema = z.object({
+  is_featured: z.coerce.boolean(),
+  page_size: z.coerce.number(),
+  ordering: z.string(),
+});

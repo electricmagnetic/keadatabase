@@ -1,8 +1,8 @@
 import { type Metadata } from "next";
 import Image from "next/image";
+import { notFound } from "next/navigation";
 
 import { getBird } from "../actions";
-import { MediaSchema } from "../schema";
 import { generateAltText, generateSummary } from "../helpers";
 
 import Page from "@/app/_components/layout/Page";
@@ -10,25 +10,33 @@ import Properties from "@/app/_components/layout/Properties";
 import Breadcrumbs from "@/app/_components/layout/Breadcrumbs";
 import { type PageWithSlugProps } from "@/app/_components/api/schema";
 import Figure from "@/app/_components/layout/Figure";
+import { validateSlug } from "@/app/_components/api/actions";
+import { getMediaOrPlaceholder } from "@/app/_components/api/media";
 
 const IMAGE_HEIGHT = 500;
 const IMAGE_WIDTH = 500;
 
 export async function generateMetadata({
-  params: { slug },
+  params: { slug: rawSlug },
 }: PageWithSlugProps): Promise<Metadata> {
+  const slug = validateSlug(rawSlug);
+  if (!slug) return {};
   const bird = await getBird(slug);
+
   return {
     title: `${bird.name} (Bird)`,
   };
 }
 
 export default async function BirdPage({
-  params: { slug },
+  params: { slug: rawSlug },
 }: PageWithSlugProps) {
+  const slug = validateSlug(rawSlug);
+  if (!slug) notFound();
+
   const { bird_extended, ...bird } = await getBird(slug);
 
-  const media = MediaSchema.parse(bird_extended?.profile_picture);
+  const media = getMediaOrPlaceholder(bird_extended?.profile_picture);
 
   return (
     <Page>

@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 export default async function BirdsPage({
   searchParams,
 }: {
-  searchParams: Record<string, string>;
+  searchParams: Record<string, unknown>;
 }) {
   const birds = await getBirds(searchParams);
 

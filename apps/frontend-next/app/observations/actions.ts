@@ -30,5 +30,10 @@ export const getObservations = async ({
     ApiListResponseSchema.extend({
       results: z.array(ObservationSchema),
     }),
-  ).then((data) => data.results);
+  ).then((data) => ({
+    results: data.results,
+    total: data.count,
+    count: data.results.length,
+    isMore: Boolean(data.next),
+  })); // TODO de-duplicate
 };

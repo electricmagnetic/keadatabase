@@ -21,7 +21,12 @@ export default async function ObservationsPage({
 }: {
   searchParams: Record<string, unknown>;
 }) {
-  const observations = await getObservations(searchParams);
+  const {
+    results: observations,
+    isMore,
+    count,
+    total,
+  } = await getObservations(searchParams);
   const observationsAsGeoJson = JSON.stringify(
     generateGeoJson("id", "point_location", observations),
   );
@@ -55,8 +60,8 @@ export default async function ObservationsPage({
                 ))}
               </ul>
             </Page.Section>
-            <Page.Section size="tiny">
-              <Paginator />
+            <Page.Section size="small">
+              <Paginator count={count} isMore={isMore} total={total} />
             </Page.Section>
           </Split.Scroll>
           <Split.Fixed>

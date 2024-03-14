@@ -2,6 +2,7 @@
 
 import { useTransition } from "react";
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
+import classNames from "classnames";
 
 import { validPage } from "./pagination";
 
@@ -9,7 +10,17 @@ import Loader from "@/app/_components/ui/Loader";
 
 type Direction = "increase" | "decrease";
 
-export function Paginator({ scroll }: { scroll?: boolean }) {
+export function Paginator({
+  scroll,
+  isMore,
+  count,
+  total,
+}: {
+  isMore?: boolean;
+  scroll?: boolean;
+  count?: number;
+  total?: number;
+}) {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();
@@ -35,34 +46,51 @@ export function Paginator({ scroll }: { scroll?: boolean }) {
 
   const page = validPage(searchParams.get("page"));
 
-  return (
-    <div className="bg-light-subtle border p-2 row justify-content-between align-items-center">
-      <div className="col text-start">
-        <button
-          className="btn btn-light btn-sm"
-          disabled={page === 1}
-          onClick={() => {
-            update("decrease");
-          }}
-          type="button"
-        >
-          Previous
-        </button>
-      </div>
-      <div className="col text-center">
-        {isPending ? <Loader small /> : <span>Showing page {page}</span>}
-      </div>
-      <div className="col text-end">
-        <button
-          className="btn btn-light btn-sm"
-          onClick={() => {
-            update("increase");
-          }}
-          type="button"
-        >
-          Next
-        </button>
-      </div>
-    </div>
-  );
+  const disableNext = !isMore;
+  const disablePrevious = page === 1;
+  const showPagination = !(disableNext && disablePrevious);
+
+  return showPagination ? (
+    <nav aria-label="Page Navigation" className="text-center">
+      <ul className="pagination justify-content-center">
+        <li className="page-item">
+          <button
+            className={classNames("page-link", disablePrevious && "disabled")}
+            disabled={disablePrevious}
+            onClick={() => {
+              update("decrease");
+            }}
+            type="button"
+          >
+            Previous
+          </button>
+        </li>
+        <li className="page-item">
+          <button
+            className={classNames("page-link", disableNext && "disabled")}
+            disabled={disableNext}
+            onClick={() => {
+              update("increase");
+            }}
+            type="button"
+          >
+            Next
+          </button>
+        </li>
+      </ul>
+      {isPending ? (
+        <Loader />
+      ) : (
+        <>
+          <p className="small mb-1">Page {page}</p>
+          <p className="small mb-0">
+            {count ? `Showing ${count}` : null}
+            {count && total ? " of " : null}
+            {total ? `${total}` : null}
+            {count || total ? " items" : null}
+          </p>
+        </>
+      )}
+    </nav>
+  ) : null;
 }

@@ -1,7 +1,9 @@
 import Link from "next/link";
 import Image from "next/image";
 
-import { MediaSchema, type Bird } from "./schema";
+import { getMediaOrPlaceholder } from "../_components/api/media";
+
+import { type Bird } from "./schema";
 import { generateAltText, generateSummary } from "./helpers";
 
 const IMAGE_HEIGHT = 250;
@@ -11,7 +13,7 @@ export function BirdAsBlock({
 }: {
   bird: Bird;
 }) {
-  const media = MediaSchema.parse(bird_extended?.profile_picture);
+  const media = getMediaOrPlaceholder(bird_extended?.profile_picture);
 
   return (
     <div className="card">

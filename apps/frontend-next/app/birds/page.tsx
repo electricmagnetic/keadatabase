@@ -16,15 +16,12 @@ export default async function BirdsPage({
 }: {
   searchParams: Record<string, unknown>;
 }) {
-  const birds = await getBirds(searchParams);
+  const { results: birds, isMore, count, total } = await getBirds(searchParams);
 
   return (
     <Page>
       <Breadcrumbs breadcrumbs={[{ name: "Birds" }]} />
       <Page.Heading>Search Birds</Page.Heading>
-      <Page.Section size="tiny">
-        <Paginator />
-      </Page.Section>
       <Page.Section>
         <ul className="list-unstyled row g-3">
           {birds.map((bird) => (
@@ -33,6 +30,9 @@ export default async function BirdsPage({
             </li>
           ))}
         </ul>
+      </Page.Section>
+      <Page.Section size="small">
+        <Paginator count={count} isMore={isMore} total={total} />
       </Page.Section>
     </Page>
   );

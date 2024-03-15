@@ -1,9 +1,11 @@
 import Image from "next/image";
+import Link from "next/link";
 import { GeoJSONLayer } from "geospatial/layers";
 import { generateGeoJson } from "geospatial/helpers";
 
 import { BirdAsBlock } from "../birds/templates";
 import { ObservationAsBlock } from "../observations/templates";
+import { generateAltText } from "../birds/helpers";
 
 import { type BirdObservation } from "./schema";
 
@@ -87,8 +89,37 @@ export function BirdObservationsAsMap({
   );
 
   return (
-    <BaseMap interactive={false}>
+    <BaseMap>
       <GeoJSONLayer geoJson={birdObservationsAsGeoJson} zoomToLayer />
     </BaseMap>
+  );
+}
+
+export function BirdObservationAsCircleBlock({
+  birdObservation,
+}: {
+  birdObservation: BirdObservation;
+}) {
+  const { bird, sighting } = birdObservation;
+
+  if (!bird) return null;
+
+  const media = getMediaOrPlaceholder(bird.bird_extended?.profile_picture);
+  return (
+    <div className="position-relative text-center">
+      <img
+        alt={generateAltText(bird)}
+        className="img-fluid rounded-circle p-1"
+        src={media.large}
+      />
+      <h3 className="h4">
+        <Link className="stretched-link" href={`/birds/${bird.slug}`}>
+          {bird.name}
+        </Link>
+      </h3>
+      <p>
+        {sighting.date_sighted} {sighting.time_sighted}
+      </p>
+    </div>
   );
 }

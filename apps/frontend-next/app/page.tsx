@@ -1,8 +1,10 @@
 import Link from "next/link";
 import { type Metadata } from "next";
-import { type PropsWithChildren } from "react";
+import { Suspense, type PropsWithChildren } from "react";
 
 import { SITE_NAME } from "./layout";
+import FeaturedBirds from "./birds/partials/FeaturedBirds";
+import RecentlyObserved from "./birdObservations/partials/RecentlyObserved";
 
 import Page from "@/app/_components/layout/Page";
 import {
@@ -12,6 +14,7 @@ import {
 import SectionHero from "@/app/_components/layout/SectionHero";
 import Icon from "@/app/_components/ui/Icon";
 import banner from "@/public/images/banner.jpg";
+import Loader, { TextBlockPlaceholder } from "@/app/_components/ui/Loader";
 
 export const metadata: Metadata = {
   title: SITE_NAME,
@@ -71,26 +74,36 @@ export default function Home() {
       <Page.Section>
         <div className="row">
           <div className="col-md">
-            <WordPressPage id={24} showTitle />
+            <Suspense fallback={<TextBlockPlaceholder />}>
+              <WordPressPage id={24} showTitle />
+            </Suspense>
           </div>
           <div className="col-md">
-            <WordPressPage id={27} showTitle />
+            <Suspense fallback={<TextBlockPlaceholder />}>
+              <WordPressPage id={27} showTitle />
+            </Suspense>
           </div>
         </div>
       </Page.Section>
-      <Page.Section background="primary">
+      <Page.Section background="primary" className="text-center">
         <h2>Featured birds</h2>
-        {/*TODO*/}
+        <Suspense fallback={<Loader className="text-white" />}>
+          <FeaturedBirds />
+        </Suspense>
       </Page.Section>
       <Page.Section>
         <div className="row">
           <div className="col-md-6">
             <h2>Recently observed</h2>
-            {/*TODO*/}
+            <Suspense fallback={<Loader />}>
+              <RecentlyObserved />
+            </Suspense>
           </div>
           <div className="col-md-6">
             <h2>Blog</h2>
-            <WordPressPosts />
+            <Suspense fallback={<TextBlockPlaceholder />}>
+              <WordPressPosts />
+            </Suspense>
           </div>
         </div>
       </Page.Section>

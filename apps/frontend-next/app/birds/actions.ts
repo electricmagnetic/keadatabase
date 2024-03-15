@@ -18,7 +18,7 @@ export const getBirds = async ({
   page,
   ...rawFilters
 }: Record<string, unknown>) => {
-  const filters = BirdsFilterSchema.partial().parse(rawFilters);
+  const filters = BirdsFilterSchema.parse(rawFilters);
 
   const compiledFilters = new URLSearchParams({
     ...(filters.is_featured && { is_featured: "true" }),

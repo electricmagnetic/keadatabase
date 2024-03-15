@@ -52,6 +52,8 @@ export type BirdObservation = z.infer<typeof BirdObservationSchema>;
 
 export const BirdObservationsFilterSchema = z
   .object({
+    has_bird: z.coerce.boolean(),
+    page_size: z.coerce.number(),
     bird: z.string(),
     sighting: z.coerce.number(),
   })

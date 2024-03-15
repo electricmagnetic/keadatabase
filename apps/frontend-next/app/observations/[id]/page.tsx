@@ -103,12 +103,9 @@ export default async function ObservationPage({
         <h2>Birds</h2>
         {birdObservations.length > 0 ? (
           <>
-            <ul className="list-unstyled row g-3">
+            <ul className="list-unstyled row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3">
               {birdObservations.map((birdObservation) => (
-                <li
-                  className="col-sm-6 col-md-4 col-lg-3"
-                  key={birdObservation.id}
-                >
+                <li className="col" key={birdObservation.id}>
                   <BirdObservationAsBirdBlock
                     birdObservation={birdObservation}
                     key={birdObservation.id}

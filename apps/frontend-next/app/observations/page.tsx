@@ -46,9 +46,9 @@ export default async function ObservationsPage({
             <Breadcrumbs breadcrumbs={[{ name: "Observations" }]} />
             <Page.Heading>View Observations</Page.Heading>
             <Page.Section>
-              <ul className="list-unstyled row g-3">
+              <ul className="list-unstyled row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-3">
                 {observations.map((observation) => (
-                  <li className="col-sm-6 col-lg-4" key={observation.id}>
+                  <li className="col" key={observation.id}>
                     <ObservationAsBlock observation={observation} />
                   </li>
                 ))}

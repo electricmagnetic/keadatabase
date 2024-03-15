@@ -134,12 +134,9 @@ export default async function BirdPage({
             <Figure caption={`Observations of ${bird.name}`}>
               <BirdObservationsAsMap birdObservations={birdObservations} />
             </Figure>
-            <ul className="list-unstyled row g-3">
+            <ul className="list-unstyled row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3">
               {birdObservations.map((birdObservation) => (
-                <li
-                  className="col-sm-6 col-md-4 col-lg-3"
-                  key={birdObservation.id}
-                >
+                <li className="col" key={birdObservation.id}>
                   <BirdObservationAsObservationBlock
                     birdObservation={birdObservation}
                     key={birdObservation.id}

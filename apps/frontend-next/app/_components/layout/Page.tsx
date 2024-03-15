@@ -70,16 +70,25 @@ const pageSectionSize = {
 };
 
 function PageSection({
+  className,
   background,
   children,
   fullWidth,
   size = "medium",
 }: PropsWithChildren<
-  { background?: BackgroundTypes; size?: SizeTypes } & PageContainerProps
+  {
+    className?: string;
+    background?: BackgroundTypes;
+    size?: SizeTypes;
+  } & PageContainerProps
 >) {
   return (
     <section
-      className={classNames("position-relative", pageSectionSize[size])}
+      className={classNames(
+        "position-relative",
+        pageSectionSize[size],
+        className,
+      )}
       style={getStyle(background)}
     >
       <PageContainer fullWidth={fullWidth}>{children}</PageContainer>

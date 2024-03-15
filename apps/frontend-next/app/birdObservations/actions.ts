@@ -14,9 +14,11 @@ export const getBirdObservations = async ({
   page,
   ...rawFilters
 }: Record<string, unknown>) => {
-  const filters = BirdObservationsFilterSchema.partial().parse(rawFilters);
+  const filters = BirdObservationsFilterSchema.parse(rawFilters);
 
   const compiledFilters = new URLSearchParams({
+    ...(filters.page_size && { page_size: `${filters.page_size}` }),
+    ...(filters.has_bird && { has_bird: "true" }),
     ...(filters.sighting && { sighting: `${filters.sighting}` }),
     ...(filters.bird && { bird: filters.bird }),
     page: `${validPage(page)}`,

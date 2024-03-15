@@ -56,8 +56,10 @@ export type Bird = z.infer<typeof BirdSchema>;
 
 /* Filters */
 
-export const BirdsFilterSchema = z.object({
-  is_featured: z.coerce.boolean(),
-  page_size: z.coerce.number(),
-  ordering: z.string(),
-});
+export const BirdsFilterSchema = z
+  .object({
+    is_featured: z.coerce.boolean(),
+    page_size: z.coerce.number(),
+    ordering: z.string(),
+  })
+  .partial();

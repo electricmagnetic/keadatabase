@@ -23,9 +23,9 @@ export default async function BirdsPage({
       <Breadcrumbs breadcrumbs={[{ name: "Birds" }]} />
       <Page.Heading>Search Birds</Page.Heading>
       <Page.Section>
-        <ul className="list-unstyled row g-3">
+        <ul className="list-unstyled row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3">
           {birds.map((bird) => (
-            <li className="col-sm-6 col-md-4 col-lg-3" key={bird.slug}>
+            <li className="col" key={bird.slug}>
               <BirdAsBlock bird={bird} />
             </li>
           ))}

@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import type { PropsWithChildren } from "react";
+import type { CSSProperties, PropsWithChildren } from "react";
 
 type BackgroundTypes =
   | "primary"
@@ -9,7 +9,8 @@ type BackgroundTypes =
   | "lightest"
   | "dull"
   | "contours";
-type SizeTypes = "tiny" | "small" | "medium" | "large";
+
+type SizeTypes = "tiny" | "small" | "medium" | "large" | "none";
 
 const getStyle = (type?: BackgroundTypes) => {
   switch (type) {
@@ -54,9 +55,15 @@ interface PageContainerProps {
 function PageContainer({
   fullWidth,
   children,
-}: PropsWithChildren<PageContainerProps>) {
+  ...others
+}: PropsWithChildren<
+  PageContainerProps & React.HTMLAttributes<HTMLDivElement>
+>) {
   return (
-    <div className={classNames(fullWidth ? "container-fluid" : "container")}>
+    <div
+      className={classNames(fullWidth ? "container-fluid" : "container")}
+      {...others}
+    >
       {children}
     </div>
   );
@@ -67,6 +74,7 @@ const pageSectionSize = {
   medium: "py-5",
   small: "py-4",
   tiny: "py-2",
+  none: "",
 };
 
 function PageSection({
@@ -75,11 +83,13 @@ function PageSection({
   children,
   fullWidth,
   size = "medium",
+  containerStyle,
 }: PropsWithChildren<
   {
     className?: string;
     background?: BackgroundTypes;
     size?: SizeTypes;
+    containerStyle?: CSSProperties;
   } & PageContainerProps
 >) {
   return (
@@ -91,7 +101,9 @@ function PageSection({
       )}
       style={getStyle(background)}
     >
-      <PageContainer fullWidth={fullWidth}>{children}</PageContainer>
+      <PageContainer fullWidth={fullWidth} style={containerStyle}>
+        {children}
+      </PageContainer>
     </section>
   );
 }

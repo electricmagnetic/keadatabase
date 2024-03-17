@@ -5,7 +5,7 @@ import { type GeoJSON } from "geojson";
 import { useEffect, useState } from "react";
 import { Source, Layer, useMap, type LayerProps } from "react-map-gl/maplibre";
 
-const PADDING = 100;
+const PADDING = 150;
 const DURATION = 500;
 
 export const PointLayerProps: LayerProps = {
@@ -36,11 +36,7 @@ export function GeoJSONLayer({
   );
 }
 
-export function ZoomToGeoJSON({
-  geoJson,
-}: {
-  geoJson: GeoJSON | null;
-}) {
+export function ZoomToGeoJSON({ geoJson }: { geoJson: GeoJSON | null }) {
   const { current: map } = useMap();
 
   const [loaded, setLoaded] = useState(false);

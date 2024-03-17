@@ -11,10 +11,10 @@ import { type BirdObservation } from "./schema";
 
 import BaseMap from "@/app/_components/geospatial/BaseMap";
 import Icon from "@/app/_components/ui/Icon";
-import { getMediaOrPlaceholder } from "@/app/_components/api/media";
-
-const IMAGE_HEIGHT = 250;
-const IMAGE_WIDTH = 350;
+import {
+  IMAGE_SIZES,
+  getMediaOrPlaceholder,
+} from "@/app/_components/api/media";
 
 // TODO: rewrite, (more or less) directly imported from old database
 function UnknownBirdBlock({
@@ -30,10 +30,10 @@ function UnknownBirdBlock({
         <Image
           alt=""
           className="card-img-top img-fluid"
-          height={IMAGE_HEIGHT}
+          height={IMAGE_SIZES.thumbnail.height}
           src={media.thumbnail}
           unoptimized
-          width={IMAGE_WIDTH}
+          width={IMAGE_SIZES.thumbnail.width}
         />
         <ul className="list-group list-group-flush">
           <li className="list-group-item">
@@ -107,10 +107,13 @@ export function BirdObservationAsCircleBlock({
   const media = getMediaOrPlaceholder(bird.bird_extended?.profile_picture);
   return (
     <div className="position-relative text-center">
-      <img
+      <Image
         alt={generateAltText(bird)}
         className="img-fluid rounded-circle p-1"
+        height={IMAGE_SIZES.large.height}
         src={media.large}
+        unoptimized
+        width={IMAGE_SIZES.large.width}
       />
       <h3 className="h4">
         <Link className="stretched-link" href={`/birds/${bird.slug}`}>

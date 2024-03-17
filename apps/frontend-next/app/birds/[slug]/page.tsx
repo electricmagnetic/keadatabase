@@ -9,12 +9,15 @@ import Page from "@/app/_components/layout/Page";
 import Properties from "@/app/_components/layout/Properties";
 import Breadcrumbs from "@/app/_components/layout/Breadcrumbs";
 import {
-  type PageWithSearchParams,
-  type PageWithSlugProps,
+  type WithSearchParams,
+  type WithSlugProps,
 } from "@/app/_components/api/schema";
 import Figure from "@/app/_components/layout/Figure";
 import { validateSlug } from "@/app/_components/api/actions";
-import { getMediaOrPlaceholder } from "@/app/_components/api/media";
+import {
+  IMAGE_SIZES,
+  getMediaOrPlaceholder,
+} from "@/app/_components/api/media";
 import { getBirdObservations } from "@/app/birdObservations/actions";
 import {
   BirdObservationAsObservationBlock,
@@ -22,12 +25,9 @@ import {
 } from "@/app/birdObservations/templates";
 import { Paginator } from "@/app/_components/api/paginator";
 
-const IMAGE_HEIGHT = 500;
-const IMAGE_WIDTH = 500;
-
 export async function generateMetadata({
   params: { slug: rawSlug },
-}: PageWithSlugProps): Promise<Metadata> {
+}: WithSlugProps): Promise<Metadata> {
   const slug = validateSlug(rawSlug);
   if (!slug) return {};
   const bird = await getBird(slug);
@@ -37,17 +37,10 @@ export async function generateMetadata({
   };
 }
 
-export default async function BirdPage({
+async function ObservationBirdsSection({
   searchParams,
-  params: { slug: rawSlug },
-}: PageWithSlugProps & PageWithSearchParams) {
-  const slug = validateSlug(rawSlug);
-  if (!slug) notFound();
-
-  const { bird_extended, ...bird } = await getBird(slug);
-
-  const media = getMediaOrPlaceholder(bird_extended?.profile_picture);
-
+  birdSlug,
+}: WithSearchParams<{ birdSlug: string }>) {
   const {
     results: birdObservations,
     isMore,
@@ -55,8 +48,51 @@ export default async function BirdPage({
     total,
   } = await getBirdObservations({
     ...searchParams,
-    bird: slug,
+    bird: birdSlug,
   });
+
+  return (
+    <Page.Section background="lightest">
+      <h2>Observations</h2>
+      {birdObservations.length > 0 ? (
+        <>
+          <Figure caption="Map of observations" className="mb-3" hideCaption>
+            <BirdObservationsAsMap birdObservations={birdObservations} />
+          </Figure>
+          <ul className="list-unstyled row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3">
+            {birdObservations.map((birdObservation) => (
+              <li className="col" key={birdObservation.id}>
+                <BirdObservationAsObservationBlock
+                  birdObservation={birdObservation}
+                  key={birdObservation.id}
+                />
+              </li>
+            ))}
+          </ul>
+          <Paginator
+            count={count}
+            isMore={isMore}
+            scroll={false}
+            total={total}
+          />
+        </>
+      ) : (
+        <em>No observations of this bird have been recorded.</em>
+      )}
+    </Page.Section>
+  );
+}
+
+export default async function BirdPage({
+  searchParams,
+  params: { slug: rawSlug },
+}: WithSlugProps & WithSearchParams) {
+  const slug = validateSlug(rawSlug);
+  if (!slug) notFound();
+
+  const { bird_extended, ...bird } = await getBird(slug);
+
+  const media = getMediaOrPlaceholder(bird_extended?.profile_picture);
 
   return (
     <Page>
@@ -89,16 +125,15 @@ export default async function BirdPage({
               <Image
                 alt={generateAltText(bird)}
                 className="rounded img-fluid bg-body-secondary"
-                height={IMAGE_HEIGHT}
+                height={IMAGE_SIZES.large.height}
                 src={media.large}
                 unoptimized
-                width={IMAGE_WIDTH}
+                width={IMAGE_SIZES.large.width}
               />
             </Figure>
           </div>
         </div>
       </Page.Section>
-
       <Page.Section>
         {bird_extended ? (
           <div className="row">
@@ -127,34 +162,7 @@ export default async function BirdPage({
           <em>No additional information on this bird can be found.</em>
         )}
       </Page.Section>
-      <Page.Section>
-        <h2>Observations</h2>
-        {birdObservations.length > 0 ? (
-          <>
-            <Figure caption={`Observations of ${bird.name}`}>
-              <BirdObservationsAsMap birdObservations={birdObservations} />
-            </Figure>
-            <ul className="list-unstyled row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3">
-              {birdObservations.map((birdObservation) => (
-                <li className="col" key={birdObservation.id}>
-                  <BirdObservationAsObservationBlock
-                    birdObservation={birdObservation}
-                    key={birdObservation.id}
-                  />
-                </li>
-              ))}
-            </ul>
-            <Paginator
-              count={count}
-              isMore={isMore}
-              scroll={false}
-              total={total}
-            />
-          </>
-        ) : (
-          <em>No observations of this bird have been recorded.</em>
-        )}
-      </Page.Section>
+      <ObservationBirdsSection birdSlug={slug} searchParams={searchParams} />
     </Page>
   );
 }

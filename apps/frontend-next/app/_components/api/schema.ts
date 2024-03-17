@@ -27,14 +27,14 @@ export const MediaSchema = z
 
 export type Media = z.infer<typeof MediaSchema>;
 
-export type PageWithSlugProps<P = unknown> = P & {
+export type WithSlugProps<P = unknown> = P & {
   params: { slug: unknown };
 };
 
-export type PageWithIdProps<P = unknown> = P & {
+export type WithIdProps<P = unknown> = P & {
   params: { id: unknown };
 };
 
-export type PageWithSearchParams<P = unknown> = P & {
+export type WithSearchParams<P = unknown> = P & {
   searchParams: Record<string, unknown>;
 };

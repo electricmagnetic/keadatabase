@@ -1,4 +1,5 @@
 import { type Metadata } from "next";
+import { Suspense } from "react";
 
 import { getObservations } from "./actions";
 import { ObservationAsBlock, ObservationsAsMap } from "./templates";
@@ -8,6 +9,7 @@ import Page from "@/app/_components/layout/Page";
 import { Paginator } from "@/app/_components/api/paginator";
 import Split from "@/app/_components/layout/Split";
 import Breadcrumbs from "@/app/_components/layout/Breadcrumbs";
+import Loader from "@/app/_components/ui/Loader";
 
 export const metadata: Metadata = {
   title: "View Observations",
@@ -46,20 +48,24 @@ export default async function ObservationsPage({
             <Breadcrumbs breadcrumbs={[{ name: "Observations" }]} />
             <Page.Heading>View Observations</Page.Heading>
             <Page.Section>
-              <ul className="list-unstyled row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-3">
-                {observations.map((observation) => (
-                  <li className="col" key={observation.id}>
-                    <ObservationAsBlock observation={observation} />
-                  </li>
-                ))}
-              </ul>
+              <Suspense fallback={<Loader />}>
+                <ul className="list-unstyled row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-3">
+                  {observations.map((observation) => (
+                    <li className="col" key={observation.id}>
+                      <ObservationAsBlock observation={observation} />
+                    </li>
+                  ))}
+                </ul>
+              </Suspense>
             </Page.Section>
             <Page.Section size="small">
               <Paginator count={count} isMore={isMore} total={total} />
             </Page.Section>
           </Split.Scroll>
           <Split.Fixed>
-            <ObservationsAsMap observations={observations} />
+            <Suspense fallback={<Loader />}>
+              <ObservationsAsMap observations={observations} />
+            </Suspense>
           </Split.Fixed>
         </Split>
       </Page.Container>

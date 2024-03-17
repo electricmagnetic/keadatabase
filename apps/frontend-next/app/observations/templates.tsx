@@ -46,9 +46,10 @@ export function ObservationAsBlock({
 
 export function ObservationsAsMap({
   observations,
+  ...others
 }: {
   observations: Observation[];
-}) {
+} & React.ComponentProps<typeof BaseMap>) {
   const birdObservationsAsGeoJson = generateGeoJson(
     "id",
     "point_location",
@@ -56,7 +57,7 @@ export function ObservationsAsMap({
   );
 
   return (
-    <BaseMap>
+    <BaseMap {...others}>
       <GeoJSONLayer geoJson={birdObservationsAsGeoJson} zoomToLayer />
     </BaseMap>
   );

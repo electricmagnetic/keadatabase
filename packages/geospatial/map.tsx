@@ -25,8 +25,10 @@ const DEFAULT_MAP_PROPS = {
 
 export default function Map({
   children,
+  hideFullscreen,
+  hideNavigation,
   ...others
-}: PropsWithChildren<MapLibreMapProps>) {
+}: PropsWithChildren<MapLibreMapProps & { hideFullscreen?: boolean, hideNavigation?: boolean }>) {
   const mapRef = useRef<MapRef>(null);
 
   const mapProps = { ...DEFAULT_MAP_PROPS, ...others };
@@ -38,8 +40,8 @@ export default function Map({
         style={{ width: "100%", height: "100%" }}
         {...mapProps}
       >
-        <FullscreenControl />
-        <NavigationControl />
+        {!hideFullscreen ? <FullscreenControl /> : null}
+        {!hideNavigation ? <NavigationControl /> : null}
         {children}
       </MapLibreMap>
     </MapProvider>

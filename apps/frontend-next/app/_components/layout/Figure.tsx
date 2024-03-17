@@ -5,12 +5,26 @@ export default function Figure({
   caption,
   className,
   children,
-}: PropsWithChildren<{ caption?: string; className?: string }>) {
+  hideCaption,
+}: PropsWithChildren<{
+  caption?: string;
+  className?: string;
+  hideCaption?: boolean;
+}>) {
   return (
-    <figure className={classNames("figure d-inline", className)}>
-      <div className="figure-img">{children}</div>
+    <figure className={classNames("figure d-block", className)}>
+      <div className={classNames("figure-img", hideCaption && "m-0")}>
+        {children}
+      </div>
       {caption ? (
-        <figcaption className="figure-caption text-end">{caption}</figcaption>
+        <figcaption
+          className={classNames(
+            "figure-caption text-end",
+            hideCaption && "visually-hidden",
+          )}
+        >
+          {caption}
+        </figcaption>
       ) : null}
     </figure>
   );

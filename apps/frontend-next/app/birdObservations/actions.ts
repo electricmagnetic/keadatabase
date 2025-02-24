@@ -17,14 +17,14 @@ export const getBirdObservations = async ({
   const filters = BirdObservationsFilterSchema.parse(rawFilters);
 
   const compiledFilters = new URLSearchParams({
-    ...(filters.page_size && { page_size: `${filters.page_size}` }),
-    ...(filters.has_bird && { has_bird: "true" }),
-    ...(filters.sighting && { sighting: `${filters.sighting}` }),
-    ...(filters.bird && { bird: filters.bird }),
+    ...(Boolean(filters.page_size) && { page_size: `${filters.page_size}` }),
+    ...(Boolean(filters.has_bird) && { has_bird: "true" }),
+    ...(Boolean(filters.sighting) && { sighting: `${filters.sighting}` }),
+    ...(Boolean(filters.bird) && { bird: filters.bird }),
     page: `${validPage(page)}`,
   });
 
-  return getData(
+  return await getData(
     `${BIRD_OBSERVATIONS_URL}?${compiledFilters.toString()}`,
     ApiListResponseSchema.extend({
       results: z.array(BirdObservationSchema),

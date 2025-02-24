@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-magic-numbers -- defining constant sizes here */
 import { type Media, MediaSchema } from "./schema";
 
 export const IMAGE_SIZES = {

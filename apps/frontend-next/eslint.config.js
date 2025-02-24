@@ -7,6 +7,7 @@ import pluginReactHooks from "eslint-plugin-react-hooks";
 import turboPlugin from "eslint-plugin-turbo";
 import globals from "globals";
 import tseslint from "typescript-eslint";
+import love from "eslint-config-love";
 
 /**
  * A custom ESLint configuration for libraries that use Next.js.
@@ -14,6 +15,10 @@ import tseslint from "typescript-eslint";
  * @type {import("eslint").Linter.Config}
  * */
 export default [
+  {
+    ...love,
+    files: ["**/*.js", "**/*.ts"],
+  },
   js.configs.recommended,
   eslintConfigPrettier,
   ...tseslint.configs.recommended,
@@ -60,6 +65,11 @@ export default [
       ...pluginReactHooks.configs.recommended.rules,
       // React scope no longer necessary with new JSX transform.
       "react/react-in-jsx-scope": "off",
+    },
+  },
+  {
+    rules: {
+      "@typescript-eslint/explicit-function-return-type": "off",
     },
   },
 ];

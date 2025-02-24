@@ -1,19 +1,21 @@
 import { notFound } from "next/navigation";
 import { z } from "zod";
 
+const HTTP_NOT_FOUND = 404;
+
 export async function getData<Schema extends z.Schema<unknown>>(
   url: string,
   schema: Schema,
 ): Promise<z.infer<Schema>> {
-  return fetch(url)
-    .then((result) => {
+  return await fetch(url)
+    .then(async (result) => {
       if (!result.ok)
-        throw result.status === 404
+        throw result.status === HTTP_NOT_FOUND
           ? notFound()
           : new Error("Error fetching data");
-      return result.json() as Promise<unknown>;
+      return await (result.json() as Promise<unknown>);
     })
-    .then((rawData) => schema.parseAsync(rawData));
+    .then(async (rawData) => await schema.parseAsync(rawData));
 }
 
 export const validateSlug = (slug: unknown) => {

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention -- Enum naming fixed by back-end */
 import { z } from "zod";
 
 import { MediaSchema } from "@/app/_components/api/schema";

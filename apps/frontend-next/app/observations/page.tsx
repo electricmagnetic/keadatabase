@@ -15,11 +15,10 @@ export const metadata: Metadata = {
   title: "View Observations",
 };
 
-export default async function ObservationsPage({
-  searchParams,
-}: {
-  searchParams: Record<string, unknown>;
+export default async function ObservationsPage(props: {
+  searchParams: Promise<Record<string, unknown>>;
 }) {
+  const searchParams = await props.searchParams;
   const {
     results: observations,
     isMore,

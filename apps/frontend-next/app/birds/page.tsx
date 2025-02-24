@@ -11,11 +11,10 @@ export const metadata: Metadata = {
   title: "Search Birds",
 };
 
-export default async function BirdsPage({
-  searchParams,
-}: {
-  searchParams: Record<string, unknown>;
+export default async function BirdsPage(props: {
+  searchParams: Promise<Record<string, unknown>>;
 }) {
+  const searchParams = await props.searchParams;
   const { results: birds, isMore, count, total } = await getBirds(searchParams);
 
   return (

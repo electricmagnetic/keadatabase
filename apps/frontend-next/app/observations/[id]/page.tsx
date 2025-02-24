@@ -19,9 +19,10 @@ import { BirdObservationAsBirdBlock } from "@/app/birdObservations/templates";
 import { Paginator } from "@/app/_components/api/paginator";
 import Loader from "@/app/_components/ui/Loader";
 
-export async function generateMetadata({
-  params: { id: rawId },
-}: WithIdProps): Promise<Metadata> {
+export async function generateMetadata(props: WithIdProps): Promise<Metadata> {
+  const params = await props.params;
+  const { id: rawId } = params;
+
   const id = validateId(rawId);
   if (!id) return {};
   const observation = await getObservation(id);
@@ -42,7 +43,10 @@ function TextBlock({ name, text }: { name: string; text: string }) {
 async function BirdObservationsSection({
   searchParams,
   sightingId,
-}: WithSearchParams<{ sightingId: number }>) {
+}: {
+  searchParams: Record<string, unknown>;
+  sightingId: number;
+}) {
   const {
     results: birdObservations,
     isMore,
@@ -86,10 +90,14 @@ async function BirdObservationsSection({
   );
 }
 
-export default async function ObservationPage({
-  searchParams,
-  params: { id: rawId },
-}: WithIdProps & WithSearchParams) {
+export default async function ObservationPage(
+  props: WithIdProps & WithSearchParams,
+) {
+  const searchParams = await props.searchParams;
+  const params = await props.params;
+
+  const { id: rawId } = params;
+
   const id = validateId(rawId);
   if (!id) notFound();
 

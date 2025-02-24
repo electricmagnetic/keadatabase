@@ -25,9 +25,13 @@ import {
 } from "@/app/birdObservations/templates";
 import { Paginator } from "@/app/_components/api/paginator";
 
-export async function generateMetadata({
-  params: { slug: rawSlug },
-}: WithSlugProps): Promise<Metadata> {
+export async function generateMetadata(
+  props: WithSlugProps,
+): Promise<Metadata> {
+  const params = await props.params;
+
+  const { slug: rawSlug } = params;
+
   const slug = validateSlug(rawSlug);
   if (!slug) return {};
   const bird = await getBird(slug);
@@ -40,7 +44,10 @@ export async function generateMetadata({
 async function ObservationBirdsSection({
   searchParams,
   birdSlug,
-}: WithSearchParams<{ birdSlug: string }>) {
+}: {
+  searchParams: Record<string, unknown>;
+  birdSlug: string;
+}) {
   const {
     results: birdObservations,
     isMore,
@@ -83,10 +90,14 @@ async function ObservationBirdsSection({
   );
 }
 
-export default async function BirdPage({
-  searchParams,
-  params: { slug: rawSlug },
-}: WithSlugProps & WithSearchParams) {
+export default async function BirdPage(
+  props: WithSlugProps & WithSearchParams,
+) {
+  const searchParams = await props.searchParams;
+  const params = await props.params;
+
+  const { slug: rawSlug } = params;
+
   const slug = validateSlug(rawSlug);
   if (!slug) notFound();
 

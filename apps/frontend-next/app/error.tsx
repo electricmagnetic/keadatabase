@@ -11,7 +11,6 @@ export default function Error({
   reset: () => void;
 }) {
   useEffect(() => {
-    // eslint-disable-next-line -- allow console error for debugging
     console.error(error);
   }, [error]);
 

@@ -10,6 +10,7 @@ import Icon from "@/app/_components/ui/Icon";
 
 export default function Navbar() {
   useEffect(() => {
+    /* eslint-disable  @typescript-eslint/no-require-imports -- Need to look into doing this import better somehow */
     require("bootstrap");
   }, []);
 

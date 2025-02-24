@@ -28,7 +28,9 @@ export default function Map({
   hideFullscreen,
   hideNavigation,
   ...others
-}: PropsWithChildren<MapLibreMapProps & { hideFullscreen?: boolean, hideNavigation?: boolean }>) {
+}: PropsWithChildren<
+  MapLibreMapProps & { hideFullscreen?: boolean; hideNavigation?: boolean }
+>) {
   const mapRef = useRef<MapRef>(null);
 
   const mapProps = { ...DEFAULT_MAP_PROPS, ...others };

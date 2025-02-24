@@ -10,7 +10,8 @@ import { getData } from "@/app/_components/api/actions";
 
 const OBSERVATIONS_URL = `${process.env.NEXT_PUBLIC_DATABASE_API}/observations`;
 
-export const getObservation = async (id: number) => await getData(`${OBSERVATIONS_URL}/${id}`, ObservationSchema);
+export const getObservation = async (id: number) =>
+  await getData(`${OBSERVATIONS_URL}/${id}`, ObservationSchema);
 
 export const getObservations = async ({
   page,

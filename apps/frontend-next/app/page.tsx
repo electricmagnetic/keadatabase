@@ -4,7 +4,7 @@ import { Suspense, type PropsWithChildren } from "react";
 
 import { SITE_NAME } from "./layout";
 import FeaturedBirds from "./birds/partials/FeaturedBirds";
-import RecentlyObserved from "./birdObservations/partials/RecentlyObserved";
+import RecentlyObserved from "./bird-observations/partials/RecentlyObserved";
 
 import Page from "@/app/_components/layout/Page";
 import {

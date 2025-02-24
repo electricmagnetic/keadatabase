@@ -18,11 +18,11 @@ import {
   IMAGE_SIZES,
   getMediaOrPlaceholder,
 } from "@/app/_components/api/media";
-import { getBirdObservations } from "@/app/birdObservations/actions";
+import { getBirdObservations } from "@/app/bird-observations/actions";
 import {
   BirdObservationAsObservationBlock,
   BirdObservationsAsMap,
-} from "@/app/birdObservations/templates";
+} from "@/app/bird-observations/templates";
 import { Paginator } from "@/app/_components/api/paginator";
 
 export async function generateMetadata(

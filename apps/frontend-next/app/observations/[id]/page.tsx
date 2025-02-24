@@ -14,8 +14,8 @@ import Breadcrumbs from "@/app/_components/layout/Breadcrumbs";
 import Properties from "@/app/_components/layout/Properties";
 import Figure from "@/app/_components/layout/Figure";
 import { validateId } from "@/app/_components/api/actions";
-import { getBirdObservations } from "@/app/birdObservations/actions";
-import { BirdObservationAsBirdBlock } from "@/app/birdObservations/templates";
+import { getBirdObservations } from "@/app/bird-observations/actions";
+import { BirdObservationAsBirdBlock } from "@/app/bird-observations/templates";
 import { Paginator } from "@/app/_components/api/paginator";
 import Loader from "@/app/_components/ui/Loader";
 

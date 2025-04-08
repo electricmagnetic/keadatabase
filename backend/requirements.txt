@@ -19,3 +19,4 @@ environs[django]==7.3.0
 sentry-sdk==0.19.5
 yapf==0.30.0
 djangorestframework-simplejwt==4.8.0
+pillow==11.1.0

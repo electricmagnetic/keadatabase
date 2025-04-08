@@ -283,6 +283,7 @@ if not DEBUG:
     AWS_LOCATION = 'media'
     AWS_IS_GZIPPED = True
     AWS_S3_CUSTOM_DOMAIN = env.str('AWS_S3_CUSTOM_DOMAIN', None)
+    AWS_S3_ENDPOINT_URL = env.str('AWS_S3_ENDPOINT_URL', None)
 
 # Versatile Image Field
 

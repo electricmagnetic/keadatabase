@@ -1,4 +1,4 @@
-FROM python:3.10.5-bullseye
+FROM python:3.10.17-bullseye
 
 RUN apt update \
     && apt install -y \
@@ -13,6 +13,8 @@ COPY requirements.txt requirements.txt
 RUN pip install -r requirements.txt
 
 COPY /src /app
+
+RUN python app/manage.py collectstatic --noinput
 
 EXPOSE 8000
 CMD ["gunicorn", "--pythonpath", "app", "--bind", "0.0.0.0:8000", "keadatabase.wsgi"]

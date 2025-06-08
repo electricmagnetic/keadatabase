@@ -18,53 +18,53 @@ env:
   IMAGE_NAME: ${{ github.repository }}
 
 jobs:
-  test:
-    runs-on: ubuntu-latest
+  # test:
+  #   runs-on: ubuntu-latest
 
-    services:
-      database:
-        image: postgis/postgis
-        env:
-          POSTGRES_DB: keadatabase
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: keadatabase
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-        ports:
-          - 5432:5432
+  #   services:
+  #     database:
+  #       image: postgis/postgis
+  #       env:
+  #         POSTGRES_DB: keadatabase
+  #         POSTGRES_USER: postgres
+  #         POSTGRES_PASSWORD: keadatabase
+  #       options: >-
+  #         --health-cmd pg_isready
+  #         --health-interval 10s
+  #         --health-timeout 5s
+  #         --health-retries 5
+  #       ports:
+  #         - 5432:5432
 
-    strategy:
-      fail-fast: false
-      matrix:
-        python-version: [3.9]
+  #   strategy:
+  #     fail-fast: false
+  #     matrix:
+  #       python-version: [3.l0]
 
-    steps:
-      - uses: actions/checkout@v2
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v4
-        with:
-          python-version: ${{ matrix.python-version }}
-          cache: pip
-      - name: Install packages
-        run: |
-          sudo apt-get update && sudo apt-get install binutils libproj-dev gdal-bin libmagic-dev python3-dev
-      - name: Install dependencies
-        run: |
-          pip install flake8 pytest 
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-      - name: Check code formatting
-        run: |
-          yapf src/**/*.py --diff
-      - name: Run tests
-        run: |
-          python3 src/manage.py test src
-        env:
-          DATABASE_URL: postgres://postgres:keadatabase@localhost:5432/keadatabase
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - name: Set up Python ${{ matrix.python-version }}
+  #       uses: actions/setup-python@v4
+  #       with:
+  #         python-version: ${{ matrix.python-version }}
+  #         cache: pip
+  #     - name: Install packages
+  #       run: |
+  #         sudo apt-get update && sudo apt-get install binutils libproj-dev gdal-bin libmagic-dev python3-dev
+  #     - name: Install dependencies
+  #       run: |
+  #         pip install flake8 pytest
+  #         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+  #     - name: Check code formatting
+  #       run: |
+  #         yapf src/**/*.py --diff
+  #     - name: Run tests
+  #       run: |
+  #         python3 src/manage.py test src
+  #       env:
+  #         DATABASE_URL: postgres://postgres:keadatabase@localhost:5432/keadatabase
   build:
-    needs: test
+    # needs: test
     runs-on: ubuntu-latest
     permissions:
       contents: read

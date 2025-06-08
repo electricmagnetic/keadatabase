@@ -1,20 +1,30 @@
 FROM python:3.10.17-bullseye
 
+COPY --from=ghcr.io/astral-sh/uv /uv /uvx /bin/
+
 RUN apt update \
     && apt install -y \
-        binutils \
-        libproj-dev \
-        gdal-bin \
-        libmagic-dev \
-        python3-dev \
+    curl \
+    ca-certificates \
+    binutils \
+    libproj-dev \
+    gdal-bin \
+    libmagic-dev \
+    python3-dev \
     && rm -rf /var/lib/apt/lists/*
 
-COPY requirements.txt requirements.txt
-RUN pip install -r requirements.txt
+ADD . /app
+WORKDIR /app
 
-COPY /src /app
+RUN uv venv
 
-RUN python app/manage.py collectstatic --noinput
+ENV PATH="/app/.venv/bin:$PATH"
+
+RUN uv sync --locked
+
+WORKDIR /app/src
+
+RUN uv run manage.py collectstatic --noinput
 
 EXPOSE 8000
-CMD ["gunicorn", "--pythonpath", "app", "--bind", "0.0.0.0:8000", "keadatabase.wsgi"]
+CMD ["uv", "run", "gunicorn", "--pythonpath", "app", "--bind", "0.0.0.0:8000", "keadatabase.wsgi"]

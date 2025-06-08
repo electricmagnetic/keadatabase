@@ -1,0 +1,31 @@
+[project]
+name = "backend"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "boto3==1.16.55",
+    "dj-database-url==0.5.0",
+    "django==3.2.20",
+    "django-cors-headers==3.7.0",
+    "django-debug-toolbar==3.2.2",
+    "django-filter==2.4.0",
+    "django-leaflet==0.27.1",
+    "django-storage-swift==1.2.19",
+    "django-storages==1.11.1",
+    "django-versatileimagefield==2.0.0",
+    "djangorestframework==3.12.2",
+    "djangorestframework-csv==2.1.0",
+    "djangorestframework-gis==0.16",
+    "djangorestframework-simplejwt==4.8.0",
+    "environs[django]==7.3.0",
+    "gunicorn==20.0.4",
+    "marshmallow==3.26.1",
+    "pillow==8.4.0",
+    "psycopg2-binary==2.9.3",
+    "python-dateutil==2.8.1",
+    "sentry-sdk==0.19.5",
+    "whitenoise==5.2.0",
+    "yapf==0.30.0",
+]

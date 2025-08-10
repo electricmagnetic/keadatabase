@@ -285,8 +285,8 @@ importers:
   apps/map:
     dependencies:
       '@turf/turf':
-        specifier: 7.2.0
-        version: 7.2.0
+        specifier: 7.0.0-alpha.113
+        version: 7.0.0-alpha.113
       '@vercel/analytics':
         specifier: ^1.5.0
         version: 1.5.0(next@15.4.6(@babel/core@7.26.9)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(sass@1.85.0))(react@19.1.1)
@@ -2824,9 +2824,6 @@ packages:
   '@turf/point-to-line-distance@7.2.0':
     resolution: {integrity: sha512-fB9Rdnb5w5+t76Gho2dYDkGe20eRrFk8CXi4v1+l1PC8YyLXO+x+l3TrtT8HzL/dVaZeepO6WUIsIw3ditTOPg==}
 
-  '@turf/point-to-polygon-distance@7.2.0':
-    resolution: {integrity: sha512-w+WYuINgTiFjoZemQwOaQSje/8Kq+uqJOynvx7+gleQPHyWQ3VtTodtV4LwzVzXz8Sf7Mngx1Jcp2SNai5CJYA==}
-
   '@turf/points-within-polygon@7.2.0':
     resolution: {integrity: sha512-jRKp8/mWNMzA+hKlQhxci97H5nOio9tp14R2SzpvkOt+cswxl+NqTEi1hDd2XetA7tjU0TSoNjEgVY8FfA0S6w==}
 
@@ -2913,9 +2910,6 @@ packages:
 
   '@turf/turf@7.0.0-alpha.113':
     resolution: {integrity: sha512-SNbmRvrMu69xjHhUciBZXsSjZePzqZTd3AjA/cPV7mVR813u5dpMUGC22IHvracM2zOcldK1sDBILW9GuNTuPA==}
-
-  '@turf/turf@7.2.0':
-    resolution: {integrity: sha512-G1kKBu4hYgoNoRJgnpJohNuS7bLnoWHZ2G/4wUMym5xOSiYah6carzdTEsMoTsauyi7ilByWHx5UHwbjjCVcBw==}
 
   '@turf/union@7.2.0':
     resolution: {integrity: sha512-Xex/cfKSmH0RZRWSJl4RLlhSmEALVewywiEXcu0aIxNbuZGTcpNoI0h4oLFrE/fUd0iBGFg/EGLXRL3zTfpg6g==}
@@ -13342,17 +13336,6 @@ snapshots:
       '@types/geojson': 7946.0.16
       tslib: 2.8.1
 
-  '@turf/point-to-polygon-distance@7.2.0':
-    dependencies:
-      '@turf/boolean-point-in-polygon': 7.2.0
-      '@turf/helpers': 7.2.0
-      '@turf/invariant': 7.2.0
-      '@turf/meta': 7.2.0
-      '@turf/point-to-line-distance': 7.2.0
-      '@turf/polygon-to-line': 7.2.0
-      '@types/geojson': 7946.0.16
-      tslib: 2.8.1
-
   '@turf/points-within-polygon@7.2.0':
     dependencies:
       '@turf/boolean-point-in-polygon': 7.2.0
@@ -13716,124 +13699,6 @@ snapshots:
       '@turf/union': 7.2.0
       '@turf/unkink-polygon': 7.2.0
       '@turf/voronoi': 7.2.0
-      tslib: 2.8.1
-
-  '@turf/turf@7.2.0':
-    dependencies:
-      '@turf/along': 7.2.0
-      '@turf/angle': 7.2.0
-      '@turf/area': 7.2.0
-      '@turf/bbox': 7.2.0
-      '@turf/bbox-clip': 7.2.0
-      '@turf/bbox-polygon': 7.2.0
-      '@turf/bearing': 7.2.0
-      '@turf/bezier-spline': 7.2.0
-      '@turf/boolean-clockwise': 7.2.0
-      '@turf/boolean-concave': 7.2.0
-      '@turf/boolean-contains': 7.2.0
-      '@turf/boolean-crosses': 7.2.0
-      '@turf/boolean-disjoint': 7.2.0
-      '@turf/boolean-equal': 7.2.0
-      '@turf/boolean-intersects': 7.2.0
-      '@turf/boolean-overlap': 7.2.0
-      '@turf/boolean-parallel': 7.2.0
-      '@turf/boolean-point-in-polygon': 7.2.0
-      '@turf/boolean-point-on-line': 7.2.0
-      '@turf/boolean-touches': 7.2.0
-      '@turf/boolean-valid': 7.2.0
-      '@turf/boolean-within': 7.2.0
-      '@turf/buffer': 7.2.0
-      '@turf/center': 7.2.0
-      '@turf/center-mean': 7.2.0
-      '@turf/center-median': 7.2.0
-      '@turf/center-of-mass': 7.2.0
-      '@turf/centroid': 7.2.0
-      '@turf/circle': 7.2.0
-      '@turf/clean-coords': 7.2.0
-      '@turf/clone': 7.2.0
-      '@turf/clusters': 7.2.0
-      '@turf/clusters-dbscan': 7.2.0
-      '@turf/clusters-kmeans': 7.2.0
-      '@turf/collect': 7.2.0
-      '@turf/combine': 7.2.0
-      '@turf/concave': 7.2.0
-      '@turf/convex': 7.2.0
-      '@turf/destination': 7.2.0
-      '@turf/difference': 7.2.0
-      '@turf/dissolve': 7.2.0
-      '@turf/distance': 7.2.0
-      '@turf/distance-weight': 7.2.0
-      '@turf/ellipse': 7.2.0
-      '@turf/envelope': 7.2.0
-      '@turf/explode': 7.2.0
-      '@turf/flatten': 7.2.0
-      '@turf/flip': 7.2.0
-      '@turf/geojson-rbush': 7.2.0
-      '@turf/great-circle': 7.2.0
-      '@turf/helpers': 7.2.0
-      '@turf/hex-grid': 7.2.0
-      '@turf/interpolate': 7.2.0
-      '@turf/intersect': 7.2.0
-      '@turf/invariant': 7.2.0
-      '@turf/isobands': 7.2.0
-      '@turf/isolines': 7.2.0
-      '@turf/kinks': 7.2.0
-      '@turf/length': 7.2.0
-      '@turf/line-arc': 7.2.0
-      '@turf/line-chunk': 7.2.0
-      '@turf/line-intersect': 7.2.0
-      '@turf/line-offset': 7.2.0
-      '@turf/line-overlap': 7.2.0
-      '@turf/line-segment': 7.2.0
-      '@turf/line-slice': 7.2.0
-      '@turf/line-slice-along': 7.2.0
-      '@turf/line-split': 7.2.0
-      '@turf/line-to-polygon': 7.2.0
-      '@turf/mask': 7.2.0
-      '@turf/meta': 7.2.0
-      '@turf/midpoint': 7.2.0
-      '@turf/moran-index': 7.2.0
-      '@turf/nearest-neighbor-analysis': 7.2.0
-      '@turf/nearest-point': 7.2.0
-      '@turf/nearest-point-on-line': 7.2.0
-      '@turf/nearest-point-to-line': 7.2.0
-      '@turf/planepoint': 7.2.0
-      '@turf/point-grid': 7.2.0
-      '@turf/point-on-feature': 7.2.0
-      '@turf/point-to-line-distance': 7.2.0
-      '@turf/point-to-polygon-distance': 7.2.0
-      '@turf/points-within-polygon': 7.2.0
-      '@turf/polygon-smooth': 7.2.0
-      '@turf/polygon-tangents': 7.2.0
-      '@turf/polygon-to-line': 7.2.0
-      '@turf/polygonize': 7.2.0
-      '@turf/projection': 7.2.0
-      '@turf/quadrat-analysis': 7.2.0
-      '@turf/random': 7.2.0
-      '@turf/rectangle-grid': 7.2.0
-      '@turf/rewind': 7.2.0
-      '@turf/rhumb-bearing': 7.2.0
-      '@turf/rhumb-destination': 7.2.0
-      '@turf/rhumb-distance': 7.2.0
-      '@turf/sample': 7.2.0
-      '@turf/sector': 7.2.0
-      '@turf/shortest-path': 7.2.0
-      '@turf/simplify': 7.2.0
-      '@turf/square': 7.2.0
-      '@turf/square-grid': 7.2.0
-      '@turf/standard-deviational-ellipse': 7.2.0
-      '@turf/tag': 7.2.0
-      '@turf/tesselate': 7.2.0
-      '@turf/tin': 7.2.0
-      '@turf/transform-rotate': 7.2.0
-      '@turf/transform-scale': 7.2.0
-      '@turf/transform-translate': 7.2.0
-      '@turf/triangle-grid': 7.2.0
-      '@turf/truncate': 7.2.0
-      '@turf/union': 7.2.0
-      '@turf/unkink-polygon': 7.2.0
-      '@turf/voronoi': 7.2.0
-      '@types/geojson': 7946.0.16
       tslib: 2.8.1
 
   '@turf/union@7.2.0':
@@ -16202,8 +16067,8 @@ snapshots:
       '@typescript-eslint/parser': 6.21.0(eslint@8.57.0)(typescript@5.3.3)
       eslint: 8.57.0
       eslint-import-resolver-node: 0.3.9
-      eslint-import-resolver-typescript: 3.6.1(@typescript-eslint/parser@6.21.0(eslint@8.57.0)(typescript@5.3.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.31.0)(eslint@8.57.0)
-      eslint-plugin-import: 2.31.0(@typescript-eslint/parser@5.62.0(eslint@8.44.0)(typescript@5.7.3))(eslint@8.57.0)
+      eslint-import-resolver-typescript: 3.6.1(@typescript-eslint/parser@6.21.0(eslint@8.57.0)(typescript@5.3.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.31.0(@typescript-eslint/parser@5.62.0(eslint@8.44.0)(typescript@5.7.3))(eslint@8.57.0))(eslint@8.57.0)
+      eslint-plugin-import: 2.31.0(@typescript-eslint/parser@6.21.0(eslint@8.57.0)(typescript@5.3.3))(eslint-import-resolver-typescript@3.6.1)(eslint@8.57.0)
       eslint-plugin-jsx-a11y: 6.10.2(eslint@8.57.0)
       eslint-plugin-react: 7.37.4(eslint@8.57.0)
       eslint-plugin-react-hooks: 4.6.0(eslint@8.57.0)
@@ -16299,13 +16164,13 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@6.21.0(eslint@8.57.0)(typescript@5.3.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.31.0)(eslint@8.57.0):
+  eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@6.21.0(eslint@8.57.0)(typescript@5.3.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.31.0(@typescript-eslint/parser@5.62.0(eslint@8.44.0)(typescript@5.7.3))(eslint@8.57.0))(eslint@8.57.0):
     dependencies:
       debug: 4.4.0
       enhanced-resolve: 5.15.0
       eslint: 8.57.0
-      eslint-module-utils: 2.12.0(@typescript-eslint/parser@6.21.0(eslint@8.57.0)(typescript@5.3.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@6.21.0(eslint@8.57.0)(typescript@5.3.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.31.0)(eslint@8.57.0))(eslint@8.57.0)
-      eslint-plugin-import: 2.31.0(@typescript-eslint/parser@5.62.0(eslint@8.44.0)(typescript@5.7.3))(eslint@8.57.0)
+      eslint-module-utils: 2.12.0(@typescript-eslint/parser@6.21.0(eslint@8.57.0)(typescript@5.3.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@6.21.0(eslint@8.57.0)(typescript@5.3.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.31.0(@typescript-eslint/parser@5.62.0(eslint@8.44.0)(typescript@5.7.3))(eslint@8.57.0))(eslint@8.57.0))(eslint@8.57.0)
+      eslint-plugin-import: 2.31.0(@typescript-eslint/parser@6.21.0(eslint@8.57.0)(typescript@5.3.3))(eslint-import-resolver-typescript@3.6.1)(eslint@8.57.0)
       fast-glob: 3.3.3
       get-tsconfig: 4.7.2
       is-core-module: 2.16.1
@@ -16341,16 +16206,6 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-module-utils@2.12.0(@typescript-eslint/parser@5.62.0(eslint@8.44.0)(typescript@5.7.3))(eslint-import-resolver-node@0.3.9)(eslint@8.57.0):
-    dependencies:
-      debug: 3.2.7
-    optionalDependencies:
-      '@typescript-eslint/parser': 5.62.0(eslint@8.44.0)(typescript@5.7.3)
-      eslint: 8.57.0
-      eslint-import-resolver-node: 0.3.9
-    transitivePeerDependencies:
-      - supports-color
-
   eslint-module-utils@2.12.0(@typescript-eslint/parser@5.62.0(eslint@9.21.0(jiti@2.4.2))(typescript@5.7.3))(eslint-import-resolver-node@0.3.9)(eslint@9.21.0(jiti@2.4.2)):
     dependencies:
       debug: 3.2.7
@@ -16361,14 +16216,14 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-module-utils@2.12.0(@typescript-eslint/parser@6.21.0(eslint@8.57.0)(typescript@5.3.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@6.21.0(eslint@8.57.0)(typescript@5.3.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.31.0)(eslint@8.57.0))(eslint@8.57.0):
+  eslint-module-utils@2.12.0(@typescript-eslint/parser@6.21.0(eslint@8.57.0)(typescript@5.3.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@6.21.0(eslint@8.57.0)(typescript@5.3.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.31.0(@typescript-eslint/parser@5.62.0(eslint@8.44.0)(typescript@5.7.3))(eslint@8.57.0))(eslint@8.57.0))(eslint@8.57.0):
     dependencies:
       debug: 3.2.7
     optionalDependencies:
       '@typescript-eslint/parser': 6.21.0(eslint@8.57.0)(typescript@5.3.3)
       eslint: 8.57.0
       eslint-import-resolver-node: 0.3.9
-      eslint-import-resolver-typescript: 3.6.1(@typescript-eslint/parser@6.21.0(eslint@8.57.0)(typescript@5.3.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.31.0)(eslint@8.57.0)
+      eslint-import-resolver-typescript: 3.6.1(@typescript-eslint/parser@6.21.0(eslint@8.57.0)(typescript@5.3.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.31.0(@typescript-eslint/parser@5.62.0(eslint@8.44.0)(typescript@5.7.3))(eslint@8.57.0))(eslint@8.57.0)
     transitivePeerDependencies:
       - supports-color
 
@@ -16462,7 +16317,7 @@ snapshots:
       - eslint-import-resolver-webpack
       - supports-color
 
-  eslint-plugin-import@2.31.0(@typescript-eslint/parser@5.62.0(eslint@8.44.0)(typescript@5.7.3))(eslint@8.57.0):
+  eslint-plugin-import@2.31.0(@typescript-eslint/parser@6.21.0(eslint@8.57.0)(typescript@5.3.3))(eslint-import-resolver-typescript@3.6.1)(eslint@8.57.0):
     dependencies:
       '@rtsao/scc': 1.1.0
       array-includes: 3.1.8
@@ -16473,7 +16328,7 @@ snapshots:
       doctrine: 2.1.0
       eslint: 8.57.0
       eslint-import-resolver-node: 0.3.9
-      eslint-module-utils: 2.12.0(@typescript-eslint/parser@5.62.0(eslint@8.44.0)(typescript@5.7.3))(eslint-import-resolver-node@0.3.9)(eslint@8.57.0)
+      eslint-module-utils: 2.12.0(@typescript-eslint/parser@6.21.0(eslint@8.57.0)(typescript@5.3.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@6.21.0(eslint@8.57.0)(typescript@5.3.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.31.0(@typescript-eslint/parser@5.62.0(eslint@8.44.0)(typescript@5.7.3))(eslint@8.57.0))(eslint@8.57.0))(eslint@8.57.0)
       hasown: 2.0.2
       is-core-module: 2.16.1
       is-glob: 4.0.3
@@ -16485,7 +16340,7 @@ snapshots:
       string.prototype.trimend: 1.0.9
       tsconfig-paths: 3.15.0
     optionalDependencies:
-      '@typescript-eslint/parser': 5.62.0(eslint@8.44.0)(typescript@5.7.3)
+      '@typescript-eslint/parser': 6.21.0(eslint@8.57.0)(typescript@5.3.3)
     transitivePeerDependencies:
       - eslint-import-resolver-typescript
       - eslint-import-resolver-webpack

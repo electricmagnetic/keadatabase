@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { FeatureCollection } from "geojson";
 import { Formik, Field, Form, FormikHelpers } from "formik";
 
-const keaZones: FeatureCollection = require("@/geo/kea-zones_2023-05-02.json");
+const keaZones: FeatureCollection = require("@/geo/kea-zones_2025-08-10.json");
 
 interface ZoneFilter {
   zoneId?: string;

@@ -1,4 +1,3 @@
-import { CSSProperties, FC, PropsWithChildren } from "react";
 import { latLng, latLngBounds, LatLngBoundsExpression } from "leaflet";
 import { useMap } from "react-leaflet";
 import { featureCollection, bbox } from "@turf/turf";
@@ -7,7 +6,7 @@ import { Loader } from "@/components/utilities";
 import { LayerStatuses } from "./types";
 import { BBox } from "geojson";
 
-const CONTROL_STYLE: CSSProperties = {
+const CONTROL_STYLE: React.CSSProperties = {
   backgroundColor: "#fff",
   padding: "0.5rem",
   fontSize: "1rem",
@@ -15,10 +14,10 @@ const CONTROL_STYLE: CSSProperties = {
 
 const BOUNDS_PADDING = 0.5;
 
-export const CustomControl: FC<PropsWithChildren<{ className: string }>> = ({
+export const CustomControl = ({
   className,
   children,
-}) => (
+}: React.PropsWithChildren<{ className: string }>) => (
   <div className={className}>
     <div className="leaflet-control leaflet-bar" style={CONTROL_STYLE}>
       {children}
@@ -29,7 +28,7 @@ export const CustomControl: FC<PropsWithChildren<{ className: string }>> = ({
 /**
  * Basic map loading component
  */
-export const MapLoader: FC = () => (
+export const MapLoader = () => (
   <CustomControl className="leaflet-bottom leaflet-left">
     <Loader />
   </CustomControl>
@@ -38,9 +37,7 @@ export const MapLoader: FC = () => (
 /**
  * Simple bounds setter (used as a child component of MapContainer)
  */
-export const SetBounds: FC<{ bounds?: LatLngBoundsExpression }> = ({
-  bounds,
-}) => {
+export const SetBounds = ({ bounds }: { bounds?: LatLngBoundsExpression }) => {
   const map = useMap();
   if (bounds) map.fitBounds(bounds);
   return null;
@@ -56,8 +53,10 @@ export const convertBboxToLeafletBounds = (inputBbox: BBox) => {
 /**
  * Given a set of layer statuses, calculate the overall bounding box and then set the bounds (if valid)
  */
-export const SetBoundsToLayers: FC<{ layerStatuses: LayerStatuses }> = ({
+export const SetBoundsToLayers = ({
   layerStatuses,
+}: {
+  layerStatuses: LayerStatuses;
 }) => {
   const bboxPolygons = featureCollection(
     Object.entries(layerStatuses)
@@ -80,8 +79,10 @@ export const SetBoundsToLayers: FC<{ layerStatuses: LayerStatuses }> = ({
 /**
  * Given a set of layer statuses, show a loader so long as at least one layer hasn't finished loading.
  */
-export const LayersLoader: FC<{ layerStatuses: LayerStatuses }> = ({
+export const LayersLoader = ({
   layerStatuses,
+}: {
+  layerStatuses: LayerStatuses;
 }) => {
   const loadedLayers = Object.entries(layerStatuses).filter(
     ([key, value]) => value.hasData === true,

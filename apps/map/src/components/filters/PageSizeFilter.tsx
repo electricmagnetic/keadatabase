@@ -1,4 +1,3 @@
-import { FC } from "react";
 import { useRouter } from "next/router";
 import { Formik, Field, Form, FormikHelpers } from "formik";
 
@@ -10,7 +9,7 @@ const pageSizeFilterInitialValues = {
   pageSize: "",
 };
 
-export const PageSizeFilter: FC = () => {
+export const PageSizeFilter = () => {
   const router = useRouter();
   const initialValues = Object.assign(
     {},
@@ -37,13 +36,27 @@ export const PageSizeFilter: FC = () => {
         }}
       >
         {({ isSubmitting }) => (
-          <Form>
-            <label htmlFor="pageSize">Page Size</label>
-            <Field name="pageSize" id="pageSize" />
-
-            <button type="submit" disabled={isSubmitting}>
-              Submit
-            </button>
+          <Form className="row">
+            <div className="col-9">
+              <label htmlFor="pageSize" className="visually-hidden">
+                Page Size
+              </label>
+              <Field
+                name="pageSize"
+                id="pageSize"
+                className="form-control"
+                placeholder="Page Size"
+              />
+            </div>
+            <div className="col-md-3">
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="btn btn-primary"
+              >
+                Submit
+              </button>
+            </div>
           </Form>
         )}
       </Formik>

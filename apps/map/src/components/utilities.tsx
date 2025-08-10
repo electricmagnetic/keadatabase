@@ -1,9 +1,7 @@
-import { FC } from "react";
-
 /**
  * Basic loading component
  */
-export const Loader: FC = () => (
+export const Loader = () => (
   <div className="spinner-border" role="status">
     <span className="visually-hidden">Loading...</span>
   </div>
@@ -12,4 +10,4 @@ export const Loader: FC = () => (
 /**
  * Basic error component
  */
-export const Error: FC = () => <span>Error</span>;
+export const Error = () => <span>Error</span>;

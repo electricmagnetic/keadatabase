@@ -1,4 +1,4 @@
-import React, { Dispatch, FC, SetStateAction, useEffect } from "react";
+import { useEffect } from "react";
 import useSWR from "swr";
 import { GeoJSON } from "react-leaflet";
 import { Feature, Point } from "geojson";
@@ -44,18 +44,18 @@ const observationPointToLayer = (feature: Feature<Point>, latlng: LatLng) => {
 const OBSERVATIONS_URL = `${process.env.NEXT_PUBLIC_API_BASE}/geojson/observations/`;
 const BIRD_OBSERVATIONS_URL = `${process.env.NEXT_PUBLIC_API_BASE}/geojson/bird_observations/`;
 
-const ObservationsLayer: FC<{
-  name: string;
-  query?: string;
-  setLayerStatuses: Dispatch<SetStateAction<LayerStatuses>>;
-  birdObservations?: boolean;
-  fwfObservations?: boolean;
-}> = ({
+const ObservationsLayer = ({
   name,
   query,
   setLayerStatuses,
   birdObservations = false,
   fwfObservations = false,
+}: {
+  name: string;
+  query?: string;
+  setLayerStatuses: React.Dispatch<React.SetStateAction<LayerStatuses>>;
+  birdObservations?: boolean;
+  fwfObservations?: boolean;
 }) => {
   const url = `${birdObservations ? BIRD_OBSERVATIONS_URL : OBSERVATIONS_URL}${
     query ? query : ""

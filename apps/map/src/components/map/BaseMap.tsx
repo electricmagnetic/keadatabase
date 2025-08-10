@@ -1,4 +1,4 @@
-import { FC, PropsWithChildren, useContext } from "react";
+import { useContext } from "react";
 import { LatLngBounds } from "leaflet";
 import { MapContainer, TileLayer } from "react-leaflet";
 
@@ -7,10 +7,10 @@ import { DEFAULT_BOUNDS, MAX_BOUNDS } from "./constants";
 
 import "leaflet/dist/leaflet.css";
 
-const BaseMap: FC<PropsWithChildren<{ bounds?: LatLngBounds }>> = ({
+const BaseMap = ({
   bounds,
   children,
-}) => {
+}: React.PropsWithChildren<{ bounds?: LatLngBounds }>) => {
   const showMenu = useContext(ShowMenuContext);
 
   return (

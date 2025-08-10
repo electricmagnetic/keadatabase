@@ -1,10 +1,4 @@
-import React, {
-  Dispatch,
-  FC,
-  SetStateAction,
-  useEffect,
-  useState,
-} from "react";
+import { useEffect, useState } from "react";
 import useSWR from "swr";
 import { Polyline } from "react-leaflet";
 import { GeoJSON as LeafletGeoJSON, LatLngExpression } from "leaflet";
@@ -18,11 +12,15 @@ const BIRD_PATH_PROPERTIES = {
   opacity: 0.7,
 };
 
-const BirdPathLayer: FC<{
+const BirdPathLayer = ({
+  name,
+  query,
+  setLayerStatuses,
+}: {
   name: string;
   query?: string;
-  setLayerStatuses: Dispatch<SetStateAction<LayerStatuses>>;
-}> = ({ name, query, setLayerStatuses }) => {
+  setLayerStatuses: React.Dispatch<React.SetStateAction<LayerStatuses>>;
+}) => {
   const [birdPath, setBirdPath] = useState<LatLngExpression[] | null>(null);
 
   const url = `${BIRD_OBSERVATIONS_URL}${query ? query : ""}`;

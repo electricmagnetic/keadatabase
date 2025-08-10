@@ -1,4 +1,3 @@
-import { FC } from "react";
 import { useRouter } from "next/router";
 import { Formik, Field, Form, FormikHelpers } from "formik";
 
@@ -10,7 +9,7 @@ const birdFilterInitialValues = {
   birdId: "",
 };
 
-export const BirdFilter: FC = () => {
+export const BirdFilter = () => {
   const router = useRouter();
   const initialValues = Object.assign(
     {},
@@ -32,13 +31,30 @@ export const BirdFilter: FC = () => {
         }}
       >
         {({ isSubmitting }) => (
-          <Form>
-            <label htmlFor="birdId">Bird</label>
-            <Field name="birdId" id="birdId" />
-
-            <button type="submit" disabled={isSubmitting}>
-              Submit
-            </button>
+          <Form className="row">
+            <div className="col-9">
+              <label
+                htmlFor="birdId"
+                className="form-label-col col-3 visually-hidden"
+              >
+                Bird
+              </label>
+              <Field
+                name="birdId"
+                id="birdId"
+                className="form-control"
+                placeholder="Bird"
+              />
+            </div>
+            <div className="col-md-3">
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="btn btn-primary"
+              >
+                Submit
+              </button>
+            </div>
           </Form>
         )}
       </Formik>

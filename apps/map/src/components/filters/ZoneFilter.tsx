@@ -1,4 +1,3 @@
-import { FC } from "react";
 import { useRouter } from "next/router";
 import { FeatureCollection } from "geojson";
 import { Formik, Field, Form, FormikHelpers } from "formik";
@@ -13,7 +12,7 @@ const zoneFilterInitialValues = {
   zoneId: "",
 };
 
-export const ZoneFilter: FC = () => {
+export const ZoneFilter = () => {
   const router = useRouter();
   const initialValues = Object.assign(
     {},
@@ -35,20 +34,34 @@ export const ZoneFilter: FC = () => {
         }}
       >
         {({ isSubmitting }) => (
-          <Form>
-            <label htmlFor="zoneId">Zone</label>
-            <Field name="zoneId" id="zoneId" as="select">
-              <option value=""></option>
-              {keaZones.features.map((feature) => (
-                <option value={feature.id} key={feature.id}>
-                  {feature.properties?.name}
-                </option>
-              ))}
-            </Field>
-
-            <button type="submit" disabled={isSubmitting}>
-              Submit
-            </button>
+          <Form className="row row-cols-lg-auto g-3 align-items-center">
+            <div className="col-12">
+              <label htmlFor="zoneId" className="form-label visually-hidden">
+                Zone
+              </label>
+              <Field
+                name="zoneId"
+                id="zoneId"
+                as="select"
+                className="form-control"
+              >
+                <option value=""></option>
+                {keaZones.features.map((feature) => (
+                  <option value={feature.id} key={feature.id}>
+                    {feature.properties?.name}
+                  </option>
+                ))}
+              </Field>
+            </div>
+            <div className="col-12">
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="btn btn-primary"
+              >
+                Submit
+              </button>
+            </div>
           </Form>
         )}
       </Formik>

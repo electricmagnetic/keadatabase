@@ -6,7 +6,7 @@ defaults:
 
 on:
   push:
-    branches: [main]
+    branches: [main, develop]
     paths:
       - "backend/**"
   pull_request:
@@ -88,6 +88,7 @@ jobs:
           tags: |
             type=sha,prefix=
             type=raw,value=latest,enable={{is_default_branch}}
+            type=raw,value=beta,enable=${{ github.ref == 'refs/heads/develop' }}
       - name: Build and push
         uses: docker/build-push-action@v4
         with:

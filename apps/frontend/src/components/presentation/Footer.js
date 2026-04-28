@@ -12,18 +12,6 @@ const Footer = (props) => {
         <div className="container py-4">
           <div className="row align-items-center">
             <div className="col-md-8">
-              <p className="footer-sponsor">
-                Kea Database data hosted in New Zealand on{" "}
-                <a
-                  href="https://www.catalyst.net.nz/products/gis-core"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="catalyst"
-                >
-                  Catalyst GIS Core
-                </a>
-                .
-              </p>
               <nav>
                 <ul className="footer-links my-2">
                   <li>

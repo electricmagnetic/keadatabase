@@ -16,16 +16,7 @@ const Footer = ({ onSubmitPage }) => {
           <div className="row align-items-center">
             <div className="col-md-8">
               <p className="footer-sponsor">
-                Kea Database data hosted in New Zealand on{" "}
-                <a
-                  href="https://www.catalyst.net.nz/products/gis-core"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="catalyst"
-                >
-                  Catalyst GIS Core
-                </a>
-                . Map data from LINZ (CC BY 4.0).
+                Map data from LINZ (CC BY 4.0).
               </p>
               <nav>
                 <ul className="footer-links my-2">

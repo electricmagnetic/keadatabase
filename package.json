@@ -21,5 +21,6 @@
     "overrides": {
       "@turf/turf": "7.0.0-alpha.113"
     }
-  }
+  },
+  "name": "keadatabase"
 }

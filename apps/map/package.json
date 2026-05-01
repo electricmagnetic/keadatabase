@@ -4,7 +4,7 @@
   "private": true,
   "homepage": "https://map.keadatabase.nz",
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
@@ -19,10 +19,10 @@
     "bootstrap": "^5.3.7",
     "formik": "^2.4.6",
     "leaflet": "^1.9.4",
-    "next": "15.4.6",
+    "next": "15.5.15",
     "qs": "^6.14.0",
-    "react": "19.1.1",
-    "react-dom": "19.1.1",
+    "react": "19.2.5",
+    "react-dom": "19.2.5",
     "react-leaflet": "^5.0.0",
     "swr": "^2.3.5"
   },
@@ -32,11 +32,17 @@
     "@types/leaflet": "^1.9.8",
     "@types/node": "24.2.1",
     "@types/qs": "^6.9.11",
-    "@types/react": "19.1.9",
-    "@types/react-dom": "19.1.7",
+    "@types/react": "19.2.14",
+    "@types/react-dom": "19.2.3",
     "eslint": "8.57.0",
-    "eslint-config-next": "14.1.0",
+    "eslint-config-next": "15.5.15",
     "prettier": "^3.2.5",
     "typescript": "5.3.3"
+  },
+  "pnpm": {
+    "overrides": {
+      "@types/react": "19.2.14",
+      "@types/react-dom": "19.2.3"
+    }
   }
 }

@@ -1,6 +1,6 @@
-FROM python:3.10.17-bullseye
+FROM python:3.10.20-trixie
 
-COPY --from=ghcr.io/astral-sh/uv /uv /uvx /bin/
+COPY --from=astral/uv:latest /uv /uvx /bin/
 
 RUN apt update \
     && apt install -y \

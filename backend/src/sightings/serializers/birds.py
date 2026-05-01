@@ -24,12 +24,12 @@ class BirdObservationSerializer(serializers.ModelSerializer):
     @staticmethod
     def setup_eager_loading(queryset):
         queryset = queryset.prefetch_related(
-            "bird",
-            "bird__band_combo",
-            "bird__study_area",
-            "bird__bird_extended",
-            "sighting",
-            "sighting__contributor",
+            'bird',
+            'bird__band_combo',
+            'bird__study_area',
+            'bird__bird_extended',
+            'sighting',
+            'sighting__contributor',
         )
 
         return queryset

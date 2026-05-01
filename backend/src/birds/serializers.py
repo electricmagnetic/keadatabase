@@ -37,8 +37,6 @@ class BirdSerializer(serializers.ModelSerializer):
 
     @staticmethod
     def setup_eager_loading(queryset):
-        queryset = queryset.select_related(
-            "bird_extended", "study_area", "band_combo"
-        )
+        queryset = queryset.select_related('bird_extended', 'study_area', 'band_combo')
 
         return queryset

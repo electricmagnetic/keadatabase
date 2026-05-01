@@ -15,13 +15,11 @@ class SurveyHourInline(admin.StackedInline):
     model = SurveyHour
     extra = 0
     list_select_related = True
-    raw_id_fields = ('grid_tile', )
+    raw_id_fields = ('grid_tile',)
 
     def get_queryset(self, request):
         qs = super().get_queryset(request)
-        return qs.all(). \
-            select_related('survey', 'grid_tile'). \
-            all()
+        return qs.all().select_related('survey', 'grid_tile').all()
 
 
 class SurveyAdmin(admin.ModelAdmin):
@@ -38,7 +36,7 @@ class SurveyAdmin(admin.ModelAdmin):
         'status',
     )
     inlines = [SurveyHourInline]
-    search_fields = ('id__exact', )
+    search_fields = ('id__exact',)
     list_select_related = True
 
     def get_queryset(self, request):
@@ -60,7 +58,7 @@ class SurveyHourAdmin(admin.ModelAdmin):
         'activity',
     )
     list_select_related = True
-    raw_id_fields = ('grid_tile', )
+    raw_id_fields = ('grid_tile',)
 
     def get_queryset(self, request):
         qs = super().get_queryset(request)

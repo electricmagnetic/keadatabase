@@ -3,8 +3,16 @@ from rest_framework import renderers
 from sightings.views.observations import ObservationViewSet
 from sightings.views.birds import BirdObservationViewSet
 from locations.views import GridTileViewSet
-from keadatabase.pagination import ObservationGeoJSONPagination, GridTileGeoJSONPagination, BirdObservationGeoJSONPagination
-from .serializers import ObservationGeoJSONSerializer, GridTileGeoJSONSerializer, BirdObservationGeoJSONSerializer
+from keadatabase.pagination import (
+    ObservationGeoJSONPagination,
+    GridTileGeoJSONPagination,
+    BirdObservationGeoJSONPagination,
+)
+from .serializers import (
+    ObservationGeoJSONSerializer,
+    GridTileGeoJSONSerializer,
+    BirdObservationGeoJSONSerializer,
+)
 
 
 class ObservationGeoJSONViewSet(ObservationViewSet):

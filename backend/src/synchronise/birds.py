@@ -22,7 +22,7 @@ sex_map = {
 
 
 def is_valid_Bird(row):
-    """ Returns True if valid Bird - filters noise in original dataset """
+    """Returns True if valid Bird - filters noise in original dataset"""
 
     # Check to confirm species is listed as 'Kea' (not 'Dummy' or 'Cavity')
     if row['Species'] != 'Kea':
@@ -40,11 +40,11 @@ def is_valid_Bird(row):
 
 
 def synchronise_Bird(self, birds_csv):
-    """ Imports Bird objects from data/Kea.csv """
+    """Imports Bird objects from data/Kea.csv"""
 
     if hasattr(self, 'stdout'):
-        self.stdout.write(self.style.MIGRATE_LABEL("\n## Bird\n\n"))
-        self.stdout.write("### Changes\n\n")
+        self.stdout.write(self.style.MIGRATE_LABEL('\n## Bird\n\n'))
+        self.stdout.write('### Changes\n\n')
 
     birds_reader = csv.DictReader(birds_csv, delimiter=',', quotechar='"')
 
@@ -59,7 +59,7 @@ def synchronise_Bird(self, birds_csv):
         # Represent birthday as a datetime object based on input format
         if row['birthday']:
             birthday = datetime.datetime.strptime(
-                row['birthday'], "%Y-%m-%d %H:%M:%S"
+                row['birthday'], '%Y-%m-%d %H:%M:%S'
             ).date()
         else:
             birthday = None
@@ -90,8 +90,8 @@ def synchronise_Bird(self, birds_csv):
                 if getattr(bird, key) != value:
                     has_changed = True
                     self.stdout.write(
-                        "* %s: %s changed from %s to %s" %
-                        (name_slugified, key, getattr(bird, key), value)
+                        '* %s: %s changed from %s to %s'
+                        % (name_slugified, key, getattr(bird, key), value)
                     )
                     setattr(bird, key, value)
 
@@ -110,7 +110,7 @@ def synchronise_Bird(self, birds_csv):
             created_count += 1
 
     if hasattr(self, 'stdout'):
-        self.stdout.write("\n### Results\n\n")
-        self.stdout.write("* Checked: %d" % checked_count)
-        self.stdout.write("* Modified: %d" % modified_count)
-        self.stdout.write("* Created: %d" % created_count)
+        self.stdout.write('\n### Results\n\n')
+        self.stdout.write('* Checked: %d' % checked_count)
+        self.stdout.write('* Modified: %d' % modified_count)
+        self.stdout.write('* Created: %d' % created_count)

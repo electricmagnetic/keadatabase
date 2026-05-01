@@ -26,8 +26,9 @@ def createObservation(row, contributor):
         'time_sighted': row['time_sighted'],
         'comments': row['comments'],
         'sighting_type': row['sighting_type'],
-        'point_location':
-            ("SRID=4326;POINT (%s %s)" % (row['longitude'], row['latitude'])),
+        'point_location': (
+            'SRID=4326;POINT (%s %s)' % (row['longitude'], row['latitude'])
+        ),
         'precision': row['precision'],
         'number': row['number'],
         'location_details': row['location_details'],
@@ -56,14 +57,12 @@ def createBirdObservation(row, observation):
 
 
 def import_Observation(self, observations_csv):
-    """ Imports Sighting objects from data/observations.csv """
+    """Imports Sighting objects from data/observations.csv"""
 
     if hasattr(self, 'stdout'):
-        self.stdout.write(self.style.MIGRATE_LABEL("Observation:"))
+        self.stdout.write(self.style.MIGRATE_LABEL('Observation:'))
 
-    observations_reader = csv.DictReader(
-        observations_csv, delimiter=',', quotechar='"'
-    )
+    observations_reader = csv.DictReader(observations_csv, delimiter=',', quotechar='"')
 
     created_count = 0
 
@@ -80,4 +79,4 @@ def import_Observation(self, observations_csv):
                 bird = createBirdObservation(row, observation)
 
     if hasattr(self, 'stdout'):
-        self.stdout.write("\tCreated: %d" % created_count)
+        self.stdout.write('\tCreated: %d' % created_count)

@@ -21,9 +21,7 @@ class SurveyHourViewSet(viewsets.ReadOnlyModelViewSet):
     )
 
     def get_queryset(self):
-        queryset = SurveyHour.objects. \
-                   select_related('survey', 'grid_tile'). \
-                   all()
+        queryset = SurveyHour.objects.select_related('survey', 'grid_tile').all()
 
         return queryset
 
@@ -35,13 +33,12 @@ class SurveyViewSet(viewsets.ReadOnlyModelViewSet):
         'id',
         'date',
     )
-    filter_fields = ('status', )
+    filter_fields = ('status',)
 
     def get_queryset(self):
-        queryset = Survey.objects. \
-                   prefetch_related('hours'). \
-                   select_related('observer'). \
-                   all()
+        queryset = (
+            Survey.objects.prefetch_related('hours').select_related('observer').all()
+        )
 
         return queryset
 
@@ -49,12 +46,10 @@ class SurveyViewSet(viewsets.ReadOnlyModelViewSet):
 class ObserverViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = ObserverSerializer
     pagination_class = SurveyPagination
-    ordering_fields = ('name', )
+    ordering_fields = ('name',)
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
-        queryset = Observer.objects. \
-                   select_related('survey'). \
-                   all()
+        queryset = Observer.objects.select_related('survey').all()
 
         return queryset

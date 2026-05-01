@@ -8,16 +8,17 @@ from .models import BandCombo
 
 
 class BandComboObjectTests(TestCase):
-    """ Tests for main functions of BandCombo objects """
+    """Tests for main functions of BandCombo objects"""
+
     def test_blank(self):
-        """ The model should not submit if all fields are left blank """
+        """The model should not submit if all fields are left blank"""
         with self.assertRaises(ValidationError):
             band = BandCombo()
             band.full_clean()
             band.save()
 
     def test_bird(self):
-        """ Models should require a Bird object """
+        """Models should require a Bird object"""
         with self.assertRaises(ValidationError):
             band = BandCombo(name="Black 'C' on Yellow Otira")
 
@@ -25,7 +26,7 @@ class BandComboObjectTests(TestCase):
             band.save()
 
     def test_unique(self):
-        """ Models should be unique (on name field) """
+        """Models should be unique (on name field)"""
         bird = Bird(name='Helen Clark')
 
         with self.assertRaises(ValidationError):

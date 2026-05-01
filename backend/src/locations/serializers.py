@@ -3,7 +3,7 @@ from rest_framework_gis.serializers import GeometryField
 
 
 class BaseGridTileSerializer(serializers.Serializer):
-    """ Default serializer """
+    """Default serializer"""
 
     id = serializers.ReadOnlyField()
 
@@ -22,6 +22,6 @@ class BaseGridTileSerializer(serializers.Serializer):
 
 
 class GridTileSerializer(BaseGridTileSerializer):
-    """ Serializer including polygon field """
+    """Serializer including polygon field"""
 
     polygon = GeometryField(precision=7)

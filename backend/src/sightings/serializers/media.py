@@ -9,4 +9,4 @@ class ObservationsMediaSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = SightingsMedia
-        exclude = ('sighting_image_ppoi', )
+        exclude = ('sighting_image_ppoi',)

@@ -11,7 +11,7 @@ class Command(management.BaseCommand):
     help = 'Allows the import of observations data from CSVs.'
 
     def do_import(self):
-        """ Imports objects into database """
+        """Imports objects into database"""
         self.stdout.write(self.style.MIGRATE_HEADING('\nBeginning import:'))
 
         if settings.DEFAULT_FILE_STORAGE == 'storages.backends.s3boto3.S3Boto3Storage':
@@ -31,12 +31,10 @@ class Command(management.BaseCommand):
         self.stdout.write(self.style.SUCCESS('\nImport complete'))
 
     def handle(self, *args, **options):
-        self.stdout.write(
-            '\nUsing input data from: %s' % settings.DEFAULT_FILE_STORAGE
-        )
+        self.stdout.write('\nUsing input data from: %s' % settings.DEFAULT_FILE_STORAGE)
 
-        confirm = input('\nReady to import? Type \'yes\' to continue: ')
-        #confirm = 'yes' # for debugging
+        confirm = input("\nReady to import? Type 'yes' to continue: ")
+        # confirm = 'yes' # for debugging
 
         if confirm == 'yes':
             self.do_import()

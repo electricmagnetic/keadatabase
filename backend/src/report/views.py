@@ -6,9 +6,7 @@ from .serializers import ReportSurveySerializer
 from .serializers import ImportObservationSerializer
 
 
-class ReportObservationBaseViewSet(
-    mixins.CreateModelMixin, viewsets.GenericViewSet
-):
+class ReportObservationBaseViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
     throttle_scope = 'report'
     permission_classes = [permissions.AllowAny]
 
@@ -21,9 +19,8 @@ class ReportSurveyViewSet(ReportObservationBaseViewSet):
     serializer_class = ReportSurveySerializer
 
 
-class ImportObservationViewSet(
-    mixins.CreateModelMixin, viewsets.GenericViewSet
-):
-    """ Auth-required view for data import (without throttling) """
+class ImportObservationViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
+    """Auth-required view for data import (without throttling)"""
+
     serializer_class = ImportObservationSerializer
     permission_classes = [permissions.IsAuthenticated]

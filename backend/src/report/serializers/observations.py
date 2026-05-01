@@ -41,7 +41,7 @@ class ReportObservationSerializer(serializers.ModelSerializer):
         )
 
     def validate(self, data):
-        """ Basic check to deter spam submissions """
+        """Basic check to deter spam submissions"""
         if data.pop('challenge', None) != 'kea':
             raise serializers.ValidationError('Invalid submission')
         return data
@@ -51,9 +51,7 @@ class ReportObservationSerializer(serializers.ModelSerializer):
         birds_data = validated_data.pop('birds')
 
         contributor = Contributor.objects.create(**contributor_data)
-        sighting = Sighting.objects.create(
-            contributor=contributor, **validated_data
-        )
+        sighting = Sighting.objects.create(contributor=contributor, **validated_data)
 
         for bird_data in birds_data:
             BirdSighting.objects.create(sighting=sighting, **bird_data)

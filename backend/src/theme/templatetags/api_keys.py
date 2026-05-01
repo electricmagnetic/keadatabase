@@ -8,11 +8,11 @@ register = template.Library()
 
 @register.simple_tag
 def linz_api_key():
-    """ Fetch LINZ_API_KEY from settings """
+    """Fetch LINZ_API_KEY from settings"""
     return getattr(settings, 'LINZ_API_KEY')
 
 
 @register.simple_tag
 def mapbox_api_key():
-    """ Fetch MAPBOX_API_KEY from settings """
+    """Fetch MAPBOX_API_KEY from settings"""
     return getattr(settings, 'MAPBOX_API_KEY')

@@ -10,15 +10,12 @@ from .models import GridTile
 
 class GridTileFilter(django_filters.FilterSet):
     has_hours = django_filters.BooleanFilter(
-        field_name='hours',
-        lookup_expr='isnull',
-        exclude=True,
-        label='Has hours'
+        field_name='hours', lookup_expr='isnull', exclude=True, label='Has hours'
     )
 
     class Meta:
         model = GridTile
-        fields = ('has_hours', )
+        fields = ('has_hours',)
 
 
 class GridTileViewSet(viewsets.ReadOnlyModelViewSet):
@@ -30,7 +27,7 @@ class GridTileViewSet(viewsets.ReadOnlyModelViewSet):
         queryset = GridTile.objects.all()
         queryset = queryset.annotate(
             hours_total=Count('hours'),
-            hours_with_kea=Count('id', filter=Q(hours__kea=True))
+            hours_with_kea=Count('id', filter=Q(hours__kea=True)),
         )
 
         return queryset

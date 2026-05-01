@@ -14,7 +14,7 @@ SEX_CHOICES = (
     ('male', 'Male'),
 )
 
-SEX_CHOICES_UNDETERMINED = SEX_CHOICES + (('undetermined', 'Undetermined'), )
+SEX_CHOICES_UNDETERMINED = SEX_CHOICES + (('undetermined', 'Undetermined'),)
 
 LIFE_STAGE_CHOICES = (
     ('fledgling', 'Fledgling'),
@@ -31,12 +31,12 @@ STATUS_CHOICES = (
 
 
 def bird_directory_path(instance, filename):
-    """ Helper function for determining upload location for BirdExtended """
+    """Helper function for determining upload location for BirdExtended"""
     return 'birds/%s/%s' % (instance.bird.slug, filename)
 
 
 class Bird(models.Model):
-    """ Basic bird information, designed to be imported from Access """
+    """Basic bird information, designed to be imported from Access"""
 
     gid = models.URLField(max_length=200, blank=True, null=True)
 
@@ -47,7 +47,7 @@ class Bird(models.Model):
         max_length=15,
         blank=True,
         choices=SEX_CHOICES_UNDETERMINED,
-        default='undetermined'
+        default='undetermined',
     )
     status = models.CharField(
         max_length=15, blank=True, choices=STATUS_CHOICES, default='unknown'
@@ -60,7 +60,7 @@ class Bird(models.Model):
         related_name='birds',
         blank=True,
         null=True,
-        on_delete=models.SET_NULL
+        on_delete=models.SET_NULL,
     )
 
     # Metadata
@@ -74,13 +74,13 @@ class Bird(models.Model):
         return self.name
 
     def save(self, *args, **kwargs):
-        """ Generate slug from name """
+        """Generate slug from name"""
 
         self.slug = slugify(self.name)
         super(Bird, self).save(*args, **kwargs)
 
     def get_age(self):
-        """ Calculates age based on birthday """
+        """Calculates age based on birthday"""
 
         if self.status == 'dead':  # No age if bird is dead
             return None
@@ -91,7 +91,7 @@ class Bird(models.Model):
         return difference_in_years
 
     def get_life_stage(self):
-        """ Calculates life stage based on age (integers) """
+        """Calculates life stage based on age (integers)"""
 
         age = self.get_age()
 
@@ -112,12 +112,10 @@ class Bird(models.Model):
 
 
 class BirdExtended(models.Model):
-    """ Extended bird information, designed to be edited on Django """
+    """Extended bird information, designed to be edited on Django"""
+
     bird = models.OneToOneField(
-        Bird,
-        on_delete=models.CASCADE,
-        primary_key=True,
-        related_name='bird_extended'
+        Bird, on_delete=models.CASCADE, primary_key=True, related_name='bird_extended'
     )
 
     is_extended = models.BooleanField(default=True, editable=False)
@@ -131,7 +129,7 @@ class BirdExtended(models.Model):
         upload_to=bird_directory_path,
         blank=True,
         null=True,
-        ppoi_field='profile_picture_ppoi'
+        ppoi_field='profile_picture_ppoi',
     )
     profile_picture_ppoi = PPOIField()
     profile_picture_attribution = models.CharField(
@@ -152,6 +150,6 @@ def warm_BirdExtended_profile_pictures(sender, instance, **kwargs):
     profile_picture_warmer = VersatileImageFieldWarmer(
         instance_or_queryset=instance,
         rendition_key_set='profile_picture',
-        image_attr='profile_picture'
+        image_attr='profile_picture',
     )
     num_created, failed_to_create = profile_picture_warmer.warm()

@@ -1,4 +1,4 @@
-""" Sightings related to a specific bird - must have a parent Sighting object """
+"""Sightings related to a specific bird - must have a parent Sighting object"""
 
 from django.contrib.gis.db import models
 
@@ -7,18 +7,19 @@ from birds.models import Bird
 from .observations import Sighting
 
 BAND_CHOICES = (
-    ('unknown', 'Couldn\'t tell'),
+    ('unknown', "Couldn't tell"),
     ('unreadable', 'Banded, unreadable'),
     ('readable', 'Banded, readable'),
     ('unbanded', 'Not banded'),
 )
 
-SEX_CHOICES_UNSURE = (('', 'Unsure'), ) + SEX_CHOICES
-LIFE_STAGE_CHOICES_UNSURE = (('', 'Unsure'), ) + LIFE_STAGE_CHOICES
+SEX_CHOICES_UNSURE = (('', 'Unsure'),) + SEX_CHOICES
+LIFE_STAGE_CHOICES_UNSURE = (('', 'Unsure'),) + LIFE_STAGE_CHOICES
 
 
 class BirdSighting(models.Model):
-    """ Information specific to a bird in a sighting """
+    """Information specific to a bird in a sighting"""
+
     sighting = models.ForeignKey(
         Sighting, related_name='birds', on_delete=models.CASCADE
     )
@@ -36,11 +37,7 @@ class BirdSighting(models.Model):
 
     # Staff only
     bird = models.ForeignKey(
-        Bird,
-        related_name='sightings',
-        blank=True,
-        null=True,
-        on_delete=models.SET_NULL
+        Bird, related_name='sightings', blank=True, null=True, on_delete=models.SET_NULL
     )
     revisit = models.BooleanField(
         default=False, help_text='Moderator: tick if bird not added yet'
@@ -50,4 +47,4 @@ class BirdSighting(models.Model):
         verbose_name = 'Bird sighting'
 
     def __str__(self):
-        return "%s [%s]" % (self.id, self.sighting)
+        return '%s [%s]' % (self.id, self.sighting)

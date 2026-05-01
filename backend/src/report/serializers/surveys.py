@@ -8,7 +8,7 @@ from surveys.models.observers import Observer
 class SurveyHourSerializer(serializers.ModelSerializer):
     class Meta:
         model = SurveyHour
-        exclude = ('survey', )
+        exclude = ('survey',)
 
 
 class ObserverSerializer(serializers.ModelSerializer):
@@ -25,10 +25,10 @@ class ReportSurveySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Survey
-        exclude = ('status', )
+        exclude = ('status',)
 
     def to_internal_value(self, data):
-        """ Set both empty strings and 0 to null for max_flock_size """
+        """Set both empty strings and 0 to null for max_flock_size"""
         if data.get('max_flock_size', None) == '':
             data.pop('max_flock_size')
         if data.get('max_flock_size', None) == 0:
@@ -48,7 +48,7 @@ class ReportSurveySerializer(serializers.ModelSerializer):
         return survey
 
     def validate(self, data):
-        """ Basic check to deter spam submissions """
+        """Basic check to deter spam submissions"""
         if data.pop('challenge', None) != 'kea':
             raise serializers.ValidationError('Invalid submission')
         return data

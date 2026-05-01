@@ -9,30 +9,34 @@ class HourSerializer(serializers.Serializer):
 
 
 class BaseAnalysisSerializer(serializers.Serializer):
-    """ Basic list only analysis serializer """
+    """Basic list only analysis serializer"""
+
     id = serializers.CharField()
 
     hours_total = HourSerializer(source='*')
 
 
 class GridTileAnalysisSerializer(BaseAnalysisSerializer):
-    """ Perform basic queries to provide an endpoint with grid tile analysis """
+    """Perform basic queries to provide an endpoint with grid tile analysis"""
 
     hours_per_quarter = serializers.SerializerMethodField()
 
     def get_hours_per_quarter(self, instance):
-        return instance.hours. \
-                annotate(quarter=TruncQuarter('survey__date')). \
-                values('quarter'). \
-                annotate(total=Count('id'), with_kea=Count('id', filter=Q(kea=True))). \
-                order_by()
+        return (
+            instance.hours.annotate(quarter=TruncQuarter('survey__date'))
+            .values('quarter')
+            .annotate(total=Count('id'), with_kea=Count('id', filter=Q(kea=True)))
+            .order_by()
+        )
 
 
 class SurveyAnalysisSerializer(BaseAnalysisSerializer):
-    """ Perform basic queries to provide an endpoint with survey analysis """
+    """Perform basic queries to provide an endpoint with survey analysis"""
 
     hours_total = serializers.SerializerMethodField()
 
     def get_hours_total(self, instance):
-        return instance.hours. \
-            aggregate(surveyed=Count('id', filter=~Q(activity='X')), with_kea=Count('id', filter=Q(kea=True)))
+        return instance.hours.aggregate(
+            surveyed=Count('id', filter=~Q(activity='X')),
+            with_kea=Count('id', filter=Q(kea=True)),
+        )

@@ -1,4 +1,4 @@
-""" Media models for Sightings (sightings and non-sightings in .observations)"""
+"""Media models for Sightings (sightings and non-sightings in .observations)"""
 
 from django.db import models
 from django.dispatch import receiver
@@ -11,12 +11,13 @@ from birds.models import Bird
 
 
 def sighting_directory_path(instance, filename):
-    """ Helper function for determining upload location for each sighting """
+    """Helper function for determining upload location for each sighting"""
     return 'sighting/%s/%s' % (instance.sighting.id, filename)
 
 
 class SightingsMedia(models.Model):
-    """ User uploaded media for a sighting """
+    """User uploaded media for a sighting"""
+
     sighting = models.ForeignKey(
         Sighting, related_name='media', on_delete=models.CASCADE
     )
@@ -26,9 +27,7 @@ class SightingsMedia(models.Model):
     )
     sighting_image_ppoi = PPOIField()
 
-    birds = models.ManyToManyField(
-        Bird, verbose_name="Birds in image", blank=True
-    )
+    birds = models.ManyToManyField(Bird, verbose_name='Birds in image', blank=True)
 
     # Optional
     caption = models.CharField(max_length=255, blank=True, null=True)
@@ -39,7 +38,7 @@ class SightingsMedia(models.Model):
         ordering = ['id']
 
     def __str__(self):
-        return "%s [%s]" % (self.id, self.sighting)
+        return '%s [%s]' % (self.id, self.sighting)
 
 
 @receiver(models.signals.post_save, sender=SightingsMedia)
@@ -48,6 +47,6 @@ def warm_SightingsMedia_images(sender, instance, **kwargs):
     sighting_image_warmer = VersatileImageFieldWarmer(
         instance_or_queryset=instance,
         rendition_key_set='sighting_image',
-        image_attr='sighting_image'
+        image_attr='sighting_image',
     )
     num_created, failed_to_create = sighting_image_warmer.warm()

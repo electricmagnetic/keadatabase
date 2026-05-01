@@ -8,12 +8,12 @@ class Command(management.BaseCommand):
     help = 'Allows the import of NZ place names'
 
     def check_current_status(self):
-        """ Outputs information about objects currently in database """
+        """Outputs information about objects currently in database"""
         self.stdout.write(self.style.MIGRATE_HEADING('Current status:'))
         self.stdout.write('Place: %d' % Place.objects.count())
 
     def do_import(self):
-        """ Imports objects into database """
+        """Imports objects into database"""
         self.stdout.write(self.style.MIGRATE_HEADING('\nBeginning import:'))
 
         place_mapping = {
@@ -21,7 +21,7 @@ class Command(management.BaseCommand):
             'name': 'name',
             'feat_type': 'feat_type',
             'land_district': 'land_distr',
-            'point': 'POINT'
+            'point': 'POINT',
         }
 
         place_shp = '../data/lds-nz-place-names-nzgb-SHP/nz-place-names-nzgb.shp'
@@ -40,8 +40,8 @@ class Command(management.BaseCommand):
     def handle(self, *args, **options):
         self.check_current_status()
 
-        confirm = input('\nReady to import? Type \'yes\' to continue: ')
-        #confirm = 'yes' # for debugging
+        confirm = input("\nReady to import? Type 'yes' to continue: ")
+        # confirm = 'yes' # for debugging
 
         if confirm == 'yes':
             self.do_import()

@@ -3,6 +3,7 @@ from rest_framework.throttling import ScopedRateThrottle
 
 
 class ThrottledObtainAuthToken(views.ObtainAuthToken):
-    """ Add throttling to token endpoint """
+    """Add throttling to token endpoint"""
+
     throttle_classes = [ScopedRateThrottle]
     throttle_scope = 'auth'

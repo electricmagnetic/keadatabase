@@ -1,4 +1,4 @@
-""" Contributor model for sightings (sightings and non-sightings in .observations)"""
+"""Contributor model for sightings (sightings and non-sightings in .observations)"""
 
 from django.db import models
 
@@ -31,7 +31,8 @@ HEARD_CHOICES = (
 
 
 class Contributor(models.Model):
-    """ Contributor details for a particular sighting """
+    """Contributor details for a particular sighting"""
+
     name = models.CharField(max_length=100)
     email = models.EmailField(max_length=100)
 

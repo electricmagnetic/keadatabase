@@ -1,4 +1,4 @@
-""" DRF router configuration """
+"""DRF router configuration"""
 
 from rest_framework.routers import DefaultRouter
 
@@ -7,7 +7,11 @@ from bands.views import BandComboViewSet
 from sightings.views.observations import ObservationViewSet
 from sightings.views.birds import BirdObservationViewSet
 from sightings.views.media import ObservationsMediaViewSet
-from geojson.views import ObservationGeoJSONViewSet, GridTileGeoJSONViewSet, BirdObservationGeoJSONViewSet
+from geojson.views import (
+    ObservationGeoJSONViewSet,
+    GridTileGeoJSONViewSet,
+    BirdObservationGeoJSONViewSet,
+)
 from report.views import ReportObservationViewSet
 from report.views import ReportSurveyViewSet
 from report.views import ImportObservationViewSet

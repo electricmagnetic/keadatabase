@@ -6,10 +6,11 @@ from ..serializers.media import ObservationsMediaSerializer
 
 
 class ObservationsMediaViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = SightingsMedia.objects. \
-               select_related('sighting'). \
-               prefetch_related('birds'). \
-               all()
+    queryset = (
+        SightingsMedia.objects.select_related('sighting')
+        .prefetch_related('birds')
+        .all()
+    )
     serializer_class = ObservationsMediaSerializer
     pagination_class = ObservationPagination
     ordering_fields = (

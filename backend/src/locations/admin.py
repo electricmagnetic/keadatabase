@@ -4,10 +4,10 @@ from .models import StudyArea, Region, Place, GridTile
 
 
 class GridTileAdmin(admin.ModelAdmin):
-    """ Read only view of grid tiles """
+    """Read only view of grid tiles"""
 
-    list_display = ('id', )
-    search_fields = ('id', )
+    list_display = ('id',)
+    search_fields = ('id',)
 
     def has_add_permission(self, request):
         return False

@@ -7,16 +7,17 @@ from .models import Bird, BirdExtended
 
 
 class BirdObjectTests(TestCase):
-    """ Tests for main functions of Bird objects """
+    """Tests for main functions of Bird objects"""
+
     def test_blank(self):
-        """ The model should not submit if all fields are left blank """
+        """The model should not submit if all fields are left blank"""
         with self.assertRaises(ValidationError):
             bird = Bird()
             bird.full_clean()
             bird.save()
 
     def test_unique(self):
-        """ Models should be unique (on name field) """
+        """Models should be unique (on name field)"""
         with self.assertRaises(ValidationError):
             bird = Bird(name='Helen Clark')
             bird_duplicate = Bird(name='Helen Clark')
@@ -28,7 +29,7 @@ class BirdObjectTests(TestCase):
             bird_duplicate.save()
 
     def test_slug_generated(self):
-        """ Models should auto-generate a slug on save """
+        """Models should auto-generate a slug on save"""
         bird = Bird(name='Helen Clark')
         self.assertEqual(bird.slug, '')
 
@@ -38,9 +39,10 @@ class BirdObjectTests(TestCase):
 
 
 class BirdFunctionTests(TestCase):
-    """ Tests for custom functions of Bird objects """
+    """Tests for custom functions of Bird objects"""
+
     def test_get_age(self):
-        """ Function should return correct age for 600-day-old bird """
+        """Function should return correct age for 600-day-old bird"""
         birthday = date.today() - timedelta(days=600)
         bird = Bird(name='Helen Clark', birthday=birthday)
 
@@ -50,7 +52,7 @@ class BirdFunctionTests(TestCase):
         self.assertEqual(bird.get_age(), 1)
 
     def test_no_get_age(self):
-        """ Function should return None if no birthday """
+        """Function should return None if no birthday"""
         bird = Bird(name='Helen Clark', birthday=None)
 
         bird.full_clean()
@@ -59,7 +61,7 @@ class BirdFunctionTests(TestCase):
         self.assertEqual(bird.get_age(), None)
 
     def test_get_life_stage(self):
-        """ Function should return different stages depending on birthday """
+        """Function should return different stages depending on birthday"""
         birthday = date.today() - timedelta(days=100)
         bird_fledgling = Bird(name='Helen Clark', birthday=birthday)
 
@@ -77,7 +79,7 @@ class BirdFunctionTests(TestCase):
         self.assertEqual(bird_juvenile.get_life_stage(), 'Juvenile')
 
     def test_no_get_life_stage(self):
-        """ Function should return None if no birthday """
+        """Function should return None if no birthday"""
         bird = Bird(name='Helen Clark', birthday=None)
 
         bird.full_clean()
@@ -87,16 +89,17 @@ class BirdFunctionTests(TestCase):
 
 
 class BirdExtendedObjectTests(TestCase):
-    """ Tests for main functions of BirdExtended objects """
+    """Tests for main functions of BirdExtended objects"""
+
     def test_blank(self):
-        """ The model should not submit if all fields are left blank """
+        """The model should not submit if all fields are left blank"""
         with self.assertRaises(ValidationError):
             bird_extended = BirdExtended()
             bird_extended.full_clean()
             bird_extended.save()
 
     def test_unique_bird(self):
-        """ Each Bird can only have one BirdExtended """
+        """Each Bird can only have one BirdExtended"""
         with self.assertRaises(ValidationError):
             bird = Bird(name='Helen Clark')
             bird.full_clean()

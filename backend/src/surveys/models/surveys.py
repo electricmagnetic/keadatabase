@@ -48,54 +48,45 @@ class Survey(models.Model):
     # TODO: validate max flock size if child object has kea sighted?
 
     # Staff only
-    status = models.CharField(
-        max_length=10, choices=STATUS_CHOICES, default='new'
-    )
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='new')
 
     # Metadata
     date_created = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return ("%s" % (self.id))
+        return '%s' % (self.id)
 
     class Meta:
         ordering = ['-date']
 
 
 class SurveyHour(models.Model):
-    survey = models.ForeignKey(
-        Survey, related_name='hours', on_delete=models.CASCADE
-    )
+    survey = models.ForeignKey(Survey, related_name='hours', on_delete=models.CASCADE)
     hour = models.PositiveIntegerField()
     kea = models.BooleanField(default=False)
-    activity = models.CharField(
-        max_length=1, choices=ACTIVITY_CHOICES, default=''
-    )
+    activity = models.CharField(max_length=1, choices=ACTIVITY_CHOICES, default='')
     grid_tile = models.ForeignKey(
-        GridTile,
-        related_name='hours',
-        on_delete=models.PROTECT,
-        blank=True,
-        null=True
+        GridTile, related_name='hours', on_delete=models.PROTECT, blank=True, null=True
     )
 
     class Meta:
         ordering = ['survey', 'hour']
 
     def __str__(self):
-        return (
-            "At %i:00 in %s for survey #%s" %
-            (self.hour, self.grid_tile, self.survey)
+        return 'At %i:00 in %s for survey #%s' % (
+            self.hour,
+            self.grid_tile,
+            self.survey,
         )
 
     def get_hour_display(self):
-        """ Better display of hour value """
-        return ("%d:00" % self.hour)
+        """Better display of hour value"""
+        return '%d:00' % self.hour
 
     def clean(self):
         # If not surveying, ensure grid_tile and kea are unset.
-        if self.activity == "X":
+        if self.activity == 'X':
             self.grid_tile = None
             self.kea = False
         else:

@@ -107,7 +107,7 @@ Please note, aside from `collectstatic` Django commands such as `migrate` are no
 
 ## Code formatting
 
-- Code formatting is handled by `yapf`: `yapf src/**/*.py -i`
+- Code formatting is handled by `ruff`: `uv run ruff format src/`
 
 ## Bug reports
 

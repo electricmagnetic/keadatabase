@@ -1,4 +1,4 @@
-""" Sightings models (contributor and media in other files) """
+"""Sightings models (contributor and media in other files)"""
 
 from django.contrib.gis.db import models
 from django.core.validators import validate_slug
@@ -23,30 +23,33 @@ STATUS_CHOICES = (
     ('new', 'New'),
     ('public', 'Verified (Public)'),
     (
-        'Private', (
+        'Private',
+        (
             ('private', 'Verified (Private)'),
             ('bad', 'Bad (Private)'),
-        )
+        ),
     ),
     (
-        'Special', (
+        'Special',
+        (
             ('fwf', 'FWF Observation'),
             ('kct', 'KCT Observation'),
             ('nztf', 'NZTF Observation'),
             ('captive', 'Captive Observation'),
-        )
+        ),
     ),
     (
-        'Automated', (
+        'Automated',
+        (
             ('radio', 'Radio Tracking Observation'),
             ('camera', 'Trail Camera Observation'),
-        )
+        ),
     ),
 )
 
 
 class BaseSighting(models.Model):
-    """ Sightings information common to sightings and non-sightings """
+    """Sightings information common to sightings and non-sightings"""
 
     contributor = models.OneToOneField(Contributor, on_delete=models.PROTECT)
 
@@ -63,13 +66,13 @@ class BaseSighting(models.Model):
         max_length=10,
         choices=STATUS_CHOICES,
         default='new',
-        help_text="Moderator: confirm verification and private/public status"
+        help_text='Moderator: confirm verification and private/public status',
     )
 
     moderator_notes = models.TextField(
         blank=True,
         help_text='Moderator: Add notes here if you needed to \
-                                                  change sighting information (not public).'
+                                                  change sighting information (not public).',
     )
 
     # Metadata
@@ -83,7 +86,8 @@ class BaseSighting(models.Model):
 
 
 class NonSighting(BaseSighting):
-    """ Information specific to a non-sighting """
+    """Information specific to a non-sighting"""
+
     location_details = models.TextField()
 
     # Optional
@@ -101,10 +105,9 @@ class NonSighting(BaseSighting):
 
 
 class Sighting(BaseSighting):
-    """ Information specific to a sighting """
-    sighting_type = models.CharField(
-        max_length=15, choices=SIGHTING_TYPE_CHOICES
-    )
+    """Information specific to a sighting"""
+
+    sighting_type = models.CharField(max_length=15, choices=SIGHTING_TYPE_CHOICES)
 
     point_location = models.PointField()
     precision = models.PositiveIntegerField(choices=PRECISION_CHOICES)
@@ -117,11 +120,11 @@ class Sighting(BaseSighting):
 
     # Staff only
     favourite = models.BooleanField(
-        default=False, help_text="Moderator: If noteworthy sighting"
+        default=False, help_text='Moderator: If noteworthy sighting'
     )
     confirmed = models.BooleanField(
         default=False,
-        help_text="Moderator: If confirmed (known contributor or photo evidence)"
+        help_text='Moderator: If confirmed (known contributor or photo evidence)',
     )
 
     # Automated
@@ -134,7 +137,7 @@ class Sighting(BaseSighting):
         null=True,
         unique=True,
         validators=[validate_slug],
-        verbose_name="Import ID"
+        verbose_name='Import ID',
     )
 
     ## TODO: Check number is greater than zero (should be an non-sighting otherwise)
@@ -149,6 +152,8 @@ class Sighting(BaseSighting):
 
     def __str__(self):
         return '%s %d on %s %s' % (
-            self.get_sighting_type_display(), self.number, self.date_sighted,
-            self.time_sighted
+            self.get_sighting_type_display(),
+            self.number,
+            self.date_sighted,
+            self.time_sighted,
         )

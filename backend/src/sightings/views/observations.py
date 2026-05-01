@@ -22,9 +22,13 @@ class ObservationFilter(FilterSet):
 
 
 class ObservationViewSet(viewsets.ModelViewSet):
-    queryset = Sighting.objects. \
-               select_related('contributor',). \
-               exclude(status='private').exclude(status='bad')
+    queryset = (
+        Sighting.objects.select_related(
+            'contributor',
+        )
+        .exclude(status='private')
+        .exclude(status='bad')
+    )
     serializer_class = ObservationSerializer
     pagination_class = ObservationPagination
     filterset_class = ObservationFilter

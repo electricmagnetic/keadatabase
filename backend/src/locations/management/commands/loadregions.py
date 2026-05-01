@@ -8,12 +8,12 @@ class Command(management.BaseCommand):
     help = 'Allows the import of regions'
 
     def check_current_status(self):
-        """ Outputs information about objects currently in database """
+        """Outputs information about objects currently in database"""
         self.stdout.write(self.style.MIGRATE_HEADING('Current status:'))
         self.stdout.write('Region: %d' % Region.objects.count())
 
     def do_import(self):
-        """ Imports objects into database """
+        """Imports objects into database"""
         self.stdout.write(self.style.MIGRATE_HEADING('\nBeginning import:'))
 
         region_mapping = {'name': 'NAME', 'polygon': 'POLYGON'}
@@ -34,8 +34,8 @@ class Command(management.BaseCommand):
     def handle(self, *args, **options):
         self.check_current_status()
 
-        confirm = input('\nReady to import? Type \'yes\' to continue: ')
-        #confirm = 'yes' # for debugging
+        confirm = input("\nReady to import? Type 'yes' to continue: ")
+        # confirm = 'yes' # for debugging
 
         if confirm == 'yes':
             self.do_import()

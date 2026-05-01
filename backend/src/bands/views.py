@@ -14,7 +14,7 @@ class BandComboFilter(django_filters.FilterSet):
         field_name='bird__bird_extended__is_extended',
         lookup_expr='isnull',
         exclude=True,
-        label='Is extended'
+        label='Is extended',
     )
     is_featured = django_filters.BooleanFilter(
         field_name='bird__bird_extended__is_featured', label='Is featured'
@@ -50,9 +50,7 @@ class BandComboViewSet(viewsets.ModelViewSet):
     filter_class = BandComboFilter
 
     def get_queryset(self):
-        queryset = BandCombo.objects. \
-                   select_related('bird', 'study_area'). \
-                   all()
+        queryset = BandCombo.objects.select_related('bird', 'study_area').all()
 
         queryset = self.get_serializer_class().setup_eager_loading(queryset)
         return queryset

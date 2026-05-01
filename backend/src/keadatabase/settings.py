@@ -45,16 +45,10 @@ if env.bool('IS_PRODUCTION', False):
 
 # Specify geo libraries (if necessary)
 if env('GEO_LIBRARIES_PATH', False):
-    GEOS_LIBRARY_PATH = "{}/lib/libgeos_c.so".format(
-        env.str('GEO_LIBRARIES_PATH')
-    )
-    GDAL_LIBRARY_PATH = "{}/lib/libgdal.so".format(
-        env.str('GEO_LIBRARIES_PATH')
-    )
-    PROJ4_LIBRARY_PATH = "{}/lib/libproj.so".format(
-        env.str('GEO_LIBRARIES_PATH')
-    )
-    GDAL_DATA = "{}/share/gdal/".format(env.str('GEO_LIBRARIES_PATH'))
+    GEOS_LIBRARY_PATH = '{}/lib/libgeos_c.so'.format(env.str('GEO_LIBRARIES_PATH'))
+    GDAL_LIBRARY_PATH = '{}/lib/libgdal.so'.format(env.str('GEO_LIBRARIES_PATH'))
+    PROJ4_LIBRARY_PATH = '{}/lib/libproj.so'.format(env.str('GEO_LIBRARIES_PATH'))
+    GDAL_DATA = '{}/share/gdal/'.format(env.str('GEO_LIBRARIES_PATH'))
 
 # Application definition
 
@@ -111,16 +105,14 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [],
         'APP_DIRS': True,
-        'OPTIONS':
-            {
-                'context_processors':
-                    [
-                        'django.template.context_processors.debug',
-                        'django.template.context_processors.request',
-                        'django.contrib.auth.context_processors.auth',
-                        'django.contrib.messages.context_processors.messages',
-                    ],
-            },
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        },
     },
 ]
 
@@ -130,11 +122,9 @@ WSGI_APPLICATION = 'keadatabase.wsgi.application'
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
 DATABASES = {
-    'default':
-        env.dj_db_url(
-            'DATABASE_URL',
-            default='postgres://postgres:@localhost:5432/keadatabase'
-        ),
+    'default': env.dj_db_url(
+        'DATABASE_URL', default='postgres://postgres:@localhost:5432/keadatabase'
+    ),
 }
 
 DATABASES['default']['CONN_MAX_AGE'] = 600
@@ -147,20 +137,16 @@ DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME':
-            'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
     },
     {
-        'NAME':
-            'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
     },
     {
-        'NAME':
-            'django.contrib.auth.password_validation.CommonPasswordValidator',
+        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
     },
     {
-        'NAME':
-            'django.contrib.auth.password_validation.NumericPasswordValidator',
+        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
 
@@ -198,38 +184,32 @@ MEDIA_URL = '/media/'
 # Django REST Framework
 
 REST_FRAMEWORK = {
-    'DEFAULT_RENDERER_CLASSES':
-        (
-            'rest_framework.renderers.JSONRenderer',
-            'rest_framework.renderers.BrowsableAPIRenderer',
-            'rest_framework_csv.renderers.PaginatedCSVRenderer',
-        ),
-    'DEFAULT_PERMISSION_CLASSES':
-        ('rest_framework.permissions.IsAuthenticatedOrReadOnly', ),
-    'DEFAULT_FILTER_BACKENDS':
-        (
-            'django_filters.rest_framework.DjangoFilterBackend',
-            'rest_framework.filters.OrderingFilter',
-            'rest_framework.filters.SearchFilter',
-        ),
-    'DEFAULT_THROTTLE_CLASSES':
-        ('rest_framework.throttling.ScopedRateThrottle', ),
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer',
+        'rest_framework_csv.renderers.PaginatedCSVRenderer',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+    ),
+    'DEFAULT_FILTER_BACKENDS': (
+        'django_filters.rest_framework.DjangoFilterBackend',
+        'rest_framework.filters.OrderingFilter',
+        'rest_framework.filters.SearchFilter',
+    ),
+    'DEFAULT_THROTTLE_CLASSES': ('rest_framework.throttling.ScopedRateThrottle',),
     'DEFAULT_THROTTLE_RATES': {
         'report': '60/hour',
         'auth': '60/hour',
     },
-    'DEFAULT_PAGINATION_CLASS':
-        'rest_framework.pagination.PageNumberPagination',
-    'DEFAULT_AUTHENTICATION_CLASSES':
-        (
-            'rest_framework.authentication.SessionAuthentication',
-            'rest_framework_simplejwt.authentication.JWTAuthentication',
-            'rest_framework.authentication.TokenAuthentication',
-        ),
-    'EXCEPTION_HANDLER':
-        'keadatabase.exceptions.exception_handler',
-    'PAGE_SIZE':
-        20,
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+    ),
+    'EXCEPTION_HANDLER': 'keadatabase.exceptions.exception_handler',
+    'PAGE_SIZE': 20,
 }
 
 # CORS
@@ -255,9 +235,9 @@ if not DEBUG:
 
 # Custom admin site header
 
-ADMIN_SITE_HEADER = "Kea Database"
-ADMIN_SITE_TITLE = "Kea Database"
-ADMIN_INDEX_TITLE = "Admin"
+ADMIN_SITE_HEADER = 'Kea Database'
+ADMIN_SITE_TITLE = 'Kea Database'
+ADMIN_INDEX_TITLE = 'Admin'
 
 # Production security
 
@@ -293,12 +273,11 @@ VERSATILEIMAGEFIELD_SETTINGS = {
 }
 
 VERSATILEIMAGEFIELD_RENDITION_KEY_SETS = {
-    'profile_picture':
-        [
-            ('full_size', 'url'),
-            ('thumbnail', 'crop__350x250'),
-            ('large', 'crop__500x500'),
-        ],
+    'profile_picture': [
+        ('full_size', 'url'),
+        ('thumbnail', 'crop__350x250'),
+        ('large', 'crop__500x500'),
+    ],
     'sighting_image': [
         ('full_size', 'url'),
         ('resized', 'crop__640x480'),
@@ -320,14 +299,12 @@ LOGGING = {
             'class': 'logging.StreamHandler',
         },
     },
-    'loggers':
-        {
-            'django':
-                {
-                    'handlers': ['console'],
-                    'level': env.str('DJANGO_LOG_LEVEL', 'ERROR'),
-                },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'level': env.str('DJANGO_LOG_LEVEL', 'ERROR'),
         },
+    },
 }
 
 # Leaflet

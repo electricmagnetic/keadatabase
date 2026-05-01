@@ -29,7 +29,7 @@ COLOURS = [
 
 
 def get_StudyArea(row):
-    """ Returns a StudyArea if it matches the name obtained from the row, False otherwise """
+    """Returns a StudyArea if it matches the name obtained from the row, False otherwise"""
 
     try:
         # Checks last word  (e.g. 'Rotoiti')
@@ -50,9 +50,7 @@ def get_StudyArea(row):
     try:
         # Checks second-to-last word (e.g. 'Waimakariri 2')
         second_last_word_location = ' '.join(row['TagID'].split()[-2:-1])
-        study_area = StudyArea.objects.get(
-            slug=slugify(second_last_word_location)
-        )
+        study_area = StudyArea.objects.get(slug=slugify(second_last_word_location))
         return study_area
     except StudyArea.DoesNotExist:
         pass
@@ -61,7 +59,7 @@ def get_StudyArea(row):
 
 
 def get_Bird(row):
-    """ Returns a Bird if it matches the name obtained from the row, False otherwise """
+    """Returns a Bird if it matches the name obtained from the row, False otherwise"""
     try:
         bird = Bird.objects.get(slug=slugify(row['Kea ID']))
         return bird
@@ -70,7 +68,7 @@ def get_Bird(row):
 
 
 def is_valid_BandCombo(row):
-    """ Returns True if given row appears to be a BandCombo, False otherwise """
+    """Returns True if given row appears to be a BandCombo, False otherwise"""
 
     # must have valid action
     valid_actions = [
@@ -110,21 +108,20 @@ def is_valid_BandCombo(row):
 
 
 def standardise_BandCombo(row, bird, study_area):
-    """ Takes a given row, bird and study_area and returns a standardised object """
+    """Takes a given row, bird and study_area and returns a standardised object"""
 
     standardised_bc = {
-        'bird':
-            bird,
-        'study_area':
-            study_area,
-        'date_deployed':
-            datetime.datetime.strptime(row['Date'], "%Y-%m-%d %H:%M:%S").date(),
+        'bird': bird,
+        'study_area': study_area,
+        'date_deployed': datetime.datetime.strptime(
+            row['Date'], '%Y-%m-%d %H:%M:%S'
+        ).date(),
     }
 
     raw_bc_str = row['TagID']
 
     # [common] remove identified StudyArea from raw string
-    raw_bc_str = raw_bc_str.replace(str(study_area), "")
+    raw_bc_str = raw_bc_str.replace(str(study_area), '')
 
     # [common] determine style (new/old) - looks for 'on' as a standalone word
     if re.search(r'\bon\b', raw_bc_str.lower()) is not None:
@@ -162,7 +159,7 @@ def standardise_BandCombo(row, bird, study_area):
     raw_bc_str = raw_bc_str.replace('/', ' / ')
 
     # [common] ensure whitespace is standardised to single spaces
-    raw_bc_str = " ".join(raw_bc_str.split())
+    raw_bc_str = ' '.join(raw_bc_str.split())
 
     # [common] identify colours (now whole words only so lightblue != blue)
     standardised_bc['colours'] = []
@@ -179,10 +176,12 @@ def standardise_BandCombo(row, bird, study_area):
         for raw_symbol in list(raw_symbols):
             # list(...) used so as to not delete items from currently iterating list
             # Remove any colours, 'on', '/' and '-'
-            if raw_symbol.lower() in COLOURS or \
-               raw_symbol.lower() == 'on' or \
-               raw_symbol.lower() == '/' or \
-               raw_symbol.lower() == '-':
+            if (
+                raw_symbol.lower() in COLOURS
+                or raw_symbol.lower() == 'on'
+                or raw_symbol.lower() == '/'
+                or raw_symbol.lower() == '-'
+            ):
                 raw_symbols.remove(raw_symbol)
 
         # remove duplicates (e.g ['A', 'A'])
@@ -209,15 +208,13 @@ def standardise_BandCombo(row, bird, study_area):
 
 
 def synchronise_BandCombo(self, transmitters_csv):
-    """ Imports Band objects from data/Transmitter actions.csv """
+    """Imports Band objects from data/Transmitter actions.csv"""
 
     if hasattr(self, 'stdout'):
-        self.stdout.write(self.style.MIGRATE_LABEL("\n## Band\n\n"))
-        self.stdout.write("### Changes\n\n")
+        self.stdout.write(self.style.MIGRATE_LABEL('\n## Band\n\n'))
+        self.stdout.write('### Changes\n\n')
 
-    transmitters_reader = csv.DictReader(
-        transmitters_csv, delimiter=',', quotechar='"'
-    )
+    transmitters_reader = csv.DictReader(transmitters_csv, delimiter=',', quotechar='"')
 
     created_count = 0
     checked_count = 0
@@ -247,8 +244,8 @@ def synchronise_BandCombo(self, transmitters_csv):
                 if getattr(band_combo, key) != value:
                     has_changed = True
                     self.stdout.write(
-                        "* %s: %s changed from %s to %s" %
-                        (band_combo.bird, key, getattr(band_combo, key), value)
+                        '* %s: %s changed from %s to %s'
+                        % (band_combo.bird, key, getattr(band_combo, key), value)
                     )
                     setattr(band_combo, key, value)
 
@@ -267,7 +264,7 @@ def synchronise_BandCombo(self, transmitters_csv):
             created_count += 1
 
     if hasattr(self, 'stdout'):
-        self.stdout.write("\n### Results\n\n")
-        self.stdout.write("* Checked: %d" % checked_count)
-        self.stdout.write("* Modified: %d" % modified_count)
-        self.stdout.write("* Created: %d" % created_count)
+        self.stdout.write('\n### Results\n\n')
+        self.stdout.write('* Checked: %d' % checked_count)
+        self.stdout.write('* Modified: %d' % modified_count)
+        self.stdout.write('* Created: %d' % created_count)

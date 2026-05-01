@@ -27,7 +27,7 @@ class BirdFilter(django_filters.FilterSet):
         field_name='bird_extended__is_extended',
         lookup_expr='isnull',
         exclude=True,
-        label='Is extended'
+        label='Is extended',
     )
     is_featured = django_filters.BooleanFilter(
         field_name='bird_extended__is_featured', label='Is featured'
@@ -58,12 +58,14 @@ class BirdFilter(django_filters.FilterSet):
 
 
 class BirdViewSet(viewsets.ModelViewSet):
-    queryset = Bird.objects. \
-               select_related('bird_extended', 'band_combo', 'study_area',). \
-               all()
+    queryset = Bird.objects.select_related(
+        'bird_extended',
+        'band_combo',
+        'study_area',
+    ).all()
     serializer_class = BirdSerializer
     pagination_class = BirdPagination
-    search_fields = ('name', )
+    search_fields = ('name',)
     ordering_fields = (
         'name',
         'status',

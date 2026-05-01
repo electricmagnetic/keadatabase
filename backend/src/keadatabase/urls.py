@@ -13,6 +13,7 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
+
 from django.conf.urls import url, include
 from django.contrib import admin
 from django.conf import settings
@@ -35,9 +36,9 @@ urlpatterns = [
     url(
         r'^robots.txt',
         lambda x: HttpResponse(
-            "user-agent: *\nAllow: /$\nDisallow: /", content_type="text/plain"
+            'user-agent: *\nAllow: /$\nDisallow: /', content_type='text/plain'
         ),
-        name="robots_file"
+        name='robots_file',
     ),
     url(r'^admin/', admin.site.urls),
     url(r'^', include(router.urls)),
@@ -47,6 +48,7 @@ urlpatterns = [
 
 if settings.DEBUG:
     import debug_toolbar
+
     urlpatterns = [
         url(r'^__debug__/', include(debug_toolbar.urls)),
     ] + urlpatterns
@@ -63,5 +65,5 @@ from rest_framework_simplejwt.views import (
 urlpatterns = [
     url(r'^jwt/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     url(r'^jwt/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    url(r'^token/', ThrottledObtainAuthToken.as_view())
+    url(r'^token/', ThrottledObtainAuthToken.as_view()),
 ] + urlpatterns

@@ -10,7 +10,7 @@ class Command(management.BaseCommand):
     help = 'Allows the import of kea survey grid tiles'
 
     def import_geometries(self):
-        """ Does the import of geometries """
+        """Does the import of geometries"""
 
         GridTile_polygon_mapping = {'id': 'id', 'polygon': 'POLYGON'}
         GridTile_min_mapping = {'id': 'id', 'min': 'POINT'}
@@ -65,7 +65,7 @@ class Command(management.BaseCommand):
         lm_centroid.save(strict=True, verbose=False)
 
     def import_neighbours(self):
-        """ Import neighbours information from a standard CSV file """
+        """Import neighbours information from a standard CSV file"""
 
         GridTile_neighbours_csv = '../data/GridTiles/neighbours.csv'
 
@@ -77,7 +77,8 @@ class Command(management.BaseCommand):
             # Obtain fields (tile has to exclude self from neighbours)
             id = row['grid_id']
             neighbours = [
-                neighbour for neighbour in row['neighbours'].split(',')
+                neighbour
+                for neighbour in row['neighbours'].split(',')
                 if not (id in neighbour)
             ]
 
@@ -97,12 +98,12 @@ class Command(management.BaseCommand):
             grid_tile.save()
 
     def check_current_status(self):
-        """ Outputs information about objects currently in database """
+        """Outputs information about objects currently in database"""
         self.stdout.write(self.style.MIGRATE_HEADING('Current status:'))
         self.stdout.write('GridTile: %d' % GridTile.objects.count())
 
     def do_import(self):
-        """ Imports objects into database """
+        """Imports objects into database"""
         self.stdout.write(self.style.MIGRATE_HEADING('\nBeginning import:'))
 
         self.import_geometries()
@@ -113,8 +114,8 @@ class Command(management.BaseCommand):
     def handle(self, *args, **options):
         self.check_current_status()
 
-        confirm = input('\nReady to import? Type \'yes\' to continue: ')
-        #confirm = 'yes' # for debugging
+        confirm = input("\nReady to import? Type 'yes' to continue: ")
+        # confirm = 'yes' # for debugging
 
         if confirm == 'yes':
             self.do_import()

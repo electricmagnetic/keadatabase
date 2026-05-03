@@ -9,13 +9,13 @@ type FetcherReturnType<Schema extends z.ZodType> =
       // schema error
       success: false;
       error: unknown;
-      errorType: "schema";
+      errorType: "SCHEMA";
     }
   | {
       // fetch error
       success: false;
       status: number;
-      errorType: "fetch";
+      errorType: "FETCH" | "NOT_FOUND";
     };
 
 /**
@@ -34,13 +34,17 @@ export default async function fetcher<Schema extends z.ZodType>(
   const response = await fetch(url, init);
 
   if (!response.ok)
-    return { success: false, status: response.status, errorType: "fetch" };
+    return {
+      success: false,
+      status: response.status,
+      errorType: response.status === 404 ? "NOT_FOUND" : "FETCH",
+    };
 
   try {
     const data = schema.parse(await response.json());
     return { success: true, data };
   } catch (error) {
     console.error(error);
-    return { success: false, error, errorType: "schema" };
+    return { success: false, error, errorType: "SCHEMA" };
   }
 }

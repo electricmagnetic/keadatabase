@@ -5,7 +5,7 @@
     "dev": "turbo dev",
     "lint": "turbo lint",
     "clean": "turbo clean",
-    "format": "prettier --write \"**/*.{ts,tsx,md,js,jsx}\""
+    "format": "prettier --write \"**/*.{ts,tsx,md,js,jsx}\" \"!backend/**\""
   },
   "devDependencies": {
     "eslint": "8.44.0",

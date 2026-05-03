@@ -2,7 +2,7 @@
   "extends": ["//"],
   "tasks": {
     "build": {
-      "env": ["NEXT_PUBLIC_API_BASE"]
+      "env": ["NEXT_PUBLIC_API_BASE", "NEXT_PUBLIC_WORDPRESS_BASE"]
     }
   }
 }

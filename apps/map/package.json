@@ -19,10 +19,10 @@
     "bootstrap": "^5.3.7",
     "formik": "^2.4.6",
     "leaflet": "^1.9.4",
-    "next": "15.5.15",
+    "next": "16.2.6",
     "qs": "^6.14.0",
-    "react": "19.2.5",
-    "react-dom": "19.2.5",
+    "react": "19.2.6",
+    "react-dom": "19.2.6",
     "react-leaflet": "^5.0.0",
     "swr": "^2.3.5"
   },
@@ -35,7 +35,7 @@
     "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
     "eslint": "8.57.0",
-    "eslint-config-next": "15.5.15",
+    "eslint-config-next": "16.2.6",
     "prettier": "^3.2.5",
     "typescript": "5.3.3"
   },

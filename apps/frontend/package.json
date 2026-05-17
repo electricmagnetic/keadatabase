@@ -64,6 +64,7 @@
     ]
   },
   "devDependencies": {
+    "@types/node": "^25.8.0",
     "eslint": "8.44.0",
     "sass": "^1.66.1"
   }

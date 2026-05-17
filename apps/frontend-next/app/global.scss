@@ -15,7 +15,8 @@ $custom-brown-lightest: #f7f4ee;
   --custom-brown-lightest: #f7f4ee;
 }
 
-$font-family-serif: var(--font-playfairDisplay), Georgia, "Times New Roman", Times, serif;
+$font-family-serif:
+  var(--font-playfairDisplay), Georgia, "Times New Roman", Times, serif;
 
 $footer-outer: lighten($custom-brown-faded, 5%);
 $footer-inner: $custom-brown-faded;
@@ -65,7 +66,8 @@ $card-border-radius: 0;
 /* Custom global elements */
 
 $navbar-brand-img-height: 2.5rem;
-$navbar-height: ($navbar-brand-padding-y * 2) + ($navbar-padding-y * 2) + $navbar-brand-img-height;
+$navbar-height: ($navbar-brand-padding-y * 2) + ($navbar-padding-y * 2) +
+  $navbar-brand-img-height;
 
 // Parent elements
 body {
@@ -169,7 +171,7 @@ footer {
 
   .split-scroll {
     .container {
-      padding: 0 var(--bs-gutter-x/2);
+      padding: 0 calc(var(--bs-gutter-x) / 2);
     }
   }
 

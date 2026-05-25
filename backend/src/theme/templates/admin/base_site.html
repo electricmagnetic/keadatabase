@@ -10,5 +10,12 @@
 {% block nav-global %}{% endblock %}
 
 {% block extrahead %}
+  {{ block.super }}
   <link rel="shortcut icon" href="{% static 'favicon.ico' %}" />
+{% endblock %}
+
+{% block extrastyle %}
+  {{ block.super }}
+  {# Colour overrides via CSS variables #}
+  <link rel="stylesheet" type="text/css" href="{% static 'admin/css/keadatabase_admin.css' %}" />
 {% endblock %}

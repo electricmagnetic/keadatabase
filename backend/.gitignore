@@ -6,6 +6,7 @@
 .DS_Store
 
 /static/
+src/static/
 
 .vagrant/
 src/media/

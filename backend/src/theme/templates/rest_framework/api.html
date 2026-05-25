@@ -13,6 +13,9 @@
 
 {% block bootstrap_theme %}
   <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" type="text/css">
+  <style>
+    .request-info, .response-info { clear: both; }
+  </style>
 {% endblock %}
 
 {% block branding %}
@@ -21,14 +24,15 @@
   </a>
 {% endblock %}
 
-{% block description %}
-<div class="alert alert-warning" role="alert">
-  <p>
-    The rights to the data on the Kea Database belong to the Kea Sightings Project team, the providers of this service.<br />
-    Please feel free to explore the API, but <a href="https://keadatabase.nz/about">contact us</a> if you wish to use this data elsewhere (e.g. for formal research).
-  </p>
-  <p>
-    Commercial use of the website, API and data is prohibited.
-  </p>
-</div>
+{% block breadcrumbs %}
+  {{ block.super }}
+  <div class="alert alert-warning" role="alert">
+    <p>
+      The rights to the data on the Kea Database belong to the Kea Sightings Project team, the providers of this service.<br />
+      Please feel free to explore the API, but <a href="https://keadatabase.nz/about">contact us</a> if you wish to use this data elsewhere (e.g. for formal research).
+    </p>
+    <p>
+      Commercial use of the website, API and data is prohibited.
+    </p>
+  </div>
 {% endblock %}

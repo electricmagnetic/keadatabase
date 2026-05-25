@@ -1,15 +1,15 @@
 import io
 
-from django.core import management
 from django.conf import settings
+from django.core import management
 from django.core.files.storage import default_storage
 
-from synchronise.locations import synchronise_StudyArea
-from synchronise.birds import synchronise_Bird
-from synchronise.bands import synchronise_BandCombo
-from locations.models import StudyArea
-from birds.models import Bird
 from bands.models import BandCombo
+from birds.models import Bird
+from locations.models import StudyArea
+from synchronise.bands import synchronise_BandCombo
+from synchronise.birds import synchronise_Bird
+from synchronise.locations import synchronise_StudyArea
 
 
 class Command(management.BaseCommand):
@@ -26,7 +26,8 @@ class Command(management.BaseCommand):
         """Imports objects into database"""
         self.stdout.write(self.style.MIGRATE_HEADING('\n# Beginning import\n'))
 
-        if settings.DEFAULT_FILE_STORAGE == 'storages.backends.s3boto3.S3Boto3Storage':
+        default_storage_backend = settings.STORAGES['default']['BACKEND']
+        if default_storage_backend == 'storages.backends.s3boto3.S3Boto3Storage':
             with (
                 default_storage.open('data/tStudyAreas.csv', 'r') as areas_csv_bin,
                 default_storage.open('data/Kea.csv', 'r') as birds_csv_bin,
@@ -59,7 +60,9 @@ class Command(management.BaseCommand):
     def handle(self, *args, **options):
         self.check_current_status()
 
-        self.stdout.write('\nUsing input data from: %s' % settings.DEFAULT_FILE_STORAGE)
+        self.stdout.write(
+            '\nUsing input data from: %s' % settings.STORAGES['default']['BACKEND']
+        )
 
         confirm = input("\nReady to import? Type 'yes' to continue: ")
         # confirm = 'yes' # for debugging

@@ -10,8 +10,9 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
-from environs import Env
 import os
+
+from environs import Env
 
 # Read environment variables, .env file
 env = Env()
@@ -159,21 +160,14 @@ TIME_ZONE = 'Pacific/Auckland'
 
 USE_I18N = True
 
-USE_L10N = False
-
 USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.11/howto/static-files/
+# https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 STATIC_URL = '/static/'
-
-# Simplified static file serving.
-# https://warehouse.python.org/project/whitenoise/
-
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Media files
 
@@ -181,12 +175,29 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 MEDIA_URL = '/media/'
 
+# Storage backends
+# https://docs.djangoproject.com/en/4.2/ref/settings/#storages
+
+# - ``staticfiles`` uses a subclass of whitenoise's manifest storage with
+#   ``manifest_strict = False`` so that third-party CSS files do not
+#   abort post-processing when they reference assets that cannot be resolved
+#   at collect time. See ``keadatabase.storage`` for the rationale.
+
+STORAGES = {
+    'default': {
+        'BACKEND': 'django.core.files.storage.FileSystemStorage',
+    },
+    'staticfiles': {
+        'BACKEND': 'keadatabase.storage.NonStrictCompressedManifestStaticFilesStorage',
+    },
+}
+
 # Django REST Framework
 
 REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': (
         'rest_framework.renderers.JSONRenderer',
-        'rest_framework.renderers.BrowsableAPIRenderer',
+        'keadatabase.renderers.BrowsableAPIRendererWithoutForms',
         'rest_framework_csv.renderers.PaginatedCSVRenderer',
     ),
     'DEFAULT_PERMISSION_CLASSES': (
@@ -256,7 +267,7 @@ if not DEBUG:
 # Amazon S3 storage
 
 if not DEBUG:
-    DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+    STORAGES['default']['BACKEND'] = 'storages.backends.s3boto3.S3Boto3Storage'
     AWS_ACCESS_KEY_ID = env.str('AWS_ACCESS_KEY_ID')
     AWS_SECRET_ACCESS_KEY = env.str('AWS_SECRET_ACCESS_KEY')
     AWS_STORAGE_BUCKET_NAME = env.str('AWS_STORAGE_BUCKET_NAME')

@@ -22,6 +22,8 @@
     "babel-plugin-react-compiler": "1.0.0",
     "eslint": "^9",
     "eslint-config-next": "16.2.6",
+    "postcss-discard-comments": "^7.0.3",
+    "postcss-nesting": "^13.0.1",
     "typescript": "^5"
   }
 }

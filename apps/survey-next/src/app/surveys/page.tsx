@@ -3,40 +3,87 @@ import Link from "next/link";
 
 import Page from "@/app/_components/ui/Page";
 import Error from "@/app/_components/ui/Error";
+import GridTileCards from "@/app/_components/grid/GridTileCards";
 
-import { getSurveys } from "./actions";
+import { getSurveys, getSurveyHours } from "./actions";
 import DateTime from "shared/ui/DateTime";
+import type { z } from "zod";
+import type { SurveySchema } from "./schema";
 
 export const metadata: Metadata = {
   title: "Browse Surveys",
 };
 
+// Helper function to get unique grid tiles from survey hours
+function getUniqueGridTiles(hours: z.infer<typeof SurveySchema>["hours"]) {
+  const gridTiles = hours
+    .map((hour) => hour.grid_tile)
+    .filter((tile): tile is string => tile !== null);
+  return [...new Set(gridTiles)];
+}
+
 export default async function SurveysPage() {
-  const surveysFetch = await getSurveys();
+  const [surveysFetch, surveyHoursFetch] = await Promise.all([
+    getSurveys(),
+    getSurveyHours(),
+  ]);
 
   if (!surveysFetch.success) return <Error message="Error fetching surveys" />; // TODO replace with error
 
   const { results: surveys } = surveysFetch.data;
 
+  // Get unique grid tiles from recent survey hours
+  const recentGridTiles = surveyHoursFetch.success
+    ? getUniqueGridTiles(surveyHoursFetch.data.results).slice(0, 8)
+    : [];
+
   return (
     <Page.Container>
       <Page.Heading>Browse Surveys</Page.Heading>
       <Page.Section>
-        <ul>
-          {surveys.map((survey) => (
-            <li key={survey.id}>
-              <Link href={`/surveys/${survey.id}`}>#{survey.id}</Link>
-              <dl>
-                <dt>Date/Time</dt>
-                <dd>
+        <h2>
+          Recent Surveys <small>(last {surveys.length})</small>
+        </h2>
+        <div className="data-table data-table--surveys">
+          {surveys.map((survey) => {
+            const gridTileIds = getUniqueGridTiles(survey.hours);
+
+            return (
+              <div key={survey.id} className="data-table__row">
+                <div className="field-id">
+                  <Link href={`/surveys/${survey.id}`}>
+                    <strong>#{survey.id}</strong>
+                  </Link>
+                </div>
+                <div className="field-date">
+                  <i className="fa-fw fas fa-calendar-alt"></i>
                   <DateTime dateTime={survey.date} format="date" />
-                </dd>
-                <dt>Observer</dt>
-                <dd>{survey.observer}</dd>
-              </dl>
-            </li>
-          ))}
-        </ul>
+                </div>
+                <div className="field-observer">
+                  <i className="fa-fw fas fa-user"></i>
+                  {survey.observer}
+                </div>
+                <div className="field-gridTile">
+                  <i className="fa-fw fas fa-map"></i>
+                  {gridTileIds.slice(0, 3).map((gridTileId) => (
+                    <Link href={`/grid/${gridTileId}`} key={gridTileId}>
+                      {gridTileId}
+                    </Link>
+                  ))}
+                  {gridTileIds.length > 3 && <span className="more">…</span>}
+                </div>
+                <div>
+                  <i className="fa-fw fas fa-info-circle"></i>
+                  <Link href={`/surveys/${survey.id}`}>View</Link>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </Page.Section>
+      <Page.Section>
+        <h2>Recently Surveyed Tiles</h2>
+        <GridTileCards gridTileIds={recentGridTiles} />
       </Page.Section>
     </Page.Container>
   );

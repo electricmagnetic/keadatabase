@@ -1,17 +1,24 @@
 "use server";
 
 import fetcher from "shared/api/fetcher";
+import { getApiUrl } from "@/app/_components/api/url";
 
-import { SurveyApiListResponseSchema, SurveySchema } from "./schema";
+import { SurveyApiListResponseSchema, SurveySchema, SurveyHourApiListResponseSchema } from "./schema";
 
 export const getSurveys = async () =>
   await fetcher(
-    `${process.env.NEXT_PUBLIC_API_BASE}/surveys/surveys/`,
+    getApiUrl("/surveys/surveys/?page_size=50"),
     SurveyApiListResponseSchema,
   );
 
 export const getSurvey = async (id: number) =>
   await fetcher(
-    `${process.env.NEXT_PUBLIC_API_BASE}/surveys/surveys/${id}`,
+    getApiUrl(`/surveys/surveys/${id}`),
     SurveySchema,
+  );
+
+export const getSurveyHours = async () =>
+  await fetcher(
+    getApiUrl("/surveys/hours/?page_size=120"),
+    SurveyHourApiListResponseSchema,
   );

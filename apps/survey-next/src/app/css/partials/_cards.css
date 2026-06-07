@@ -1,0 +1,26 @@
+.cards {
+  --min-width: 175px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(var(--min-width), 1fr));
+  gap: 1rem;
+}
+
+.card {
+  a {
+    display: block;
+    border: 1px solid var(--border-color);
+    background-color: var(--white);
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+
+  figcaption {
+    padding: 1rem;
+  }
+}
+
+.page__home .cards {
+  --min-width: 120px;
+}

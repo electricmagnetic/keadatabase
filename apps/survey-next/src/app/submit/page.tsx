@@ -1,16 +1,17 @@
 import { type Metadata } from "next";
-
+import { Step1Form } from "./Step1Form";
 import Page from "@/app/_components/ui/Page";
 
 export const metadata: Metadata = {
-  title: "Submit Survey",
+  title: "Submit Survey | Kea Survey",
+  description: "Submit your kea survey observations.",
 };
 
 export default function SubmitPage() {
   return (
     <Page.Container>
       <Page.Heading>Submit Survey</Page.Heading>
-      <Page.Section>TODO</Page.Section>
+      <Step1Form />
     </Page.Container>
   );
 }

@@ -1,0 +1,36 @@
+.data-table {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+
+  &__row {
+    border: 1px solid var(--border-color);
+    padding: 0.9rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+
+    > div {
+      padding-inline: 0.5rem;
+    }
+
+    @media (width < 700px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &--surveys .data-table__row {
+    grid-template-columns: 9% 16% 25% 34% 16%;
+
+    @media (width < 700px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  i {
+    margin-right: 1rem;
+  }
+
+  a + a {
+    margin-left: 0.5rem;
+  }
+}

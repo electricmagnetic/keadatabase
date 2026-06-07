@@ -1,0 +1,71 @@
+.form {
+  fieldset {
+    border: none;
+    padding: 0;
+  }
+
+  fieldset + fieldset {
+    margin-top: 2rem;
+  }
+
+  legend {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  &__group {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+
+    @media (width < 660px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &__label {
+    font-weight: 700;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  &__control {
+    background-clip: padding-box;
+    background-color: var(--white);
+    border: 1px solid #ced4da;
+    border-radius: 0;
+    color: #495057;
+    display: block;
+    font-size: 1rem;
+    font-weight: 400;
+    height: calc(1.5em + 0.75rem + 2px);
+    line-height: 1.5;
+    padding: 0.375rem 0.75rem;
+    transition:
+      border-color 0.15s ease-in-out,
+      box-shadow 0.15s ease-in-out;
+    width: 100%;
+
+    &:focus {
+      border-color: #fb9c6a;
+      box-shadow: 0 0 0 0.2rem rgba(223, 82, 6, 0.25);
+      color: #495057;
+      outline: 0;
+    }
+
+    &.is-invalid {
+      border-color: var(--red);
+    }
+  }
+
+  small {
+    font-size: 1rem;
+    display: block;
+    margin-block: 0.25rem;
+    color: #6c757d;
+  }
+
+  &--note {
+    color: var(--red);
+  }
+}

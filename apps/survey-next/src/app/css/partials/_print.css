@@ -1,0 +1,81 @@
+/**
+ * Print Styles for Grid Map
+ */
+
+@media print {
+  /* Hide navigation and non-essential elements */
+  header,
+  footer,
+  .d-print-none {
+    display: none !important;
+  }
+
+  /* Show print-specific elements */
+  .d-print-block {
+    display: block !important;
+  }
+
+  /* Ensure proper page breaks */
+  .grid-tile-card,
+  .card {
+    page-break-inside: avoid;
+  }
+
+  /* Remove backgrounds to save ink */
+  body {
+    background: white;
+  }
+
+  .bg-light,
+  .bg-faded {
+    background: white !important;
+  }
+
+  /* Ensure text is black for readability */
+  body,
+  p,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    color: black !important;
+  }
+
+  /* Remove box shadows */
+  .card,
+  .btn {
+    box-shadow: none !important;
+  }
+
+  /* Print links with their URLs */
+  a[href]:after {
+    content: " (" attr(href) ")";
+    font-size: 0.8em;
+  }
+
+  /* Don't show URLs for navigation links */
+  nav a[href]:after,
+  a[href^="#"]:after {
+    content: "";
+  }
+
+  /* Ensure images fit on page */
+  img {
+    max-width: 100% !important;
+    page-break-inside: avoid;
+  }
+
+  /* Optimize card layout for printing */
+  .card {
+    border: 1px solid #000 !important;
+    margin-bottom: 1rem !important;
+  }
+
+  /* Hide interactive elements */
+  button,
+  .btn {
+    display: none !important;
+  }
+}

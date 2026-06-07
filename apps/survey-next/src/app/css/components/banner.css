@@ -1,0 +1,29 @@
+.banner {
+  min-height: 575px;
+  background: url("/images/banner.jpg") no-repeat center 15% / cover;
+  display: flex;
+
+  .holder {
+    margin-block: auto;
+  }
+
+  &__buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+
+    & + .banner__buttons {
+      margin-top: 0.5rem;
+    }
+  }
+
+  &__title {
+    display: inline-block;
+    background-color: rgba(52, 58, 64, 0.85);
+    color: #fff;
+    padding: 1rem;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    line-height: 1;
+    margin-bottom: 1.5rem;
+  }
+}

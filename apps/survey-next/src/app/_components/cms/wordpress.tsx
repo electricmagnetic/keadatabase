@@ -11,14 +11,12 @@ if (!WORDPRESS_BASE) {
   throw new Error(MISSING_WORDPRESS_BASE_ERROR_MESSAGE);
 }
 
-/** WordPressPage pre-configured with base URL specified */
 export function WordPressPage(
   props: Omit<React.ComponentProps<typeof BaseWordPressPage>, "baseUrl">,
 ) {
   return <BaseWordPressPage {...props} baseUrl={WORDPRESS_BASE} />;
 }
 
-/** WordPressPosts pre-configured with base URL specified */
 export function WordPressPosts(
   props: Omit<React.ComponentProps<typeof BaseWordPressPosts>, "baseUrl">,
 ) {

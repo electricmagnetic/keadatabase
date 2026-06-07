@@ -1,8 +1,5 @@
 import { z } from "zod";
 
-/**
- * Standard paginated Django REST Framework API response
- */
 export const ApiListResponseSchema = z.object({
   count: z.number(),
   next: z.url().nullable(),

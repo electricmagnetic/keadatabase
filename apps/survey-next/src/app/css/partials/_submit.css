@@ -1,0 +1,45 @@
+.submit {
+  &__bar {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: hsla(44, 34%, 85%, 0.9);
+    border-top: 1px solid #dfd4ba;
+    padding: 1rem;
+    z-index: 20;
+
+    .holder {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: 1fr 25%;
+    gap: 2rem;
+    padding-right: 2rem;
+    padding-bottom: 2rem;
+
+    @media (width < 995px) {
+      grid-template-columns: 1fr;
+      padding-right: 0;
+    }
+  }
+
+  &__tiles {
+    border: 1px solid var(--border-color);
+    padding: 1rem;
+    background-color: hsla(44, 34%, 85%, 0.5);
+
+    @media (width < 995px) {
+      margin-inline: 2rem;
+    }
+
+    &--offset {
+      margin-top: 2rem;
+    }
+  }
+}

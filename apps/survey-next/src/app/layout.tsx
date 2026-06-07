@@ -1,15 +1,24 @@
 import type { Metadata } from "next";
-import { IBM_Plex_Sans } from "next/font/google";
+import { IBM_Plex_Sans, Zilla_Slab } from "next/font/google";
 
 import { Header } from "./_components/layout/Header";
 import { Footer } from "./_components/layout/Footer";
+import { BodyWithClasses } from "./_components/layout/BodyWithClasses";
+import { HomePageBanner } from "./_components/layout/HomePageBanner";
 
+import "@fortawesome/fontawesome-free/css/all.min.css";
 import "./css/main.css";
 
 const ibmPlexSans = IBM_Plex_Sans({
   variable: "--font-ibm-plex-sans",
   subsets: ["latin", "latin-ext"],
   weight: ["400", "500", "700"],
+});
+
+const zillaSlab = Zilla_Slab({
+  variable: "--font-zilla-slab",
+  subsets: ["latin", "latin-ext"],
+  weight: ["500"],
 });
 
 export const metadata: Metadata = {
@@ -36,12 +45,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${ibmPlexSans.variable}`}>
-      <body>
+    <html lang="en" className={`${ibmPlexSans.variable} ${zillaSlab.variable}`}>
+      <BodyWithClasses>
         <Header />
-        {children}
+        <HomePageBanner />
+        <main className="page">
+          <div className="holder holder--page">{children}</div>
+        </main>
         <Footer />
-      </body>
+      </BodyWithClasses>
     </html>
   );
 }

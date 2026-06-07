@@ -1,14 +1,30 @@
 :root {
   --orange: #df5206;
+  --orange-mid: #ba4405;
   --orange-dark: #953704;
   --black: #212529;
+  --steel-blue: #343a40;
+  --white: #ffffff;
+  --grey: hsla(0, 0%, 100%, 0.75);
+  --cream-dark: #e6dfcc;
+  --cream-mid: #eeeadd;
+  --cream-light: hsla(44, 34%, 85%, 0.5);
+  --brown-faded: #f5f5f0;
+  --brown-dull: #d4cbb8;
+  --yellow-light: #ffeeba;
+  --yellow: #ffdf7e;
+  --red: #dc3545;
 
-  --html-color: #ffffff;
+  --html-color: #f8f9fa;
+  --border-color: rgba(0, 0, 0, 0.125);
 
   --link-color: var(--orange);
   --text-color: var(--black);
 
   --font: var(--font-ibm-plex-sans), Arial, Helvetica, Verdana, sans-serif;
+  --font-alt: var(--font-zilla-slab), serif;
   --font-size: 1rem;
   --line-height: 1.5;
+
+  --max-width: 600px;
 }

@@ -32,3 +32,7 @@ export const SurveySchema = z.object({
 export const SurveyApiListResponseSchema = ApiListResponseSchema.extend({
   results: z.array(SurveySchema),
 });
+
+export const SurveyHourApiListResponseSchema = ApiListResponseSchema.extend({
+  results: z.array(SurveyHourSchema),
+});

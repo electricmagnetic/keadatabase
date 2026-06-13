@@ -1,9 +1,10 @@
 from rest_framework import serializers
 from rest_framework_gis.serializers import GeometryField
 
+from birds.serializers import BirdSerializer
+
 from ..models.birds import BirdSighting
 from .observations import ObservationSerializer
-from birds.serializers import BirdSerializer
 
 
 class BirdObservationSerializer(serializers.ModelSerializer):
@@ -23,7 +24,7 @@ class BirdObservationSerializer(serializers.ModelSerializer):
 
     @staticmethod
     def setup_eager_loading(queryset):
-        queryset = queryset.prefetch_related(
+        queryset = queryset.select_related(
             'bird',
             'bird__band_combo',
             'bird__study_area',

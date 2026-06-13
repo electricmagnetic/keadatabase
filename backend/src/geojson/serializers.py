@@ -1,10 +1,9 @@
 from rest_framework_gis.serializers import GeoFeatureModelSerializer
 
-from sightings.serializers.observations import ObservationSerializer
-from sightings.serializers.birds import BirdObservationSerializer
-
 from locations.models import GridTile
 from locations.serializers import GridTileSerializer
+from sightings.serializers.birds import BirdObservationSerializer
+from sightings.serializers.observations import ObservationSerializer
 
 
 class ObservationGeoJSONSerializer(GeoFeatureModelSerializer, ObservationSerializer):

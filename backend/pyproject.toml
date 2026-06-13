@@ -3,11 +3,11 @@ name = "backend"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.12"
 dependencies = [
     "boto3==1.35.36",
     "dj-database-url==2.3.0",
-    "django==4.2.16",
+    "django==4.2.30",
     "django-cors-headers==4.4.0",
     "django-debug-toolbar==4.4.6",
     "django-filter==24.3",

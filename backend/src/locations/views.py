@@ -1,15 +1,15 @@
 from django.db.models import Count, Q
-
-import django_filters
+from django_filters import FilterSet, filters
 from rest_framework import viewsets
 
 from keadatabase.pagination import GridTilePagination
-from .serializers import BaseGridTileSerializer
+
 from .models import GridTile
+from .serializers import BaseGridTileSerializer
 
 
-class GridTileFilter(django_filters.FilterSet):
-    has_hours = django_filters.BooleanFilter(
+class GridTileFilter(FilterSet):
+    has_hours = filters.BooleanFilter(
         field_name='hours', lookup_expr='isnull', exclude=True, label='Has hours'
     )
 
@@ -20,7 +20,7 @@ class GridTileFilter(django_filters.FilterSet):
 
 class GridTileViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = BaseGridTileSerializer
-    filter_class = GridTileFilter
+    filterset_class = GridTileFilter
     pagination_class = GridTilePagination
 
     def get_queryset(self):

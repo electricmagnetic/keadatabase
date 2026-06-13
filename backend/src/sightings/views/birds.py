@@ -1,13 +1,14 @@
-import django_filters
+from django_filters import FilterSet, filters
 from rest_framework import viewsets
 
 from keadatabase.pagination import ObservationPagination
+
 from ..models.birds import BirdSighting
 from ..serializers.birds import BirdObservationSerializer
 
 
-class BirdSightingFilter(django_filters.FilterSet):
-    has_bird = django_filters.BooleanFilter(
+class BirdSightingFilter(FilterSet):
+    has_bird = filters.BooleanFilter(
         field_name='bird', lookup_expr='isnull', exclude=True, label='Has bird'
     )
 
@@ -34,7 +35,7 @@ class BirdObservationViewSet(viewsets.ModelViewSet):
         'sighting__time_sighted',
         'bird',
     )
-    filter_class = BirdSightingFilter
+    filterset_class = BirdSightingFilter
 
     def get_queryset(self):
         queryset = BirdSighting.objects.exclude(sighting__status='private').exclude(

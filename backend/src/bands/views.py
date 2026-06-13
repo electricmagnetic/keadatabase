@@ -1,22 +1,23 @@
-import django_filters
+from django_filters import FilterSet, filters
 from rest_framework import viewsets
 
 from keadatabase.pagination import BirdPagination
+
 from .models import BandCombo
 from .serializers import BandComboSerializer
 
 
-class BandComboFilter(django_filters.FilterSet):
-    colours = django_filters.BaseInFilter(lookup_expr='contains')
-    symbols = django_filters.BaseInFilter(lookup_expr='contains')
+class BandComboFilter(FilterSet):
+    colours = filters.BaseInFilter(lookup_expr='contains')
+    symbols = filters.BaseInFilter(lookup_expr='contains')
 
-    is_extended = django_filters.BooleanFilter(
+    is_extended = filters.BooleanFilter(
         field_name='bird__bird_extended__is_extended',
         lookup_expr='isnull',
         exclude=True,
         label='Is extended',
     )
-    is_featured = django_filters.BooleanFilter(
+    is_featured = filters.BooleanFilter(
         field_name='bird__bird_extended__is_featured', label='Is featured'
     )
 
@@ -47,7 +48,7 @@ class BandComboViewSet(viewsets.ModelViewSet):
         'bird__status',
         'bird__bird_extended',
     )
-    filter_class = BandComboFilter
+    filterset_class = BandComboFilter
 
     def get_queryset(self):
         queryset = BandCombo.objects.select_related('bird', 'study_area').all()

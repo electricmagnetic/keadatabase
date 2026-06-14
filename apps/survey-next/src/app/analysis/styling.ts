@@ -45,11 +45,11 @@ export function calculateFillOpacity(analysis: GridTileAnalysis): number {
   const manyHours = analysis.hours_total.total > 10;
 
   if (hasKea) {
-    // Orange tiles: opacity increases with kea/hours ratio
+    // orange tiles: opacity increases with kea/hours ratio
     const ratio = analysis.hours_total.with_kea / analysis.hours_total.total;
     return 0.3 + ratio * 0.4;
   } else {
-    // Grey tiles: darker if many hours surveyed
+    // grey tiles: darker if many hours surveyed
     return manyHours ? 0.7 : 0.3;
   }
 }

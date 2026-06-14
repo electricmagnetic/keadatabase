@@ -23,24 +23,24 @@ export default async function SubmitDetailsPage({
 }) {
   const params = await searchParams;
 
-  // Validate required params
+  // validate required params
   if (!params.observer_name || !params.observer_email || !params.gridTiles) {
-    // Missing params, redirect back to step 1
+    // missing params, redirect back to step 1
     redirect("/submit");
   }
 
-  // Parse observer data
+  // parse observer data
   const observer: Observer = {
     name: params.observer_name,
     email: params.observer_email,
   };
 
-  // Parse grid tiles (can be string or array)
+  // parse grid tiles (can be string or array)
   const gridTiles = Array.isArray(params.gridTiles)
     ? params.gridTiles
     : [params.gridTiles];
 
-  // Fetch field options from API
+  // fetch field options from API
   const fieldOptionsFetch = await getFieldOptions();
 
   if (!fieldOptionsFetch.success) {

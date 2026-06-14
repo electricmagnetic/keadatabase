@@ -7,7 +7,7 @@ export async function swrFetcher<T = any>(url: string): Promise<T> {
 
   if (!result.ok) {
     const error = new Error("An error occurred while fetching the data.");
-    // Attach extra info to the error object
+    // attach extra info to the error object
     (error as any).info = await result.json().catch(() => ({}));
     (error as any).status = result.status;
     throw error;

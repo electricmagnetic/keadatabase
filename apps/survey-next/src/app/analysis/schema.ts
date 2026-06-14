@@ -14,9 +14,8 @@ export const HoursTotalSchema = z.object({
  * Contains aggregated survey data for a specific grid tile
  */
 export const GridTileAnalysisSchema = z.object({
-  id: z.string(), // Grid tile ID (e.g., "BV22NE")
+  id: z.string(), // grid tile ID (e.g., "BV22NE")
   hours_total: HoursTotalSchema,
-  // Additional fields may be added based on API response
 });
 
 /**

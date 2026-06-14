@@ -9,7 +9,7 @@ import { getApiUrl } from "@/app/_components/api/url";
  */
 const FieldOptionsSchema = z.object({
   actions: z.object({
-    POST: z.record(z.string(), z.any()), // Field options structure varies
+    POST: z.record(z.string(), z.any()), // field options structure varies
   }),
 });
 
@@ -18,7 +18,6 @@ const FieldOptionsSchema = z.object({
  */
 const SurveySubmissionResponseSchema = z.object({
   id: z.number(),
-  // Add other fields as needed based on API response
 });
 
 /**
@@ -65,14 +64,14 @@ export async function submitSurvey(payload: SurveySubmissionPayload) {
   });
 
   if (!response.ok) {
-    // Try to get error details from response
+    // try to get error details from response
     try {
       const errorData = await response.json();
       return {
         success: false,
         status: response.status,
         errorType: response.status === 404 ? "NOT_FOUND" : "FETCH",
-        errors: errorData, // Field-specific errors from API
+        errors: errorData, // field-specific errors from API
       } as const;
     } catch {
       return {

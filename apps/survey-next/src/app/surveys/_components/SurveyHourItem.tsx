@@ -34,13 +34,13 @@ function ActivityIcon({ activity }: { activity: string }) {
     }
   })(activity);
 
-  return <i className={`fa-fw fas fa-${icon} mr-2`}></i>;
+  return <i className={`fa-fw fas fa-${icon}`}></i>;
 }
 
 function KeaIcon({ hasKea }: { hasKea: boolean }) {
   const icon = hasKea ? "feather-alt" : "times";
 
-  return <i className={`fa-fw fas fa-${icon} mr-2`}></i>;
+  return <i className={`fa-fw fas fa-${icon}`}></i>;
 }
 
 export function SurveyHourItem({
@@ -64,12 +64,12 @@ export function SurveyHourItem({
     <div className={classNames}>
       {showSurvey && (
         <div className="field-survey-date">
-          <i className="fa-fw fas fa-calendar mr-2"></i>
+          <i className="fa-fw fas fa-calendar"></i>
           <DateTime dateTime={surveyHour.survey__date} format="date" />
         </div>
       )}
       <div className="field-hour">
-        <i className="fa-fw fas fa-clock mr-2"></i>
+        <i className="fa-fw fas fa-clock"></i>
         {surveyHour.get_hour_display}
       </div>
       <div className="field-activity">
@@ -84,7 +84,7 @@ export function SurveyHourItem({
           </div>
           {showGridTile && surveyHour.grid_tile && (
             <div className="field-gridTile">
-              <i className="fa-fw fas fa-map-marker-alt mr-2"></i>
+              <i className="fa-fw fas fa-map-marker-alt"></i>
               <Link href={`/grid/${surveyHour.grid_tile}`}>
                 {surveyHour.grid_tile}
               </Link>
@@ -94,7 +94,7 @@ export function SurveyHourItem({
       )}
       {showSurvey && (
         <div className="field-survey">
-          <i className="fa-fw fas fa-clipboard-list mr-2"></i>
+          <i className="fa-fw fas fa-clipboard-list"></i>
           <Link href={`/surveys/${surveyHour.survey}`}>
             #{surveyHour.survey}
           </Link>

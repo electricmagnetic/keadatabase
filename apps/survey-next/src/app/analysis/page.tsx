@@ -12,16 +12,11 @@ export const metadata: Metadata = {
 };
 
 export default async function AnalysisPage() {
-  // Fetch grid tile analyses from API
+  // fetch grid tile analyses from API
   const analysesFetch = await getGridTileAnalyses();
 
-  console.log("=== ANALYSIS PAGE SERVER DEBUG ===");
-  console.log("analysesFetch:", JSON.stringify(analysesFetch, null, 2));
-  console.log("success:", analysesFetch.success);
-
-  // Handle errors
+  // handle errors
   if (!analysesFetch.success) {
-    console.log("Fetch FAILED, errorType:", analysesFetch.errorType);
     if (analysesFetch.errorType === "NOT_FOUND") {
       return (
         <div className="container my-5">
@@ -37,8 +32,6 @@ export default async function AnalysisPage() {
   }
 
   const analyses = analysesFetch.data;
-  console.log("analyses length:", analyses?.length);
-  console.log("first analysis:", analyses?.[0]);
 
   return (
     <Page.Container>

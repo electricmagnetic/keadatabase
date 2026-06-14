@@ -3,7 +3,7 @@
 import dynamic from "next/dynamic";
 import type { GridTileAnalysis } from "./schema";
 
-// Dynamically import map component with SSR disabled to avoid MapLibre errors
+// dynamically import map component with SSR disabled to avoid MapLibre errors
 const GridTileAnalysesMap = dynamic(
   () => import("./GridTileAnalysesMap").then((mod) => mod.GridTileAnalysesMap),
   {

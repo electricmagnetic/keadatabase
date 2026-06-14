@@ -12,7 +12,7 @@ export function FurtherInformationFieldset() {
 
   // useWatch (not watch) so this component re-renders when a nested kea
   // checkbox toggles — a plain watch() return gets frozen by the React
-  // Compiler and never updates the conditional below
+  // compiler and never updates the conditional below
   const hours = useWatch({ control, name: "hours" }) || [];
   const atLeastOneKeaObserved = hours.some((hour) => hour.kea === true);
 

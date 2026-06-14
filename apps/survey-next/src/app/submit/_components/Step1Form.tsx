@@ -25,9 +25,9 @@ export function Step1Form() {
 
   const methods = useForm<Step1FormData>({
     resolver: zodResolver(Step1Schema),
-    mode: "onTouched", // Validate on blur first, then on change
-    reValidateMode: "onChange", // Revalidate on every change after first blur
-    criteriaMode: "all", // Return all errors
+    mode: "onTouched", // validate on blur first, then on change
+    reValidateMode: "onChange", // revalidate on every change after first blur
+    criteriaMode: "all", // return all errors
     defaultValues: {
       observer: {
         name: "",
@@ -46,7 +46,7 @@ export function Step1Form() {
   };
 
   const onSubmit = async (data: Step1FormData) => {
-    // Encode form data as URL params
+    // encode form data as URL params
     const params = new URLSearchParams();
     params.set("observer_name", data.observer.name);
     params.set("observer_email", data.observer.email);
@@ -54,7 +54,7 @@ export function Step1Form() {
       params.append("gridTiles", tile);
     });
 
-    // Navigate to Step 2 — keep isSubmitting true through the navigation
+    // navigate to Step 2 — keep isSubmitting true through the navigation
     // so the SubmitBar shows its loading state
     router.push(`/submit/details?${params.toString()}`);
     await new Promise(() => {});

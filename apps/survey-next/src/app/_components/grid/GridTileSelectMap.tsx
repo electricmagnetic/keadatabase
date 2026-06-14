@@ -43,12 +43,12 @@ export function GridTileSelectMap({
         }
       : null;
 
-  // Auto-zoom to selected tiles or reset to initial view when cleared
+  // auto-zoom to selected tiles or reset to initial view when cleared
   useEffect(() => {
     if (!mapRef.current) return;
 
     if (selectedTilesGeoJSON && selectedTiles.length > 0) {
-      // Zoom to selected tiles
+      // zoom to selected tiles
       const bounds = bbox(selectedTilesGeoJSON);
       const [minLng, minLat, maxLng, maxLat] = bounds;
 
@@ -64,7 +64,7 @@ export function GridTileSelectMap({
         }
       );
     } else if (selectedTiles.length === 0) {
-      // Reset to initial view when all tiles are cleared
+      // reset to initial view when all tiles are cleared
       mapRef.current.flyTo({
         center: [170.45, -43.9],
         zoom: 6,

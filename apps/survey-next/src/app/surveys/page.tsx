@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   title: "Browse Surveys",
 };
 
-// Helper function to get unique grid tiles from survey hours
+// helper function to get unique grid tiles from survey hours
 function getUniqueGridTiles(hours: z.infer<typeof SurveySchema>["hours"]) {
   const gridTiles = hours
     .map((hour) => hour.grid_tile)
@@ -28,11 +28,11 @@ export default async function SurveysPage() {
     getSurveyHours(),
   ]);
 
-  if (!surveysFetch.success) return <Error message="Error fetching surveys" />; // TODO replace with error
+  if (!surveysFetch.success) return <Error message="Error fetching surveys" />;
 
   const { results: surveys } = surveysFetch.data;
 
-  // Get unique grid tiles from recent survey hours
+  // get unique grid tiles from recent survey hours
   const recentGridTiles = surveyHoursFetch.success
     ? getUniqueGridTiles(surveyHoursFetch.data.results).slice(0, 8)
     : [];

@@ -35,12 +35,12 @@ export const Step1Schema = z.object({
   gridTiles: GridTilesSchema,
 });
 
-// Form schema - grid_tile is an array (for typeahead compatibility)
+// form schema - grid_tile is an array (for typeahead compatibility)
 export const SurveyHourSchema = z.object({
   hour: z.number().int().min(0).max(23),
   activity: z.string().min(1, MESSAGES.required),
   kea: z.boolean().nullable(),
-  grid_tile: z.array(z.string()).nullable(), // Array for typeahead
+  grid_tile: z.array(z.string()).nullable(), // array for typeahead
 });
 
 // superRefine (not refine) so errors attach to the specific field paths

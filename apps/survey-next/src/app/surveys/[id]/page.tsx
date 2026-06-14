@@ -18,7 +18,7 @@ import "@/app/css/components/survey.css";
 export default async function SurveyDetailPage({ params }: PageWithParams) {
   const paramsData = await params;
 
-  // Validate the ID parameter
+  // validate the ID parameter
   const parsedParams = SurveyIdSchema.safeParse(paramsData);
 
   if (!parsedParams.success) {

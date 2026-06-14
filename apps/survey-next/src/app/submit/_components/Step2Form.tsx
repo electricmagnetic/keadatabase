@@ -5,7 +5,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useState, useMemo } from "react";
 
-import { Messages } from "../_components/Messages";
 import { TripFieldset } from "../_components/TripFieldset";
 import { SurveyHourFieldset } from "../_components/SurveyHourFieldset";
 import { FurtherInformationFieldset } from "../_components/FurtherInformationFieldset";
@@ -45,7 +44,7 @@ export function Step2Form({
   const router = useRouter();
   const [submitError, setSubmitError] = useState<string | null>(null);
 
-  // Memoize default values to prevent hydration mismatches
+  // memoize default values to prevent hydration mismatches
   const defaultValues = useMemo(
     () => ({
       observer,
@@ -54,16 +53,16 @@ export function Step2Form({
       max_flock_size: null,
       purpose: "",
       comments: "",
-      challenge: "kea", // Anti-spam field (fixed value)
+      challenge: "kea", // anti-spam field (fixed value)
     }),
     [observer, gridTiles],
   );
 
   const methods = useForm<Step2FormInput, unknown, Step2FormData>({
     resolver: zodResolver(Step2Schema),
-    mode: "onTouched", // Validate on blur first, then on change
-    reValidateMode: "onChange", // Revalidate on every change after first blur
-    criteriaMode: "all", // Return all errors
+    mode: "onTouched", // validate on blur first, then on change
+    reValidateMode: "onChange", // revalidate on every change after first blur
+    criteriaMode: "all", // return all errors
     defaultValues,
   });
 
@@ -72,10 +71,10 @@ export function Step2Form({
   const onSubmit = async (data: Step2FormData) => {
     setSubmitError(null);
 
-    // Transform form data to API payload
+    // transform form data to API payload
     const payload = transformFormDataToPayload(data);
 
-    // Submit to API
+    // submit to API
     const result = await submitSurvey(payload);
 
     if (!result.success) {
@@ -87,19 +86,23 @@ export function Step2Form({
       return;
     }
 
-    // Redirect to success page
+    // redirect to success page
     router.push(`/submit/success/${result.data.id}`);
+  };
+
+  const onInvalid = () => {
+    setSubmitError(
+      "Invalid data provided. Please double-check the form for errors.",
+    );
   };
 
   return (
     <FormProvider {...methods}>
       <Toast message={submitError} onDismiss={() => setSubmitError(null)} />
       <section className="form">
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(onSubmit, onInvalid)}>
           <Page.Section>
             <h2>Step 2: Survey Details</h2>
-
-            <Messages />
 
             <div className="form__fields">
               <TripFieldset

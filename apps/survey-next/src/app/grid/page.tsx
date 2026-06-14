@@ -23,7 +23,7 @@ const DownloadLink = ({
         target="_blank"
         className="download-link"
       >
-        <i className="fas fa-file-download me-1"></i>
+        <i className="fas fa-file-download"></i>
         Download {title}
       </a>
     </li>

@@ -17,7 +17,7 @@ interface GridTileAnalysesMapProps {
   analyses: GridTileAnalysis[];
 }
 
-// Extend GridTileProperties to include analysis data
+// extend GridTileProperties to include analysis data
 interface AnalysisFeatureProperties extends GridTileProperties {
   analysis_id: string;
   fill_color: string;
@@ -36,18 +36,13 @@ interface AnalysisFeatureProperties extends GridTileProperties {
  * - Layer toggles for grid overlay
  */
 export function GridTileAnalysesMap({ analyses }: GridTileAnalysesMapProps) {
-  console.log("=== MAP COMPONENT CLIENT DEBUG ===");
-  console.log("analyses received:", analyses);
-  console.log("analyses length:", analyses?.length);
-  console.log("first analysis:", analyses?.[0]);
-
   const [selectedAnalysis, setSelectedAnalysis] =
     useState<GridTileAnalysis | null>(null);
 
-  // Layer visibility toggles
+  // layer visibility toggles
   const [showGridOverlay, setShowGridOverlay] = useState(false);
 
-  // Handle tile clicks
+  // handle tile clicks
   const onTileClick = useCallback(
     (event: MapLayerMouseEvent) => {
       const feature = event.features?.[0];
@@ -64,36 +59,30 @@ export function GridTileAnalysesMap({ analyses }: GridTileAnalysesMapProps) {
     [analyses],
   );
 
-  // Create GeoJSON with embedded style properties
+  // create GeoJSON with embedded style properties
   const analysesGeoJSON = useMemo<FeatureCollection<
     Polygon,
     AnalysisFeatureProperties
   > | null>(() => {
-    console.log("useMemo: creating GeoJSON from", analyses?.length, "analyses");
-
     if (!analyses || !Array.isArray(analyses) || analyses.length === 0) {
-      console.log("useMemo: no valid analyses, returning null");
       return null;
     }
 
     const features: Feature<Polygon, AnalysisFeatureProperties>[] = [];
-    let tilesNotFound = 0;
 
     for (const analysis of analyses) {
       if (!analysis || !analysis.id) {
-        console.log("useMemo: skipping invalid analysis:", analysis);
         continue;
       }
 
       const tile = getGridTileById(analysis.id);
       if (!tile) {
-        tilesNotFound++;
         continue;
       }
 
       const style = getAnalysisTileStyle(analysis);
 
-      // Create feature with embedded style properties
+      // create feature with embedded style properties
       features.push({
         ...tile,
         properties: {
@@ -106,34 +95,15 @@ export function GridTileAnalysesMap({ analyses }: GridTileAnalysesMapProps) {
       });
     }
 
-    console.log("useMemo: created", features.length, "features");
-    console.log("useMemo: tiles not found:", tilesNotFound);
-
     if (features.length === 0) {
-      console.log("useMemo: no features created, returning null");
       return null;
     }
 
-    const geojson = {
+    return {
       type: "FeatureCollection" as const,
       features,
     };
-    console.log(
-      "useMemo: returning GeoJSON with",
-      geojson.features.length,
-      "features",
-    );
-    return geojson;
   }, [analyses]);
-
-  console.log("analysesGeoJSON:", analysesGeoJSON);
-  console.log("analysesGeoJSON type:", analysesGeoJSON?.type);
-  console.log(
-    "analysesGeoJSON features count:",
-    analysesGeoJSON?.features?.length,
-  );
-
-  console.log("About to render BaseMap with conditional Source component");
 
   return (
     <div style={{ width: "100%", height: "860px", position: "relative" }}>

@@ -12,7 +12,7 @@ interface GridTileTypeaheadProps {
   onBlur?: () => void;
   maxTiles?: number;
   placeholder?: string;
-  options?: string[]; // Optional: limit to specific tiles
+  options?: string[]; // optional: limit to specific tiles
 }
 
 export function GridTileTypeahead({

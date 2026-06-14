@@ -15,10 +15,7 @@ export function getSurveyHoursForDate(date: Date): readonly number[] {
   return getSurveyHoursForSeason(season);
 }
 
-export function generateInitialHours(
-  date: Date,
-  gridTiles?: string[],
-): SurveyHour[] {
+export function generateInitialHours(gridTiles?: string[]): SurveyHour[] {
   // Always use summer hours which includes all possible hours (6-20)
   // Hours 6, 19, 20 will show "summer only" in the UI
   const hours = SURVEY_HOURS.summer;

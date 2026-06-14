@@ -7,7 +7,6 @@ interface GridTileCardProps {
   hideDetails?: boolean;
   hideImage?: boolean;
   addLink?: boolean;
-  onRemove?: (id: GridTileId) => void;
 }
 
 export function GridTileCard({
@@ -15,7 +14,6 @@ export function GridTileCard({
   hideDetails = false,
   hideImage = false,
   addLink = false,
-  onRemove,
 }: GridTileCardProps) {
   const gridTile = getGridTileById(id);
 

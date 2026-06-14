@@ -4,7 +4,6 @@ import useSWR from "swr";
 import type { GridTileId } from "@/app/_components/grid/types";
 import { SurveyHourItem } from "./SurveyHourItem";
 import { Spinner } from "@/app/_components/ui/Spinner";
-import Error from "@/app/_components/ui/Error";
 
 interface SurveyHoursProps {
   gridTile?: GridTileId;

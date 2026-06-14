@@ -18,10 +18,6 @@ import type { GridTileId } from "../_components/grid/types";
 export function GridTool() {
   const [selectedTiles, setSelectedTiles] = useState<GridTileId[]>([]);
 
-  const handleRemoveTile = (tileId: GridTileId) => {
-    setSelectedTiles(selectedTiles.filter((id) => id !== tileId));
-  };
-
   const handlePrint = () => {
     window.print();
   };
@@ -57,13 +53,7 @@ export function GridTool() {
             <div className="result">
               {selectedTiles.length > 0 ? (
                 selectedTiles.map((tileId) => (
-                  <GridTileCard
-                    key={tileId}
-                    id={tileId}
-                    hideImage
-                    addLink
-                    onRemove={handleRemoveTile}
-                  />
+                  <GridTileCard key={tileId} id={tileId} hideImage addLink />
                 ))
               ) : (
                 <div className="no-results">No grid tiles selected</div>

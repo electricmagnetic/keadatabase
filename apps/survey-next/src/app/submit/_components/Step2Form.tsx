@@ -45,25 +45,18 @@ export function Step2Form({
   const router = useRouter();
   const [submitError, setSubmitError] = useState<string | null>(null);
 
-  // Compute today's date once to prevent hydration mismatches
-  const todayDate = useMemo(() => {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    return today;
-  }, []);
-
   // Memoize default values to prevent hydration mismatches
   const defaultValues = useMemo(
     () => ({
       observer,
       date: "", // empty so the field shows "required" on blur (matches Step 1)
-      hours: generateInitialHours(todayDate, gridTiles),
+      hours: generateInitialHours(gridTiles),
       max_flock_size: null,
       purpose: "",
       comments: "",
       challenge: "kea", // Anti-spam field (fixed value)
     }),
-    [observer, todayDate, gridTiles],
+    [observer, gridTiles],
   );
 
   const methods = useForm<Step2FormInput, unknown, Step2FormData>({

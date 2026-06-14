@@ -1,6 +1,7 @@
 from rest_framework import viewsets
 
 from keadatabase.pagination import ObservationPagination
+
 from ..models.media import SightingsMedia
 from ..serializers.media import ObservationsMediaSerializer
 
@@ -17,9 +18,8 @@ class ObservationsMediaViewSet(viewsets.ReadOnlyModelViewSet):
         'id',
         'sighting',
     )
-    filter_fields = (
+    filterset_fields = (
         'id',
         'sighting',
         'birds',
     )
-    # filter_fields

@@ -1,9 +1,10 @@
-from rest_framework import viewsets, permissions
+from rest_framework import permissions, viewsets
 
 from keadatabase.pagination import SurveyPagination
-from .models.surveys import Survey, SurveyHour
+
 from .models.observers import Observer
-from .serializers import SurveySerializer, SurveyHourSerializer, ObserverSerializer
+from .models.surveys import Survey, SurveyHour
+from .serializers import ObserverSerializer, SurveyHourSerializer, SurveySerializer
 
 
 class SurveyHourViewSet(viewsets.ReadOnlyModelViewSet):
@@ -13,7 +14,7 @@ class SurveyHourViewSet(viewsets.ReadOnlyModelViewSet):
         'id',
         'survey__date',
     )
-    filter_fields = (
+    filterset_fields = (
         'grid_tile',
         'activity',
         'kea',
@@ -33,7 +34,7 @@ class SurveyViewSet(viewsets.ReadOnlyModelViewSet):
         'id',
         'date',
     )
-    filter_fields = ('status',)
+    filterset_fields = ('status',)
 
     def get_queryset(self):
         queryset = (

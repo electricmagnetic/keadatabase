@@ -1,7 +1,7 @@
 import { type Metadata } from "next";
 
 import Page from "@/app/_components/ui/Page";
-import { GridTool } from "./GridTool";
+import { GridTool } from "./_components/GridTool";
 
 export const metadata: Metadata = {
   title: "Grid Map | Kea Survey",

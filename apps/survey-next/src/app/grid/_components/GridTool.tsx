@@ -1,10 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { GridTileSelectMap } from "../_components/grid/GridTileSelectMap";
-import { GridTileTypeahead } from "../_components/grid/GridTileTypeahead";
-import { GridTileCard } from "../_components/grid/GridTileCard";
-import type { GridTileId } from "../_components/grid/types";
+import { GridTileSelectMap } from "@/app/_components/grid/GridTileSelectMap";
+import { GridTileTypeahead } from "@/app/_components/grid/GridTileTypeahead";
+import { GridTileCard } from "@/app/_components/grid/GridTileCard";
+import type { GridTileId } from "@/app/_components/grid/types";
 
 /**
  * Interactive grid tile tool
@@ -33,10 +33,11 @@ export function GridTool() {
       )}
 
       <div className="submit__grid">
-        <div className="submit__map" style={{ height: "860px" }}>
+        <div className="submit__map">
           <GridTileSelectMap
             selectedTiles={selectedTiles}
             onSelectionChange={setSelectedTiles}
+            height="860px"
           />
         </div>
 

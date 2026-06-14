@@ -86,12 +86,16 @@ export function SurveyHourItem({
         <ActivityIcon activity={surveyHour.activity} />
         {surveyHour.get_activity_display}
       </div>
-      {!notSurveying && (
-        <>
-          <div className="field-kea">
+      <div className="field-kea">
+        {!notSurveying && (
+          <>
             <KeaIcon hasKea={hasKea} />
             {hasKea ? "Kea" : "No kea"}
-          </div>
+          </>
+        )}
+      </div>
+      {!notSurveying && (
+        <>
           {showGridTile && surveyHour.grid_tile && (
             <div className="field-marker">
               <i className="fas fa-map-marker-alt"></i>

@@ -2,7 +2,7 @@
 
 import useSWR from "swr";
 import type { GridTileId } from "@/app/_components/grid/types";
-import { SurveyHourItem } from "./SurveyHourItem";
+import { SurveyHourItem } from "@/app/_components/SurveyHourItem";
 import { Spinner } from "@/app/_components/ui/Spinner";
 
 interface SurveyHoursProps {

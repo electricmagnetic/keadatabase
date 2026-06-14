@@ -7,11 +7,12 @@ import Error from "@/app/_components/ui/Error";
 import { SurveyIdSchema } from "@/app/_components/api/helpers";
 import { SelectedGridTilesMap } from "@/app/_components/grid/SelectedGridTilesMap";
 import GridTileCards from "@/app/_components/grid/GridTileCards";
+import { getUniqueGridTiles } from "@/app/_components/grid/helpers";
+
+import { SurveyHourItem } from "@/app/_components/SurveyHourItem";
 
 import { getSurvey } from "../actions";
-import { SurveyHourItem } from "../_components/SurveyHourItem";
 import { SurveyAnalysis } from "../_components/SurveyAnalysis";
-import { getUniqueGridTiles } from "../_components/helpers";
 
 import "@/app/css/components/survey.css";
 

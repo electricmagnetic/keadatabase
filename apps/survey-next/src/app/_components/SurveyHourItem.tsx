@@ -1,23 +1,28 @@
 import Link from "next/link";
 import DateTime from "shared/ui/DateTime";
 
+interface SurveyHourData {
+  id: number;
+  hour: number;
+  kea: boolean;
+  activity: string;
+  get_hour_display: string;
+  get_activity_display: string;
+  survey: number;
+  survey__date: Date | string;
+  grid_tile: string | null;
+}
+
 interface SurveyHourItemProps {
-  surveyHour: {
-    id: number;
-    hour: number;
-    kea: boolean;
-    activity: string;
-    get_hour_display: string;
-    get_activity_display: string;
-    survey: number;
-    survey__date: Date;
-    grid_tile: string | null;
-  };
+  surveyHour: SurveyHourData;
   swapGridTileSurvey?: boolean;
 }
 
+/**
+ * Activity icon mapper
+ */
 function ActivityIcon({ activity }: { activity: string }) {
-  const icon = (function (activity) {
+  const icon = (() => {
     switch (activity) {
       case "W":
         return "walking";
@@ -32,17 +37,23 @@ function ActivityIcon({ activity }: { activity: string }) {
       default:
         return "question-circle";
     }
-  })(activity);
+  })();
 
-  return <i className={`fa-fw fas fa-${icon}`}></i>;
+  return <i className={`fas fa-${icon}`}></i>;
 }
 
+/**
+ * Kea presence icon
+ */
 function KeaIcon({ hasKea }: { hasKea: boolean }) {
   const icon = hasKea ? "feather-alt" : "times";
-
-  return <i className={`fa-fw fas fa-${icon}`}></i>;
+  return <i className={`fas fa-${icon}`}></i>;
 }
 
+/**
+ * Presents a nicely formatted list item for a given survey hour.
+ * `swapGridTileSurvey` enables toggling between showing the grid tile or the survey ID.
+ */
 export function SurveyHourItem({
   surveyHour,
   swapGridTileSurvey = false,
@@ -52,11 +63,7 @@ export function SurveyHourItem({
   const showSurvey = swapGridTileSurvey;
   const showGridTile = !swapGridTileSurvey;
 
-  const classNames = [
-    "data-table__row",
-    hasKea && "hasKea",
-    `activity-${surveyHour.activity}`,
-  ]
+  const classNames = ["data-table__row", hasKea && "hasKea"]
     .filter(Boolean)
     .join(" ");
 
@@ -64,12 +71,15 @@ export function SurveyHourItem({
     <div className={classNames}>
       {showSurvey && (
         <div className="field-survey-date">
-          <i className="fa-fw fas fa-calendar"></i>
-          <DateTime dateTime={surveyHour.survey__date} format="date" />
+          <i className="fas fa-calendar"></i>
+          <DateTime
+            dateTime={new Date(surveyHour.survey__date)}
+            format="date"
+          />
         </div>
       )}
       <div className="field-hour">
-        <i className="fa-fw fas fa-clock"></i>
+        <i className="fas fa-clock"></i>
         {surveyHour.get_hour_display}
       </div>
       <div className="field-activity">
@@ -83,8 +93,8 @@ export function SurveyHourItem({
             {hasKea ? "Kea" : "No kea"}
           </div>
           {showGridTile && surveyHour.grid_tile && (
-            <div className="field-gridTile">
-              <i className="fa-fw fas fa-map-marker-alt"></i>
+            <div className="field-marker">
+              <i className="fas fa-map-marker-alt"></i>
               <Link href={`/grid/${surveyHour.grid_tile}`}>
                 {surveyHour.grid_tile}
               </Link>
@@ -94,7 +104,7 @@ export function SurveyHourItem({
       )}
       {showSurvey && (
         <div className="field-survey">
-          <i className="fa-fw fas fa-clipboard-list"></i>
+          <i className="fas fa-clipboard-list"></i>
           <Link href={`/surveys/${surveyHour.survey}`}>
             #{surveyHour.survey}
           </Link>

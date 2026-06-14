@@ -4,23 +4,14 @@ import Link from "next/link";
 import Page from "@/app/_components/ui/Page";
 import Error from "@/app/_components/ui/Error";
 import GridTileCards from "@/app/_components/grid/GridTileCards";
+import { getUniqueGridTiles } from "@/app/_components/grid/helpers";
 
 import { getSurveys, getSurveyHours } from "./actions";
 import DateTime from "shared/ui/DateTime";
-import type { z } from "zod";
-import type { SurveySchema } from "./schema";
 
 export const metadata: Metadata = {
   title: "Browse Surveys",
 };
-
-// helper function to get unique grid tiles from survey hours
-function getUniqueGridTiles(hours: z.infer<typeof SurveySchema>["hours"]) {
-  const gridTiles = hours
-    .map((hour) => hour.grid_tile)
-    .filter((tile): tile is string => tile !== null);
-  return [...new Set(gridTiles)];
-}
 
 export default async function SurveysPage() {
   const [surveysFetch, surveyHoursFetch] = await Promise.all([

@@ -24,7 +24,6 @@
     "react-app-polyfill": "^1.0.6",
     "react-bootstrap-typeahead": "^3.4.7",
     "react-dom": "^16.14.0",
-    "react-fetch": "^0.0.9",
     "react-helmet": "^5.2.1",
     "react-leaflet": "^2.8.0",
     "react-moment": "^0.9.7",

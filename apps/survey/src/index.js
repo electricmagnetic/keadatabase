@@ -19,16 +19,13 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 
 Moment.globalLocale = "en-nz";
 
-// Only initialize Sentry if a valid DSN is provided
-if (process.env.REACT_APP_SENTRY_DSN && process.env.REACT_APP_SENTRY_DSN !== 'put_key_in_.env.local') {
-  Sentry.init({
-    dsn: `${process.env.REACT_APP_SENTRY_DSN}`,
-    release: `${process.env.REACT_APP_NAME}@${process.env.REACT_APP_VERSION}`,
-    autoSessionTracking: true,
-    integrations: [new Integrations.BrowserTracing()],
-    tracesSampleRate: 1.0,
-  });
-}
+Sentry.init({
+  dsn: `${process.env.REACT_APP_SENTRY_DSN}`,
+  release: `${process.env.REACT_APP_NAME}@${process.env.REACT_APP_VERSION}`,
+  autoSessionTracking: true,
+  integrations: [new Integrations.BrowserTracing()],
+  tracesSampleRate: 1.0,
+});
 
 ReactDOM.render(<App />, document.getElementById("root"));
 

@@ -1,4 +1,4 @@
-FROM python:3.13.3-trixie
+FROM python:3.13.14-trixie
 
 COPY --from=astral/uv:latest /uv /uvx /bin/
 

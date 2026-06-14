@@ -123,6 +123,7 @@ This is a **Turborepo monorepo** managed with **pnpm workspaces**:
 6. **apps/survey-next**
    - Next.js version of survey tool
    - Modern architecture with React Compiler
+   - Core workflows implemented (survey browse/detail, grid tool, analysis map, two-step submission); auth and photo upload still TODO
 
 ## Backend API
 

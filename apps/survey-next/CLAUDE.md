@@ -4,12 +4,9 @@
 
 This is the Next.js 16 replacement for the original Kea Survey Tool (first built in 2019 with Create React App). It's part of the Kea Database's migration strategy from legacy CRA apps to modern Next.js architecture.
 
-**Status**: Early development / Foundation phase
-**Production URL**: survey.keadatabase.nz (currently serves legacy app)
-**Tech Stack**: Next.js 16, React 19, TypeScript, Zod
-**Started**: May 2024
-
-> **Important**: This is just the starting point for the survey-next application. Significant additional work will be required to reach feature parity with the legacy app and implement new functionality. This document captures the current foundation and serves as a roadmap for future development.
+**Status**: Active development — core feature parity largely reached
+**Production URL**: survey.keadatabase.nz (currently serves the legacy `apps/survey`)
+**Tech Stack**: Next.js 16, React 19 (React Compiler), TypeScript, Zod
 
 ## Purpose
 
@@ -17,479 +14,223 @@ The Kea Survey Tool enables researchers and citizen scientists to conduct struct
 
 ## Current Implementation Status
 
-### ✅ Completed
+The major workflows from the legacy app are now implemented. Earlier versions of this document described these as stubs — that is no longer accurate.
 
-**Foundation & Configuration**
-- Next.js 16 setup with React Compiler enabled
-- TypeScript configuration with strict mode
-- Path aliases configured (`@/*` → `src/*`)
-- IBM Plex Sans font integration
-- Environment variable setup (.env.example)
-- ESLint configuration (Next.js defaults)
-- Integration with shared workspace package
+### ✅ Implemented
 
-**Layout & Navigation**
-- Root layout with Header and Footer (layout.tsx:1)
-- Header navigation with links to all main sections (Header.tsx:1)
-- Footer with secondary navigation (Footer.tsx:1)
-- Global CSS with CSS custom properties (globals.css:1)
-- Responsive flexbox layout structure
+- **Home** (`/`) — WordPress intro content + recent grid tiles
+- **Surveys** (`/surveys`, `/surveys/[id]`) — list and detail views with per-survey analysis and hour-by-hour observations
+- **Grid** (`/grid`, `/grid/[id]`) — interactive grid tool (map + typeahead tile selection + print), and per-tile detail pages with survey hours and analysis graphs
+- **Analysis** (`/analysis`) — colour-coded map of grid tile analyses (orange = surveyed with kea, grey = surveyed without), with click-through popups
+- **Submit** (`/submit`, `/submit/details`, `/submit/success/[id]`) — full two-step survey submission form
+- **CMS pages** (`/about`, `/instructions`, `/legal`) — pulled from WordPress
+- **Layout** — Header, Footer, mobile menu, home-page banner, custom CSS architecture
+- **Shared UI** — Page composition system, Error, Spinner, Toast, MapLayerToggle
 
-**API Integration**
-- Generic `fetcher` utility from shared package with Zod validation (shared/api/fetcher.ts:29)
-- Type-safe API responses with discriminated unions (success/error states)
-- Django REST Framework integration
-- Standardized error handling (NOT_FOUND, FETCH, SCHEMA error types)
+### Not yet implemented / known gaps
 
-**Survey Features**
-- Browse surveys list with pagination support (surveys/page.tsx:14)
-- Individual survey detail view (surveys/[id]/page.tsx:11)
-- Survey schema with Zod validation (surveys/schema.ts:18)
-- Server actions for data fetching (surveys/actions.ts:7)
-- Display of survey metadata (date, observer, max flock size, comments)
-- Integration with backend `/surveys/surveys/` API endpoint
+- **Authentication** — no JWT/login flow yet (submit is currently public, matching the legacy report endpoint)
+- **Photo upload** — not implemented
+- **Survey editing / CSV export** — not implemented
+- **Pagination UI** — list endpoints fetch a fixed `page_size` rather than paging
+- **Tests** — no unit/e2e tests yet
 
-**WordPress CMS Integration**
-- Reusable WordPress page component from shared package (shared/cms/wordpress.tsx:58)
-- Environment-configured WordPress base URL
-- About page pulling from WordPress (about/page.tsx:10)
-- Instructions page pulling from WordPress (instructions/page.tsx:10)
-- Legal page pulling from WordPress (legal/page.tsx:10)
-
-**UI Components**
-- Page component system (Heading, Section, Container) (ui/Page.tsx:1)
-- Error component for error states (ui/Error.tsx:1)
-- DateTime formatter using date-fns (shared/ui/DateTime.tsx:9)
-
-### 🚧 Stub Pages (TODO Implementation)
-
-These pages exist with basic structure but need implementation:
-
-1. **Submit Survey** (submit/page.tsx:9)
-   - Main survey submission form
-   - Grid tile selection
-   - Hour-by-hour kea observations
-   - Activity tracking per hour
-   - Max flock size recording
-
-2. **Analysis** (analysis/page.tsx:9)
-   - Survey data visualization
-   - Population trend analysis
-   - Geographic distribution maps
-
-3. **Grid Map** (grid/page.tsx:9)
-   - Interactive map of survey grid tiles
-   - Visual indication of surveyed vs. unsurveyed areas
-   - Tile selection for surveys
-
-### 📦 Dependencies
+## Dependencies
 
 **Core**
-- `next`: 16.2.6 (with React Compiler)
-- `react`: 19.2.6
-- `react-dom`: 19.2.6
-- `zod`: ^4.4.3 (schema validation)
+- `next` 16.2.6 (React Compiler enabled in `next.config.ts`)
+- `react` / `react-dom` 19.2.7
+- `zod` ^4.4.3 — schema validation
+- `react-hook-form` ^7.62 + `@hookform/resolvers` — form state/validation
+- `swr` ^2.4 — client data fetching (24h cache)
+- `date-fns` ^4 — date formatting
+
+**Mapping**
+- `maplibre-gl` ^5 + `react-map-gl` ^8
+- `@turf/turf` ^7 — geospatial calculations
+- `geospatial` (workspace) — shared `Map`, `GeoJSONLayer`, `XYZRasterLayer`
+
+**UI**
+- `recharts` ^3 — analysis graphs
+- `react-bootstrap-typeahead` ^6 — grid tile typeahead
+- `@fortawesome/fontawesome-free` ^5 — icons (CSS imported in `layout.tsx`)
 
 **Workspace**
-- `shared`: workspace:* (common utilities)
+- `shared` — `fetcher`, `DateTime`, WordPress CMS components, Next types
+- `geospatial` — map primitives
 
 **Dev**
-- `typescript`: ^5
-- `eslint`: ^9
-- `eslint-config-next`: 16.2.6
-- `babel-plugin-react-compiler`: 1.0.0
+- `typescript` ^5, `eslint` ^9, `eslint-config-next`, `babel-plugin-react-compiler`
+- `postcss` + `postcss-nested` + `postcss-discard-comments` (CSS build pipeline)
 
 ## Architecture
 
 ### File Structure
 
 ```
-src/
-├── app/
-│   ├── _components/           # Shared components (underscore = not a route)
-│   │   ├── api/              # API utilities
-│   │   │   ├── helpers.ts    # Param parsing helpers
-│   │   │   └── schema.ts     # Common API schemas
-│   │   ├── cms/              # CMS integration
-│   │   │   └── wordpress.tsx # Pre-configured WordPress components
-│   │   ├── layout/           # Layout components
-│   │   │   ├── Header.tsx
-│   │   │   └── Footer.tsx
-│   │   └── ui/               # UI components
-│   │       ├── Error.tsx
-│   │       └── Page.tsx
-│   │
-│   ├── about/                # Route: /about
-│   ├── analysis/             # Route: /analysis (TODO)
-│   ├── grid/                 # Route: /grid (TODO)
-│   ├── instructions/         # Route: /instructions
-│   ├── legal/                # Route: /legal
-│   ├── submit/               # Route: /submit (TODO)
-│   ├── surveys/              # Route: /surveys
-│   │   ├── [id]/            # Route: /surveys/:id
-│   │   │   └── page.tsx     # Survey detail view
-│   │   ├── actions.ts       # Server actions
-│   │   ├── schema.ts        # Zod schemas
-│   │   └── page.tsx         # Survey list view
-│   │
-│   ├── layout.tsx            # Root layout
-│   ├── page.tsx              # Home page
-│   ├── globals.css           # Global styles
-│   └── favicon.ico
+src/app/
+├── _components/                # Shared components (underscore = not a route)
+│   ├── SurveyHourItem.tsx      # Shared row for a survey hour (used by surveys + grid)
+│   ├── api/                    # fetcher (swr + server), schema, helpers, url
+│   ├── cms/                    # (WordPress components live in shared package)
+│   ├── grid/                   # Map + grid tile components and helpers
+│   │   ├── BaseMap.tsx         # MapLibre base map (basemaps, grid overlay, outline)
+│   │   ├── GridTileSelectMap.tsx
+│   │   ├── SelectedGridTilesMap.tsx
+│   │   ├── GridTileTypeahead.tsx
+│   │   ├── GridTileCard(s).tsx
+│   │   ├── RecentGridTiles.tsx
+│   │   ├── helpers.ts          # getGridTileById, getUniqueGridTiles, getNeighbours, …
+│   │   └── types.ts
+│   ├── layout/                 # Header, Footer, MobileMenu, HomePageBanner, BodyWithClasses
+│   ├── providers/SWRProvider.tsx
+│   └── ui/                     # Page, Error, Spinner, Toast, MapLayerToggle
 │
-└── public/
-    └── images/
-        └── logo.svg
+├── about|instructions|legal/   # WordPress-backed CMS pages
+├── analysis/                   # Grid tile analysis map (+ actions, schema, styling)
+├── grid/                       # Grid tool + per-tile detail
+│   ├── _components/            # GridTool, GridTilePage, GridTileAnalysis, SurveyHours, graphs
+│   └── [id]/page.tsx
+├── submit/                     # Two-step submission flow
+│   ├── _components/            # Step1Form, Step2Form, fieldsets, SubmitBar
+│   ├── details/page.tsx        # Step 2 page
+│   ├── success/[id]/page.tsx
+│   ├── actions.ts              # getFieldOptions (OPTIONS), submitSurvey (POST)
+│   ├── schema.ts               # Zod schemas for both steps + payload type
+│   ├── constants.ts            # SEASONS, SURVEY_HOURS, MAX_GRID_TILES
+│   └── utils.ts                # season/hours helpers, payload transform
+├── surveys/                    # Survey list + detail (+ actions, schema)
+│
+├── css/                        # See "CSS Architecture" below
+├── layout.tsx                  # Root layout (fonts, providers, header/footer)
+└── page.tsx                    # Home
+
+public/
+├── geo/                        # tiles.json, tilesOutline.json (grid GeoJSON)
+└── images/, favicons, manifest
 ```
 
 ### Key Patterns
 
-**1. Server Actions for Data Fetching**
-```typescript
-// surveys/actions.ts
-"use server";
+**1. Server actions for data fetching** — each route owns an `actions.ts` (`"use server"`) that calls the shared `fetcher` with a Zod schema and `getApiUrl(path)`.
 
-export const getSurveys = async () =>
-  await fetcher(
-    `${process.env.NEXT_PUBLIC_API_BASE}/surveys/surveys/`,
-    SurveyApiListResponseSchema,
-  );
+```typescript
+export const getSurvey = async (id: number) =>
+  await fetcher(getApiUrl(`/surveys/surveys/${id}/`), SurveySchema);
 ```
 
-**2. Zod Schema Validation**
-```typescript
-// surveys/schema.ts
-export const SurveySchema = z.object({
-  id: z.number().int(),
-  observer: z.string(),
-  date: z.coerce.date(),
-  // ... more fields
-});
-```
+**2. Type-safe fetch results** — `fetcher` returns a discriminated union; pages branch on it:
 
-**3. Type-Safe Error Handling**
 ```typescript
-const surveyFetch = await getSurvey(id);
-
-if (!surveyFetch.success) {
-  if (surveyFetch.errorType === "NOT_FOUND") return notFound();
-  return <Error message="Error fetching surveys" />;
+const fetch = await getSurvey(id);
+if (!fetch.success) {
+  if (fetch.errorType === "NOT_FOUND") return notFound();
+  return <Error message="Error fetching survey" />;
 }
-
-const survey = surveyFetch.data; // Type-safe!
+const survey = fetch.data; // typed
 ```
 
-**4. Component Composition**
-```typescript
-// Page component system
-<Page.Container>
-  <Page.Heading>Title</Page.Heading>
-  <Page.Section>Content</Page.Section>
-</Page.Container>
-```
+**3. Client/server API base split** (`_components/api/url.ts`) — avoids CORS:
+- **Client**: `NEXT_PUBLIC_API_BASE` = `/api`, proxied to the backend via `next.config.ts` `rewrites()` (dev only).
+- **Server**: `BACKEND_API_BASE`, a direct backend URL.
 
-**5. WordPress CMS Pages**
-```typescript
-// Simple WordPress page rendering
-<WordPressPage id={474} />  // Fetches and renders page from WP
-```
+**4. Two-step submit form** (React Hook Form + Zod):
+- **Step 1** (`Step1Form`) collects observer + grid tiles, then navigates to `/submit/details` with data in URL params.
+- **Step 2** page fetches field metadata via an `OPTIONS` request (`getFieldOptions`), renders `Step2Form` with hour-by-hour fieldsets, and POSTs through `submitSurvey`.
+- Validation failures and submit errors both surface through a single `<Toast>`; `utils.transformFormDataToPayload` shapes the RHF state into the API payload.
+
+**5. Maps** — `BaseMap` wraps the shared `geospatial` `Map` with Mapbox + LINZ raster basemaps, an XYZ grid overlay, and the South Island outline. Specific maps (`GridTileSelectMap`, `SelectedGridTilesMap`, `analysis/GridTileAnalysesMap`) compose `BaseMap` with their own sources/layers and pass a `height` prop.
+
+**6. SWR provider** (`providers/SWRProvider.tsx`) — global `swrFetcher`, 24h `dedupingInterval`, `revalidateOnFocus: false`. Used by client components like `grid/_components/SurveyHours`.
+
+**7. Page composition** — `<Page.Container>`, `<Page.Heading>`, `<Page.Section>` for consistent page scaffolding.
+
+## CSS Architecture
+
+Vanilla CSS with a PostCSS pipeline (`postcss-nested` for nesting, `postcss-discard-comments`). Entry point `css/main.css` imports, in order:
+
+- `_variables.css` — CSS custom properties (colours, fonts, borders)
+- `partials/*` — `_normalize`, `_utilities`, `_layout`, `_data-table`, `_cards`, `_submit`, `_form`, `_buttons`, `_toast`, `_mobile-menu`, `_grid`, `_print`
+- `components/*` — per-component styles (`banner.css`, `survey.css`, `spinner.css`)
+
+**Conventions**:
+- `partials/` use a leading underscore (shared/base styles); `components/` do not (component-specific).
+- Component CSS is imported via the `@/app/css/components/<name>.css` alias from the component that uses it (e.g. `HomePageBanner` → `banner.css`, `surveys/[id]/page.tsx` → `survey.css`).
+- Fonts: **IBM Plex Sans** (body) and **Zilla Slab** (headings), loaded via `next/font/google` in `layout.tsx`.
 
 ## Environment Variables
 
 ```bash
-# Backend API
-NEXT_PUBLIC_API_BASE=https://dev.data.keadatabase.nz
+# Client uses the /api proxy (avoids CORS); production uses a full URL
+NEXT_PUBLIC_API_BASE=/api
+# Backend the Next.js proxy forwards to (dev only)
+BACKEND_API_BASE=https://dev.data.keadatabase.nz
 
-# WordPress CMS
 NEXT_PUBLIC_WORDPRESS_BASE=https://public-api.wordpress.com/wp/v2/sites/blog.keadatabase.nz
+
+NEXT_PUBLIC_MAPBOX_TOKEN=   # Mapbox basemap tiles
+NEXT_PUBLIC_LINZ_API_KEY=   # LINZ topo layers (optional)
 ```
+
+`next.config.ts` also sets `trailingSlash: true` (Django REST Framework expects trailing slashes).
 
 ## Backend API Integration
 
-**Base URL**: Configured via `NEXT_PUBLIC_API_BASE`
-**Framework**: Django REST Framework
-**Authentication**: JWT (not yet implemented in frontend)
+**Framework**: Django REST Framework. List endpoints use DRF pagination (`{ count, next, previous, results }`).
 
-### Current Endpoints Used
+### Endpoints used
 
-**Surveys**
-- `GET /surveys/surveys/` - List all surveys (paginated)
-- `GET /surveys/surveys/:id` - Get single survey detail
+- `GET /surveys/surveys/` , `/surveys/surveys/:id/` — survey list / detail
+- `GET /surveys/hours/` — survey hour observations
+- `GET /analysis/grid_tiles/` — grid tile analyses (for the analysis map)
+- `GET /analysis/surveys/:id/` — per-survey analysis
+- `OPTIONS /report/survey/` — form field metadata (activity choices, etc.)
+- `POST /report/survey/` — submit a survey
 
-### API Response Format
+## Survey Domain Rules
 
-All list endpoints follow Django REST Framework pagination:
-```typescript
-{
-  count: number;
-  next: string | null;      // URL to next page
-  previous: string | null;  // URL to previous page
-  results: T[];             // Array of results
-}
-```
-
-### Survey Data Model
-
-```typescript
-type Survey = {
-  id: number;
-  observer: string;
-  date: Date;
-  purpose: string;
-  comments: string;
-  max_flock_size: number | null;
-  status: string;
-  get_status_display: string;
-  date_created: Date;
-  date_updated: Date;
-  hours: SurveyHour[];
-};
-
-type SurveyHour = {
-  id: number;
-  hour: number;              // Hour of day (0-23)
-  kea: boolean;              // Was a kea observed?
-  activity: string;          // Activity code
-  get_hour_display: string;  // Human-readable hour
-  get_activity_display: string;  // Human-readable activity
-  survey: number;            // Survey ID (foreign key)
-  survey__date: Date;        // Denormalized survey date
-  grid_tile: string | null;  // Grid tile reference
-};
-```
-
-## Shared Package Utilities
-
-The app leverages the `shared` workspace package for common functionality:
-
-**API Utilities**
-- `fetcher(url, schema, init?)` - Type-safe fetch with Zod validation (shared/api/fetcher.ts:29)
-- Returns discriminated union: `{ success: true, data: T } | { success: false, errorType: ..., ... }`
-
-**UI Components**
-- `DateTime` - Formats dates with date-fns (shared/ui/DateTime.tsx:9)
-- Supports formats: "date", "time", "dateTime"
-
-**CMS Components**
-- `WordPressPage` - Renders WordPress page by ID (shared/cms/wordpress.tsx:58)
-- `WordPressPosts` - Renders WordPress posts (shared/cms/wordpress.tsx:125)
-
-**Next.js Types**
-- `PageWithParams` - Type for pages with route params (shared/next/types.d.ts:11)
-- `PageWithSearchParams` - Type for pages with query params (shared/next/types.d.ts:14)
-
-## Design Decisions
-
-### Why Next.js 16?
-- **React Compiler**: Automatic optimization of React components
-- **Server Components**: Better performance and SEO
-- **Type Safety**: Better TypeScript integration
-- **App Router**: Modern routing with layouts
-- **Future-proof**: Latest stable Next.js version
-
-### Why Zod?
-- **Runtime Validation**: Ensures API data matches expected types
-- **TypeScript Integration**: Automatic type inference from schemas
-- **Error Handling**: Detailed validation errors
-- **Coercion**: `z.coerce.date()` handles date string conversion
-
-### Why Server Actions?
-- **Simplicity**: No need for separate API route files
-- **Type Safety**: End-to-end type safety from server to client
-- **Caching**: Built-in request deduplication
-- **Progressive Enhancement**: Works without JavaScript
-
-### Why Workspace Package?
-- **Code Reuse**: Share utilities across multiple apps
-- **Consistency**: Same patterns in frontend-next, survey-next, map
-- **Maintenance**: Update in one place, benefits all apps
-
-## CSS Architecture
-
-**Approach**: Vanilla CSS with modern features
-**Font**: IBM Plex Sans (loaded via next/font/google)
-**Variables**: CSS custom properties for theming
-
-```css
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-body {
-  font-family: var(--font-ibm-plex-sans), Arial, Helvetica, sans-serif;
-}
-```
-
-**Layout**: Flexbox-based with semantic HTML
-**Future Consideration**: May add Tailwind or CSS-in-JS if complexity grows
-
-## Known Issues & Technical Debt
-
-1. **Error Boundaries**: Need proper error boundary implementation (Error.tsx:1 is basic)
-2. **Loading States**: No loading indicators for async operations
-3. **Pagination**: Survey list shows all results, needs pagination UI
-4. **Metadata**: Page metadata is basic, could be enhanced for SEO
-5. **Authentication**: Not yet implemented (needed for submit functionality)
-6. **TypeScript**: Some schemas marked as "TODO Provisional" (surveys/schema.ts:4)
-7. **WordPress Caching**: WordPress pages fetch on every request (consider ISR)
+Defined in `submit/constants.ts`:
+- **Seasons**: summer = Oct–Mar, winter = Apr–Sep
+- **Survey hours**: summer 6–20, winter 7–18
+- **Max grid tiles per survey**: 15
+- Activity codes map to FontAwesome icons in `SurveyHourItem` (`W` walking, `S` street-view, `C` campground, `H` home, `X` not surveying). `X` = "not surveying" and suppresses kea/tile fields.
 
 ## Development
 
-### Running Locally
-
-From repository root:
+From repo root:
 ```bash
 pnpm dev --filter=survey-next...
 ```
-
-From app directory:
+From this directory:
 ```bash
-pnpm dev
-```
-
-Access at: http://localhost:3000
-
-### Building
-
-```bash
+pnpm dev      # http://localhost:3000
 pnpm build
+pnpm lint     # eslint
+npx tsc --noEmit   # typecheck
 ```
 
-### Linting
+## Conventions & Notes
 
-```bash
-pnpm lint
-```
+- **React Compiler is enabled** — avoid manual `useMemo`/`useCallback` for optimization (some are kept where lint/Compiler requires, e.g. RHF `watch()` interop).
+- Server actions are marked `"use server"`; client components `"use client"`.
+- Files under `_components` are not routes (Next.js convention).
+- Comments use lowercase `//` single-line style; `// TODO` retained where present.
+- Dates from `<input type="date">` are parsed/validated in Zod and emitted as ISO date strings in the payload.
 
-## Next Steps (Priority Order)
+## Known Issues & Technical Debt
 
-### High Priority
-1. **Submit Survey Form** (submit/page.tsx)
-   - Multi-step form with React Hook Form + Zod
-   - Grid tile selection interface
-   - Hour-by-hour observation entry
-   - Photo upload support
-   - Form submission to backend API
+1. **Auth** not implemented — needed before any non-public/editing features.
+2. **No tests** — align strategy with other Next.js apps in the monorepo.
+3. **Pagination** — list views fetch a fixed page size; no paging UI.
+4. **WordPress pages** fetch per request (consider ISR).
+5. A few `any` types remain in form/fieldset typings and the API field-options schema (DRF OPTIONS shape varies).
+6. `MobileMenu` has an effect that calls `setState` synchronously (eslint flags it).
 
-2. **Grid Map** (grid/page.tsx)
-   - Integrate MapLibre GL from geospatial package
-   - Display grid tiles over NZ
-   - Show surveyed vs. unsurveyed tiles
-   - Enable tile selection for surveys
+## Migration from Legacy App (`apps/survey`)
 
-3. **Authentication**
-   - JWT token management
-   - Login/logout flow
-   - Protected routes (submit requires auth)
-   - User profile display
-
-### Medium Priority
-4. **Analysis Page** (analysis/page.tsx)
-   - Survey statistics dashboard
-   - Charts/graphs (consider recharts or similar)
-   - Export functionality
-
-5. **Pagination**
-   - Implement pagination UI for survey list
-   - Use DRF pagination links (next/previous)
-
-6. **Enhanced Survey Detail**
-   - Display hour-by-hour observations
-   - Show grid tile on map
-   - Link to related surveys
-
-### Low Priority
-7. **Testing**
-   - Add Vitest for unit tests
-   - Add Playwright for e2e tests
-
-8. **Accessibility**
-   - ARIA labels
-   - Keyboard navigation
-   - Screen reader optimization
-
-9. **Performance**
-   - Add loading states
-   - Implement ISR for WordPress pages
-   - Optimize images with next/image
-
-## Migration from Legacy App
-
-The original survey tool (apps/survey) has these features to migrate:
-
-**Completed**:
-- ✅ Basic navigation structure
-- ✅ Survey browsing
-- ✅ Survey detail view
-- ✅ CMS integration (About, Instructions, Legal)
-
-**TODO**:
-- ❌ Survey submission form
-- ❌ Grid map with tile selection
-- ❌ Analysis/statistics
-- ❌ User authentication
-- ❌ Observer management
-- ❌ Photo upload
-- ❌ Survey editing
-- ❌ CSV export
-
-## Reference Links
-
-- **Next.js Docs**: https://nextjs.org/docs
-- **React Compiler**: https://react.dev/learn/react-compiler
-- **Zod Docs**: https://zod.dev
-- **Main Kea Database**: https://keadatabase.nz
-- **Legacy Survey Tool**: https://survey.keadatabase.nz
-
-## Notes
-
-- React Compiler is enabled (next.config.ts:5) - avoid manual memoization
-- All dates are coerced from strings using `z.coerce.date()`
-- Server actions are marked with `"use server"` directive
-- Component files under `_components` are not routes (Next.js convention)
-- Public assets go in `/public` directory (currently just logo.svg)
-
-## Questions to Resolve
-
-1. **Form Library**: Should we use React Hook Form or Formik for submit form?
-   - Recommendation: React Hook Form (modern, smaller, better TypeScript)
-
-2. **Map Library**: MapLibre GL or Leaflet for grid map?
-   - Recommendation: MapLibre GL (already in geospatial package, more modern)
-
-3. **Charts**: Which charting library for analysis page?
-   - Options: Recharts, Victory, D3
-   - Need to evaluate based on requirements
-
-4. **State Management**: Do we need a state management library?
-   - Current: Using React Server Components + Server Actions
-   - May need Zustand or Jotai for complex client state in submit form
-
-5. **Testing**: What's the testing strategy?
-   - Need to align with other Next.js apps in monorepo
+**Done**: navigation/layout, survey browse + detail, grid tool + tile detail, analysis map, two-step submission, CMS pages.
+**TODO**: authentication, photo upload, survey editing, CSV export, observer management.
 
 ---
 
-## Development Roadmap
-
-This application is in the **foundation phase**. The current implementation provides:
-- ✅ Basic infrastructure and configuration
-- ✅ API integration patterns
-- ✅ Initial navigation and layout
-- ✅ Read-only survey browsing
-
-**Significant work remains**, including:
-- Complex form submission with multi-step flows
-- Interactive mapping with grid tile selection
-- Authentication and user management
-- Data analysis and visualization
-- Photo upload and management
-- Full feature parity with legacy survey.keadatabase.nz
-
-This is intended as a modern, maintainable foundation upon which to build the complete survey tool functionality.
-
----
-
-**Last Updated**: 2026-05-28
-**Next Review**: After submit form implementation
+**Last Updated**: 2026-06-14

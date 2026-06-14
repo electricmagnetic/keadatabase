@@ -1,6 +1,6 @@
-function Heading({ children, subheading }: React.PropsWithChildren<{ subheading?: React.ReactNode }>) {
+function Heading({ children, subheading, className }: React.PropsWithChildren<{ subheading?: React.ReactNode; className?: string }>) {
   return (
-    <div className="page__heading">
+    <div className={`page__heading${className ? ` ${className}` : ""}`}>
       <div className="holder holder--sm">
         <h1>{children}</h1>
         {subheading}

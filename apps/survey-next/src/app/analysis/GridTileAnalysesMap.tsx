@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useCallback } from "react";
 import { Source, Layer, Popup } from "react-map-gl/maplibre";
+import type { MapLayerMouseEvent } from "react-map-gl/maplibre";
 import Link from "next/link";
 import type { FeatureCollection, Polygon, Feature } from "geojson";
 
@@ -10,6 +11,7 @@ import { getGridTileById } from "../_components/grid/helpers";
 import type { GridTileProperties } from "../_components/grid/types";
 import { getAnalysisTileStyle } from "./styling";
 import type { GridTileAnalysis } from "./schema";
+import { MapLayerToggle } from "../_components/ui/MapLayerToggle";
 
 interface GridTileAnalysesMapProps {
   analyses: GridTileAnalysis[];
@@ -31,6 +33,7 @@ interface AnalysisFeatureProperties extends GridTileProperties {
  * - Orange tiles: surveyed with kea (darker = higher kea ratio)
  * - Grey tiles: surveyed without kea (darker = >10 hours)
  * - Popups showing statistics on click
+ * - Layer toggles for grid overlay
  */
 export function GridTileAnalysesMap({ analyses }: GridTileAnalysesMapProps) {
   console.log("=== MAP COMPONENT CLIENT DEBUG ===");
@@ -40,6 +43,26 @@ export function GridTileAnalysesMap({ analyses }: GridTileAnalysesMapProps) {
 
   const [selectedAnalysis, setSelectedAnalysis] =
     useState<GridTileAnalysis | null>(null);
+
+  // Layer visibility toggles
+  const [showGridOverlay, setShowGridOverlay] = useState(false);
+
+  // Handle tile clicks
+  const onTileClick = useCallback(
+    (event: MapLayerMouseEvent) => {
+      const feature = event.features?.[0];
+      if (!feature) return;
+
+      const analysisId = feature.properties?.analysis_id;
+      if (!analysisId) return;
+
+      const analysis = analyses.find((a) => a.id === analysisId);
+      if (analysis) {
+        setSelectedAnalysis(analysis);
+      }
+    },
+    [analyses],
+  );
 
   // Create GeoJSON with embedded style properties
   const analysesGeoJSON = useMemo<FeatureCollection<
@@ -110,95 +133,109 @@ export function GridTileAnalysesMap({ analyses }: GridTileAnalysesMapProps) {
     analysesGeoJSON?.features?.length,
   );
 
-  // Don't render anything if no valid data
-  if (!analysesGeoJSON) {
-    console.log("No GeoJSON to render - showing 'No analysis data'");
-    return (
-      <BaseMap hideGridTiles>
-        <div
-          style={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            background: "white",
-            padding: "20px",
-            borderRadius: "4px",
-            boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
-          }}
-        >
-          No analysis data to display
-        </div>
-      </BaseMap>
-    );
-  }
-
-  console.log("About to render BaseMap with Source component");
-  console.log("Source data:", analysesGeoJSON);
+  console.log("About to render BaseMap with conditional Source component");
 
   return (
-    <BaseMap hideGridTiles>
-      <Source type="geojson" data={analysesGeoJSON} id="analysis-tiles">
-        {/* Fill layer - use pre-computed colors from properties */}
-        <Layer
-          id="analysis-tiles-fill"
-          type="fill"
-          paint={{
-            "fill-color": ["get", "fill_color"],
-            "fill-opacity": ["get", "fill_opacity"],
-          }}
-        />
+    <div style={{ width: "100%", height: "860px", position: "relative" }}>
+      <MapLayerToggle
+        label="Grid Tiles"
+        checked={showGridOverlay}
+        onChange={setShowGridOverlay}
+      />
 
-        {/* Outline layer - use pre-computed colors from properties */}
-        <Layer
-          id="analysis-tiles-outline"
-          type="line"
-          paint={{
-            "line-color": ["get", "line_color"],
-            "line-width": 1,
-            "line-opacity": 0.6,
-          }}
-        />
-      </Source>
+      <BaseMap
+        hideGridTiles
+        showGridOverlay={showGridOverlay}
+        navigationPosition="top-left"
+        hideFullscreen
+        interactiveLayerIds={["analysis-tiles-fill"]}
+        onClick={onTileClick}
+        cursor="pointer"
+      >
+        {/* Only render Source/Layers when we have valid GeoJSON data */}
+        {analysesGeoJSON && (
+          <Source type="geojson" data={analysesGeoJSON} id="analysis-tiles">
+            {/* Fill layer - use pre-computed colors from properties */}
+            <Layer
+              id="analysis-tiles-fill"
+              type="fill"
+              paint={{
+                "fill-color": ["get", "fill_color"],
+                "fill-opacity": ["get", "fill_opacity"],
+              }}
+            />
 
-      {/* Popup for selected tile */}
-      {selectedAnalysis &&
-        (() => {
-          const tile = getGridTileById(selectedAnalysis.id);
-          if (!tile) return null;
+            {/* Outline layer - use pre-computed colors from properties */}
+            <Layer
+              id="analysis-tiles-outline"
+              type="line"
+              paint={{
+                "line-color": ["get", "line_color"],
+                "line-width": 1,
+                "line-opacity": 0.6,
+              }}
+            />
+          </Source>
+        )}
 
-          const [lng, lat] = tile.properties.centroid.coordinates;
+        {/* Show message when no data */}
+        {!analysesGeoJSON && (
+          <div
+            style={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              background: "white",
+              padding: "20px",
+              borderRadius: "4px",
+              boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
+              zIndex: 1,
+            }}
+          >
+            No analysis data to display
+          </div>
+        )}
 
-          return (
-            <Popup
-              longitude={lng}
-              latitude={lat}
-              onClose={() => setSelectedAnalysis(null)}
-              closeButton={true}
-              closeOnClick={false}
-            >
-              <div style={{ padding: "8px" }}>
-                <h3 style={{ margin: "0 0 8px 0" }}>{selectedAnalysis.id}</h3>
-                <dl style={{ margin: 0, fontSize: "14px" }}>
-                  <dt style={{ fontWeight: "bold" }}>Total hours:</dt>
-                  <dd style={{ margin: "0 0 4px 0" }}>
-                    {selectedAnalysis.hours_total.total}
-                  </dd>
-                  <dt style={{ fontWeight: "bold" }}>Hours with kea:</dt>
-                  <dd style={{ margin: "0 0 8px 0" }}>
-                    {selectedAnalysis.hours_total.with_kea}
-                  </dd>
-                </dl>
-                <Link
-                  href={`/grid/${selectedAnalysis.id}`}
-                  style={{ fontSize: "14px" }}
-                >
-                  View tile details →
-                </Link>
-              </div>
-            </Popup>
-          );
-        })()}
-    </BaseMap>
+        {/* Popup for selected tile */}
+        {selectedAnalysis &&
+          (() => {
+            const tile = getGridTileById(selectedAnalysis.id);
+            if (!tile) return null;
+
+            const [lng, lat] = tile.properties.centroid.coordinates;
+
+            return (
+              <Popup
+                longitude={lng}
+                latitude={lat}
+                onClose={() => setSelectedAnalysis(null)}
+                closeButton={true}
+                closeOnClick={false}
+              >
+                <div className="grid-tile__popup">
+                  <h3>{selectedAnalysis.id}</h3>
+                  <dl>
+                    <div>
+                      <dt>Total hours:</dt>
+                      <dd>{selectedAnalysis.hours_total.total}</dd>
+                    </div>
+                    <div>
+                      <dt>Hours with kea:</dt>
+                      <dd>{selectedAnalysis.hours_total.with_kea}</dd>
+                    </div>
+                  </dl>
+                  <Link
+                    href={`/grid/${selectedAnalysis.id}`}
+                    style={{ fontSize: "14px" }}
+                  >
+                    View
+                  </Link>
+                </div>
+              </Popup>
+            );
+          })()}
+      </BaseMap>
+    </div>
   );
 }

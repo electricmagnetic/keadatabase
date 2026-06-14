@@ -24,3 +24,19 @@
 .page__home .cards {
   --min-width: 120px;
 }
+
+.submit__tiles {
+  container-type: inline-size;
+  .cards {
+    --count: 3;
+    grid-template-columns: repeat(var(--count), minmax(0, 1fr));
+
+    @container (width < 550px) {
+      --count: 2;
+    }
+
+    @container (width < 200px) {
+      --count: 1;
+    }
+  }
+}

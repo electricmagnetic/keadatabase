@@ -1,6 +1,5 @@
 "use server";
 
-import fetcher from "shared/api/fetcher";
 import { z } from "zod";
 import type { SurveySubmissionPayload } from "./schema";
 import { getApiUrl } from "@/app/_components/api/url";
@@ -10,7 +9,7 @@ import { getApiUrl } from "@/app/_components/api/url";
  */
 const FieldOptionsSchema = z.object({
   actions: z.object({
-    POST: z.record(z.any()), // Field options structure varies
+    POST: z.record(z.string(), z.any()), // Field options structure varies
   }),
 });
 
@@ -91,15 +90,4 @@ export async function submitSurvey(payload: SurveySubmissionPayload) {
     console.error(error);
     return { success: false, error, errorType: "SCHEMA" } as const;
   }
-}
-
-/**
- * Get submitted survey details (for success page)
- *
- * @param id - Survey ID
- */
-export async function getSubmittedSurvey(id: number) {
-  const url = getApiUrl(`/report/survey/${id}/`);
-
-  return await fetcher(url, SurveySubmissionResponseSchema);
 }

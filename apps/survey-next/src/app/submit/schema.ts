@@ -35,28 +35,50 @@ export const Step1Schema = z.object({
   gridTiles: GridTilesSchema,
 });
 
+// Form schema - grid_tile is an array (for typeahead compatibility)
 export const SurveyHourSchema = z.object({
   hour: z.number().int().min(0).max(23),
   activity: z.string().min(1, MESSAGES.required),
   kea: z.boolean().nullable(),
-  grid_tile: z.string().nullable(),
+  grid_tile: z.array(z.string()).nullable(), // Array for typeahead
 });
 
-export const SurveyHourSchemaWithValidation = SurveyHourSchema.refine(
-  (data) => {
-    if (data.activity !== "X") {
-      return data.kea !== null && data.grid_tile !== null;
+// superRefine (not refine) so errors attach to the specific field paths
+// (activity / grid_tile) rather than the object root — RHF needs per-field
+// paths to surface field-level validation, and an object-root error would
+// otherwise clobber the per-field `activity` required error
+export const SurveyHourSchemaWithValidation = SurveyHourSchema.superRefine(
+  (data, ctx) => {
+    // when actively surveying, a grid tile must be chosen for the hour
+    if (data.activity !== "X" && data.activity !== "") {
+      if (data.grid_tile === null || data.grid_tile.length === 0) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: MESSAGES.required,
+          path: ["grid_tile"],
+        });
+      }
     }
-    return true;
-  },
-  {
-    message: "Kea observation and grid tile are required when activity is recorded",
   },
 );
 
+// accepts the raw string from <input type="date">; empty is "required",
+// unparseable is "format invalid", and a future date fails maxDate.
+// output is a Date so the payload transform can call toISOString()
+export const DateSchema = z
+  .string()
+  .min(1, MESSAGES.required)
+  .refine((value) => !Number.isNaN(new Date(value).getTime()), MESSAGES.date)
+  .transform((value) => new Date(value))
+  .refine((date) => {
+    const today = new Date();
+    today.setHours(23, 59, 59, 999);
+    return date.getTime() <= today.getTime();
+  }, MESSAGES.maxDate);
+
 export const Step2Schema = z.object({
   observer: ObserverSchema,
-  date: z.coerce.date().max(new Date(), MESSAGES.maxDate),
+  date: DateSchema,
   hours: z.array(SurveyHourSchemaWithValidation).min(1, MESSAGES.hourRequired),
   max_flock_size: z.number().int().min(0).nullable(),
   purpose: z.string().optional(),
@@ -68,9 +90,12 @@ export type Observer = z.infer<typeof ObserverSchema>;
 export type GridTiles = z.infer<typeof GridTilesSchema>;
 export type Step1FormData = z.infer<typeof Step1Schema>;
 export type SurveyHour = z.infer<typeof SurveyHourSchema>;
+// input type accepts the raw date string from <input type="date">,
+// output type (post-coercion) has date as a Date
+export type Step2FormInput = z.input<typeof Step2Schema>;
 export type Step2FormData = z.infer<typeof Step2Schema>;
 
-export type SurveySubmissionPayload = Omit<Step2FormData, "date"> & {
+export type SurveySubmissionPayload = Omit<Step2FormData, "date" | "hours"> & {
   date: string;
   hours: Array<Omit<SurveyHour, "grid_tile"> & { grid_tile: string }>;
 };

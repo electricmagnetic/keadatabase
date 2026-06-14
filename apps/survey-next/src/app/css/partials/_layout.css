@@ -131,6 +131,10 @@
       font-weight: 300;
       margin-top: 0;
     }
+
+    &.sub-heading--sm p {
+      font-size: 1rem;
+    }
   }
 
   &__section {

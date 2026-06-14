@@ -26,7 +26,7 @@ export function GridTileCard({
   const tileData = gridTile.properties;
 
   return (
-    <div className="card my-3">
+    <div className="grid-card">
       {!hideImage && (
         <img
           src={tileData.get_large_image}
@@ -34,47 +34,30 @@ export function GridTileCard({
           className="card-img-top"
         />
       )}
-      <div className="card-body">
-        <h2 className="card-title d-flex justify-content-between align-items-center">
-          <span>
-            {addLink ? <Link href={`/grid/${id}`}>{id}</Link> : id}
-          </span>
-          {onRemove && (
-            <button
-              type="button"
-              className="btn btn-sm btn-outline-danger"
-              onClick={() => onRemove(id)}
-              aria-label={`Remove ${id}`}
-            >
-              ×
-            </button>
-          )}
+      <div className="grid-card__body">
+        <h2 className="grid-card__title">
+          <i className="fas fa-map-marker-alt"></i>
+          {addLink ? <Link href={`/grid/${id}`}>{id}</Link> : id}
         </h2>
         {!hideDetails && (
-          <div className="card-text">
-            <dl className="m-0">
-              <div className="row">
-                <div className="col-6">
-                  <dt>
-                    SW <small>NZTM</small>
-                  </dt>
-                  <dd>
-                    {tileData.min.coordinates[0]},{" "}
-                    {tileData.min.coordinates[1]}
-                  </dd>
-                </div>
-                <div className="col-6">
-                  <dt>
-                    NE <small>NZTM</small>
-                  </dt>
-                  <dd>
-                    {tileData.max.coordinates[0]},{" "}
-                    {tileData.max.coordinates[1]}
-                  </dd>
-                </div>
-              </div>
-            </dl>
-          </div>
+          <dl>
+            <div>
+              <dt>
+                SW <small>NZTM</small>
+              </dt>
+              <dd>
+                {tileData.min.coordinates[0]}, {tileData.min.coordinates[1]}
+              </dd>
+            </div>
+            <div>
+              <dt>
+                NE <small>NZTM</small>
+              </dt>
+              <dd>
+                {tileData.max.coordinates[0]}, {tileData.max.coordinates[1]}
+              </dd>
+            </div>
+          </dl>
         )}
       </div>
     </div>

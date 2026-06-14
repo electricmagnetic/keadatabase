@@ -1,0 +1,13 @@
+.survey-details {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+
+  dt {
+    font-weight: bold;
+  }
+
+  dd {
+    margin-top: 0;
+  }
+}

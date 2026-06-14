@@ -34,3 +34,17 @@ export function searchGridTiles(query: string): string[] {
     .map((tile) => tile.id)
     .slice(0, 50);
 }
+
+export function getNeighbours(gridTileIds: string[]): string[] {
+  return [
+    ...new Set(
+      gridTileIds
+        .map((gridTileId) => {
+          const tile = getGridTileById(gridTileId);
+          return tile?.properties.neighbours || [];
+        })
+        .flat()
+        .filter((neighbourId) => !gridTileIds.includes(neighbourId)),
+    ),
+  ];
+}

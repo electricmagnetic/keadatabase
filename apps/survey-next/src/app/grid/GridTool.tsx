@@ -29,7 +29,7 @@ export function GridTool() {
   return (
     <div>
       {selectedTiles.length > 0 && (
-        <h2>
+        <h2 className="print-only">
           <small>Grid Tiles, Kea Survey Tool</small>
           <br />
           {selectedTiles.join(" ")}
@@ -37,7 +37,7 @@ export function GridTool() {
       )}
 
       <div className="submit__grid">
-        <div className="submit__map">
+        <div className="submit__map" style={{ height: "860px" }}>
           <GridTileSelectMap
             selectedTiles={selectedTiles}
             onSelectionChange={setSelectedTiles}
@@ -45,13 +45,12 @@ export function GridTool() {
         </div>
 
         <div className="submit__tiles submit__tiles--offset">
-          <div className="bg-light p-3">
-            <div className="d-print-none mb-3">
+          <div>
+            <div className="desktop-only">
               <label htmlFor="gridTileSearch">Select grid tiles to view</label>
               <GridTileTypeahead
                 selectedTiles={selectedTiles}
                 onSelectionChange={setSelectedTiles}
-                autoFocus
               />
             </div>
 
@@ -67,7 +66,7 @@ export function GridTool() {
                   />
                 ))
               ) : (
-                <div>No grid tiles selected</div>
+                <div className="no-results">No grid tiles selected</div>
               )}
             </div>
 

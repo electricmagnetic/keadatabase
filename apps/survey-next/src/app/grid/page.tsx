@@ -48,7 +48,7 @@ export default function GridPage() {
 
       <GridTool />
 
-      <Page.Section className="page__section--bg-cream">
+      <Page.Section className="page__section--bg-cream desktop-only">
         <h2>Download Grid</h2>
         <p>
           The kea survey grid is based on the{" "}

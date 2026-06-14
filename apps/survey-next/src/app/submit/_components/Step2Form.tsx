@@ -5,10 +5,19 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useState, useMemo } from "react";
 
+import { Messages } from "../_components/Messages";
 import { TripFieldset } from "../_components/TripFieldset";
 import { SurveyHourFieldset } from "../_components/SurveyHourFieldset";
 import { FurtherInformationFieldset } from "../_components/FurtherInformationFieldset";
-import { Step2Schema, type Step2FormData, type Observer } from "../schema";
+import { SubmitBar } from "../_components/SubmitBar";
+import { Toast } from "@/app/_components/ui/Toast";
+import Page from "@/app/_components/ui/Page";
+import {
+  Step2Schema,
+  type Step2FormInput,
+  type Step2FormData,
+  type Observer,
+} from "../schema";
 import { generateInitialHours, transformFormDataToPayload } from "../utils";
 import { submitSurvey } from "../actions";
 
@@ -28,7 +37,11 @@ interface Step2FormProps {
  *
  * On submit: Posts to API and redirects to success page
  */
-export function Step2Form({ observer, gridTiles, fieldOptions }: Step2FormProps) {
+export function Step2Form({
+  observer,
+  gridTiles,
+  fieldOptions,
+}: Step2FormProps) {
   const router = useRouter();
   const [submitError, setSubmitError] = useState<string | null>(null);
 
@@ -43,17 +56,17 @@ export function Step2Form({ observer, gridTiles, fieldOptions }: Step2FormProps)
   const defaultValues = useMemo(
     () => ({
       observer,
-      date: todayDate,
+      date: "", // empty so the field shows "required" on blur (matches Step 1)
       hours: generateInitialHours(todayDate, gridTiles),
       max_flock_size: null,
       purpose: "",
       comments: "",
       challenge: "kea", // Anti-spam field (fixed value)
     }),
-    [observer, todayDate, gridTiles]
+    [observer, todayDate, gridTiles],
   );
 
-  const methods = useForm<Step2FormData>({
+  const methods = useForm<Step2FormInput, unknown, Step2FormData>({
     resolver: zodResolver(Step2Schema),
     mode: "onTouched", // Validate on blur first, then on change
     reValidateMode: "onChange", // Revalidate on every change after first blur
@@ -61,10 +74,7 @@ export function Step2Form({ observer, gridTiles, fieldOptions }: Step2FormProps)
     defaultValues,
   });
 
-  const {
-    handleSubmit,
-    formState: { isSubmitting },
-  } = methods;
+  const { handleSubmit } = methods;
 
   const onSubmit = async (data: Step2FormData) => {
     setSubmitError(null);
@@ -90,49 +100,35 @@ export function Step2Form({ observer, gridTiles, fieldOptions }: Step2FormProps)
 
   return (
     <FormProvider {...methods}>
-      <form onSubmit={handleSubmit(onSubmit)} className="submit-page">
-        <div className="container">
-          {submitError && (
-            <div className="alert alert-danger" role="alert">
-              <i className="fas fa-exclamation-triangle me-2"></i>
-              {submitError}
+      <Toast message={submitError} onDismiss={() => setSubmitError(null)} />
+      <section className="form">
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <Page.Section>
+            <h2>Step 2: Survey Details</h2>
+
+            <Messages />
+
+            <div className="form__fields">
+              <TripFieldset
+                observerName={observer.name}
+                observerEmail={observer.email}
+                gridTiles={gridTiles}
+                fieldOptions={fieldOptions}
+              />
+
+              <SurveyHourFieldset
+                gridTiles={gridTiles}
+                fieldOptions={fieldOptions?.hours?.child?.children}
+              />
+
+              <FurtherInformationFieldset />
             </div>
-          )}
 
-          <TripFieldset
-            observerName={observer.name}
-            observerEmail={observer.email}
-            gridTiles={gridTiles}
-            fieldOptions={fieldOptions}
-          />
+          </Page.Section>
 
-          <SurveyHourFieldset gridTiles={gridTiles} fieldOptions={fieldOptions} />
-
-          <FurtherInformationFieldset />
-        </div>
-
-        {/* Fixed submit bar */}
-        <div className="submit-bar fixed-bottom d-print-none">
-          <div className="container">
-            <div className="row align-items-center">
-              <div className="col-8">
-                {isSubmitting && (
-                  <span className="spinner-border spinner-border-sm me-2"></span>
-                )}
-              </div>
-              <div className="col-4 text-end">
-                <button
-                  type="submit"
-                  className="btn btn-primary"
-                  disabled={isSubmitting}
-                >
-                  Submit
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </form>
+          <SubmitBar buttonText="Submit" />
+        </form>
+      </section>
     </FormProvider>
   );
 }

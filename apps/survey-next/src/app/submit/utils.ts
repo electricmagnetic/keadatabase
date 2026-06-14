@@ -3,7 +3,7 @@ import type { SurveyHour, SurveySubmissionPayload, Step2FormData } from "./schem
 
 export function getCurrentSeason(date: Date = new Date()): Season {
   const month = date.getMonth() + 1;
-  return SEASONS.summer.includes(month) ? "summer" : "winter";
+  return (SEASONS.summer as readonly number[]).includes(month) ? "summer" : "winter";
 }
 
 export function getSurveyHoursForSeason(season: Season): readonly number[] {
@@ -19,28 +19,33 @@ export function generateInitialHours(
   date: Date,
   gridTiles?: string[],
 ): SurveyHour[] {
-  const hours = getSurveyHoursForDate(date);
-  const singleGridTile = gridTiles?.length === 1 ? gridTiles[0] : null;
+  // Always use summer hours which includes all possible hours (6-20)
+  // Hours 6, 19, 20 will show "summer only" in the UI
+  const hours = SURVEY_HOURS.summer;
+  // grid_tile is an array of one for typeahead compatibility
+  const singleGridTile = gridTiles?.length === 1 ? [gridTiles[0]] : [];
 
   return hours.map((hour) => ({
     hour,
     activity: "",
-    kea: null,
-    grid_tile: singleGridTile,
+    kea: false,
+    grid_tile: singleGridTile.length > 0 ? singleGridTile : null,
   }));
 }
 
 export function transformFormDataToPayload(
   formData: Step2FormData,
 ): SurveySubmissionPayload {
+  const { date, hours, ...rest } = formData;
   return {
-    ...formData,
-    date: formData.date.toISOString().split("T")[0],
-    hours: formData.hours
-      .filter((hour) => hour.grid_tile !== null)
-      .map((hour) => ({
+    ...rest,
+    date: date.toISOString().split("T")[0],
+    hours: hours
+      .filter((hour) => hour.grid_tile !== null && hour.grid_tile.length > 0)
+      .map(({ grid_tile, ...hour }) => ({
         ...hour,
-        grid_tile: hour.grid_tile!,
+        // transform array of one to string for API
+        grid_tile: grid_tile![0],
       })),
   };
 }

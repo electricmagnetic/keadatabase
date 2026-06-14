@@ -52,10 +52,6 @@
     display: none;
     padding-inline: 2rem;
 
-    @container (max-width: 1000px) {
-      max-width: 500px;
-    }
-
     @media (max-width: 910px) {
       display: block;
     }

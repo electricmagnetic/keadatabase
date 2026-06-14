@@ -1,6 +1,6 @@
 import { type Metadata } from "next";
 import { redirect } from "next/navigation";
-import { Step2Form } from "./Step2Form";
+import { Step2Form } from "../_components/Step2Form";
 import { getFieldOptions } from "../actions";
 import Error from "@/app/_components/ui/Error";
 import type { Observer } from "../schema";

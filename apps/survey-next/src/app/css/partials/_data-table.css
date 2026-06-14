@@ -16,11 +16,29 @@
     @media (width < 700px) {
       grid-template-columns: 1fr;
     }
+
+    &.hasKea {
+      background-color: var(--kea);
+    }
   }
 
   &--surveys .data-table__row {
     grid-template-columns: 9% 16% 25% 34% 16%;
 
+    @media (width < 700px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &--survey .data-table__row {
+    grid-template-columns: 16% 33% 16% 32%;
+    @media (width < 700px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &--hours .data-table__row {
+    grid-template-columns: 16% 16% 33% 16% 16%;
     @media (width < 700px) {
       grid-template-columns: 1fr;
     }
@@ -32,5 +50,31 @@
 
   a + a {
     margin-left: 0.5rem;
+  }
+}
+
+.table {
+  color: var(--black);
+  margin-bottom: 1rem;
+  width: 100%;
+  border: 1px solid #dee2e6;
+  border-collapse: collapse;
+
+  th,
+  td {
+    border: 1px solid #dee2e6;
+    padding: 0.75rem;
+    vertical-align: top;
+  }
+
+  thead th {
+    vertical-align: bottom;
+    border-bottom-width: 2px;
+    text-align: left;
+  }
+
+  tr.summer {
+    background-color: #ffeeba;
+    border-color: #ffdf7e;
   }
 }

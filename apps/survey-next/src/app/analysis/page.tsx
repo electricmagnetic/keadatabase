@@ -3,6 +3,7 @@ import { type Metadata } from "next";
 import Error from "@/app/_components/ui/Error";
 import { getGridTileAnalyses } from "./actions";
 import { AnalysisMapClient } from "./AnalysisMapClient";
+import Page from "@/app/_components/ui/Page";
 
 export const metadata: Metadata = {
   title: "Analysis | Kea Survey",
@@ -40,48 +41,32 @@ export default async function AnalysisPage() {
   console.log("first analysis:", analyses?.[0]);
 
   return (
-    <main className="page">
-      {/* Header section */}
-      <section className="d-print-none">
-        <div className="bg-light py-5">
-          <div className="container">
-            <h1>Analysis</h1>
-            <p className="mb-2">
-              <strong className="text-danger">Orange tiles:</strong> surveyed,
-              kea observed.{" "}
-              <small className="text-muted">
-                Darker orange denotes higher proportion of kea to hours
-                surveyed.
-              </small>
+    <Page.Container>
+      <Page.Heading
+        className="sub-heading--sm"
+        subheading={
+          <>
+            <p>
+              Orange tiles: surveyed, kea observed. Darker orange denotes higher
+              proportion of kea to hours surveyed.
+              <br />
+              Grey tiles: surveyed, kea not observed. Darker grey denotes
+              greater than ten hours surveyed.
             </p>
-            <p className="mb-2">
-              <strong>Grey tiles:</strong> surveyed, kea not observed.{" "}
-              <small className="text-muted">
-                Darker grey denotes greater than ten hours surveyed.
-              </small>
-            </p>
-            <p className="mb-0">
-              <small className="text-muted">
-                Showing {analyses.length} grid tiles with survey data
-              </small>
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Map section */}
+          </>
+        }
+      >
+        Analysis
+      </Page.Heading>
       <section>
         {analyses.length > 0 ? (
           <AnalysisMapClient analyses={analyses} />
         ) : (
-          <div className="container my-5">
-            <div className="alert alert-info">
-              <i className="fas fa-info-circle me-2"></i>
-              No analysis data available yet.
-            </div>
+          <div>
+            <div>No analysis data available yet.</div>
           </div>
         )}
       </section>
-    </main>
+    </Page.Container>
   );
 }

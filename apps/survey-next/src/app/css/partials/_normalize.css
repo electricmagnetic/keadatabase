@@ -90,7 +90,9 @@ code,
 kbd,
 samp {
   font-family: monospace, monospace;
-  font-size: 1em;
+  word-wrap: break-word;
+  color: #e83e8c;
+  font-size: 87.5%;
 }
 
 small {
@@ -244,6 +246,7 @@ h5,
 h6 {
   text-wrap: balance;
   font-family: var(--font-alt);
+  font-weight: 500;
 }
 
 .h1,
@@ -344,4 +347,33 @@ textarea {
   color: var(--text-color);
   -webkit-font-smoothing: antialiased;
   font-weight: 300;
+}
+
+.print-only {
+  display: none;
+  @media print {
+    display: block;
+  }
+}
+
+.desktop-only {
+  display: block;
+  @media print {
+    display: none;
+  }
+}
+
+dl + dl {
+  margin-top: 1rem;
+}
+
+dt {
+  font-weight: bold;
+  small {
+    font-weight: normal;
+  }
+}
+
+dd {
+  margin-top: 0;
 }

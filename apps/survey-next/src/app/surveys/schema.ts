@@ -36,3 +36,10 @@ export const SurveyApiListResponseSchema = ApiListResponseSchema.extend({
 export const SurveyHourApiListResponseSchema = ApiListResponseSchema.extend({
   results: z.array(SurveyHourSchema),
 });
+
+export const SurveyAnalysisSchema = z.object({
+  hours_total: z.object({
+    with_kea: z.number().int(),
+    surveyed: z.number().int(),
+  }),
+});

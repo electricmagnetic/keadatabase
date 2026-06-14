@@ -1,26 +1,33 @@
 "use client";
 
-import { useEffect } from "react";
-import { Source, Layer, Popup } from "react-map-gl/maplibre";
-import type { MapLibreEvent } from "react-map-gl/maplibre";
-import { ZoomToGeoJSON } from "geospatial/layers";
+import { useEffect, useRef, useState } from "react";
+import { Source, Layer, Marker } from "react-map-gl/maplibre";
+import type { MapRef } from "react-map-gl/maplibre";
+import type { MapLayerMouseEvent } from "maplibre-gl";
 import type { FeatureCollection, Polygon } from "geojson";
+import { bbox, centerOfMass } from "@turf/turf";
 
 import { BaseMap } from "./BaseMap";
 import { getGridTileByCoordinates, getGridTileById } from "./helpers";
 import type { GridTileId, GridTileProperties } from "./types";
+import { MapLayerToggle } from "../ui/MapLayerToggle";
 
 interface GridTileSelectMapProps {
   selectedTiles: GridTileId[];
   onSelectionChange: (tiles: GridTileId[]) => void;
   maxTiles?: number;
+  height?: string;
 }
 
 export function GridTileSelectMap({
   selectedTiles,
   onSelectionChange,
   maxTiles = 15,
+  height = "500px",
 }: GridTileSelectMapProps) {
+  const mapRef = useRef<MapRef>(null);
+  const [showGridOverlay, setShowGridOverlay] = useState(true);
+
   const selectedTilesGeoJSON: FeatureCollection<
     Polygon,
     GridTileProperties
@@ -36,69 +43,122 @@ export function GridTileSelectMap({
         }
       : null;
 
-  const handleMapClick = (event: MapLibreEvent) => {
+  // Auto-zoom to selected tiles or reset to initial view when cleared
+  useEffect(() => {
+    if (!mapRef.current) return;
+
+    if (selectedTilesGeoJSON && selectedTiles.length > 0) {
+      // Zoom to selected tiles
+      const bounds = bbox(selectedTilesGeoJSON);
+      const [minLng, minLat, maxLng, maxLat] = bounds;
+
+      mapRef.current.fitBounds(
+        [
+          [minLng, minLat],
+          [maxLng, maxLat],
+        ],
+        {
+          padding: 60,
+          maxZoom: 11,
+          duration: 1000,
+        }
+      );
+    } else if (selectedTiles.length === 0) {
+      // Reset to initial view when all tiles are cleared
+      mapRef.current.flyTo({
+        center: [170.45, -43.9],
+        zoom: 6,
+        duration: 1000,
+      });
+    }
+  }, [selectedTilesGeoJSON, selectedTiles.length]);
+
+  const handleMapClick = (event: MapLayerMouseEvent) => {
     const { lat, lng } = event.lngLat;
     const clickedTile = getGridTileByCoordinates(lat, lng);
 
-    if (!clickedTile) return;
+    if (!clickedTile) {
+      return;
+    }
 
     const tileId = clickedTile.id;
     const isSelected = selectedTiles.includes(tileId);
 
     if (isSelected) {
-      onSelectionChange(selectedTiles.filter((id) => id !== tileId));
+      const newTiles = selectedTiles.filter((id) => id !== tileId);
+      onSelectionChange(newTiles);
     } else {
       if (selectedTiles.length < maxTiles) {
-        onSelectionChange([...selectedTiles, tileId]);
-      } else {
-        console.warn(`Maximum of ${maxTiles} tiles can be selected`);
+        const newTiles = [...selectedTiles, tileId];
+        onSelectionChange(newTiles);
       }
     }
   };
 
   return (
-    <BaseMap onClick={handleMapClick} showGridOverlay={true}>
+    <div style={{ width: "100%", height, position: "relative" }}>
+      <MapLayerToggle
+        label="Grid Tiles"
+        checked={showGridOverlay}
+        onChange={setShowGridOverlay}
+      />
+
+      <BaseMap
+        ref={mapRef}
+        onClick={handleMapClick}
+        showGridOverlay={showGridOverlay}
+        navigationPosition="top-left"
+        hideFullscreen
+        cursor="pointer"
+        interactiveLayerIds={["all-grid-tiles-layer"]}
+      >
       {selectedTilesGeoJSON && (
         <>
           <Source data={selectedTilesGeoJSON} type="geojson" id="selected-tiles">
             <Layer
-              id="selected-tiles-fill"
-              type="fill"
-              paint={{
-                "fill-color": "#df5206",
-                "fill-opacity": 0.3,
-              }}
-            />
-
-            <Layer
               id="selected-tiles-outline"
               type="line"
               paint={{
-                "line-color": "#df5206",
-                "line-width": 2,
-                "line-opacity": 0.8,
-              }}
-            />
-
-            <Layer
-              id="selected-tiles-labels"
-              type="symbol"
-              layout={{
-                "text-field": ["get", "id"],
-                "text-size": 14,
-                "text-font": ["Open Sans Bold", "Arial Unicode MS Bold"],
-              }}
-              paint={{
-                "text-color": "#333333",
-                "text-halo-color": "#ffffff",
-                "text-halo-width": 2,
+                "line-color": "#ff0000",
+                "line-width": 3,
               }}
             />
           </Source>
 
-          <ZoomToGeoJSON geoJson={selectedTilesGeoJSON} />
+          {/* Labels as Markers for each selected tile */}
+          {selectedTilesGeoJSON.features.map((feature) => {
+            const center = centerOfMass(feature);
+            const [lng, lat] = center.geometry.coordinates;
+
+            return (
+              <Marker
+                key={feature.id}
+                longitude={lng}
+                latitude={lat}
+                anchor="center"
+              >
+                <div
+                  style={{
+                    backgroundColor: "#ffffff",
+                    padding: "3px 6px",
+                    borderRadius: "3px",
+                    fontWeight: "normal",
+                    fontSize: "12px",
+                    fontFamily: "Arial, Helvetica, sans-serif",
+                    color: "#000000",
+                    whiteSpace: "nowrap",
+                    boxShadow: "0 1px 3px rgba(0,0,0,0.3)",
+                    pointerEvents: "none",
+                  }}
+                >
+                  {feature.id}
+                </div>
+              </Marker>
+            );
+          })}
         </>
       )}
-    </BaseMap>
+      </BaseMap>
+    </div>
   );
 }

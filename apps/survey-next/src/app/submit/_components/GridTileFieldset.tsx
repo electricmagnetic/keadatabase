@@ -1,18 +1,18 @@
 "use client";
 
-import { useFormContext } from "react-hook-form";
+import { useFormContext, useWatch } from "react-hook-form";
 import { GridTileTypeahead } from "../../_components/grid/GridTileTypeahead";
 import type { Step1FormData } from "../schema";
 import { MAX_GRID_TILES } from "../constants";
 
 export function GridTileFieldset() {
   const {
-    watch,
+    control,
     setValue,
     formState: { errors, touchedFields },
   } = useFormContext<Step1FormData>();
 
-  const gridTiles = watch("gridTiles") || [];
+  const gridTiles = useWatch({ control, name: "gridTiles" }) || [];
 
   const handleSelectionChange = (tiles: string[]) => {
     setValue("gridTiles", tiles, { shouldValidate: true, shouldTouch: true });

@@ -4,11 +4,12 @@ import { useForm, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 
-import { GridTileSelectMap } from "../_components/grid/GridTileSelectMap";
-import { ObserverFieldset } from "./_components/ObserverFieldset";
-import { GridTileFieldset } from "./_components/GridTileFieldset";
-import { SelectedGridTiles } from "./_components/SelectedGridTiles";
-import { Step1Schema, type Step1FormData } from "./schema";
+import { GridTileSelectMap } from "../../_components/grid/GridTileSelectMap";
+import { ObserverFieldset } from "./ObserverFieldset";
+import { GridTileFieldset } from "./GridTileFieldset";
+import { SelectedGridTiles } from "./SelectedGridTiles";
+import { Step1Schema, type Step1FormData } from "../schema";
+import { SubmitBar } from "./SubmitBar";
 import Page from "@/app/_components/ui/Page";
 /**
  * Step 1: Observer and Grid Tile Selection Form
@@ -36,12 +37,7 @@ export function Step1Form() {
     },
   });
 
-  const {
-    handleSubmit,
-    watch,
-    setValue,
-    formState: { isSubmitting, isValid },
-  } = methods;
+  const { handleSubmit, watch, setValue } = methods;
 
   const gridTiles = watch("gridTiles") || [];
 
@@ -49,7 +45,7 @@ export function Step1Form() {
     setValue("gridTiles", tiles, { shouldValidate: true });
   };
 
-  const onSubmit = (data: Step1FormData) => {
+  const onSubmit = async (data: Step1FormData) => {
     // Encode form data as URL params
     const params = new URLSearchParams();
     params.set("observer_name", data.observer.name);
@@ -58,8 +54,10 @@ export function Step1Form() {
       params.append("gridTiles", tile);
     });
 
-    // Navigate to Step 2
+    // Navigate to Step 2 — keep isSubmitting true through the navigation
+    // so the SubmitBar shows its loading state
     router.push(`/submit/details?${params.toString()}`);
+    await new Promise(() => {});
   };
 
   return (
@@ -79,6 +77,7 @@ export function Step1Form() {
             <GridTileSelectMap
               selectedTiles={gridTiles}
               onSelectionChange={handleMapSelectionChange}
+              height="860px"
             />
           </div>
           <div className="submit__tiles">
@@ -86,24 +85,7 @@ export function Step1Form() {
           </div>
         </div>
 
-        <div className="submit__bar">
-          <div className="holder holder--sm">
-            <div>
-              {!isValid && (
-                <small>Form can be submitted once data entered.</small>
-              )}
-            </div>
-            <div>
-              <button
-                type="submit"
-                className="btn btn--primary"
-                disabled={!isValid}
-              >
-                Next
-              </button>
-            </div>
-          </div>
-        </div>
+        <SubmitBar buttonText="Next" />
       </form>
     </FormProvider>
   );

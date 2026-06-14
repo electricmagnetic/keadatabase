@@ -1,3 +1,10 @@
+.success__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
 .submit {
   &__bar {
     position: fixed;
@@ -29,6 +36,10 @@
     }
   }
 
+  &__map {
+    min-height: 860px;
+  }
+
   &__tiles {
     border: 1px solid var(--border-color);
     padding: 1rem;
@@ -40,6 +51,17 @@
 
     &--offset {
       margin-top: 2rem;
+    }
+
+    .grid-tile-typeahead {
+      margin-block: 1rem;
+    }
+
+    .no-results {
+      font-style: italic;
+      padding: 0.75rem 1.25rem;
+      background-color: hsla(44, 34%, 85%, 0.5);
+      border: 1px solid #e6dfcc;
     }
   }
 }

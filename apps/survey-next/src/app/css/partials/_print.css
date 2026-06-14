@@ -3,16 +3,15 @@
  */
 
 @media print {
+  :root {
+    --border-color: transparent !important;
+  }
+
   /* Hide navigation and non-essential elements */
   header,
   footer,
-  .d-print-none {
+  .page__heading {
     display: none !important;
-  }
-
-  /* Show print-specific elements */
-  .d-print-block {
-    display: block !important;
   }
 
   /* Ensure proper page breaks */

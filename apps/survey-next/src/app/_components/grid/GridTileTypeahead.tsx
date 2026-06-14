@@ -1,125 +1,81 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { searchGridTiles } from "./helpers";
-import type { GridTileId } from "./types";
+import { Typeahead } from "react-bootstrap-typeahead";
+import "react-bootstrap-typeahead/css/Typeahead.css";
+
+import tiles from "../../../../public/geo/tiles.json";
+import type { GridTileId, GridTilesCollection } from "./types";
 
 interface GridTileTypeaheadProps {
   selectedTiles: GridTileId[];
   onSelectionChange: (tiles: GridTileId[]) => void;
+  onBlur?: () => void;
   maxTiles?: number;
   placeholder?: string;
-  autoFocus?: boolean;
+  options?: string[]; // Optional: limit to specific tiles
 }
 
 export function GridTileTypeahead({
   selectedTiles,
   onSelectionChange,
+  onBlur,
   maxTiles = 15,
-  placeholder = "Search grid tiles (e.g., BQ48-NE)...",
-  autoFocus = false,
+  placeholder = "Grid ID (XXXX-XX)",
+  options,
 }: GridTileTypeaheadProps) {
-  const [query, setQuery] = useState("");
-  const [suggestions, setSuggestions] = useState<string[]>([]);
-  const [showSuggestions, setShowSuggestions] = useState(false);
-
-  useEffect(() => {
-    if (query.trim().length > 0) {
-      const results = searchGridTiles(query);
-      const filteredResults = results.filter(
-        (id) => !selectedTiles.includes(id),
-      );
-      setSuggestions(filteredResults);
-      setShowSuggestions(true);
-    } else {
-      setSuggestions([]);
-      setShowSuggestions(false);
-    }
-  }, [query, selectedTiles]);
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setQuery(e.target.value);
-  };
-
-  const handleSelectTile = (tileId: string) => {
-    if (selectedTiles.length < maxTiles) {
-      onSelectionChange([...selectedTiles, tileId]);
-      setQuery("");
-      setSuggestions([]);
-      setShowSuggestions(false);
-    }
-  };
-
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter" && suggestions.length === 1) {
-      e.preventDefault();
-      handleSelectTile(suggestions[0]);
-    }
-  };
+  const tilesData = tiles as GridTilesCollection;
+  const allTileIds = tilesData.features.map((feature) => feature.id);
+  const availableOptions = options || allTileIds;
+  const isFull = selectedTiles.length >= maxTiles;
 
   return (
-    <div className="grid-tile-typeahead" style={{ position: "relative" }}>
-      <input
-        type="text"
-        value={query}
-        onChange={handleInputChange}
-        onKeyDown={handleKeyDown}
+    <div
+      className={`grid-tile-typeahead${isFull ? " grid-tile-typeahead--full" : ""}`}
+    >
+      <Typeahead
+        id="grid-tile-typeahead"
+        multiple
+        options={availableOptions}
+        selected={selectedTiles}
+        onChange={(selected) => {
+          if (selected.length <= maxTiles) {
+            onSelectionChange(selected as GridTileId[]);
+          }
+        }}
+        onBlur={onBlur}
         placeholder={placeholder}
-        autoFocus={autoFocus}
-        disabled={selectedTiles.length >= maxTiles}
-        className="form__control"
-        autoComplete="off"
+        minLength={options ? 0 : 3}
+        maxResults={options ? 15 : 8}
+        paginate={!options}
+        highlightOnlyResult
+        // when full: hide the menu and make the text input read-only/non-focusable
+        // so it appears disabled, but keep the control enabled so the selected
+        // token's clear (×) button stays clickable
+        open={isFull ? false : undefined}
+        inputProps={isFull ? { readOnly: true, tabIndex: -1 } : undefined}
+        renderMenuItemChildren={(option) => {
+          const tileId = option as string;
+          const tile = tilesData.features.find((f) => f.id === tileId);
+
+          if (!tile) return <div>{tileId}</div>;
+
+          return (
+            <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+              <img
+                src={tile.properties.get_small_image}
+                alt={`Tile ${tileId}`}
+                style={{
+                  width: "50px",
+                  height: "50px",
+                  objectFit: "cover",
+                  borderRadius: "4px",
+                }}
+              />
+              <span>{tileId}</span>
+            </div>
+          );
+        }}
       />
-
-      {showSuggestions && suggestions.length > 0 && (
-        <div
-          className="typeahead-suggestions"
-          style={{
-            position: "absolute",
-            top: "100%",
-            left: 0,
-            right: 0,
-            maxHeight: "300px",
-            overflowY: "auto",
-            backgroundColor: "white",
-            border: "1px solid #ccc",
-            borderTop: "none",
-            zIndex: 1000,
-          }}
-        >
-          {suggestions.map((tileId) => (
-            <button
-              key={tileId}
-              type="button"
-              onClick={() => handleSelectTile(tileId)}
-              className="typeahead-suggestion-item"
-              style={{
-                display: "block",
-                width: "100%",
-                padding: "8px 12px",
-                border: "none",
-                backgroundColor: "transparent",
-                textAlign: "left",
-                cursor: "pointer",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = "#f0f0f0";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = "transparent";
-              }}
-            >
-              {tileId}
-            </button>
-          ))}
-        </div>
-      )}
-
-      {selectedTiles.length >= maxTiles && (
-        <small className="text-muted">
-          Maximum of {maxTiles} tiles selected
-        </small>
-      )}
     </div>
   );
 }

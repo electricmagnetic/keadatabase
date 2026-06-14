@@ -7,6 +7,8 @@ export function BodyWithClasses({ children }: PropsWithChildren) {
   const pathname = usePathname();
 
   const getPageClass = () => {
+    // the success page is a plain content page, not the submit form layout
+    if (pathname.startsWith("/submit/success")) return "";
     if (pathname.startsWith("/submit")) return "page--submit";
     if (pathname.startsWith("/surveys")) return "page--surveys";
     if (pathname.startsWith("/analysis")) return "page--analysis";

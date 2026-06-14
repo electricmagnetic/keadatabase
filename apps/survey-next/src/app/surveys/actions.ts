@@ -3,7 +3,7 @@
 import fetcher from "shared/api/fetcher";
 import { getApiUrl } from "@/app/_components/api/url";
 
-import { SurveyApiListResponseSchema, SurveySchema, SurveyHourApiListResponseSchema } from "./schema";
+import { SurveyApiListResponseSchema, SurveySchema, SurveyHourApiListResponseSchema, SurveyAnalysisSchema } from "./schema";
 
 export const getSurveys = async () =>
   await fetcher(
@@ -13,7 +13,7 @@ export const getSurveys = async () =>
 
 export const getSurvey = async (id: number) =>
   await fetcher(
-    getApiUrl(`/surveys/surveys/${id}`),
+    getApiUrl(`/surveys/surveys/${id}/`),
     SurveySchema,
   );
 
@@ -21,4 +21,10 @@ export const getSurveyHours = async () =>
   await fetcher(
     getApiUrl("/surveys/hours/?page_size=120"),
     SurveyHourApiListResponseSchema,
+  );
+
+export const getSurveyAnalysis = async (id: number) =>
+  await fetcher(
+    getApiUrl(`/analysis/surveys/${id}/`),
+    SurveyAnalysisSchema,
   );

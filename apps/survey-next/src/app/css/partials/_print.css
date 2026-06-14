@@ -22,12 +22,12 @@
 
   /* Remove backgrounds to save ink */
   body {
-    background: white;
+    background: var(--pure-white);
   }
 
   .bg-light,
   .bg-faded {
-    background: white !important;
+    background: var(--pure-white) !important;
   }
 
   /* Ensure text is black for readability */
@@ -39,7 +39,7 @@
   h4,
   h5,
   h6 {
-    color: black !important;
+    color: var(--pure-black) !important;
   }
 
   /* Remove box shadows */
@@ -68,7 +68,7 @@
 
   /* Optimize card layout for printing */
   .card {
-    border: 1px solid #000 !important;
+    border: 1px solid var(--pure-black) !important;
     margin-bottom: 1rem !important;
   }
 

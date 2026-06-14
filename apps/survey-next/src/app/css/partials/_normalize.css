@@ -23,7 +23,7 @@ html {
   -moz-osx-font-smoothing: grayscale;
 
   @media print {
-    background: #fff;
+    background: var(--pure-white);
   }
 }
 
@@ -91,7 +91,7 @@ kbd,
 samp {
   font-family: monospace, monospace;
   word-wrap: break-word;
-  color: #e83e8c;
+  color: var(--pink);
   font-size: 87.5%;
 }
 

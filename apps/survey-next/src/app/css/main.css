@@ -1,6 +1,7 @@
 @import "./_variables.css";
 
 @import "partials/_normalize.css";
+@import "partials/_utilities.css";
 @import "partials/_print.css";
 @import "partials/_layout.css";
 @import "partials/_data-table.css";

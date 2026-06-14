@@ -18,7 +18,7 @@
   border-radius: 0.25rem;
   border-left: 4px solid;
   background-color: var(--white);
-  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  box-shadow: 0 0.5rem 1rem var(--shadow-md);
   color: var(--black);
   pointer-events: auto;
   animation: toast-in 0.2s ease-out;
@@ -28,11 +28,11 @@
   }
 
   &--success {
-    border-left-color: #198754;
+    border-left-color: var(--green);
   }
 
   &--info {
-    border-left-color: #0d6efd;
+    border-left-color: var(--blue);
   }
 
   &__message {
@@ -48,7 +48,7 @@
     padding: 0;
     margin: 0;
     cursor: pointer;
-    color: #6c757d;
+    color: var(--grey-mid);
     font-size: 1rem;
     line-height: 1;
 

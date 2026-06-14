@@ -42,7 +42,7 @@ export function MobileMenu() {
   return (
     <>
       <button
-        className="mobile-menu__toggle"
+        className="mobile-menu__toggle fade-hover"
         onClick={() => setIsOpen(true)}
         aria-label="Open menu"
         aria-expanded={isOpen}
@@ -60,7 +60,7 @@ export function MobileMenu() {
           <nav className={`mobile-menu__panel${isClosing ? " mobile-menu__panel--closing" : ""}`}>
             <div className="mobile-menu__header">
               <button
-                className="mobile-menu__close"
+                className="mobile-menu__close fade-hover"
                 onClick={handleClose}
                 aria-label="Close menu"
               >

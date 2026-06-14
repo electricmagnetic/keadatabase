@@ -1,0 +1,14 @@
+/* white box with a hairline border — shared by cards, grid tiles, panels */
+.panel {
+  background-color: var(--white);
+  border: 1px solid var(--border-color);
+}
+
+/* subtle dim on hover for clickable blocks and icon buttons */
+.fade-hover {
+  transition: opacity 0.2s linear;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}

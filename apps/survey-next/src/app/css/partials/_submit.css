@@ -11,8 +11,8 @@
     left: 0;
     bottom: 0;
     width: 100%;
-    background-color: hsla(44, 34%, 85%, 0.9);
-    border-top: 1px solid #dfd4ba;
+    background-color: var(--cream);
+    border-top: 1px solid var(--cream-border);
     padding: 1rem;
     z-index: 20;
 
@@ -43,7 +43,7 @@
   &__tiles {
     border: 1px solid var(--border-color);
     padding: 1rem;
-    background-color: hsla(44, 34%, 85%, 0.5);
+    background-color: var(--cream-light);
 
     @media (width < 995px) {
       margin-inline: 2rem;
@@ -60,8 +60,8 @@
     .no-results {
       font-style: italic;
       padding: 0.75rem 1.25rem;
-      background-color: hsla(44, 34%, 85%, 0.5);
-      border: 1px solid #e6dfcc;
+      background-color: var(--cream-light);
+      border: 1px solid var(--cream-dark);
     }
   }
 }

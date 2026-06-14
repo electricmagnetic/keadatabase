@@ -26,7 +26,7 @@ export function GridTilePage({ id }: GridTilePageProps) {
         <div className="grid-details__details">
           <h2>Details</h2>
           <div>
-            <div className="grid-tile">
+            <div className="grid-tile panel">
               <img
                 src={tileData.get_large_image}
                 alt={`Map grid tile ${id}`}

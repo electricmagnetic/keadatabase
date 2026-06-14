@@ -19,8 +19,8 @@
 
   &__title {
     display: inline-block;
-    background-color: rgba(52, 58, 64, 0.85);
-    color: #fff;
+    background-color: var(--steel-blue-translucent);
+    color: var(--white);
     padding: 1rem;
     font-size: clamp(2rem, 5vw, 3.5rem);
     line-height: 1;

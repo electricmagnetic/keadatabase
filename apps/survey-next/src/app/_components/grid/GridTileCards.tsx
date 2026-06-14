@@ -13,7 +13,7 @@ export default function GridTileCards({ gridTileIds }: GridTileCardsProps) {
     <div className="cards">
       {gridTileIds.map((gridTileId) => (
         <div key={gridTileId} className="card">
-          <Link href={`/grid/${gridTileId}`}>
+          <Link href={`/grid/${gridTileId}`} className="panel fade-hover">
             <figure>
               <img
                 src={`https://geo.keadatabase.nz/tiles/${gridTileId}.png`}

@@ -26,7 +26,7 @@ export function GridTileCard({
   const tileData = gridTile.properties;
 
   return (
-    <div className="grid-card">
+    <div className="grid-card panel">
       {!hideImage && (
         <img
           src={tileData.get_large_image}

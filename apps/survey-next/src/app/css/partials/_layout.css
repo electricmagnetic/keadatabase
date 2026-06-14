@@ -10,7 +10,7 @@
 }
 
 .page {
-  background-color: #f8f9fa;
+  background-color: var(--html-color);
 
   .holder--page {
     min-height: calc(100vh - 178px);
@@ -25,8 +25,8 @@
     --logo-color: var(--white);
 
     &--home {
-      --nav-color: rgba(0, 0, 0, 0.75);
-      --logo-color: rgba(0, 0, 0, 0.75);
+      --nav-color: var(--dark-translucent);
+      --logo-color: var(--dark-translucent);
       background-color: transparent;
       position: absolute;
       left: 0;
@@ -68,6 +68,7 @@
         gap: 0.5rem;
         align-items: center;
         color: var(--nav-color);
+        transition: opacity 0.2s linear;
 
         &:hover {
           opacity: 0.8;

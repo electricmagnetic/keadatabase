@@ -2,22 +2,44 @@
   --orange: #df5206;
   --orange-mid: #ba4405;
   --orange-dark: #953704;
+  --orange-light: #fb9c6a;
+  --orange-focus: rgba(223, 82, 6, 0.25);
   --black: #212529;
+  --pure-black: #000000;
+  --pure-white: #ffffff;
   --steel-blue: #343a40;
+  --steel-blue-translucent: rgba(52, 58, 64, 0.85);
   --white: #ffffff;
   --grey: hsla(0, 0%, 100%, 0.75);
+  --grey-mid: #6c757d;
+  --grey-light: #e9ecef;
+  --grey-lighter: #d3d9df;
   --cream-dark: #e6dfcc;
   --cream-mid: #eeeadd;
   --cream-light: hsla(44, 34%, 85%, 0.5);
+  --cream: hsla(44, 34%, 85%, 0.9);
+  --cream-border: #dfd4ba;
   --brown-faded: #f5f5f0;
   --brown-dull: #d4cbb8;
   --yellow-light: #ffeeba;
   --yellow: #ffdf7e;
   --red: #dc3545;
+  --green: #198754;
+  --blue: #0d6efd;
+  --pink: #e83e8c;
   --kea: rgba(106, 112, 41, 0.3);
 
   --html-color: #f8f9fa;
   --border-color: rgba(0, 0, 0, 0.125);
+  --border-grey: #dee2e6;
+  --input-border: #ced4da;
+  --input-text: #495057;
+
+  --dark-translucent: rgba(0, 0, 0, 0.75);
+  --overlay: rgba(0, 0, 0, 0.5);
+  --shadow-sm: rgba(0, 0, 0, 0.1);
+  --shadow-md: rgba(0, 0, 0, 0.15);
+  --focus-shadow: hsla(210, 6%, 81%, 0.5);
 
   --link-color: var(--orange);
   --text-color: var(--black);

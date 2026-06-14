@@ -8,12 +8,6 @@
 .card {
   a {
     display: block;
-    border: 1px solid var(--border-color);
-    background-color: var(--white);
-
-    &:hover {
-      opacity: 0.8;
-    }
   }
 
   figcaption {

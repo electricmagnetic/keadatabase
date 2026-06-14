@@ -21,22 +21,38 @@ export function GeoJSONLayer({
   geoJson,
   layerProps = PointLayerProps,
   zoomToLayer = false,
+  sourceId,
+  layerId,
 }: {
   geoJson: GeoJSON;
   layerProps?: LayerProps;
   zoomToLayer?: boolean;
+  sourceId: string;
+  layerId?: string;
 }) {
+  const actualLayerId = layerId || `${sourceId}-layer`;
+
   return (
     <>
-      <Source data={geoJson} type="geojson">
-        <Layer {...layerProps} />
+      <Source id={sourceId} data={geoJson} type="geojson">
+        <Layer id={actualLayerId} {...layerProps} />
       </Source>
       {zoomToLayer ? <ZoomToGeoJSON geoJson={geoJson} /> : null}
     </>
   );
 }
 
-export function ZoomToGeoJSON({ geoJson }: { geoJson: GeoJSON | null }) {
+export function ZoomToGeoJSON({
+  geoJson,
+  options = {},
+}: {
+  geoJson: GeoJSON | null;
+  options?: {
+    padding?: number;
+    duration?: number;
+    maxZoom?: number;
+  };
+}) {
   const { current: map } = useMap();
 
   const [loaded, setLoaded] = useState(false);
@@ -68,14 +84,18 @@ export function ZoomToGeoJSON({ geoJson }: { geoJson: GeoJSON | null }) {
           [minLng, minLat],
           [maxLng, maxLat],
         ],
-        { padding: PADDING, duration: DURATION },
+        {
+          padding: options.padding ?? PADDING,
+          duration: options.duration ?? DURATION,
+          maxZoom: options.maxZoom,
+        },
       );
     };
 
     if (loaded && geoJson) {
       zoomMap();
     }
-  }, [geoJson, map, loaded]);
+  }, [geoJson, map, loaded, options]);
 
   return null;
 }
@@ -84,19 +104,26 @@ export function XYZRasterLayer({
   attribution = "",
   tileSize = 512,
   url,
+  sourceId,
+  layerId,
 }: {
   attribution?: string;
   tileSize?: number;
   url: string;
+  sourceId: string;
+  layerId?: string;
 }) {
+  const actualLayerId = layerId || `${sourceId}-layer`;
+
   return (
     <Source
+      id={sourceId}
       attribution={attribution}
       tileSize={tileSize}
       tiles={[url]}
       type="raster"
     >
-      <Layer type="raster" />
+      <Layer id={actualLayerId} type="raster" />
     </Source>
   );
 }
@@ -104,20 +131,32 @@ export function XYZRasterLayer({
 export function RasterLayer({
   maxzoom,
   url,
+  sourceId,
+  layerId,
 }: {
   maxzoom?: number;
   url: string;
+  sourceId: string;
+  layerId?: string;
 }) {
+  const actualLayerId = layerId || `${sourceId}-layer`;
+
   return (
-    <Source maxzoom={maxzoom} type="raster" url={url}>
-      <Layer type="raster" />
+    <Source id={sourceId} maxzoom={maxzoom} type="raster" url={url}>
+      <Layer id={actualLayerId} type="raster" />
     </Source>
   );
 }
 
-export function VectorLayer({ url }: { url: string }) {
+export function VectorLayer({
+  url,
+  sourceId,
+}: {
+  url: string;
+  sourceId: string;
+}) {
   return (
-    <Source type="vector" url={url}>
+    <Source id={sourceId} type="vector" url={url}>
       {/* <Layer  /> */}
     </Source>
   );

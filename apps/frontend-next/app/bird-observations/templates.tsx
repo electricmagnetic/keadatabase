@@ -90,7 +90,11 @@ export function BirdObservationsAsMap({
 
   return (
     <BaseMap>
-      <GeoJSONLayer geoJson={birdObservationsAsGeoJson} zoomToLayer />
+      <GeoJSONLayer
+        sourceId="bird-observations"
+        geoJson={birdObservationsAsGeoJson}
+        zoomToLayer
+      />
     </BaseMap>
   );
 }

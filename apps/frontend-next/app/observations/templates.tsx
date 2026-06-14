@@ -58,7 +58,11 @@ export function ObservationsAsMap({
 
   return (
     <BaseMap {...others}>
-      <GeoJSONLayer geoJson={birdObservationsAsGeoJson} zoomToLayer />
+      <GeoJSONLayer
+        sourceId="observations"
+        geoJson={birdObservationsAsGeoJson}
+        zoomToLayer
+      />
     </BaseMap>
   );
 }

@@ -351,7 +351,7 @@ sentry_sdk.init(
 EMAIL_BACKEND = 'anymail.backends.mailgun.EmailBackend'
 
 ANYMAIL = {
-    'MAILGUN_API_KEY': env.str('MAILGUN_API_KEY'),
+    'MAILGUN_API_KEY': env.str('MAILGUN_API_KEY', ''),
     'MAILGUN_API_URL': env.str('MAILGUN_API_URL', 'https://api.eu.mailgun.net/v3'),
 }
 

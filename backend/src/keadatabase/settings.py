@@ -61,6 +61,7 @@ INSTALLED_APPS = [
     'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
     'django.contrib.gis',
+    'anymail',
     'theme',
     'django.contrib.admin',
     'storages',
@@ -344,3 +345,16 @@ sentry_sdk.init(
     traces_sample_rate=0.2,
     send_default_pii=True,
 )
+
+# Email configuration
+
+EMAIL_BACKEND = 'anymail.backends.mailgun.EmailBackend'
+
+ANYMAIL = {
+    'MAILGUN_API_KEY': env.str('MAILGUN_API_KEY'),
+    'MAILGUN_API_URL': env.str('MAILGUN_API_URL', 'https://api.eu.mailgun.net/v3'),
+}
+
+DEFAULT_FROM_EMAIL = env.str('FROM_EMAIL', 'no-reply@keadatabase.nz')
+SERVER_EMAIL = env.str('FROM_EMAIL', 'no-reply@keadatabase.nz')
+

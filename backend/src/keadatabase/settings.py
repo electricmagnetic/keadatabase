@@ -202,7 +202,7 @@ REST_FRAMEWORK = {
         'rest_framework_csv.renderers.PaginatedCSVRenderer',
     ),
     'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+        'keadatabase.permissions.IsAdminOrReadOnly',
     ),
     'DEFAULT_FILTER_BACKENDS': (
         'django_filters.rest_framework.DjangoFilterBackend',

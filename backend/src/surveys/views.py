@@ -48,7 +48,9 @@ class ObserverViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = ObserverSerializer
     pagination_class = SurveyPagination
     ordering_fields = ('name',)
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [
+        permissions.IsAdminUser
+    ]  # only admin - we do not want regular (public) users to access
 
     def get_queryset(self):
         queryset = Observer.objects.select_related('survey').all()

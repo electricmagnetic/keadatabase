@@ -1,9 +1,10 @@
-from rest_framework import viewsets, permissions
-from rest_framework import mixins
+from rest_framework import mixins, permissions, viewsets
 
-from .serializers import ReportObservationSerializer
-from .serializers import ReportSurveySerializer
-from .serializers import ImportObservationSerializer
+from .serializers import (
+    ImportObservationSerializer,
+    ReportObservationSerializer,
+    ReportSurveySerializer,
+)
 
 
 class ReportObservationBaseViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
@@ -23,4 +24,4 @@ class ImportObservationViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet)
     """Auth-required view for data import (without throttling)"""
 
     serializer_class = ImportObservationSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAdminUser]

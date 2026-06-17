@@ -1,5 +1,4 @@
 from django.test import TestCase
-from django.core.exceptions import ValidationError
 
 from locations.models import StudyArea
 from birds.models import Bird

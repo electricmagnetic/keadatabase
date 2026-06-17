@@ -79,7 +79,7 @@ class Command(management.BaseCommand):
             neighbours = [
                 neighbour
                 for neighbour in row['neighbours'].split(',')
-                if not (id in neighbour)
+                if id not in neighbour
             ]
 
             # Map fields

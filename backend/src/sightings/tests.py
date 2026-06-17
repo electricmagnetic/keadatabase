@@ -1,4 +1,3 @@
-from django.test import TestCase
 
 # TODO: write tests for Contributor
 # TODO: write tests for SightingsMedia

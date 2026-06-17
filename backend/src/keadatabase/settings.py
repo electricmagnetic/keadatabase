@@ -69,6 +69,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.gis',
     'anymail',
+    'allauth',
+    'allauth.account',
+    'allauth.headless',
     'theme',
     'django.contrib.admin',
     'storages',
@@ -105,6 +108,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = 'keadatabase.urls'
@@ -208,9 +212,7 @@ REST_FRAMEWORK = {
         'keadatabase.renderers.BrowsableAPIRendererWithoutForms',
         'rest_framework_csv.renderers.PaginatedCSVRenderer',
     ),
-    'DEFAULT_PERMISSION_CLASSES': (
-        'keadatabase.permissions.IsAdminOrReadOnly',
-    ),
+    'DEFAULT_PERMISSION_CLASSES': ('keadatabase.permissions.IsAdminOrReadOnly',),
     'DEFAULT_FILTER_BACKENDS': (
         'django_filters.rest_framework.DjangoFilterBackend',
         'rest_framework.filters.OrderingFilter',
@@ -226,6 +228,7 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
         'rest_framework.authentication.TokenAuthentication',
+        'allauth.headless.contrib.rest_framework.authentication.JWTTokenAuthentication',
     ),
     'EXCEPTION_HANDLER': 'keadatabase.exceptions.exception_handler',
     'PAGE_SIZE': 20,

@@ -66,3 +66,11 @@ urlpatterns = [
     path('jwt/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('token/', ThrottledObtainAuthToken.as_view()),
 ] + urlpatterns
+
+
+# Auth
+
+urlpatterns = [
+    path('accounts/', include('allauth.urls')),
+    path('_allauth/', include('allauth.headless.urls')),
+] + urlpatterns

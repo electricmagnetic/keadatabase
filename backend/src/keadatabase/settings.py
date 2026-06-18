@@ -82,7 +82,6 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'rest_framework_gis',
     'rest_framework_csv',
-    'rest_framework_simplejwt',
     'debug_toolbar',
     'leaflet',
     'birds',
@@ -226,7 +225,6 @@ REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.SessionAuthentication',
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
         'rest_framework.authentication.TokenAuthentication',
         'allauth.headless.contrib.rest_framework.authentication.JWTTokenAuthentication',
     ),

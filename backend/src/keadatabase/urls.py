@@ -20,7 +20,6 @@ from django.contrib import admin
 from django.http import HttpResponse
 from django.urls import include, path, re_path
 
-from .auth import ThrottledObtainAuthToken
 from .router import router
 
 # Custom admin site settings

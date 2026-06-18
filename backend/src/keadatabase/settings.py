@@ -226,7 +226,6 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.TokenAuthentication',
-        'allauth.headless.contrib.rest_framework.authentication.JWTTokenAuthentication',
     ),
     'EXCEPTION_HANDLER': 'keadatabase.exceptions.exception_handler',
     'PAGE_SIZE': 20,

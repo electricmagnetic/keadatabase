@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "https://data.keasurvey.nz/:path*"
+    }
+  ]
+}

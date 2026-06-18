@@ -53,20 +53,6 @@ if settings.DEBUG:
 
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-# JWT authentication
-
-from rest_framework_simplejwt.views import (
-    TokenObtainPairView,
-    TokenRefreshView,
-)
-
-urlpatterns = [
-    path('jwt/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('jwt/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    path('token/', ThrottledObtainAuthToken.as_view()),
-] + urlpatterns
-
-
 # Auth
 
 urlpatterns = [

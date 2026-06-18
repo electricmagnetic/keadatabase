@@ -44,6 +44,13 @@ if env.bool('IS_PRODUCTION', False):
         '.keasurvey.nz',
     ]
 
+    CSRF_TRUSTED_ORIGINS = [
+        'https://keadatabase.nz',
+        'https://*.keadatabase.nz',
+        'https://keasurvey.nz',
+        'https://*.keasurvey.nz',
+    ]
+
 # Specify geo libraries (if necessary)
 if env('GEO_LIBRARIES_PATH', False):
     GEOS_LIBRARY_PATH = '{}/lib/libgeos_c.so'.format(env.str('GEO_LIBRARIES_PATH'))
@@ -357,4 +364,29 @@ ANYMAIL = {
 
 DEFAULT_FROM_EMAIL = env.str('FROM_EMAIL', 'no-reply@keadatabase.nz')
 SERVER_EMAIL = env.str('FROM_EMAIL', 'no-reply@keadatabase.nz')
+
+# Auth configuration
+
+## Basic auth configuration
+
+USE_X_FORWARDED_HOST = True
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',  # Needed to login by username in Django admin
+    'allauth.account.auth_backends.AuthenticationBackend',  # `allauth` specific authentication methods
+]
+
+CORS_ALLOW_HEADERS = CORS_ALLOW_HEADERS + [
+    'x-session-token',
+    'x-email-verification-key',
+    'x-password-reset-key',
+]
+
+CORS_ALLOW_CREDENTIALS = True
+
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+ACCOUNT_SIGNUP_FIELDS = ['email*', 'username*', 'password1*', 'password2*']
+ACCOUNT_LOGIN_METHODS = {'email'}
+
+HEADLESS_ONLY = True
 

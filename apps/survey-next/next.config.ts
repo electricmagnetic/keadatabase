@@ -1,12 +1,16 @@
 import type { NextConfig } from "next";
 
+const getApiBase = () => {
+  const apiBase = process.env.API_BASE;
+  if (!apiBase) throw new Error("Missing API_BASE environment variable");
+  return apiBase;
+};
 const nextConfig: NextConfig = {
-  /* config options here */
   reactCompiler: true,
   rewrites: async () => [
     {
       source: "/api/:path*",
-      destination: `${process.env.NEXT_PUBLIC_API_BASE}/:path*`,
+      destination: `${getApiBase()}/:path*`,
     },
   ],
 };

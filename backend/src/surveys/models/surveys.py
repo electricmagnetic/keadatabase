@@ -44,6 +44,9 @@ class Survey(models.Model):
     )
     comments = models.TextField(blank=True)
     max_flock_size = models.PositiveIntegerField(null=True, blank=True)
+    max_flock_size_grid_tile = models.ForeignKey(
+        GridTile, on_delete=models.PROTECT, null=True, blank=True
+    )
 
     # TODO: validate max flock size if child object has kea sighted?
 

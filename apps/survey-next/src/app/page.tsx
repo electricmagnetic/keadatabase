@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 export default async function HomePage() {
   // Simple fetch to check API wired up correctly
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_BASE}/surveys/surveys/`,
+    `${process.env.NEXT_PUBLIC_API_PATH}/surveys/surveys/`,
   );
 
   const data = response.ok

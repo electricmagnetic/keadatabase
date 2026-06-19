@@ -2,7 +2,7 @@ from django.db.models import Count, Q
 from django_filters import FilterSet, filters
 from rest_framework import viewsets
 
-from keadatabase.pagination import GridTilePagination
+from keasurvey.pagination import GridTilePagination
 
 from .models import GridTile
 from .serializers import BaseGridTileSerializer

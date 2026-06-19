@@ -1,6 +1,6 @@
 from rest_framework import permissions, viewsets
 
-from keadatabase.pagination import SurveyPagination
+from keasurvey.pagination import SurveyPagination
 
 from .models.observers import Observer
 from .models.surveys import Survey, SurveyHour

@@ -1,6 +1,6 @@
 from rest_framework import renderers
 
-from keadatabase.pagination import (
+from keasurvey.pagination import (
     GridTileGeoJSONPagination,
 )
 from locations.views import GridTileViewSet

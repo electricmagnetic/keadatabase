@@ -3,15 +3,15 @@ FROM python:3.13.14-trixie
 COPY --from=astral/uv:latest /uv /uvx /bin/
 
 RUN apt update \
-    && apt install -y \
-    curl \
-    ca-certificates \
-    binutils \
-    libproj-dev \
-    gdal-bin \
-    libmagic-dev \
-    python3-dev \
-    && rm -rf /var/lib/apt/lists/*
+  && apt install -y \
+  curl \
+  ca-certificates \
+  binutils \
+  libproj-dev \
+  gdal-bin \
+  libmagic-dev \
+  python3-dev \
+  && rm -rf /var/lib/apt/lists/*
 
 ADD . /app
 WORKDIR /app
@@ -27,4 +27,4 @@ WORKDIR /app/src
 RUN uv run manage.py collectstatic --noinput
 
 EXPOSE 8000
-CMD ["uv", "run", "gunicorn", "--pythonpath", "app", "--bind", "0.0.0.0:8000", "keadatabase.wsgi"]
+CMD ["uv", "run", "gunicorn", "--pythonpath", "app", "--bind", "0.0.0.0:8000", "keasurvey.wsgi"]

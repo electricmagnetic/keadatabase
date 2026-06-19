@@ -1,0 +1,50 @@
+[project]
+name = "backend"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "boto3==1.35.36",
+    "dj-database-url==2.3.0",
+    "django==5.2.15",
+    "django-allauth[headless,headless-spec]>=65.18.0",
+    "django-anymail[mailgun]>=15.0",
+    "django-cors-headers==4.9.0",
+    "django-debug-toolbar==6.3.0",
+    "django-filter==25.2",
+    "django-leaflet==0.33.0",
+    "django-storages==1.14.6",
+    "django-versatileimagefield==3.1",
+    "djangorestframework==3.17.1",
+    "djangorestframework-csv==3.0.2",
+    "djangorestframework-gis==1.2.1",
+    "environs[django]==11.0.0",
+    "gunicorn==23.0.0",
+    "marshmallow==3.26.1",
+    "pillow==12.2.0",
+    "psycopg[binary]>=3.2",
+    "python-dateutil==2.9.0.post0",
+    "sentry-sdk==2.62.0",
+    "whitenoise==6.7.0",
+]
+
+[tool.ruff]
+exclude = [
+    "**/migrations/**",
+]
+
+[tool.ruff.format]
+quote-style = "single"
+
+[dependency-groups]
+dev = [
+    # django-stubs provides type stubs for Django. Without it, basedpyright
+    # cannot see attributes that Django attaches dynamically (e.g. the
+    # ``Style.MIGRATE_HEADING`` / ``MIGRATE_LABEL`` / ``SUCCESS`` / ... roles
+    # that ``django.core.management.color.make_style`` sets via ``setattr``),
+    # and flags every ``self.style.MIGRATE_HEADING`` call as
+    # ``reportAttributeAccessIssue``. The 4.2.x line targets Django 4.2 LTS.
+    "django-stubs==5.2.9",
+    "ruff>=0.15.12",
+]

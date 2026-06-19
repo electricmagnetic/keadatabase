@@ -65,10 +65,6 @@ INSTALLED_APPS = [
     'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
     'django.contrib.gis',
-    'anymail',
-    'allauth',
-    'allauth.account',
-    'allauth.headless',
     'theme',
     'django.contrib.admin',
     'storages',
@@ -102,7 +98,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = 'keadatabase.urls'
@@ -346,40 +341,3 @@ sentry_sdk.init(
     traces_sample_rate=0.2,
     send_default_pii=True,
 )
-
-# Email configuration
-
-EMAIL_BACKEND = 'anymail.backends.mailgun.EmailBackend'
-
-ANYMAIL = {
-    'MAILGUN_API_KEY': env.str('MAILGUN_API_KEY', ''),
-    'MAILGUN_API_URL': env.str('MAILGUN_API_URL', 'https://api.eu.mailgun.net/v3'),
-}
-
-DEFAULT_FROM_EMAIL = env.str('FROM_EMAIL', 'no-reply@keadatabase.nz')
-SERVER_EMAIL = env.str('FROM_EMAIL', 'no-reply@keadatabase.nz')
-
-# Auth configuration
-
-## Basic auth configuration
-
-USE_X_FORWARDED_HOST = True
-
-AUTHENTICATION_BACKENDS = [
-    'django.contrib.auth.backends.ModelBackend',  # Needed to login by username in Django admin
-    'allauth.account.auth_backends.AuthenticationBackend',  # `allauth` specific authentication methods
-]
-
-CORS_ALLOW_HEADERS = CORS_ALLOW_HEADERS + [
-    'x-session-token',
-    'x-email-verification-key',
-    'x-password-reset-key',
-]
-
-CORS_ALLOW_CREDENTIALS = True
-
-ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
-ACCOUNT_SIGNUP_FIELDS = ['email*', 'username*', 'password1*', 'password2*']
-ACCOUNT_LOGIN_METHODS = {'email'}
-
-HEADLESS_ONLY = False

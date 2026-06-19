@@ -52,10 +52,3 @@ if settings.DEBUG:
     ] + urlpatterns
 
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
-# Auth
-
-urlpatterns = [
-    path('accounts/', include('allauth.urls')),
-    path('_allauth/', include('allauth.headless.urls')),
-] + urlpatterns

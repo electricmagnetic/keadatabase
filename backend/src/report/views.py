@@ -3,7 +3,6 @@ from rest_framework import mixins, permissions, viewsets
 from .serializers import (
     ImportObservationSerializer,
     ReportObservationSerializer,
-    ReportSurveySerializer,
 )
 
 
@@ -14,10 +13,6 @@ class ReportObservationBaseViewSet(mixins.CreateModelMixin, viewsets.GenericView
 
 class ReportObservationViewSet(ReportObservationBaseViewSet):
     serializer_class = ReportObservationSerializer
-
-
-class ReportSurveyViewSet(ReportObservationBaseViewSet):
-    serializer_class = ReportSurveySerializer
 
 
 class ImportObservationViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):

@@ -41,14 +41,11 @@ if env.bool('IS_PRODUCTION', False):
     ALLOWED_HOSTS = [
         '.keadatabase.nz',
         '.electricmagnetic.net',
-        '.keasurvey.nz',
     ]
 
     CSRF_TRUSTED_ORIGINS = [
         'https://keadatabase.nz',
         'https://*.keadatabase.nz',
-        'https://keasurvey.nz',
-        'https://*.keasurvey.nz',
     ]
 
 # Specify geo libraries (if necessary)
@@ -91,8 +88,6 @@ INSTALLED_APPS = [
     'sightings',
     'report',
     'geojson',
-    'surveys',
-    'analysis',
 ]
 
 MIDDLEWARE = [
@@ -246,7 +241,6 @@ if not DEBUG:
 
     CORS_ALLOWED_ORIGIN_REGEXES = (
         r'^https?://\w*\.?keadatabase.nz$',
-        r'^https?://\w*\.?keasurvey.nz$',
         r'^https?://\w*\.?electricmagnetic.net$',
         r'^https?://localhost:3000$',
         r'^https?://localhost:8000$',
@@ -389,4 +383,3 @@ ACCOUNT_SIGNUP_FIELDS = ['email*', 'username*', 'password1*', 'password2*']
 ACCOUNT_LOGIN_METHODS = {'email'}
 
 HEADLESS_ONLY = False
-

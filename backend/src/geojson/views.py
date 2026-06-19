@@ -1,31 +1,21 @@
 from rest_framework import renderers
 
-from sightings.views.observations import ObservationViewSet
-from sightings.views.birds import BirdObservationViewSet
-from locations.views import GridTileViewSet
 from keadatabase.pagination import (
-    ObservationGeoJSONPagination,
-    GridTileGeoJSONPagination,
     BirdObservationGeoJSONPagination,
+    ObservationGeoJSONPagination,
 )
+from sightings.views.birds import BirdObservationViewSet
+from sightings.views.observations import ObservationViewSet
+
 from .serializers import (
-    ObservationGeoJSONSerializer,
-    GridTileGeoJSONSerializer,
     BirdObservationGeoJSONSerializer,
+    ObservationGeoJSONSerializer,
 )
 
 
 class ObservationGeoJSONViewSet(ObservationViewSet):
     serializer_class = ObservationGeoJSONSerializer
     pagination_class = ObservationGeoJSONPagination
-
-    # Disable HTML view of this for compatibility
-    renderer_classes = [renderers.JSONRenderer]
-
-
-class GridTileGeoJSONViewSet(GridTileViewSet):
-    serializer_class = GridTileGeoJSONSerializer
-    pagination_class = GridTileGeoJSONPagination
 
     # Disable HTML view of this for compatibility
     renderer_classes = [renderers.JSONRenderer]

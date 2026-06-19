@@ -24,9 +24,7 @@ dependencies = [
     { name = "django-cors-headers" },
     { name = "django-debug-toolbar" },
     { name = "django-filter" },
-    { name = "django-leaflet" },
     { name = "django-storages" },
-    { name = "django-versatileimagefield" },
     { name = "djangorestframework" },
     { name = "djangorestframework-csv" },
     { name = "djangorestframework-gis" },
@@ -56,9 +54,7 @@ requires-dist = [
     { name = "django-cors-headers", specifier = "==4.9.0" },
     { name = "django-debug-toolbar", specifier = "==6.3.0" },
     { name = "django-filter", specifier = "==25.2" },
-    { name = "django-leaflet", specifier = "==0.33.0" },
     { name = "django-storages", specifier = "==1.14.6" },
-    { name = "django-versatileimagefield", specifier = "==3.1" },
     { name = "djangorestframework", specifier = "==3.17.1" },
     { name = "djangorestframework-csv", specifier = "==3.0.2" },
     { name = "djangorestframework-gis", specifier = "==1.2.1" },
@@ -387,18 +383,6 @@ wheels = [
 ]
 
 [[package]]
-name = "django-leaflet"
-version = "0.33.0"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "django" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/71/35/be356129d89c98c8f4884e946abec7f7d21ddcce159bcde4970e754ea3ab/django_leaflet-0.33.0.tar.gz", hash = "sha256:b51c71e7179eed9961484dfd57b87bd1ece3b1ff7bee4dfb7f4d5702206b2eca", size = 562259, upload-time = "2025-12-01T13:00:41.525Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/d5/9b/b323a5ea711961e77e9e362f55ea6d229d75daa6c1eaa37aec3ddaba1017/django_leaflet-0.33.0-py3-none-any.whl", hash = "sha256:bf30526daf7710f9afc35f0221284fe3b0558f3d9f259344ac3b82e23d28ec98", size = 577199, upload-time = "2025-12-01T13:00:39.069Z" },
-]
-
-[[package]]
 name = "django-storages"
 version = "1.14.6"
 source = { registry = "https://pypi.org/simple" }
@@ -436,20 +420,6 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/d8/01/419bc3cd882f3ec645d5a4511085202dd6bd3ef8d385871dcd2d32cc15b3/django_stubs_ext-6.0.5.tar.gz", hash = "sha256:1cc325e991303849bce70e19748981b225ef08b37256f263e113caf97cd3bcc0", size = 6666, upload-time = "2026-05-25T08:46:36.012Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/ef/bf/7ee71071d84ad4e0efcd77e2681afed254a5f65c27524441a9caf8c60467/django_stubs_ext-6.0.5-py3-none-any.whl", hash = "sha256:a9932c8233d6dd4e34ae0b192026379c1a9be8f0b7c27aa1fa09ae215169773e", size = 10362, upload-time = "2026-05-25T08:46:34.467Z" },
-]
-
-[[package]]
-name = "django-versatileimagefield"
-version = "3.1"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "django" },
-    { name = "pillow" },
-    { name = "python-magic" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/0f/6f/d0e7c144e94e030dea2849273952c898143210c83673186a24d3dd36ff42/django-versatileimagefield-3.1.tar.gz", hash = "sha256:3390e20048098e897bf299b0360763d10cd089665b7aef8eba900eecbaead0d8", size = 29684, upload-time = "2024-01-21T16:24:31.974Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/d2/74/940127fc8aeba9fbb57517484056e0cdf5581c0c4205977b9131f5779962/django_versatileimagefield-3.1-py2.py3-none-any.whl", hash = "sha256:dfdffa11a0d4c169e44f164481d2b26f94a0a00517216ee85748324c2f96a669", size = 54397, upload-time = "2024-01-21T16:24:29.925Z" },
 ]
 
 [[package]]
@@ -707,15 +677,6 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/82/ed/0301aeeac3e5353ef3d94b6ec08bbcabd04a72018415dcb29e588514bba8/python_dotenv-1.2.2.tar.gz", hash = "sha256:2c371a91fbd7ba082c2c1dc1f8bf89ca22564a087c2c287cd9b662adde799cf3", size = 50135, upload-time = "2026-03-01T16:00:26.196Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/0b/d7/1959b9648791274998a9c3526f6d0ec8fd2233e4d4acce81bbae76b44b2a/python_dotenv-1.2.2-py3-none-any.whl", hash = "sha256:1d8214789a24de455a8b8bd8ae6fe3c6b69a5e3d64aa8a8e5d68e694bbcb285a", size = 22101, upload-time = "2026-03-01T16:00:25.09Z" },
-]
-
-[[package]]
-name = "python-magic"
-version = "0.4.27"
-source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/da/db/0b3e28ac047452d079d375ec6798bf76a036a08182dbb39ed38116a49130/python-magic-0.4.27.tar.gz", hash = "sha256:c1ba14b08e4a5f5c31a302b7721239695b2f0f058d125bd5ce1ee36b9d9d3c3b", size = 14677, upload-time = "2022-06-07T20:16:59.508Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/6c/73/9f872cb81fc5c3bb48f7227872c28975f998f3e7c2b1c16e95e6432bbb90/python_magic-0.4.27-py2.py3-none-any.whl", hash = "sha256:c212960ad306f700aa0d01e5d7a325d20548ff97eb9920dcd29513174f0294d3", size = 13840, upload-time = "2022-06-07T20:16:57.763Z" },
 ]
 
 [[package]]

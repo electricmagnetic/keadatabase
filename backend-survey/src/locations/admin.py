@@ -1,6 +1,6 @@
 from django.contrib.gis import admin
 
-from .models import StudyArea, Region, Place, GridTile
+from .models import GridTile
 
 
 class GridTileAdmin(admin.ModelAdmin):
@@ -19,7 +19,4 @@ class GridTileAdmin(admin.ModelAdmin):
         return False
 
 
-admin.site.register(StudyArea)
-admin.site.register(Region)
-admin.site.register(Place)
 admin.site.register(GridTile, GridTileAdmin)

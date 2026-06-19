@@ -75,7 +75,6 @@ INSTALLED_APPS = [
     'theme',
     'django.contrib.admin',
     'storages',
-    'versatileimagefield',
     'django_filters',
     'corsheaders',
     'rest_framework',
@@ -83,12 +82,7 @@ INSTALLED_APPS = [
     'rest_framework_gis',
     'rest_framework_csv',
     'debug_toolbar',
-    'leaflet',
-    'birds',
-    'bands',
     'locations',
-    'synchronise',
-    'sightings',
     'report',
     'geojson',
     'surveys',
@@ -284,24 +278,6 @@ if not DEBUG:
     AWS_S3_CUSTOM_DOMAIN = env.str('AWS_S3_CUSTOM_DOMAIN', None)
     AWS_S3_ENDPOINT_URL = env.str('AWS_S3_ENDPOINT_URL', None)
 
-# Versatile Image Field
-
-VERSATILEIMAGEFIELD_SETTINGS = {
-    'create_images_on_demand': False,
-}
-
-VERSATILEIMAGEFIELD_RENDITION_KEY_SETS = {
-    'profile_picture': [
-        ('full_size', 'url'),
-        ('thumbnail', 'crop__350x250'),
-        ('large', 'crop__500x500'),
-    ],
-    'sighting_image': [
-        ('full_size', 'url'),
-        ('resized', 'crop__640x480'),
-    ],
-}
-
 # Debug toolbar
 
 if DEBUG:
@@ -324,22 +300,6 @@ LOGGING = {
         },
     },
 }
-
-# Leaflet
-
-LINZ_API_KEY = env.str('LINZ_API_KEY', '')
-MAPBOX_API_KEY = env.str('MAPBOX_API_KEY', '')
-
-# yapf: disable
-LEAFLET_CONFIG = {
-    'DEFAULT_CENTER': (-41.47, 172.72),
-    'DEFAULT_ZOOM': 4,
-    'MIN_ZOOM': 4,
-    'MAX_ZOOM': 14,
-    'RESET_VIEW': False,
-    'TILES': [],
-}
-# yapf: enable
 
 # Sentry
 
@@ -390,3 +350,7 @@ ACCOUNT_LOGIN_METHODS = {'email'}
 
 HEADLESS_ONLY = False
 
+# temp
+
+GDAL_LIBRARY_PATH = '/opt/homebrew/opt/gdal/lib/libgdal.dylib'
+GEOS_LIBRARY_PATH = '/opt/homebrew/opt/geos/lib/libgeos_c.dylib'

@@ -2,13 +2,6 @@ from rest_framework_gis.serializers import GeoFeatureModelSerializer
 
 from locations.models import GridTile
 from locations.serializers import GridTileSerializer
-from sightings.serializers.birds import BirdObservationSerializer
-from sightings.serializers.observations import ObservationSerializer
-
-
-class ObservationGeoJSONSerializer(GeoFeatureModelSerializer, ObservationSerializer):
-    class Meta(ObservationSerializer.Meta):
-        geo_field = 'point_location'
 
 
 class GridTileGeoJSONSerializer(GeoFeatureModelSerializer, GridTileSerializer):
@@ -16,10 +9,3 @@ class GridTileGeoJSONSerializer(GeoFeatureModelSerializer, GridTileSerializer):
         model = GridTile
         geo_field = 'polygon'
         fields = '__all__'
-
-
-class BirdObservationGeoJSONSerializer(
-    GeoFeatureModelSerializer, BirdObservationSerializer
-):
-    class Meta(BirdObservationSerializer.Meta):
-        geo_field = 'sighting__point_location'

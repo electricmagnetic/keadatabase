@@ -19,7 +19,7 @@
     "leaflet": "^1.9.4",
     "moment": "^2.29.4",
     "prop-types": "^15.8.1",
-    "qs": "^6.11.2",
+    "qs": "^6.15.2",
     "react": "^16.14.0",
     "react-app-polyfill": "^1.0.6",
     "react-bootstrap-typeahead": "^3.4.7",

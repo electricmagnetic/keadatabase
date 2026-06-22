@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import Link from "next/link";
 import { Source, Layer, Marker } from "react-map-gl/maplibre";
 import { ZoomToGeoJSON } from "geospatial/layers";
@@ -8,6 +8,7 @@ import { centerOfMass } from "@turf/turf";
 import type { FeatureCollection, Polygon } from "geojson";
 
 import { BaseMap } from "./BaseMap";
+import { MapLayerToggle } from "../ui/MapLayerToggle";
 import { getGridTileById, getNeighbours } from "./helpers";
 import type { GridTileId, GridTileProperties } from "./types";
 
@@ -22,6 +23,8 @@ export function SelectedGridTilesMap({
   height = "600px",
   showNeighbours = false,
 }: SelectedGridTilesMapProps) {
+  const [showGridOverlay, setShowGridOverlay] = useState(true);
+
   const selectedTilesGeoJSON = useMemo<FeatureCollection<
     Polygon,
     GridTileProperties
@@ -61,12 +64,19 @@ export function SelectedGridTilesMap({
 
   return (
     <div style={{ height, width: "100%", position: "relative" }}>
+      <MapLayerToggle
+        label="Grid Tiles"
+        checked={showGridOverlay}
+        onChange={setShowGridOverlay}
+      />
+
       <BaseMap
         initialViewState={{
           longitude: 170.0,
           latitude: -43.5,
           zoom: 5,
         }}
+        showGridOverlay={showGridOverlay}
         interactive={false}
       >
         {selectedTilesGeoJSON && (

@@ -53,6 +53,7 @@ export const BaseMap = forwardRef<MapRef, PropsWithChildren<BaseMapProps>>(funct
       minZoom={5}
       maxZoom={14}
       {...mapProps}
+      hideFullscreen
     >
       <XYZRasterLayer
         sourceId="basemap-raster"

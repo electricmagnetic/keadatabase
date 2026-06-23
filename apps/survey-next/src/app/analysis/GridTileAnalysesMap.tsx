@@ -116,8 +116,6 @@ export function GridTileAnalysesMap({ analyses }: GridTileAnalysesMapProps) {
       <BaseMap
         hideGridTiles
         showGridOverlay={showGridOverlay}
-        navigationPosition="top-left"
-        hideFullscreen
         interactiveLayerIds={["analysis-tiles-fill"]}
         onClick={onTileClick}
         cursor="pointer"

@@ -107,8 +107,6 @@ export function GridTileSelectMap({
         ref={mapRef}
         onClick={handleMapClick}
         showGridOverlay={showGridOverlay}
-        navigationPosition="top-left"
-        hideFullscreen
         cursor="pointer"
         interactiveLayerIds={["all-grid-tiles-layer"]}
       >

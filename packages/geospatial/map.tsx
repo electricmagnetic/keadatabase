@@ -35,7 +35,7 @@ const Map = forwardRef<
   children,
   hideFullscreen,
   hideNavigation,
-  navigationPosition = "top-right",
+  navigationPosition = "top-left",
   ...others
 }, ref) {
   const mapProps = { ...DEFAULT_MAP_PROPS, ...others };
@@ -46,7 +46,7 @@ const Map = forwardRef<
       style={{ width: "100%", height: "100%" }}
       {...mapProps}
     >
-      {!hideFullscreen ? <FullscreenControl /> : null}
+      {!hideFullscreen ? <FullscreenControl position="top-left" /> : null}
       {!hideNavigation ? (
         <NavigationControl
           position={navigationPosition}

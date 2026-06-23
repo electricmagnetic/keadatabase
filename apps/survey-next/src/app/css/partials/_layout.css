@@ -20,12 +20,14 @@
 
   &__header {
     background-color: var(--steel-blue);
-    padding-block: 1rem;
+    padding-block: 0.75rem;
     --nav-color: var(--grey);
+    --nav-active-color: var(--white);
     --logo-color: var(--white);
 
     &--home {
       --nav-color: var(--dark-translucent);
+      --nav-active-color: var(--dark-translucent);
       --logo-color: var(--dark-translucent);
       background-color: transparent;
       position: absolute;
@@ -77,7 +79,7 @@
         }
 
         &.active span {
-          color: var(--nav-color);
+          color: var(--nav-active-color);
           text-decoration: underline;
         }
       }
@@ -125,7 +127,7 @@
   &__heading {
     background-color: var(--cream-mid);
     > .holder {
-      padding-block: 4rem;
+      padding-block: 2.5rem;
     }
 
     p {

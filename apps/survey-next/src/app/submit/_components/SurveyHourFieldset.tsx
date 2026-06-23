@@ -4,6 +4,7 @@ import {
   useFormContext,
   useFieldArray,
   useFormState,
+  useWatch,
   Controller,
   type Control,
 } from "react-hook-form";
@@ -48,15 +49,21 @@ function SurveyHourRow({
   gridTiles,
   activityChoices,
 }: SurveyHourRowProps) {
-  const { register, watch, control } = useFormContext<Step2FormData>();
+  const { register, control, setValue } = useFormContext<Step2FormData>();
   const { errors, touchedFields } = useFormState({
     control,
     name: `hours.${index}`,
   });
 
-  const activity = watch(`hours.${index}.activity`);
-  const singleGridTile = watch(`hours.${index}.grid_tile`);
+  const activity = useWatch({ control, name: `hours.${index}.activity` });
+  const singleGridTile = useWatch({
+    control,
+    name: `hours.${index}.grid_tile`,
+  });
   const isNotSurveying = activity === "X";
+
+  // a disabled checkbox keeps its last value, so force kea false when not surveying
+  if (isNotSurveying) setValue(`hours.${index}.kea`, false);
 
   const activityError = errors.hours?.[index]?.activity;
   const activityTouched = touchedFields.hours?.[index]?.activity;
@@ -108,8 +115,8 @@ function SurveyHourRow({
             type="checkbox"
             id={`hours.${index}.kea`}
             className="form-check-input"
-            disabled={isNotSurveying}
             {...register(`hours.${index}.kea`)}
+            disabled={isNotSurveying}
           />
           <label className="sr-only" htmlFor={`hours.${index}.kea`}>
             Kea

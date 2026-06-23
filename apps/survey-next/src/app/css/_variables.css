@@ -29,6 +29,10 @@
   --pink: #e83e8c;
   --kea: rgba(106, 112, 41, 0.3);
 
+  --alert-blue-dark: #0c5460;
+  --alert-blue-mid: #bee5eb;
+  --alert-blue-light: #d1ecf1;
+
   --html-color: #f8f9fa;
   --border-color: rgba(0, 0, 0, 0.125);
   --border-grey: #dee2e6;

@@ -78,7 +78,7 @@ export async function WordPressPage({
   if (!selectedPage) return null;
 
   return (
-    <div className={classNames?.wrapper}>
+    <div className={"body-content" + (classNames?.wrapper ?? "")}>
       {showTitle ? (
         <h2
           className={classNames?.title}

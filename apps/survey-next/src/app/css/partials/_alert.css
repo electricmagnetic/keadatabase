@@ -1,0 +1,13 @@
+.alert {
+  border: 1px solid transparent;
+  border-radius: 0;
+  margin-bottom: 1rem;
+  padding: 0.75rem 1.25rem;
+  position: relative;
+
+  &-info {
+    background-color: var(--alert-blue-light);
+    border-color: var(--alert-blue-mid);
+    color: var(--alert-blue-dark);
+  }
+}

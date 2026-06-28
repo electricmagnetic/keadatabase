@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
@@ -11,6 +12,7 @@ import { SelectedGridTiles } from "./SelectedGridTiles";
 import { Step1Schema, type Step1FormData } from "../schema";
 import { SubmitBar } from "./SubmitBar";
 import Page from "@/app/_components/ui/Page";
+import { useSession } from "@/app/_components/auth/useSession";
 /**
  * Step 1: Observer and Grid Tile Selection Form
  *
@@ -22,7 +24,9 @@ import Page from "@/app/_components/ui/Page";
  */
 export function Step1Form() {
   const router = useRouter();
+  const { user, isAuthenticated } = useSession();
 
+  // when logged in, pre-fill the observer fields from the session and lock them
   const methods = useForm<Step1FormData>({
     resolver: zodResolver(Step1Schema),
     mode: "onTouched", // validate on blur first, then on change
@@ -30,14 +34,22 @@ export function Step1Form() {
     criteriaMode: "all", // return all errors
     defaultValues: {
       observer: {
-        name: "",
-        email: "",
+        name: isAuthenticated ? (user?.display ?? "") : "",
+        email: isAuthenticated ? (user?.email ?? "") : "",
       },
       gridTiles: [],
     },
   });
 
   const { handleSubmit, watch, setValue } = methods;
+
+  // the session resolves after mount, so defaultValues miss it — fill the
+  // observer fields once it arrives (only if the user hasn't typed anything)
+  useEffect(() => {
+    if (!isAuthenticated) return;
+    setValue("observer.name", user?.display ?? "");
+    setValue("observer.email", user?.email ?? "");
+  }, [isAuthenticated, user?.display, user?.email, setValue]);
 
   const gridTiles = watch("gridTiles") || [];
 
@@ -67,7 +79,7 @@ export function Step1Form() {
           <h2>Step 1: Observer and Trip Details</h2>
 
           <div className="form__fields">
-            <ObserverFieldset />
+            <ObserverFieldset readOnly={isAuthenticated} />
             <GridTileFieldset />
           </div>
         </Page.Section>

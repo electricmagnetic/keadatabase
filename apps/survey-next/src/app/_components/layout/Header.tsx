@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { MobileMenu } from "./MobileMenu";
+import { AuthNav } from "../auth/AuthNav";
 
 export function Header() {
   const pathname = usePathname();
@@ -70,6 +71,7 @@ export function Header() {
                 <span>Submit Survey</span>
               </Link>
             </li>
+            <AuthNav />
           </ul>
         </nav>
         <MobileMenu />

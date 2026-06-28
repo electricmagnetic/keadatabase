@@ -3,7 +3,12 @@
 import { useFormContext } from "react-hook-form";
 import type { Step1FormData } from "../schema";
 
-export function ObserverFieldset() {
+interface ObserverFieldsetProps {
+  /** When true, the fields are pre-filled from the logged-in user and locked. */
+  readOnly?: boolean;
+}
+
+export function ObserverFieldset({ readOnly = false }: ObserverFieldsetProps) {
   const {
     register,
     formState: { errors, touchedFields },
@@ -28,10 +33,15 @@ export function ObserverFieldset() {
             id="observer.name"
             className={`form__control ${nameError && nameTouched ? "is-invalid" : ""}`}
             placeholder="Name"
-            autoFocus
+            autoFocus={!readOnly}
+            readOnly={readOnly}
             {...register("observer.name")}
           />
-          <small>Your name will be publicly visible</small>
+          <small>
+            {readOnly
+              ? "Taken from your account"
+              : "Your name will be publicly visible"}
+          </small>
           {nameError && nameTouched && (
             <div className="form--note">{nameError.message}</div>
           )}
@@ -46,9 +56,14 @@ export function ObserverFieldset() {
             id="observer.email"
             className={`form__control ${emailError && emailTouched ? "is-invalid" : ""}`}
             placeholder="Email"
+            readOnly={readOnly}
             {...register("observer.email")}
           />
-          <small>Your email is only visible to the project team</small>
+          <small>
+            {readOnly
+              ? "Taken from your account"
+              : "Your email is only visible to the project team"}
+          </small>
           {emailError && emailTouched && (
             <div className="form--note">{emailError.message}</div>
           )}

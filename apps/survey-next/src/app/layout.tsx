@@ -6,6 +6,7 @@ import { Footer } from "./_components/layout/Footer";
 import { BodyWithClasses } from "./_components/layout/BodyWithClasses";
 import { HomePageBanner } from "./_components/layout/HomePageBanner";
 import { SWRProvider } from "./_components/providers/SWRProvider";
+import { SessionProvider } from "./_components/auth/SessionProvider";
 
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "./css/main.css";
@@ -49,12 +50,14 @@ export default function RootLayout({
     <html lang="en" className={`${ibmPlexSans.variable} ${zillaSlab.variable}`}>
       <BodyWithClasses>
         <SWRProvider>
-          <Header />
-          <HomePageBanner />
-          <main className="page">
-            <div className="holder holder--page">{children}</div>
-          </main>
-          <Footer />
+          <SessionProvider>
+            <Header />
+            <HomePageBanner />
+            <main className="page">
+              <div className="holder holder--page">{children}</div>
+            </main>
+            <Footer />
+          </SessionProvider>
         </SWRProvider>
       </BodyWithClasses>
     </html>

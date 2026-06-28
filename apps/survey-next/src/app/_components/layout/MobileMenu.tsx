@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
+import { AuthNav } from "../auth/AuthNav";
 
 export function MobileMenu() {
   const [isOpen, setIsOpen] = useState(false);
@@ -107,6 +108,7 @@ export function MobileMenu() {
                   <span>Submit Survey</span>
                 </Link>
               </li>
+              <AuthNav />
             </ul>
           </nav>
         </>

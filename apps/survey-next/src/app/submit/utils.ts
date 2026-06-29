@@ -33,10 +33,14 @@ export function generateInitialHours(gridTiles?: string[]): SurveyHour[] {
 export function transformFormDataToPayload(
   formData: Step2FormData,
 ): SurveySubmissionPayload {
-  const { date, hours, ...rest } = formData;
+  const { date, hours, max_flock_size_grid_tile, ...rest } = formData;
   return {
     ...rest,
     date: date.toISOString().split("T")[0],
+    max_flock_size_grid_tile:
+      max_flock_size_grid_tile && max_flock_size_grid_tile.length > 0
+        ? max_flock_size_grid_tile[0]
+        : null,
     hours: hours
       .filter((hour) => hour.grid_tile !== null && hour.grid_tile.length > 0)
       .map(({ grid_tile, ...hour }) => ({

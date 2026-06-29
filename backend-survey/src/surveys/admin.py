@@ -8,7 +8,9 @@ class ObserverAdmin(admin.ModelAdmin):
     list_display = (
         '__str__',
         'email',
+        'user',
     )
+    raw_id_fields = ('user',)
 
 
 class SurveyHourInline(admin.StackedInline):

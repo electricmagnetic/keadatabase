@@ -19,15 +19,17 @@ export default async function AnalysisPage() {
   if (!analysesFetch.success) {
     if (analysesFetch.errorType === "NOT_FOUND") {
       return (
-        <div className="container my-5">
-          <Error message="Analysis data not found" />
-        </div>
+        <Page.Container>
+          <Page.Heading>Error</Page.Heading>
+          <Page.Section>Analysis data not found</Page.Section>
+        </Page.Container>
       );
     }
     return (
-      <div className="container my-5">
-        <Error message="Error fetching analysis data" />
-      </div>
+      <Page.Container>
+        <Page.Heading>Error</Page.Heading>
+        <Page.Section>Error fetching analysis</Page.Section>
+      </Page.Container>
     );
   }
 

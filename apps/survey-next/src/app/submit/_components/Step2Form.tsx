@@ -51,6 +51,7 @@ export function Step2Form({
       date: "", // empty so the field shows "required" on blur (matches Step 1)
       hours: generateInitialHours(gridTiles),
       max_flock_size: null,
+      max_flock_size_grid_tile: gridTiles.length === 1 ? [gridTiles[0]] : null,
       purpose: "",
       comments: "",
       challenge: "kea", // anti-spam field (fixed value)
@@ -117,7 +118,7 @@ export function Step2Form({
                 fieldOptions={fieldOptions?.hours?.child?.children}
               />
 
-              <FurtherInformationFieldset />
+              <FurtherInformationFieldset gridTiles={gridTiles} />
             </div>
 
           </Page.Section>

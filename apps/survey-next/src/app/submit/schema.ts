@@ -81,6 +81,7 @@ export const Step2Schema = z.object({
   date: DateSchema,
   hours: z.array(SurveyHourSchemaWithValidation).min(1, MESSAGES.hourRequired),
   max_flock_size: z.number().int().min(0).nullable(),
+  max_flock_size_grid_tile: z.array(z.string()).nullable(),
   purpose: z.string().optional(),
   comments: z.string().optional(),
   challenge: z.string().min(1, MESSAGES.required),
@@ -95,7 +96,11 @@ export type SurveyHour = z.infer<typeof SurveyHourSchema>;
 export type Step2FormInput = z.input<typeof Step2Schema>;
 export type Step2FormData = z.infer<typeof Step2Schema>;
 
-export type SurveySubmissionPayload = Omit<Step2FormData, "date" | "hours"> & {
+export type SurveySubmissionPayload = Omit<
+  Step2FormData,
+  "date" | "hours" | "max_flock_size_grid_tile"
+> & {
   date: string;
   hours: Array<Omit<SurveyHour, "grid_tile"> & { grid_tile: string }>;
+  max_flock_size_grid_tile: string | null;
 };

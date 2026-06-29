@@ -29,7 +29,13 @@ export function SignupForm() {
   const onSubmit = async (data: SignupFormData) => {
     const result = await authFetch(AUTH_PATHS.signup, {
       method: "POST",
-      body: JSON.stringify({ email: data.email, password: data.password }),
+      // backend allauth requires a username; we don't collect one, so reuse the
+      // email (allauth accepts it and email is the login identifier anyway).
+      body: JSON.stringify({
+        username: data.email,
+        email: data.email,
+        password: data.password,
+      }),
     });
 
     // allauth returns 401 with a pending email-verification flow on success —

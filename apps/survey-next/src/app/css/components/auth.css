@@ -1,9 +1,5 @@
 /* auth pages and forms */
 
-.auth-section {
-  max-width: 32rem;
-}
-
 .auth-form {
   display: flex;
   flex-direction: column;

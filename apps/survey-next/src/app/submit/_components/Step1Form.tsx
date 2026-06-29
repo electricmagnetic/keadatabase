@@ -34,7 +34,8 @@ export function Step1Form() {
     criteriaMode: "all", // return all errors
     defaultValues: {
       observer: {
-        name: isAuthenticated ? (user?.display ?? "") : "",
+        // name is always typed by the observer — allauth has no name field yet
+        name: "",
         email: isAuthenticated ? (user?.email ?? "") : "",
       },
       gridTiles: [],
@@ -44,12 +45,11 @@ export function Step1Form() {
   const { handleSubmit, watch, setValue } = methods;
 
   // the session resolves after mount, so defaultValues miss it — fill the
-  // observer fields once it arrives (only if the user hasn't typed anything)
+  // observer email once it arrives. name stays as the observer typed it.
   useEffect(() => {
     if (!isAuthenticated) return;
-    setValue("observer.name", user?.display ?? "");
     setValue("observer.email", user?.email ?? "");
-  }, [isAuthenticated, user?.display, user?.email, setValue]);
+  }, [isAuthenticated, user?.email, setValue]);
 
   const gridTiles = watch("gridTiles") || [];
 
@@ -79,7 +79,7 @@ export function Step1Form() {
           <h2>Step 1: Observer and Trip Details</h2>
 
           <div className="form__fields">
-            <ObserverFieldset readOnly={isAuthenticated} />
+            <ObserverFieldset emailReadOnly={isAuthenticated} />
             <GridTileFieldset />
           </div>
         </Page.Section>

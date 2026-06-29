@@ -1,11 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 
 import { AuthField } from "./AuthField";
+import { AuthSubmitButton } from "./AuthSubmitButton";
+import { useAuthForm } from "./useAuthForm";
 import { authFetch, authErrorMessage, AUTH_PATHS } from "./client";
 import {
   PasswordResetConfirmSchema,
@@ -22,7 +23,7 @@ export function PasswordResetConfirmForm({ resetKey }: { resetKey: string }) {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<PasswordResetConfirmFormData>({
+  } = useAuthForm<PasswordResetConfirmFormData>({
     resolver: zodResolver(PasswordResetConfirmSchema),
     defaultValues: { password: "", passwordConfirm: "" },
   });
@@ -66,9 +67,9 @@ export function PasswordResetConfirmForm({ resetKey }: { resetKey: string }) {
           error={errors.passwordConfirm}
         />
 
-        <button type="submit" className="btn btn--primary" disabled={isSubmitting}>
-          {isSubmitting ? "Saving…" : "Set new password"}
-        </button>
+        <AuthSubmitButton pendingLabel="Saving…" isSubmitting={isSubmitting}>
+          Set new password
+        </AuthSubmitButton>
       </form>
 
       <Toast message={toast} variant="error" onDismiss={() => setToast(null)} />

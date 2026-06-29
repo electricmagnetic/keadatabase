@@ -11,7 +11,7 @@ import { authFetch, AUTH_PATHS } from "./client";
  * Header and the MobileMenu.
  */
 export function AuthNav() {
-  const { user, isAuthenticated, loading, refresh } = useSession();
+  const { isAuthenticated, loading, refresh } = useSession();
   const router = useRouter();
 
   // avoid a flash of the wrong state before the session resolves
@@ -33,7 +33,7 @@ export function AuthNav() {
           </Link>
         </li>
         <li>
-          <Link href="/signup">
+          <Link href="/register">
             <i className="fa-fw fas fa-user-plus"></i>
             <span>Register</span>
           </Link>
@@ -47,7 +47,7 @@ export function AuthNav() {
       <li>
         <Link href="/account">
           <i className="fa-fw fas fa-user"></i>
-          <span>{user?.display || user?.email || "Account"}</span>
+          <span>Account</span>
         </Link>
       </li>
       <li>

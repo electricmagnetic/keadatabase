@@ -16,6 +16,9 @@ const MESSAGES = {
 export const ObserverSchema = z.object({
   name: z.string().min(1, MESSAGES.required),
   email: z.string().min(1, MESSAGES.required).email(MESSAGES.email),
+  // set from the logged-in user at submit; the API currently treats observer.id
+  // as read-only so this is ignored until the backend accepts it
+  id: z.number().optional(),
 });
 
 export const GridTilesSchema = z

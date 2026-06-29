@@ -1,27 +1,31 @@
 "use client";
 
 import { useState } from "react";
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 import { AuthField } from "./AuthField";
+import { AuthSubmitButton } from "./AuthSubmitButton";
+import { useAuthForm } from "./useAuthForm";
 import { useSession } from "./useSession";
+import { useRedirectIfAuthenticated } from "./useRedirectIfAuthenticated";
 import { authFetch, authErrorMessage, AUTH_PATHS } from "./client";
 import { SignupSchema, type SignupFormData } from "./schema";
 import { Toast } from "@/app/_components/ui/Toast";
+import { Spinner } from "@/app/_components/ui/Spinner";
 
 export function SignupForm() {
   const router = useRouter();
   const { refresh } = useSession();
+  const redirecting = useRedirectIfAuthenticated();
   const [toast, setToast] = useState<string | null>(null);
 
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<SignupFormData>({
+  } = useAuthForm<SignupFormData>({
     resolver: zodResolver(SignupSchema),
     defaultValues: { email: "", password: "", passwordConfirm: "" },
   });
@@ -50,6 +54,9 @@ export function SignupForm() {
     // to the verify-email page either way (it explains the next step)
     router.push("/verify-email");
   };
+
+  // withhold the form during the session check / pending redirect (no flash)
+  if (redirecting) return <Spinner />;
 
   return (
     <>
@@ -80,9 +87,9 @@ export function SignupForm() {
           error={errors.passwordConfirm}
         />
 
-        <button type="submit" className="btn btn--primary" disabled={isSubmitting}>
-          {isSubmitting ? "Creating account…" : "Create account"}
-        </button>
+        <AuthSubmitButton pendingLabel="Creating account…" isSubmitting={isSubmitting}>
+          Create account
+        </AuthSubmitButton>
 
         <p className="auth-form__links">
           <Link href="/login">Already have an account? Login</Link>

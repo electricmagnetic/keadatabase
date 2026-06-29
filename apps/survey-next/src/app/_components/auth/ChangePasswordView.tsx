@@ -2,15 +2,15 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
 
 import Page from "@/app/_components/ui/Page";
 import { Spinner } from "@/app/_components/ui/Spinner";
 import { useSession } from "./useSession";
+import { ChangePasswordForm } from "./ChangePasswordForm";
 
-/** Account management: emails + change password. Redirects anon users to login. */
-export function AccountView() {
-  const { user, isAuthenticated, loading } = useSession();
+/** Standalone change-password page. Redirects anon users to login. */
+export function ChangePasswordView() {
+  const { isAuthenticated, loading } = useSession();
   const router = useRouter();
 
   useEffect(() => {
@@ -21,18 +21,9 @@ export function AccountView() {
 
   return (
     <Page.Container>
-      <Page.Heading>Your account</Page.Heading>
-
+      <Page.Heading>Change password</Page.Heading>
       <Page.Section className="auth-section">
-        <h2>Account Details</h2>
-        <p>{user?.email}</p>
-      </Page.Section>
-
-      <Page.Section className="auth-section">
-        <h2>Change password</h2>
-        <p>
-          <Link href="/account/password">Change your password</Link>
-        </p>
+        <ChangePasswordForm />
       </Page.Section>
     </Page.Container>
   );

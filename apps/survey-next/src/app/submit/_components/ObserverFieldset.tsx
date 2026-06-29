@@ -4,11 +4,15 @@ import { useFormContext } from "react-hook-form";
 import type { Step1FormData } from "../schema";
 
 interface ObserverFieldsetProps {
-  /** When true, the fields are pre-filled from the logged-in user and locked. */
-  readOnly?: boolean;
+  /**
+   * When true, the email is pre-filled from the logged-in user and locked. Name
+   * stays an editable input — allauth has no name field yet, so the observer
+   * always types their own name.
+   */
+  emailReadOnly?: boolean;
 }
 
-export function ObserverFieldset({ readOnly = false }: ObserverFieldsetProps) {
+export function ObserverFieldset({ emailReadOnly = false }: ObserverFieldsetProps) {
   const {
     register,
     formState: { errors, touchedFields },
@@ -33,15 +37,10 @@ export function ObserverFieldset({ readOnly = false }: ObserverFieldsetProps) {
             id="observer.name"
             className={`form__control ${nameError && nameTouched ? "is-invalid" : ""}`}
             placeholder="Name"
-            autoFocus={!readOnly}
-            readOnly={readOnly}
+            autoFocus
             {...register("observer.name")}
           />
-          <small>
-            {readOnly
-              ? "Taken from your account"
-              : "Your name will be publicly visible"}
-          </small>
+          <small>Your name will be publicly visible</small>
           {nameError && nameTouched && (
             <div className="form--note">{nameError.message}</div>
           )}
@@ -56,11 +55,11 @@ export function ObserverFieldset({ readOnly = false }: ObserverFieldsetProps) {
             id="observer.email"
             className={`form__control ${emailError && emailTouched ? "is-invalid" : ""}`}
             placeholder="Email"
-            readOnly={readOnly}
+            readOnly={emailReadOnly}
             {...register("observer.email")}
           />
           <small>
-            {readOnly
+            {emailReadOnly
               ? "Taken from your account"
               : "Your email is only visible to the project team"}
           </small>

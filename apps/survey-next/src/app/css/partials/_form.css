@@ -84,4 +84,10 @@
     color: var(--red);
     font-size: 0.85rem;
   }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
 }

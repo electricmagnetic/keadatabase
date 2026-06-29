@@ -186,3 +186,21 @@
 .body-content {
   line-height: 1.4;
 }
+
+.nav-link-button {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  color: var(--nav-color);
+  font: inherit;
+  font-weight: 400;
+  transition: opacity 0.2s linear;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}

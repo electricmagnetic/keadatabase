@@ -48,8 +48,14 @@ async function proxy(req: NextRequest) {
   });
 
   upstream.headers.forEach((value, key) => {
-    if (key.toLowerCase() === "set-cookie") return; // handled below
-    if (key.toLowerCase() === "content-encoding") return; // body already decoded
+    const k = key.toLowerCase();
+    if (k === "set-cookie") return; // handled below
+    // Node's fetch already decoded the body, so the upstream content-encoding
+    // and content-length describe the *compressed* bytes. Forwarding them makes
+    // the browser truncate the decoded body to the shorter compressed length
+    // (e.g. the session payload gets cut off → invalid JSON). Drop both and let
+    // Next.js set content-length for the body we actually send.
+    if (k === "content-encoding" || k === "content-length") return;
     res.headers.set(key, value);
   });
 

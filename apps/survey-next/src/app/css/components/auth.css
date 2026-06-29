@@ -1,9 +1,9 @@
-/* auth pages and forms */
-
 .auth-form {
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  max-width: 600px;
+  margin-inline: auto;
 
   .btn {
     align-self: flex-start;
@@ -26,31 +26,11 @@
   }
 }
 
-/* logout button styled to sit alongside the nav links */
-.nav-link-button {
-  display: flex;
-  gap: 0.5rem;
-  align-items: center;
-  background: none;
-  border: 0;
-  padding: 0;
-  cursor: pointer;
-  color: var(--nav-color);
-  font: inherit;
-  font-weight: 400;
-  transition: opacity 0.2s linear;
-
-  &:hover {
-    opacity: 0.8;
-  }
-}
-
 .btn--small {
   font-size: 0.85rem;
   padding: 0.25rem 0.5rem;
 }
 
-/* account email list */
 .email-manager {
   display: flex;
   flex-direction: column;
@@ -73,28 +53,5 @@
     margin-left: auto;
     display: flex;
     gap: 0.5rem;
-  }
-}
-
-.badge {
-  font-size: 0.75rem;
-  padding: 0.15rem 0.5rem;
-  border-radius: 0.25rem;
-  background-color: var(--grey-light);
-  color: var(--black);
-
-  &--primary {
-    background-color: var(--steel-blue);
-    color: var(--white);
-  }
-
-  &--verified {
-    background-color: var(--orange);
-    color: var(--white);
-  }
-
-  &--unverified {
-    background-color: var(--grey-light);
-    color: var(--black);
   }
 }

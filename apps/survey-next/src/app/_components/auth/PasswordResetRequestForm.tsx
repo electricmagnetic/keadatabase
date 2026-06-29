@@ -1,11 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 
 import { AuthField } from "./AuthField";
+import { AuthSubmitButton } from "./AuthSubmitButton";
+import { useAuthForm } from "./useAuthForm";
 import { authFetch, authErrorMessage, AUTH_PATHS } from "./client";
 import {
   PasswordResetRequestSchema,
@@ -21,7 +22,7 @@ export function PasswordResetRequestForm() {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<PasswordResetRequestFormData>({
+  } = useAuthForm<PasswordResetRequestFormData>({
     resolver: zodResolver(PasswordResetRequestSchema),
     defaultValues: { email: "" },
   });
@@ -61,9 +62,9 @@ export function PasswordResetRequestForm() {
           error={errors.email}
         />
 
-        <button type="submit" className="btn btn--primary" disabled={isSubmitting}>
-          {isSubmitting ? "Sending…" : "Send reset link"}
-        </button>
+        <AuthSubmitButton pendingLabel="Sending…" isSubmitting={isSubmitting}>
+          Send reset link
+        </AuthSubmitButton>
 
         <p className="auth-form__links">
           <Link href="/login">Back to login</Link>

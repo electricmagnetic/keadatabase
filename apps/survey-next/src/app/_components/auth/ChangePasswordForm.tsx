@@ -1,10 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
+import Link from "next/link";
+
 import { AuthField } from "./AuthField";
+import { AuthSubmitButton } from "./AuthSubmitButton";
+import { useAuthForm } from "./useAuthForm";
 import { authFetch, authErrorMessage, AUTH_PATHS } from "./client";
 import { ChangePasswordSchema, type ChangePasswordFormData } from "./schema";
 import { Toast } from "@/app/_components/ui/Toast";
@@ -18,7 +21,7 @@ export function ChangePasswordForm() {
     handleSubmit,
     reset,
     formState: { errors, isSubmitting },
-  } = useForm<ChangePasswordFormData>({
+  } = useAuthForm<ChangePasswordFormData>({
     resolver: zodResolver(ChangePasswordSchema),
     defaultValues: {
       currentPassword: "",
@@ -74,9 +77,12 @@ export function ChangePasswordForm() {
           error={errors.newPasswordConfirm}
         />
 
-        <button type="submit" className="btn btn--primary" disabled={isSubmitting}>
-          {isSubmitting ? "Saving…" : "Change password"}
-        </button>
+        <div className="form__actions">
+          <AuthSubmitButton pendingLabel="Saving…" isSubmitting={isSubmitting}>
+            Change password
+          </AuthSubmitButton>
+          <Link href="/account">Back to your account</Link>
+        </div>
       </form>
 
       <Toast

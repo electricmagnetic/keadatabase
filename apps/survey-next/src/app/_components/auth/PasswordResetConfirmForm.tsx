@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 import { AuthField } from "./AuthField";
 import { AuthSubmitButton } from "./AuthSubmitButton";
@@ -35,10 +36,12 @@ export function PasswordResetConfirmForm({ resetKey }: { resetKey: string }) {
     });
 
     if (!result.ok) {
+      // allauth returns 401 with a flows envelope (no `errors`) when the reset
+      // key is dead/unusable in this session — treat it like an expired link.
       setToast(
         authErrorMessage(
           result,
-          "This reset link is invalid or has expired. Request a new one.",
+          "This reset link is invalid or has expired. Request a new one below.",
         ),
       );
       return;
@@ -67,9 +70,12 @@ export function PasswordResetConfirmForm({ resetKey }: { resetKey: string }) {
           error={errors.passwordConfirm}
         />
 
-        <AuthSubmitButton pendingLabel="Saving…" isSubmitting={isSubmitting}>
-          Set new password
-        </AuthSubmitButton>
+        <div className="form__actions">
+          <AuthSubmitButton pendingLabel="Saving…" isSubmitting={isSubmitting}>
+            Set new password
+          </AuthSubmitButton>
+          <Link href="/password/reset">Resend password reset</Link>
+        </div>
       </form>
 
       <Toast message={toast} variant="error" onDismiss={() => setToast(null)} />

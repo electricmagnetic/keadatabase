@@ -51,14 +51,20 @@ export async function getFieldOptions() {
  * Submit survey to the API
  *
  * @param payload - Survey submission data
+ * @param sessionToken - allauth session token; forwarded as `X-Session-Token`
+ *   when logged in so the backend attaches the user to the record
  */
-export async function submitSurvey(payload: SurveySubmissionPayload) {
+export async function submitSurvey(
+  payload: SurveySubmissionPayload,
+  sessionToken?: string | null,
+) {
   const url = getApiUrl("/report/survey/");
 
   const response = await fetch(url, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      ...(sessionToken ? { "X-Session-Token": sessionToken } : {}),
     },
     body: JSON.stringify(payload),
   });

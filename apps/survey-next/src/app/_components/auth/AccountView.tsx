@@ -25,6 +25,7 @@ export function AccountView() {
 
       <Page.Section className="auth-section">
         <h2>Account Details</h2>
+        {user?.name && <p>{user.name}</p>}
         <p>{user?.email}</p>
       </Page.Section>
 

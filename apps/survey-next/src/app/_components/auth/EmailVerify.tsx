@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 
 import { authFetch, AUTH_PATHS } from "./client";
@@ -18,22 +18,21 @@ export function EmailVerify({ verifyKey }: { verifyKey?: string }) {
   const [status, setStatus] = useState<Status>(
     verifyKey ? "verifying" : "no-key",
   );
+  // the verification key is single-use: POSTing twice consumes it then reports
+  // "invalid". Strict Mode runs effects twice in dev, so latch to POST once.
+  const submitted = useRef(false);
 
   useEffect(() => {
-    if (!verifyKey) return;
-    let active = true;
+    if (!verifyKey || submitted.current) return;
+    submitted.current = true;
     (async () => {
       const result = await authFetch(AUTH_PATHS.emailVerify, {
         method: "POST",
         body: JSON.stringify({ key: verifyKey }),
       });
-      if (!active) return;
       setStatus(result.ok ? "success" : "error");
       if (result.ok) await refresh();
     })();
-    return () => {
-      active = false;
-    };
   }, [verifyKey, refresh]);
 
   switch (status) {

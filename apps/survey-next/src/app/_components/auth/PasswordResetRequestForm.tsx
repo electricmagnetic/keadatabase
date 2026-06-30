@@ -62,13 +62,12 @@ export function PasswordResetRequestForm() {
           error={errors.email}
         />
 
-        <AuthSubmitButton pendingLabel="Sending…" isSubmitting={isSubmitting}>
-          Send reset link
-        </AuthSubmitButton>
-
-        <p className="auth-form__links">
+        <div className="form__actions">
+          <AuthSubmitButton pendingLabel="Sending…" isSubmitting={isSubmitting}>
+            Send reset link
+          </AuthSubmitButton>
           <Link href="/login">Back to login</Link>
-        </p>
+        </div>
       </form>
 
       <Toast message={toast} variant="error" onDismiss={() => setToast(null)} />

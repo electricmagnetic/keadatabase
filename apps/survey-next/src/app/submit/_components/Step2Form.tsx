@@ -43,7 +43,7 @@ export function Step2Form({
   fieldOptions,
 }: Step2FormProps) {
   const router = useRouter();
-  const { user } = useSession();
+  const { sessionToken } = useSession();
   const [submitError, setSubmitError] = useState<string | null>(null);
 
   // memoize default values to prevent hydration mismatches
@@ -77,14 +77,9 @@ export function Step2Form({
     // transform form data to API payload
     const payload = transformFormDataToPayload(data);
 
-    // when logged in, attach the user id to the observer (API currently ignores
-    // it — observer.id is read-only — but send it so it's ready server-side)
-    if (user?.id != null) {
-      payload.observer = { ...payload.observer, id: Number(user.id) };
-    }
-
-    // submit to API
-    const result = await submitSurvey(payload);
+    // when logged in, forward the allauth session token so the backend can
+    // attach the user to the record
+    const result = await submitSurvey(payload, sessionToken);
 
     if (!result.success) {
       setSubmitError(

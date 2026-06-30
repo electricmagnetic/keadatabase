@@ -5,6 +5,7 @@ import { z } from "zod";
 export const UserSchema = z.object({
   id: z.union([z.number(), z.string()]).optional(),
   display: z.string().optional(),
+  name: z.string().optional(),
   email: z.email().optional(),
   username: z.string().optional(),
   has_usable_password: z.boolean().optional(),
@@ -33,6 +34,7 @@ export type LoginFormData = z.infer<typeof LoginSchema>;
 
 export const SignupSchema = z
   .object({
+    name: z.string().min(1, "Name is required"),
     email: z.email("Enter a valid email address"),
     password: z.string().min(8, "Password must be at least 8 characters"),
     passwordConfirm: z.string(),

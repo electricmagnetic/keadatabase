@@ -38,3 +38,4 @@ database/
 .idea
 .plan
 backend/.ddev
+backend-survey/.ddev

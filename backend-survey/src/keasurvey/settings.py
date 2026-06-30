@@ -32,6 +32,15 @@ DEBUG = env.bool('DEBUG', True)
 
 ALLOWED_HOSTS = []
 
+# local development hosts. Defaults to localhost; extra hosts/origins (e.g. a
+# ddev *.ddev.site domain) can be supplied via env without touching this file.
+if DEBUG:
+    ALLOWED_HOSTS = ['localhost', '127.0.0.1'] + env.list('DEV_ALLOWED_HOSTS', [])
+    CSRF_TRUSTED_ORIGINS = [
+        'http://localhost:3000',
+        'http://localhost:8000',
+    ] + env.list('DEV_CSRF_TRUSTED_ORIGINS', [])
+
 # Production settings for security
 if env.bool('IS_PRODUCTION', False):
     SECRET_KEY = env.str('DJANGO_SECRET_KEY')
@@ -316,12 +325,21 @@ sentry_sdk.init(
 
 # Email configuration
 
-EMAIL_BACKEND = 'anymail.backends.mailgun.EmailBackend'
-
-ANYMAIL = {
-    'MAILGUN_API_KEY': env.str('MAILGUN_API_KEY', ''),
-    'MAILGUN_API_URL': env.str('MAILGUN_API_URL', 'https://api.eu.mailgun.net/v3'),
-}
+# Production sends via Mailgun (anymail). Locally, send over SMTP to a mail
+# catcher (set EMAIL_HOST/EMAIL_PORT via env). Falls back to the console backend
+# when neither a Mailgun key nor an SMTP host is configured.
+if env.str('MAILGUN_API_KEY', ''):
+    EMAIL_BACKEND = 'anymail.backends.mailgun.EmailBackend'
+    ANYMAIL = {
+        'MAILGUN_API_KEY': env.str('MAILGUN_API_KEY', ''),
+        'MAILGUN_API_URL': env.str('MAILGUN_API_URL', 'https://api.eu.mailgun.net/v3'),
+    }
+elif env.str('EMAIL_HOST', ''):
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    EMAIL_HOST = env.str('EMAIL_HOST')
+    EMAIL_PORT = env.int('EMAIL_PORT', 1025)
+else:
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 DEFAULT_FROM_EMAIL = env.str('FROM_EMAIL', 'no-reply@keadatabase.nz')
 SERVER_EMAIL = env.str('FROM_EMAIL', 'no-reply@keadatabase.nz')
@@ -349,7 +367,28 @@ ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 ACCOUNT_SIGNUP_FIELDS = ['email*', 'username*', 'password1*', 'password2*']
 ACCOUNT_LOGIN_METHODS = {'email'}
 
-HEADLESS_ONLY = False
+# branding for emails (no django.contrib.sites; templates read this directly)
+ACCOUNT_EMAIL_SUBJECT_PREFIX = '[Kea Survey] '
+
+## Headless / frontend integration
+#
+# The survey-next SPA drives auth through the headless API. With HEADLESS_ONLY,
+# allauth's email-confirmation and password-reset emails link to the frontend
+# (URLs below) with headless-compatible keys, instead of the server-rendered
+# allauth HTML views. Without this, reset/verify links 404 or carry a key the
+# headless endpoints reject.
+HEADLESS_ONLY = True
+
+# Frontend base URL the emailed links point at. Override per-environment via env.
+FRONTEND_URL = env.str('FRONTEND_URL', 'http://localhost:3000')
+
+HEADLESS_FRONTEND_URLS = {
+    'account_confirm_email': FRONTEND_URL + '/accounts/confirm-email/{key}',
+    'account_reset_password': FRONTEND_URL + '/password/reset',
+    'account_reset_password_from_key': FRONTEND_URL
+    + '/accounts/password/reset/key/{key}',
+    'account_signup': FRONTEND_URL + '/register',
+}
 
 if not DEBUG:
     SESSION_COOKIE_DOMAIN = 'keasurvey.nz'

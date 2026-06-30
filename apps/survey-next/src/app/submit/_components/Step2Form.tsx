@@ -53,7 +53,8 @@ export function Step2Form({
       date: "", // empty so the field shows "required" on blur (matches Step 1)
       hours: generateInitialHours(gridTiles),
       max_flock_size: null,
-      max_flock_size_grid_tile: gridTiles.length === 1 ? [gridTiles[0]] : null,
+      // set by FurtherInformationFieldset once kea tiles are known
+      max_flock_size_grid_tile: null,
       purpose: "",
       comments: "",
       challenge: "kea", // anti-spam field (fixed value)

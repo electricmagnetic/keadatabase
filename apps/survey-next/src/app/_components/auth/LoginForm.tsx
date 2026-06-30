@@ -37,6 +37,17 @@ export function LoginForm() {
     });
 
     if (!result.ok) {
+      // allauth blocks login for an unverified email and returns a pending
+      // verify_email flow (and re-sends the verification email). Tell the user
+      // to check their inbox rather than "invalid password".
+      const flows = (result.data as { flows?: { id: string }[] } | undefined)
+        ?.flows;
+      if (flows?.some((f) => f.id === "verify_email")) {
+        setToast(
+          "Please verify your email first — we've sent you a new verification link.",
+        );
+        return;
+      }
       setToast(authErrorMessage(result, "Invalid email or password."));
       return;
     }
@@ -69,14 +80,16 @@ export function LoginForm() {
           error={errors.password}
         />
 
-        <AuthSubmitButton pendingLabel="Logging in…" isSubmitting={isSubmitting}>
-          Login
-        </AuthSubmitButton>
-
-        <p className="auth-form__links">
+        <div className="form__actions">
+          <AuthSubmitButton
+            pendingLabel="Logging in…"
+            isSubmitting={isSubmitting}
+          >
+            Login
+          </AuthSubmitButton>
           <Link href="/password/reset">Forgot your password?</Link>
           <Link href="/register">Create an account</Link>
-        </p>
+        </div>
       </form>
 
       <Toast message={toast} variant="error" onDismiss={() => setToast(null)} />

@@ -89,5 +89,20 @@
     display: flex;
     align-items: center;
     gap: 1rem;
+
+    /* push the links to the right, away from the button */
+    a:first-of-type {
+      margin-left: auto;
+    }
+
+    /* on narrow screens, stack the links below the button, left-aligned */
+    @media (max-width: 575px) {
+      flex-direction: column;
+      align-items: flex-start;
+
+      a:first-of-type {
+        margin-left: 0;
+      }
+    }
   }
 }

@@ -15,13 +15,16 @@ export default async function ConfirmEmailPage({
 }: {
   params: Promise<{ key: string }>;
 }) {
+  // the param can arrive percent-encoded (allauth emails encode the `:` in the
+  // key as %3A); decode so the backend receives the raw key
   const { key } = await params;
+  const decodedKey = decodeURIComponent(key);
 
   return (
     <Page.Container>
       <Page.Heading>Verify your email</Page.Heading>
       <Page.Section className="auth-section">
-        <EmailVerify verifyKey={decodeURIComponent(key)} />
+        <EmailVerify verifyKey={decodedKey} />
       </Page.Section>
     </Page.Container>
   );

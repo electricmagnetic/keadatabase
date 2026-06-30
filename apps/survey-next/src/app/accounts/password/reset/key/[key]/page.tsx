@@ -17,12 +17,14 @@ export default async function PasswordResetConfirmKeyPage({
 }: PageWithParams) {
   const { key } = await params;
   if (typeof key !== "string" || !key) return notFound();
+  // decode in case the param arrives percent-encoded (matches confirm-email)
+  const decodedKey = decodeURIComponent(key);
 
   return (
     <Page.Container>
       <Page.Heading>Set a new password</Page.Heading>
       <Page.Section className="auth-section">
-        <PasswordResetConfirmForm resetKey={key} />
+        <PasswordResetConfirmForm resetKey={decodedKey} />
       </Page.Section>
     </Page.Container>
   );

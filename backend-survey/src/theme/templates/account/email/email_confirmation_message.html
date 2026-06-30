@@ -1,0 +1,32 @@
+{% extends "account/email/base_message.html" %}
+{% load account %}
+{% load i18n %}
+
+{% block content %}{% user_display user as user_display %}
+<h1 style="margin:0 0 16px; font-size:22px; color:#1f2937;">{% trans "Confirm your email" %}</h1>
+<p style="margin:0 0 20px; font-size:15px; line-height:1.6; color:#374151;">
+  {% blocktrans with site_domain=current_site.domain %}You're receiving this email because user {{ user_display }} has given your email address to register an account on {{ site_domain }}.{% endblocktrans %}
+</p>
+
+{% if code %}
+<p style="margin:0 0 12px; font-size:15px; line-height:1.6; color:#374151;">
+  {% trans "Your email verification code is below. Enter it in your open browser window." %}
+</p>
+<p style="margin:0 0 8px; font-size:28px; font-weight:700; letter-spacing:4px; color:#df5206;">{{ code }}</p>
+{% else %}
+<p style="margin:0 0 24px; font-size:15px; line-height:1.6; color:#374151;">
+  {% trans "To confirm this is correct, click the button below." %}
+</p>
+<table role="presentation" cellpadding="0" cellspacing="0">
+  <tr>
+    <td style="border-radius:6px; background-color:#df5206;">
+      <a href="{{ activate_url }}" style="display:inline-block; padding:12px 28px; font-size:15px; font-weight:600; color:#ffffff; text-decoration:none; border-radius:6px;">{% trans "Confirm email" %}</a>
+    </td>
+  </tr>
+</table>
+<p style="margin:24px 0 0; font-size:13px; line-height:1.5; color:#6b7280;">
+  {% trans "If the button doesn't work, copy and paste this link into your browser:" %}<br>
+  <a href="{{ activate_url }}" style="color:#df5206; word-break:break-all;">{{ activate_url }}</a>
+</p>
+{% endif %}
+{% endblock content %}

@@ -1,0 +1,7 @@
+{% extends "account/email/base_message.html" %}
+
+{% block content %}
+<p style="margin:0; font-size:15px; line-height:1.6; color:#374151;">
+  {% block notification_message %}{% endblock notification_message %}
+</p>
+{% endblock content %}

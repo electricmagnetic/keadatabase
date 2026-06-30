@@ -198,6 +198,119 @@ cd apps/frontend
 pnpm dev
 ```
 
+### Running `backend-survey` locally with DDEV (optional)
+
+`backend-survey` (Django 5.2, Python 3.13, **uv**, GeoDjango/PostGIS,
+`django-allauth` headless) can be run under [DDEV](https://ddev.com). Its
+`src/keasurvey/settings.py` is fully env-driven and contains **no** ddev- or
+machine-specific values — relevant env vars:
+
+- `DEBUG` (default `True`)
+- `DATABASE_URL` (default `postgres://postgres:@localhost:5432/keasurvey`)
+- `DEV_ALLOWED_HOSTS` / `DEV_CSRF_TRUSTED_ORIGINS` — comma-separated extra
+  hosts/origins added in DEBUG (localhost always allowed)
+- `MAILGUN_API_KEY` — if set, send via Mailgun; else if `EMAIL_HOST` is set,
+  send via SMTP (a local mail catcher); else console backend
+- `EMAIL_HOST` / `EMAIL_PORT` — SMTP catcher (port default 1025)
+- `FRONTEND_URL` — base URL the allauth verification / password-reset emails
+  link to (default `http://localhost:3000`); drives `HEADLESS_FRONTEND_URLS`
+
+All DDEV config lives under `backend-survey/.ddev/`, which is **git-ignored** and
+never committed. The steps below reproduce it from scratch (run from
+`backend-survey/`).
+
+**1. Initialise** (generic project + Postgres):
+
+```bash
+ddev config --project-type=generic --database=postgres:16 --project-name=keasurvey
+```
+
+**2. `.ddev/config.keasurvey.yaml`** — runs/exposes the Django dev server, sets
+env, migrates on start:
+
+```yaml
+web_extra_exposed_ports:
+  - name: django
+    container_port: 8000
+    http_port: 8000
+    https_port: 8443
+
+web_extra_daemons:
+  - name: django
+    command: "cd /var/www/html/src && uv run manage.py runserver 0.0.0.0:8000"
+    directory: /var/www/html
+
+web_environment:
+  - DATABASE_URL=postgres://db:db@db:5432/db
+  - DEBUG=True
+  - EMAIL_HOST=localhost          # Mailpit (ddev's built-in mail catcher)
+  - DEV_ALLOWED_HOSTS=.ddev.site
+  - DEV_CSRF_TRUSTED_ORIGINS=https://*.ddev.site
+
+hooks:
+  post-start:
+    - exec: "cd /var/www/html && uv sync"
+    - exec: "psql -d db -c 'CREATE EXTENSION IF NOT EXISTS postgis;'"
+      service: db
+    - exec: "cd /var/www/html/src && uv run manage.py migrate"
+```
+
+**3. `.ddev/web-build/Dockerfile`** — GeoDjango libs + uv:
+
+```dockerfile
+ARG BASE_IMAGE
+FROM $BASE_IMAGE
+RUN apt-get update && apt-get install -y --no-install-recommends \
+  binutils libproj-dev gdal-bin libgdal-dev libmagic-dev \
+  && rm -rf /var/lib/apt/lists/*
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
+```
+
+**4. `.ddev/db-build/Dockerfile`** — PostGIS (ddev's stock postgres omits it):
+
+```dockerfile
+ARG BASE_IMAGE
+FROM $BASE_IMAGE
+RUN apt-get update && apt-get install -y --no-install-recommends \
+  postgresql-16-postgis-3 postgresql-16-postgis-3-scripts \
+  && rm -rf /var/lib/apt/lists/*
+```
+
+**5. Start:** `ddev start`
+
+**URLs:**
+- API: `http://keasurvey.ddev.site:8000` (and `https://…:8443`)
+- Mailpit (catches all outbound email): `https://keasurvey.ddev.site:8026`
+
+**Common tasks:**
+
+```bash
+ddev exec "cd src && uv run manage.py createsuperuser"
+ddev exec "cd src && uv run manage.py migrate"
+ddev restart    # pick up settings.py / config changes
+ddev delete -O  # remove project + db (keeps your files)
+```
+
+**Point the frontend at it** (`apps/survey-next/.env`):
+
+```bash
+NEXT_PUBLIC_API_PATH=/api
+BACKEND_API_BASE=http://keasurvey.ddev.site:8000
+```
+
+The Next.js dev proxy (`apps/survey-next/src/app/api/[...path]/route.ts`)
+forwards `/api/*` to `BACKEND_API_BASE` and rewrites Set-Cookie for localhost.
+
+**Tear down** (leaves the repo clean, since `.ddev/` is git-ignored):
+
+```bash
+ddev delete -O   # remove the ddev project + database
+rm -rf .ddev     # remove all ddev config from the working tree
+```
+
+The app still runs without DDEV — point `DATABASE_URL` at any local
+PostGIS-enabled Postgres and run `uv run src/manage.py runserver`.
+
 ### Build Commands
 
 ```bash

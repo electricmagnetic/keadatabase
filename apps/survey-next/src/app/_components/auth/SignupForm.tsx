@@ -96,13 +96,15 @@ export function SignupForm() {
           error={errors.passwordConfirm}
         />
 
-        <AuthSubmitButton pendingLabel="Creating account…" isSubmitting={isSubmitting}>
-          Create account
-        </AuthSubmitButton>
-
-        <p className="auth-form__links">
+        <div className="form__actions">
+          <AuthSubmitButton
+            pendingLabel="Creating account…"
+            isSubmitting={isSubmitting}
+          >
+            Create account
+          </AuthSubmitButton>
           <Link href="/login">Already have an account? Login</Link>
-        </p>
+        </div>
       </form>
 
       <Toast message={toast} variant="error" onDismiss={() => setToast(null)} />

@@ -35,18 +35,22 @@ export function PasswordResetConfirmForm({ resetKey }: { resetKey: string }) {
       body: JSON.stringify({ key: resetKey, password: data.password }),
     });
 
-    if (!result.ok) {
-      // allauth returns 401 with a flows envelope (no `errors`) when the reset
-      // key is dead/unusable in this session — treat it like an expired link.
-      setToast(
-        authErrorMessage(
-          result,
-          "This reset link is invalid or has expired. Request a new one below.",
-        ),
-      );
+    // allauth returns 401 with a flows envelope on SUCCESS: the password is
+    // changed but the reset doesn't log you in, so it reports "now authenticate".
+    if (result.ok || result.status === 401) {
+      router.push("/login");
       return;
     }
-    router.push("/login");
+
+    // a 400 on the `key` param means the link is dead; a 400 on `password`
+    // means the password failed a rule (too similar/short/common) — surface
+    // that real message instead of blaming the link.
+    const keyError = result.errors?.some((e) => e.param === "key");
+    setToast(
+      keyError
+        ? "This reset link is invalid or has expired. Request a new one below."
+        : authErrorMessage(result, "Could not reset your password."),
+    );
   };
 
   return (

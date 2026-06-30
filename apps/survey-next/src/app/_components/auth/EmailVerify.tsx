@@ -30,8 +30,12 @@ export function EmailVerify({ verifyKey }: { verifyKey?: string }) {
         method: "POST",
         body: JSON.stringify({ key: verifyKey }),
       });
-      setStatus(result.ok ? "success" : "error");
-      if (result.ok) await refresh();
+      // allauth returns 401 with a flows envelope on SUCCESS: the email is
+      // verified but you're not logged in, so it reports "now authenticate".
+      // A genuine bad/expired key returns 400 with `errors`.
+      const ok = result.ok || result.status === 401;
+      setStatus(ok ? "success" : "error");
+      if (ok) await refresh();
     })();
   }, [verifyKey, refresh]);
 
@@ -41,14 +45,16 @@ export function EmailVerify({ verifyKey }: { verifyKey?: string }) {
     case "success":
       return (
         <p className="auth-form__message">
-          Your email is verified. <Link href="/account">Go to your account</Link>.
+          Your email is verified. You can now{" "}
+          <Link href="/login">log in</Link>.
         </p>
       );
     case "error":
       return (
         <p className="auth-form__message auth-form__message--error">
-          This verification link is invalid or has expired. You can request a new
-          one from your <Link href="/account">account page</Link>.
+          This verification link is invalid or has expired. Try{" "}
+          <Link href="/login">logging in</Link> to request a new link, or{" "}
+          <Link href="/register">create an account</Link>.
         </p>
       );
     case "no-key":

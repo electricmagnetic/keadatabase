@@ -102,7 +102,6 @@ Please note, aside from `collectstatic` Django commands such as `migrate` are no
 - `src/synchronise/` - Command and helpers that syncs Django DB with provided CSVs
 - `src/theme/` - Django REST Framework customisations
 - `src/geojson/` - Provides a GeoJSON endpoint of filterable observations
-- `src/surveys/` - Provides the kea survey tool functionality
 - `src/analysis/` - Provides an endpoint for analysis of observation data
 
 ## Code formatting

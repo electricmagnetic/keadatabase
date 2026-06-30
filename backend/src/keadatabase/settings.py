@@ -10,8 +10,9 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
-from environs import Env
 import os
+
+from environs import Env
 
 # Read environment variables, .env file
 env = Env()
@@ -40,7 +41,11 @@ if env.bool('IS_PRODUCTION', False):
     ALLOWED_HOSTS = [
         '.keadatabase.nz',
         '.electricmagnetic.net',
-        '.keasurvey.nz',
+    ]
+
+    CSRF_TRUSTED_ORIGINS = [
+        'https://keadatabase.nz',
+        'https://*.keadatabase.nz',
     ]
 
 # Specify geo libraries (if necessary)
@@ -70,7 +75,6 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'rest_framework_gis',
     'rest_framework_csv',
-    'rest_framework_simplejwt',
     'debug_toolbar',
     'leaflet',
     'birds',
@@ -80,8 +84,6 @@ INSTALLED_APPS = [
     'sightings',
     'report',
     'geojson',
-    'surveys',
-    'analysis',
 ]
 
 MIDDLEWARE = [
@@ -159,21 +161,14 @@ TIME_ZONE = 'Pacific/Auckland'
 
 USE_I18N = True
 
-USE_L10N = False
-
 USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.11/howto/static-files/
+# https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 STATIC_URL = '/static/'
-
-# Simplified static file serving.
-# https://warehouse.python.org/project/whitenoise/
-
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Media files
 
@@ -181,17 +176,32 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 MEDIA_URL = '/media/'
 
+# Storage backends
+# https://docs.djangoproject.com/en/4.2/ref/settings/#storages
+
+# - ``staticfiles`` uses a subclass of whitenoise's manifest storage with
+#   ``manifest_strict = False`` so that third-party CSS files do not
+#   abort post-processing when they reference assets that cannot be resolved
+#   at collect time. See ``keadatabase.storage`` for the rationale.
+
+STORAGES = {
+    'default': {
+        'BACKEND': 'django.core.files.storage.FileSystemStorage',
+    },
+    'staticfiles': {
+        'BACKEND': 'keadatabase.storage.NonStrictCompressedManifestStaticFilesStorage',
+    },
+}
+
 # Django REST Framework
 
 REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': (
         'rest_framework.renderers.JSONRenderer',
-        'rest_framework.renderers.BrowsableAPIRenderer',
+        'keadatabase.renderers.BrowsableAPIRendererWithoutForms',
         'rest_framework_csv.renderers.PaginatedCSVRenderer',
     ),
-    'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
-    ),
+    'DEFAULT_PERMISSION_CLASSES': ('keadatabase.permissions.IsAdminOrReadOnly',),
     'DEFAULT_FILTER_BACKENDS': (
         'django_filters.rest_framework.DjangoFilterBackend',
         'rest_framework.filters.OrderingFilter',
@@ -205,7 +215,6 @@ REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.SessionAuthentication',
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
         'rest_framework.authentication.TokenAuthentication',
     ),
     'EXCEPTION_HANDLER': 'keadatabase.exceptions.exception_handler',
@@ -227,7 +236,6 @@ if not DEBUG:
 
     CORS_ALLOWED_ORIGIN_REGEXES = (
         r'^https?://\w*\.?keadatabase.nz$',
-        r'^https?://\w*\.?keasurvey.nz$',
         r'^https?://\w*\.?electricmagnetic.net$',
         r'^https?://localhost:3000$',
         r'^https?://localhost:8000$',
@@ -250,13 +258,12 @@ if not DEBUG:
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
     SECURE_HSTS_PRELOAD = True
-    SECURE_BROWSER_XSS_FILTER = True
     X_FRAME_OPTIONS = 'DENY'
 
 # Amazon S3 storage
 
 if not DEBUG:
-    DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+    STORAGES['default']['BACKEND'] = 'storages.backends.s3boto3.S3Boto3Storage'
     AWS_ACCESS_KEY_ID = env.str('AWS_ACCESS_KEY_ID')
     AWS_SECRET_ACCESS_KEY = env.str('AWS_SECRET_ACCESS_KEY')
     AWS_STORAGE_BUCKET_NAME = env.str('AWS_STORAGE_BUCKET_NAME')

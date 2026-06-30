@@ -1,0 +1,28 @@
+/*
+ * Kea Survey admin theme.
+ *
+ */
+
+:root {
+  --primary: #6a7030;
+  --secondary: #231f20;
+  --accent: #f96b1f;
+  --primary-fg: #fff;
+
+  --header-color: #f96b1f;
+  --header-branding-color: var(--accent);
+  --header-bg: var(--secondary);
+  --header-link-color: var(--primary-fg);
+
+  --breadcrumbs-fg: #c4dce8;
+  --breadcrumbs-link-fg: var(--body-bg);
+  --breadcrumbs-bg: var(--primary);
+
+  --link-fg: #f96b1e;
+  --link-hover-color: #b5490e;
+
+  --button-bg: var(--primary);
+  --button-hover-bg: #98a143;
+  --default-button-bg: var(--secondary);
+  --default-button-hover-bg: #205067;
+}

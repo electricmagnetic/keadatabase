@@ -1,14 +1,15 @@
-import django_filters
+from django_filters import FilterSet, filters
 from rest_framework import viewsets
 
 from keadatabase.pagination import BirdPagination
+
 from .models import Bird
 from .serializers import BirdSerializer
 
 EMPTY_VALUES = ([], (), {}, '', None)
 
 
-class BirdOrdering(django_filters.OrderingFilter):
+class BirdOrdering(filters.OrderingFilter):
     def __init__(self, *args, **kwargs):
         super(BirdOrdering, self).__init__(*args, **kwargs)
         self.extra['choices'] += [('random', 'Random')]
@@ -22,18 +23,18 @@ class BirdOrdering(django_filters.OrderingFilter):
         return super(BirdOrdering, self).filter(qs, value)
 
 
-class BirdFilter(django_filters.FilterSet):
-    is_extended = django_filters.BooleanFilter(
+class BirdFilter(FilterSet):
+    is_extended = filters.BooleanFilter(
         field_name='bird_extended__is_extended',
         lookup_expr='isnull',
         exclude=True,
         label='Is extended',
     )
-    is_featured = django_filters.BooleanFilter(
+    is_featured = filters.BooleanFilter(
         field_name='bird_extended__is_featured', label='Is featured'
     )
 
-    has_band = django_filters.BooleanFilter(
+    has_band = filters.BooleanFilter(
         field_name='band_combo', lookup_expr='isnull', exclude=True
     )
 
@@ -73,4 +74,4 @@ class BirdViewSet(viewsets.ModelViewSet):
         'bird_extended',
         'date_imported',
     )
-    filter_class = BirdFilter
+    filterset_class = BirdFilter

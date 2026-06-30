@@ -12,11 +12,12 @@ export function getApiBaseUrl(): string {
   const isServer = typeof window === "undefined";
 
   if (isServer) {
-    // server-side: use direct backend URL (no CORS issues)
-    return process.env.BACKEND_API_BASE || process.env.NEXT_PUBLIC_API_BASE || "";
+    // server-side: hit the backend directly (no CORS issues)
+    return process.env.BACKEND_API_BASE || process.env.NEXT_PUBLIC_API_PATH || "";
   } else {
-    // client-side: use proxy path
-    return process.env.NEXT_PUBLIC_API_BASE || "";
+    // client-side: use the proxy path (NEXT_PUBLIC_API_PATH, e.g. /api) so the
+    // proxy can rewrite Set-Cookie for same-origin auth
+    return process.env.NEXT_PUBLIC_API_PATH || "";
   }
 }
 

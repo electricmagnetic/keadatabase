@@ -1,7 +1,7 @@
 import io
 
-from django.core import management
 from django.conf import settings
+from django.core import management
 from django.core.files.storage import default_storage
 
 from sightings.importobservations import import_Observation
@@ -14,7 +14,8 @@ class Command(management.BaseCommand):
         """Imports objects into database"""
         self.stdout.write(self.style.MIGRATE_HEADING('\nBeginning import:'))
 
-        if settings.DEFAULT_FILE_STORAGE == 'storages.backends.s3boto3.S3Boto3Storage':
+        default_storage_backend = settings.STORAGES['default']['BACKEND']
+        if default_storage_backend == 'storages.backends.s3boto3.S3Boto3Storage':
             with default_storage.open(
                 'data/observations.csv', 'r'
             ) as observations_csv_bin:
@@ -31,7 +32,9 @@ class Command(management.BaseCommand):
         self.stdout.write(self.style.SUCCESS('\nImport complete'))
 
     def handle(self, *args, **options):
-        self.stdout.write('\nUsing input data from: %s' % settings.DEFAULT_FILE_STORAGE)
+        self.stdout.write(
+            '\nUsing input data from: %s' % settings.STORAGES['default']['BACKEND']
+        )
 
         confirm = input("\nReady to import? Type 'yes' to continue: ")
         # confirm = 'yes' # for debugging

@@ -75,7 +75,7 @@ def is_valid_BandCombo(row):
         'deployed',
         'transferred',
     ]
-    if not row['Action'].lower() in valid_actions:
+    if row['Action'].lower() not in valid_actions:
         return False
 
     # must not have 'kit' in ID

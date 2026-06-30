@@ -2,22 +2,19 @@
 
 from rest_framework.routers import DefaultRouter
 
-from birds.views import BirdViewSet
 from bands.views import BandComboViewSet
-from sightings.views.observations import ObservationViewSet
+from birds.views import BirdViewSet
+from geojson.views import (
+    BirdObservationGeoJSONViewSet,
+    ObservationGeoJSONViewSet,
+)
+from report.views import (
+    ImportObservationViewSet,
+    ReportObservationViewSet,
+)
 from sightings.views.birds import BirdObservationViewSet
 from sightings.views.media import ObservationsMediaViewSet
-from geojson.views import (
-    ObservationGeoJSONViewSet,
-    GridTileGeoJSONViewSet,
-    BirdObservationGeoJSONViewSet,
-)
-from report.views import ReportObservationViewSet
-from report.views import ReportSurveyViewSet
-from report.views import ImportObservationViewSet
-from surveys.views import SurveyViewSet, SurveyHourViewSet, ObserverViewSet
-from locations.views import GridTileViewSet
-from analysis.views import GridTileAnalysisViewSet, SurveyAnalysisViewSet
+from sightings.views.observations import ObservationViewSet
 
 router = DefaultRouter()
 
@@ -33,17 +30,7 @@ router.register(r'geojson/observations', ObservationGeoJSONViewSet, 'Observation
 router.register(r'geojson/bird_observations', BirdObservationGeoJSONViewSet, 'BirdObservationGeoJSON')
 router.register(r'report/observation', ReportObservationViewSet, 'ReportObservation')
 
-# Survey endpoints
-router.register(r'surveys/grid_tiles', GridTileViewSet, 'GridTile')
-router.register(r'surveys/hours', SurveyHourViewSet, 'SurveyHour')
-router.register(r'surveys/surveys', SurveyViewSet, 'Survey')
-router.register(r'geojson/grid_tiles', GridTileGeoJSONViewSet, 'GridTileGeoJSON')
-router.register(r'analysis/grid_tiles', GridTileAnalysisViewSet, 'GridTileAnalysis')
-router.register(r'analysis/surveys', SurveyAnalysisViewSet, 'SurveyAnalysis')
-router.register(r'report/survey', ReportSurveyViewSet, 'ReportSurveyViewSet')
-
 # Permission required
-router.register(r'surveys/observers', ObserverViewSet, 'Observer')
 router.register(r'report/import', ImportObservationViewSet, 'ImportObservation')
 
 # yapf: enable

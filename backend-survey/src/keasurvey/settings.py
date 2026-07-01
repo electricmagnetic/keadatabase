@@ -383,10 +383,10 @@ HEADLESS_ONLY = True
 FRONTEND_URL = env.str('FRONTEND_URL', 'http://localhost:3000')
 
 HEADLESS_FRONTEND_URLS = {
-    'account_confirm_email': FRONTEND_URL + '/accounts/confirm-email/{key}',
-    'account_reset_password': FRONTEND_URL + '/password/reset',
+    'account_confirm_email': FRONTEND_URL + '/account/confirm-email/{key}',
+    'account_reset_password': FRONTEND_URL + '/account/password/reset',
     'account_reset_password_from_key': FRONTEND_URL
-    + '/accounts/password/reset/key/{key}',
+    + '/account/password/reset/key/{key}',
     'account_signup': FRONTEND_URL + '/register',
 }
 

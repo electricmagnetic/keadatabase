@@ -73,6 +73,33 @@
     }
   }
 
+  &__password {
+    position: relative;
+
+    .form__control {
+      padding-right: 2.5rem;
+    }
+  }
+
+  &__password-toggle {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--grey-mid);
+
+    &:hover {
+      color: var(--input-text);
+    }
+  }
+
   small {
     font-size: 0.85rem;
     display: block;

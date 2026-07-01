@@ -78,7 +78,7 @@ export function PasswordResetConfirmForm({ resetKey }: { resetKey: string }) {
           <AuthSubmitButton pendingLabel="Saving…" isSubmitting={isSubmitting}>
             Set new password
           </AuthSubmitButton>
-          <Link href="/password/reset">Resend password reset</Link>
+          <Link href="/accounts/password/reset">Resend password reset</Link>
         </div>
       </form>
 

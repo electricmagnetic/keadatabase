@@ -87,7 +87,7 @@ export function LoginForm() {
           >
             Login
           </AuthSubmitButton>
-          <Link href="/password/reset">Forgot your password?</Link>
+          <Link href="/accounts/password/reset">Forgot your password?</Link>
           <Link href="/register">Create an account</Link>
         </div>
       </form>

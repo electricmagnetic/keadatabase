@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   title: "Verify your email",
 };
 
-// the backend's allauth verification email links here (/accounts/confirm-email/<key>/)
+// the backend's allauth verification email links here (/account/confirm-email/<key>/)
 // rather than to /verify-email. Reuse the same component, taking the key from the path.
 export default async function ConfirmEmailPage({
   params,

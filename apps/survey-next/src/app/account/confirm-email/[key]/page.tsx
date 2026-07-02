@@ -8,8 +8,8 @@ export const metadata: Metadata = {
   title: "Verify your email",
 };
 
-// the backend's allauth verification email links here (/account/confirm-email/<key>/)
-// rather than to /verify-email. Reuse the same component, taking the key from the path.
+// the backend's allauth verification email links here (/account/confirm-email/<key>/),
+// so the key arrives in the path. this route does the actual verification.
 export default async function ConfirmEmailPage({
   params,
 }: {
@@ -18,13 +18,12 @@ export default async function ConfirmEmailPage({
   // the param can arrive percent-encoded (allauth emails encode the `:` in the
   // key as %3A); decode so the backend receives the raw key
   const { key } = await params;
-  const decodedKey = decodeURIComponent(key);
 
   return (
     <Page.Container>
       <Page.Heading>Verify your email</Page.Heading>
       <Page.Section className="auth-section">
-        <EmailVerify verifyKey={decodedKey} />
+        <EmailVerify verifyKey={decodeURIComponent(key)} />
       </Page.Section>
     </Page.Container>
   );

@@ -64,4 +64,10 @@
       border: 1px solid var(--cream-dark);
     }
   }
+
+  &-gate {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
 }

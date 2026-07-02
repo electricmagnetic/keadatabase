@@ -1,7 +1,9 @@
 import { type Metadata } from "next";
+import { Suspense } from "react";
 
 import Page from "@/app/_components/ui/Page";
 import { LoginForm } from "@/app/_components/auth/LoginForm";
+import { Spinner } from "@/app/_components/ui/Spinner";
 import "@/app/css/components/auth.css";
 
 export const metadata: Metadata = {
@@ -13,7 +15,9 @@ export default function LoginPage() {
     <Page.Container>
       <Page.Heading>Login</Page.Heading>
       <Page.Section className="auth-section">
-        <LoginForm />
+        <Suspense fallback={<Spinner />}>
+          <LoginForm />
+        </Suspense>
       </Page.Section>
     </Page.Container>
   );

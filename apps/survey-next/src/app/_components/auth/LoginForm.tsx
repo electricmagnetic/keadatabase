@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 import { AuthField } from "./AuthField";
 import { AuthSubmitButton } from "./AuthSubmitButton";
@@ -18,7 +18,9 @@ import { Spinner } from "@/app/_components/ui/Spinner";
 export function LoginForm() {
   const router = useRouter();
   const { refresh } = useSession();
-  const redirecting = useRedirectIfAuthenticated();
+  // return to ?next= after login (e.g. the submit flow), else /account
+  const next = useSearchParams().get("next") ?? "/account";
+  const redirecting = useRedirectIfAuthenticated(next);
   const [toast, setToast] = useState<string | null>(null);
 
   const {
@@ -53,7 +55,7 @@ export function LoginForm() {
     }
 
     await refresh();
-    router.push("/account");
+    router.push(next);
   };
 
   // withhold the form during the session check / pending redirect (no flash)

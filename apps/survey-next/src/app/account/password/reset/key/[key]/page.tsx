@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   title: "Set a new password",
 };
 
-// the backend's allauth reset email links here (/accounts/password/reset/key/<key>)
+// the backend's allauth reset email links here (/account/password/reset/key/<key>)
 // rather than to /password/reset/<key>. Reuse the same form.
 export default async function PasswordResetConfirmKeyPage({
   params,

@@ -20,6 +20,8 @@ from django.contrib import admin
 from django.http import HttpResponse
 from django.urls import include, path, re_path
 
+from accounts.views import UserProfileView
+
 from .router import router
 
 # Custom admin site settings
@@ -58,4 +60,5 @@ if settings.DEBUG:
 urlpatterns = [
     path('accounts/', include('allauth.urls')),
     path('_allauth/', include('allauth.headless.urls')),
+    path('me/', UserProfileView.as_view(), name='user-profile'),
 ] + urlpatterns

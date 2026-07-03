@@ -96,6 +96,7 @@ INSTALLED_APPS = [
     'geojson',
     'surveys',
     'analysis',
+    'accounts',
 ]
 
 MIDDLEWARE = [
@@ -366,6 +367,7 @@ CORS_ALLOW_CREDENTIALS = True
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 ACCOUNT_SIGNUP_FIELDS = ['email*', 'username*', 'password1*', 'password2*']
 ACCOUNT_LOGIN_METHODS = {'email'}
+ACCOUNT_SIGNUP_FORM_CLASS = 'accounts.forms.SignupForm'
 
 # branding for emails (no django.contrib.sites; templates read this directly)
 ACCOUNT_EMAIL_SUBJECT_PREFIX = '[Kea Survey] '

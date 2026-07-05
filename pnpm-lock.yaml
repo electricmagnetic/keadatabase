@@ -471,7 +471,7 @@ importers:
         version: 5.15.4
       '@hookform/resolvers':
         specifier: ^5.2.1
-        version: 5.2.1(react-hook-form@7.62.0)
+        version: 5.2.1(react-hook-form@7.81.0)
       '@turf/turf':
         specifier: ^7.3.5
         version: 7.3.5
@@ -497,8 +497,8 @@ importers:
         specifier: 19.2.7
         version: 19.2.7(react@19.2.7)
       react-hook-form:
-        specifier: ^7.62.0
-        version: 7.62.0(react@19.2.7)
+        specifier: ^7.81.0
+        version: 7.81.0(react@19.2.7)
       react-map-gl:
         specifier: ^8.1.1
         version: 8.1.1(maplibre-gl@5.24.0)(react-dom@19.2.7)(react@19.2.7)
@@ -2621,6 +2621,15 @@ packages:
     dependencies:
       '@standard-schema/utils': 0.3.0
       react-hook-form: 7.62.0(react@19.2.6)
+    dev: false
+
+  /@hookform/resolvers@5.2.1(react-hook-form@7.81.0):
+    resolution: {integrity: sha512-u0+6X58gkjMcxur1wRWokA7XsiiBJ6aK17aPZxhkoYiK5J+HcTx0Vhu9ovXe6H+dVpO6cjrn2FkJTryXEMlryQ==}
+    peerDependencies:
+      react-hook-form: ^7.55.0
+    dependencies:
+      '@standard-schema/utils': 0.3.0
+      react-hook-form: 7.81.0(react@19.2.7)
     dev: false
 
   /@humanfs/core@0.19.2:
@@ -16342,8 +16351,8 @@ packages:
       react: 19.2.6
     dev: false
 
-  /react-hook-form@7.62.0(react@19.2.7):
-    resolution: {integrity: sha512-7KWFejc98xqG/F4bAxpL41NB3o1nnvQO1RWZT3TqRZYL8RryQETGfEdVnJN2fy1crCiBLLjkRBVK05j24FxJGA==}
+  /react-hook-form@7.81.0(react@19.2.7):
+    resolution: {integrity: sha512-ocbmr2p5KBMoAfj4WCUvped33lVi1Kd5DuDUvQDnB6VEAacOjPI/jMbtDdbhco4y9ct4xUuCmMY0b/C9L0QHjw==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
       react: ^16.8.0 || ^17 || ^18 || ^19

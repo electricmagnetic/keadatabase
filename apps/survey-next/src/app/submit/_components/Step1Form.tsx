@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
@@ -13,6 +13,8 @@ import { Step1Schema, type Step1FormData } from "../schema";
 import { SubmitBar } from "./SubmitBar";
 import Page from "@/app/_components/ui/Page";
 import { useSession } from "@/app/_components/auth/useSession";
+import { profileFetch } from "@/app/_components/auth/client";
+import type { Profile } from "@/app/_components/auth/schema";
 /**
  * Step 1: Observer and Grid Tile Selection Form
  *
@@ -25,6 +27,9 @@ import { useSession } from "@/app/_components/auth/useSession";
 export function Step1Form() {
   const router = useRouter();
   const { user, isAuthenticated } = useSession();
+  // lock the name field only once the profile actually returns one, so
+  // accounts without a saved name can still type it
+  const [nameLocked, setNameLocked] = useState(false);
 
   // when logged in, pre-fill the observer fields from the session and lock them
   const methods = useForm<Step1FormData>({
@@ -34,7 +39,6 @@ export function Step1Form() {
     criteriaMode: "all", // return all errors
     defaultValues: {
       observer: {
-        // name is always typed by the observer — allauth has no name field yet
         name: "",
         email: isAuthenticated ? (user?.email ?? "") : "",
       },
@@ -45,10 +49,22 @@ export function Step1Form() {
   const { handleSubmit, watch, setValue } = methods;
 
   // the session resolves after mount, so defaultValues miss it — fill the
-  // observer email once it arrives. name stays as the observer typed it.
+  // observer email once it arrives. The name isn't in the session payload, so
+  // fetch it from /me/; both fields are locked while logged in.
   useEffect(() => {
     if (!isAuthenticated) return;
     setValue("observer.email", user?.email ?? "");
+    (async () => {
+      const result = await profileFetch<Profile>();
+      if (!result.ok || !result.data) return;
+      const name = [result.data.first_name, result.data.last_name]
+        .filter(Boolean)
+        .join(" ");
+      if (name) {
+        setValue("observer.name", name);
+        setNameLocked(true);
+      }
+    })();
   }, [isAuthenticated, user?.email, setValue]);
 
   const gridTiles = watch("gridTiles") || [];
@@ -79,7 +95,10 @@ export function Step1Form() {
           <h2>Step 1: Observer and Trip Details</h2>
 
           <div className="form__fields">
-            <ObserverFieldset emailReadOnly={isAuthenticated} />
+            <ObserverFieldset
+              emailReadOnly={isAuthenticated}
+              nameReadOnly={nameLocked}
+            />
             <GridTileFieldset />
           </div>
         </Page.Section>

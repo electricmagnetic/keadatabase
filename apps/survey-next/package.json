@@ -19,7 +19,7 @@
     "react": "19.2.7",
     "react-bootstrap-typeahead": "^6.4.1",
     "react-dom": "19.2.7",
-    "react-hook-form": "^7.62.0",
+    "react-hook-form": "^7.81.0",
     "react-map-gl": "^8.1.1",
     "recharts": "^3.8.1",
     "shared": "workspace:*",

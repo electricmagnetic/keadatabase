@@ -204,3 +204,9 @@
     opacity: 0.8;
   }
 }
+
+.account__details {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+  gap: 2rem;
+}

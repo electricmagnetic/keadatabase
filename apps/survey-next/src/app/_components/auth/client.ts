@@ -108,6 +108,36 @@ export async function authFetch<T = unknown>(
   };
 }
 
+// DRF profile endpoint (plain JSON, not the allauth envelope)
+export const PROFILE_PATH = "/me/";
+
+/**
+ * Fetch the DRF profile endpoint with session cookie + CSRF header.
+ *
+ * Unlike allauth, DRF returns the payload directly and errors as
+ * `{ field: ["message"] }` / `{ detail: "message" }`; normalise both into
+ * {@link AuthResult} so `authErrorMessage` keeps working.
+ */
+export async function profileFetch<T = unknown>(
+  init?: RequestInit,
+): Promise<AuthResult<T>> {
+  if (!getCsrfToken()) await primeCsrf();
+  const response = await sendAuth(PROFILE_PATH, init);
+  const body = await response.json().catch(() => null);
+
+  if (response.ok) {
+    return { ok: true, status: response.status, data: body };
+  }
+  const errors = body
+    ? Object.entries(body).flatMap(([param, messages]) =>
+        (Array.isArray(messages) ? messages : [String(messages)]).map(
+          (message) => ({ code: param, param, message }),
+        ),
+      )
+    : undefined;
+  return { ok: false, status: response.status, errors };
+}
+
 /**
  * Turn an {@link AuthResult} into a single human-readable message for a Toast.
  */

@@ -4,15 +4,20 @@ import { useFormContext } from "react-hook-form";
 import type { Step1FormData } from "../schema";
 
 interface ObserverFieldsetProps {
-  /**
-   * When true, the email is pre-filled from the logged-in user and locked. Name
-   * stays an editable input — allauth has no name field yet, so the observer
-   * always types their own name.
-   */
+  /** When true, the email is pre-filled from the logged-in user and locked. */
   emailReadOnly?: boolean;
+  /**
+   * When true, the name is pre-filled from the user's profile and locked.
+   * Separate from emailReadOnly so accounts without a saved name (pre-dating
+   * the first/last name fields) can still type one.
+   */
+  nameReadOnly?: boolean;
 }
 
-export function ObserverFieldset({ emailReadOnly = false }: ObserverFieldsetProps) {
+export function ObserverFieldset({
+  emailReadOnly = false,
+  nameReadOnly = false,
+}: ObserverFieldsetProps) {
   const {
     register,
     formState: { errors, touchedFields },
@@ -37,10 +42,14 @@ export function ObserverFieldset({ emailReadOnly = false }: ObserverFieldsetProp
             id="observer.name"
             className={`form__control ${nameError && nameTouched ? "is-invalid" : ""}`}
             placeholder="Name"
-            autoFocus
+            readOnly={nameReadOnly}
             {...register("observer.name")}
           />
-          <small>Your name will be publicly visible</small>
+          <small>
+            {nameReadOnly
+              ? "Taken from your account and publicly visible"
+              : "Your name will be publicly visible"}
+          </small>
           {nameError && nameTouched && (
             <div className="form--note">{nameError.message}</div>
           )}

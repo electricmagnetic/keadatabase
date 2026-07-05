@@ -5,7 +5,6 @@ import { z } from "zod";
 export const UserSchema = z.object({
   id: z.union([z.number(), z.string()]).optional(),
   display: z.string().optional(),
-  name: z.string().optional(),
   email: z.email().optional(),
   username: z.string().optional(),
   has_usable_password: z.boolean().optional(),
@@ -55,7 +54,8 @@ function tooSimilar(password: string, attrs: (string | undefined)[]): boolean {
 
 export const SignupSchema = z
   .object({
-    name: z.string().min(1, "Name is required"),
+    firstName: z.string().min(1, "First name is required"),
+    lastName: z.string().min(1, "Last name is required"),
     email: z.email("Enter a valid email address"),
     password: passwordBase,
     passwordConfirm: z.string(),
@@ -64,11 +64,26 @@ export const SignupSchema = z
     message: "Passwords do not match",
     path: ["passwordConfirm"],
   })
-  .refine((d) => !tooSimilar(d.password, [d.email, d.name]), {
+  .refine((d) => !tooSimilar(d.password, [d.email, d.firstName, d.lastName]), {
     message: "Password is too similar to your name or email",
     path: ["password"],
   });
 export type SignupFormData = z.infer<typeof SignupSchema>;
+
+// profile payload from GET/PATCH /me/ (plain DRF, not the allauth envelope)
+export const ProfileSchema = z.object({
+  username: z.string(),
+  email: z.string(),
+  first_name: z.string(),
+  last_name: z.string(),
+});
+export type Profile = z.infer<typeof ProfileSchema>;
+
+export const ProfileFormSchema = z.object({
+  firstName: z.string().min(1, "First name is required"),
+  lastName: z.string().min(1, "Last name is required"),
+});
+export type ProfileFormData = z.infer<typeof ProfileFormSchema>;
 
 export const PasswordResetRequestSchema = z.object({
   email: z.email("Enter a valid email address"),

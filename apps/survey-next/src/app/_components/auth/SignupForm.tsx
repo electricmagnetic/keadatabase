@@ -27,7 +27,13 @@ export function SignupForm() {
     formState: { errors, isSubmitting },
   } = useAuthForm<SignupFormData>({
     resolver: zodResolver(SignupSchema),
-    defaultValues: { name: "", email: "", password: "", passwordConfirm: "" },
+    defaultValues: {
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: "",
+      passwordConfirm: "",
+    },
   });
 
   const onSubmit = async (data: SignupFormData) => {
@@ -37,7 +43,8 @@ export function SignupForm() {
       // email (allauth accepts it and email is the login identifier anyway).
       body: JSON.stringify({
         username: data.email,
-        name: data.name,
+        first_name: data.firstName,
+        last_name: data.lastName,
         email: data.email,
         password: data.password,
       }),
@@ -63,13 +70,21 @@ export function SignupForm() {
     <>
       <form onSubmit={handleSubmit(onSubmit)} className="form auth-form">
         <AuthField
-          id="name"
-          label="Name"
+          id="firstName"
+          label="First name"
           type="text"
-          autoComplete="name"
+          autoComplete="given-name"
           autoFocus
-          register={register("name")}
-          error={errors.name}
+          register={register("firstName")}
+          error={errors.firstName}
+        />
+        <AuthField
+          id="lastName"
+          label="Last name"
+          type="text"
+          autoComplete="family-name"
+          register={register("lastName")}
+          error={errors.lastName}
         />
         <AuthField
           id="email"

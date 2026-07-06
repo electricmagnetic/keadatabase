@@ -45,7 +45,11 @@ export function TripFieldset({
 
       <div className="form__group">
         <div className="form__row">
-          <label htmlFor="observer.name" className="form__label">
+          {/* no asterisk once the profile supplies the name — it's read-only then */}
+          <label
+            htmlFor="observer.name"
+            className={`form__label ${nameLocked ? "" : "form__label--required"}`}
+          >
             Name
           </label>
           <input
@@ -84,7 +88,7 @@ export function TripFieldset({
 
       <div className="form__group">
         <div className="form__row">
-          <label htmlFor="date" className="form__label">
+          <label htmlFor="date" className="form__label form__label--required">
             Date
           </label>
           <input

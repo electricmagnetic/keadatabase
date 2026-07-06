@@ -242,7 +242,7 @@ export function SurveyHourFieldset({
           <thead>
             <tr>
               <th style={{ width: "10%" }}>Hour</th>
-              <th>Activity</th>
+              <th className="form__label--required">Activity</th>
               <th>Kea?</th>
               <th>Max Seen</th>
               <th>Grid Tile</th>

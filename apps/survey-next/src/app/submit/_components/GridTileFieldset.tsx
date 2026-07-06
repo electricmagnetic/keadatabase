@@ -23,7 +23,10 @@ export function GridTileFieldset() {
       <legend>Trip Details</legend>
 
       <div className="form__row">
-        <label htmlFor="gridTileSearch" className="form__label">
+        <label
+          htmlFor="gridTileSearch"
+          className="form__label form__label--required"
+        >
           Surveyed grid tiles
         </label>
         <GridTileTypeahead

@@ -28,7 +28,8 @@ export function AuthField({
 
   return (
     <div className="form__row">
-      <label htmlFor={id} className="form__label">
+      {/* every auth field is schema-required, so the asterisk is unconditional */}
+      <label htmlFor={id} className="form__label form__label--required">
         {label}
       </label>
       <div className={isPassword ? "form__password" : undefined}>

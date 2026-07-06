@@ -38,6 +38,15 @@
     margin-bottom: 0.5rem;
   }
 
+  /* red asterisk on required-field labels (also used on table headers) */
+  &__label--required::after {
+    content: " *";
+    color: var(--red);
+    font-size: 0.6rem;
+    position: relative;
+    top: -0.4rem;
+  }
+
   &__control {
     background-clip: padding-box;
     background-color: var(--white);

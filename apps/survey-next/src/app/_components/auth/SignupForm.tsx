@@ -20,6 +20,10 @@ export function SignupForm() {
   const { refresh } = useSession();
   const redirecting = useRedirectIfAuthenticated();
   const [toast, setToast] = useState<string | null>(null);
+  // true once signup succeeded and we're navigating to /verify-email — the
+  // user isn't authenticated yet (email pending), so `redirecting` won't
+  // cover this transition and the form would flash back enabled
+  const [navigating, setNavigating] = useState(false);
 
   const {
     register,
@@ -60,11 +64,13 @@ export function SignupForm() {
     await refresh();
     // if email verification is required the user isn't logged in yet; send them
     // to the verify-email page either way (it explains the next step)
+    setNavigating(true);
     router.push("/verify-email");
   };
 
-  // withhold the form during the session check / pending redirect (no flash)
-  if (redirecting) return <Spinner />;
+  // withhold the form during the session check, pending redirect, or the
+  // post-signup navigation (no flash of an enabled form)
+  if (redirecting || navigating) return <Spinner />;
 
   return (
     <>

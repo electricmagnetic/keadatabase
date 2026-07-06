@@ -56,6 +56,7 @@ function SurveyHourRow({
   });
 
   const activity = useWatch({ control, name: `hours.${index}.activity` });
+  const kea = useWatch({ control, name: `hours.${index}.kea` });
   const singleGridTile = useWatch({
     control,
     name: `hours.${index}.grid_tile`,
@@ -64,10 +65,14 @@ function SurveyHourRow({
 
   // a disabled checkbox keeps its last value, so force kea false when not surveying
   if (isNotSurveying) setValue(`hours.${index}.kea`, false);
+  // likewise a disabled max-seen keeps its last value, so clear it when kea is unticked
+  if (!kea) setValue(`hours.${index}.max_seen`, null);
 
   const activityError = errors.hours?.[index]?.activity;
   const activityTouched = touchedFields.hours?.[index]?.activity;
   const showActivityError = activityError && activityTouched;
+
+  const maxSeenError = errors.hours?.[index]?.max_seen;
 
   const gridTileError = errors.hours?.[index]?.grid_tile;
 
@@ -122,6 +127,27 @@ function SurveyHourRow({
             Kea
           </label>
         </div>
+      </td>
+
+      <td>
+        <label className="sr-only" htmlFor={`hours.${index}.max_seen`}>
+          Max Seen
+        </label>
+        <input
+          type="number"
+          min={1}
+          id={`hours.${index}.max_seen`}
+          className={`form__control submit__max-seen ${maxSeenError ? "is-invalid" : ""}`}
+          disabled={!kea}
+          {...register(`hours.${index}.max_seen`, {
+            // number input yields strings; empty means "not filled in", not 0
+            setValueAs: (value) =>
+              value === "" || value === null ? null : Number(value),
+          })}
+        />
+        {maxSeenError && (
+          <span className="form--note">{maxSeenError.message}</span>
+        )}
       </td>
 
       <td>
@@ -218,6 +244,7 @@ export function SurveyHourFieldset({
               <th style={{ width: "10%" }}>Hour</th>
               <th>Activity</th>
               <th>Kea?</th>
+              <th>Max Seen</th>
               <th>Grid Tile</th>
             </tr>
           </thead>

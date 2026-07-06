@@ -3,7 +3,7 @@
 import { useForm, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 
 import { TripFieldset } from "../_components/TripFieldset";
 import { SurveyHourFieldset } from "../_components/SurveyHourFieldset";
@@ -15,14 +15,14 @@ import {
   Step2Schema,
   type Step2FormInput,
   type Step2FormData,
-  type Observer,
 } from "../schema";
 import { generateInitialHours, transformFormDataToPayload } from "../utils";
 import { submitSurvey } from "../actions";
 import { useSession } from "@/app/_components/auth/useSession";
+import { profileFetch } from "@/app/_components/auth/client";
+import type { Profile } from "@/app/_components/auth/schema";
 
 interface Step2FormProps {
-  observer: Observer;
   gridTiles: string[];
   fieldOptions?: Record<string, any>;
 }
@@ -37,29 +37,27 @@ interface Step2FormProps {
  *
  * On submit: Posts to API and redirects to success page
  */
-export function Step2Form({
-  observer,
-  gridTiles,
-  fieldOptions,
-}: Step2FormProps) {
+export function Step2Form({ gridTiles, fieldOptions }: Step2FormProps) {
   const router = useRouter();
-  const { sessionToken } = useSession();
+  const { user, sessionToken } = useSession();
   const [submitError, setSubmitError] = useState<string | null>(null);
+  // lock the name field only once the profile actually returns one, so
+  // accounts without a saved name can still type it
+  const [nameLocked, setNameLocked] = useState(false);
 
-  // memoize default values to prevent hydration mismatches
+  // memoize default values to prevent hydration mismatches; RequireAuth
+  // guarantees the session has resolved before this renders, so the email
+  // is available here
   const defaultValues = useMemo(
     () => ({
-      observer,
+      observer: { name: "", email: user?.email ?? "" },
       date: "", // empty so the field shows "required" on blur (matches Step 1)
       hours: generateInitialHours(gridTiles),
-      max_flock_size: null,
-      // set by FurtherInformationFieldset once kea tiles are known
-      max_flock_size_grid_tile: null,
       purpose: "",
       comments: "",
       challenge: "kea", // anti-spam field (fixed value)
     }),
-    [observer, gridTiles],
+    [user?.email, gridTiles],
   );
 
   const methods = useForm<Step2FormInput, unknown, Step2FormData>({
@@ -70,7 +68,24 @@ export function Step2Form({
     defaultValues,
   });
 
-  const { handleSubmit } = methods;
+  const { handleSubmit, setValue } = methods;
+
+  // the name isn't in the session payload — fetch it from /me/ and lock the
+  // field once it returns one (setValue, not reset: reset on a mounted form
+  // drops typed values under the React Compiler)
+  useEffect(() => {
+    (async () => {
+      const result = await profileFetch<Profile>();
+      if (!result.ok || !result.data) return;
+      const name = [result.data.first_name, result.data.last_name]
+        .filter(Boolean)
+        .join(" ");
+      if (name) {
+        setValue("observer.name", name);
+        setNameLocked(true);
+      }
+    })();
+  }, [setValue]);
 
   const onSubmit = async (data: Step2FormData) => {
     setSubmitError(null);
@@ -111,8 +126,7 @@ export function Step2Form({
 
             <div className="form__fields">
               <TripFieldset
-                observerName={observer.name}
-                observerEmail={observer.email}
+                nameLocked={nameLocked}
                 gridTiles={gridTiles}
                 fieldOptions={fieldOptions}
               />
@@ -122,7 +136,7 @@ export function Step2Form({
                 fieldOptions={fieldOptions?.hours?.child?.children}
               />
 
-              <FurtherInformationFieldset gridTiles={gridTiles} />
+              <FurtherInformationFieldset />
             </div>
 
           </Page.Section>

@@ -26,6 +26,7 @@ export function generateInitialHours(gridTiles?: string[]): SurveyHour[] {
     hour,
     activity: "",
     kea: false,
+    max_seen: null,
     grid_tile: singleGridTile.length > 0 ? singleGridTile : null,
   }));
 }
@@ -33,14 +34,25 @@ export function generateInitialHours(gridTiles?: string[]): SurveyHour[] {
 export function transformFormDataToPayload(
   formData: Step2FormData,
 ): SurveySubmissionPayload {
-  const { date, hours, max_flock_size_grid_tile, ...rest } = formData;
+  const { date, hours, ...rest } = formData;
+
+  // the hour with the most kea seen supplies the max flock size and its tile;
+  // ties go to the earliest such hour
+  const maxHour = hours.reduce<SurveyHour | null>(
+    (best, hour) =>
+      hour.kea === true &&
+      hour.max_seen !== null &&
+      hour.max_seen > (best?.max_seen ?? 0)
+        ? hour
+        : best,
+    null,
+  );
+
   return {
     ...rest,
     date: date.toISOString().split("T")[0],
-    max_flock_size_grid_tile:
-      max_flock_size_grid_tile && max_flock_size_grid_tile.length > 0
-        ? max_flock_size_grid_tile[0]
-        : null,
+    max_flock_size: maxHour?.max_seen ?? null,
+    max_flock_size_grid_tile: maxHour?.grid_tile?.[0] ?? null,
     hours: hours
       .filter((hour) => hour.grid_tile !== null && hour.grid_tile.length > 0)
       .map(({ grid_tile, ...hour }) => ({

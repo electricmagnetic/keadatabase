@@ -20,7 +20,7 @@ export function GridTileFieldset() {
 
   return (
     <fieldset>
-      <legend>2. Trip Details</legend>
+      <legend>Trip Details</legend>
 
       <div className="form__row">
         <label htmlFor="gridTileSearch" className="form__label">

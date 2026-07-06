@@ -11,7 +11,7 @@ const MESSAGES = {
   gridTileMax: "Too many grid tiles have been selected.",
   gridTileInvalid: "One or more grid tiles are invalid.",
   hourRequired: "At least one survey hour is required.",
-  maxFlockRequired: "Enter how many kea you saw.",
+  maxSeenRequired: "Enter how many kea you saw this hour.",
 };
 
 export const ObserverSchema = z.object({
@@ -32,7 +32,6 @@ export const GridTilesSchema = z
   );
 
 export const Step1Schema = z.object({
-  observer: ObserverSchema,
   gridTiles: GridTilesSchema,
 });
 
@@ -41,6 +40,7 @@ export const SurveyHourSchema = z.object({
   hour: z.number().int().min(0).max(23),
   activity: z.string().min(1, MESSAGES.required),
   kea: z.boolean().nullable(),
+  max_seen: z.number().int().min(1, MESSAGES.maxSeenRequired).nullable(),
   grid_tile: z.array(z.string()).nullable(), // array for typeahead
 });
 
@@ -60,6 +60,15 @@ export const SurveyHourSchemaWithValidation = SurveyHourSchema.superRefine(
         });
       }
     }
+
+    // when kea were observed this hour, a count is required
+    if (data.kea === true && data.max_seen === null) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: MESSAGES.maxSeenRequired,
+        path: ["max_seen"],
+      });
+    }
   },
 );
 
@@ -77,28 +86,14 @@ export const DateSchema = z
     return date.getTime() <= today.getTime();
   }, MESSAGES.maxDate);
 
-export const Step2Schema = z
-  .object({
-    observer: ObserverSchema,
-    date: DateSchema,
-    hours: z.array(SurveyHourSchemaWithValidation).min(1, MESSAGES.hourRequired),
-    max_flock_size: z.number().int().min(0).nullable(),
-    max_flock_size_grid_tile: z.array(z.string()).nullable(),
-    purpose: z.string().optional(),
-    comments: z.string().optional(),
-    challenge: z.string().min(1, MESSAGES.required),
-  })
-  .superRefine((data, ctx) => {
-    // if any hour recorded kea, "max kea seen" is required and must be >= 1
-    const keaObserved = data.hours.some((hour) => hour.kea === true);
-    if (keaObserved && (data.max_flock_size === null || data.max_flock_size < 1)) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: MESSAGES.maxFlockRequired,
-        path: ["max_flock_size"],
-      });
-    }
-  });
+export const Step2Schema = z.object({
+  observer: ObserverSchema,
+  date: DateSchema,
+  hours: z.array(SurveyHourSchemaWithValidation).min(1, MESSAGES.hourRequired),
+  purpose: z.string().optional(),
+  comments: z.string().optional(),
+  challenge: z.string().min(1, MESSAGES.required),
+});
 
 export type Observer = z.infer<typeof ObserverSchema>;
 export type GridTiles = z.infer<typeof GridTilesSchema>;
@@ -109,11 +104,10 @@ export type SurveyHour = z.infer<typeof SurveyHourSchema>;
 export type Step2FormInput = z.input<typeof Step2Schema>;
 export type Step2FormData = z.infer<typeof Step2Schema>;
 
-export type SurveySubmissionPayload = Omit<
-  Step2FormData,
-  "date" | "hours" | "max_flock_size_grid_tile"
-> & {
+// max flock size fields are derived from the hours, not entered directly
+export type SurveySubmissionPayload = Omit<Step2FormData, "date" | "hours"> & {
   date: string;
   hours: Array<Omit<SurveyHour, "grid_tile"> & { grid_tile: string }>;
+  max_flock_size: number | null;
   max_flock_size_grid_tile: string | null;
 };

@@ -6,26 +6,30 @@ import { SelectedGridTilesMap } from "../../_components/grid/SelectedGridTilesMa
 import type { Step2FormData } from "../schema";
 
 interface TripFieldsetProps {
-  observerName: string;
-  observerEmail: string;
+  /** When true, the name came from the user's profile and is locked. */
+  nameLocked: boolean;
   gridTiles: string[];
   fieldOptions?: Record<string, any>;
 }
 
 export function TripFieldset({
-  observerName,
-  observerEmail,
+  nameLocked,
   gridTiles,
   fieldOptions,
 }: TripFieldsetProps) {
   const { register, control } = useFormContext<Step2FormData>();
 
-  // subscribe to the date field's state via useFormState so this child
-  // re-renders when its error/touched state changes (React Compiler safe)
-  const { errors, touchedFields } = useFormState({ control, name: "date" });
+  // subscribe to field state via useFormState so this child re-renders when
+  // error/touched state changes (React Compiler safe)
+  const { errors, touchedFields } = useFormState({
+    control,
+    name: ["date", "observer.name"],
+  });
 
   const dateError = errors.date;
   const dateTouched = touchedFields.date;
+  const nameError = errors.observer?.name;
+  const nameTouched = touchedFields.observer?.name;
 
   const todayString = useMemo(() => {
     const today = new Date();
@@ -47,11 +51,19 @@ export function TripFieldset({
           <input
             type="text"
             id="observer.name"
-            className="form__control"
-            value={observerName}
-            readOnly
-            tabIndex={-1}
+            className={`form__control ${nameError && nameTouched ? "is-invalid" : ""}`}
+            readOnly={nameLocked}
+            tabIndex={nameLocked ? -1 : undefined}
+            {...register("observer.name")}
           />
+          <small>
+            {nameLocked
+              ? "Taken from your account and publicly visible"
+              : "Your name will be publicly visible"}
+          </small>
+          {nameError && nameTouched && (
+            <span className="form--note">{nameError.message}</span>
+          )}
         </div>
 
         <div className="form__row">
@@ -62,10 +74,11 @@ export function TripFieldset({
             type="email"
             id="observer.email"
             className="form__control"
-            value={observerEmail}
             readOnly
             tabIndex={-1}
+            {...register("observer.email")}
           />
+          <small>Taken from your account</small>
         </div>
       </div>
 

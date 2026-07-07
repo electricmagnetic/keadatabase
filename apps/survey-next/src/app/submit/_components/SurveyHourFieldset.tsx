@@ -131,7 +131,7 @@ function SurveyHourRow({
 
       <td>
         <label className="sr-only" htmlFor={`hours.${index}.max_seen`}>
-          Max Seen
+          Largest Group Seen
         </label>
         <input
           type="number"
@@ -244,7 +244,7 @@ export function SurveyHourFieldset({
               <th style={{ width: "10%" }}>Hour</th>
               <th className="form__label--required">Activity</th>
               <th>Kea?</th>
-              <th>Max Seen</th>
+              <th>Largest Group Seen</th>
               <th>Grid Tile</th>
             </tr>
           </thead>

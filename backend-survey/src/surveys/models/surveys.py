@@ -1,8 +1,9 @@
-from django.db import models
 from django.core.exceptions import ValidationError
+from django.db import models
+
+from locations.models import GridTile
 
 from .observers import Observer
-from locations.models import GridTile
 
 PURPOSE_CHOICES = (
     ('', ''),
@@ -17,6 +18,7 @@ PURPOSE_CHOICES = (
     ('kea', 'Kea Surveying'),
     ('hut', 'Hut Wardening'),
     ('cycle', 'Bike/Cycle Touring'),
+    ('walking', 'Walking'),
     ('other', 'Other'),
 )
 

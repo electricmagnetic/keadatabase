@@ -1,7 +1,7 @@
 /**
  * Get the API base URL for fetch requests
  *
- * - Client-side: Uses /api proxy (NEXT_PUBLIC_API_BASE)
+ * - Client-side: Uses /api proxy (NEXT_PUBLIC_API_PATH)
  * - Server-side: Uses direct backend URL (BACKEND_API_BASE)
  *
  * This avoids CORS issues on the client while allowing server-side

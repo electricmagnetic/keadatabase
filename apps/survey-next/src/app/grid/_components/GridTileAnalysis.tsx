@@ -1,6 +1,7 @@
 "use client";
 
 import useSWR from "swr";
+import { getApiUrl } from "@/app/_components/api/url";
 import type { GridTileId } from "@/app/_components/grid/types";
 import { GridTileAnalysisItem } from "./GridTileAnalysisItem";
 import { Spinner } from "@/app/_components/ui/Spinner";
@@ -13,7 +14,7 @@ interface GridTileAnalysisProps {
  * Obtain analyses for a given grid tile ID via API
  */
 export function GridTileAnalysis({ id }: GridTileAnalysisProps) {
-  const url = `${process.env.NEXT_PUBLIC_API_BASE}/analysis/grid_tiles/${id}/`;
+  const url = getApiUrl(`/analysis/grid_tiles/${id}/`);
   const { data, error, isLoading } = useSWR(url);
 
   if (isLoading) {

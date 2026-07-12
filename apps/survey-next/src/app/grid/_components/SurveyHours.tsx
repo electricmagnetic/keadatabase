@@ -1,6 +1,7 @@
 "use client";
 
 import useSWR from "swr";
+import { getApiUrl } from "@/app/_components/api/url";
 import type { GridTileId } from "@/app/_components/grid/types";
 import { SurveyHourItem } from "@/app/_components/SurveyHourItem";
 import { Spinner } from "@/app/_components/ui/Spinner";
@@ -46,7 +47,7 @@ export function SurveyHours({
     ? `?${queryParams.toString()}`
     : "";
 
-  const url = `${process.env.NEXT_PUBLIC_API_BASE}/surveys/hours/${queryString}`;
+  const url = getApiUrl(`/surveys/hours/${queryString}`);
 
   const { data, error, isLoading } = useSWR<SurveyHoursResponse>(url);
 

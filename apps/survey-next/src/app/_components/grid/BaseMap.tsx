@@ -37,16 +37,23 @@ interface BaseMapProps extends Omit<MapProps, "children"> {
     | "bottom-left"
     | "bottom-right";
   hideFullscreen?: boolean;
+  hash?: boolean;
 }
 
 export const BaseMap = forwardRef<MapRef, PropsWithChildren<BaseMapProps>>(
   function BaseMap(
-    { children, hideGridTiles = false, showGridOverlay = true, ...mapProps },
+    {
+      children,
+      hideGridTiles = false,
+      showGridOverlay = true,
+      hash = true,
+      ...mapProps
+    },
     ref,
   ) {
     return (
       <Map
-        hash
+        hash={hash}
         ref={ref}
         mapStyle={{
           version: 8,

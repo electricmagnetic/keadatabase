@@ -3,8 +3,7 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import { Source, Layer, Marker } from "react-map-gl/maplibre";
-import { ZoomToGeoJSON } from "geospatial/layers";
-import { centerOfMass } from "@turf/turf";
+import { bbox, centerOfMass } from "@turf/turf";
 import type { FeatureCollection, Polygon } from "geojson";
 
 import { BaseMap } from "./BaseMap";
@@ -62,6 +61,25 @@ export function SelectedGridTilesMap({
     };
   }, [gridTileIds, showNeighbours]);
 
+  // frame the tiles in the map's *first* view rather than animating to them
+  // afterwards: navigating to a neighbour remounts this component, and a
+  // post-mount fitBounds would visibly fly out to the initial view and back in
+  const initialViewState = useMemo(() => {
+    if (!selectedTilesGeoJSON) {
+      return { longitude: 170.0, latitude: -43.5, zoom: 5 };
+    }
+
+    const [minLng, minLat, maxLng, maxLat] = bbox(selectedTilesGeoJSON);
+
+    return {
+      bounds: [
+        [minLng, minLat],
+        [maxLng, maxLat],
+      ] as [[number, number], [number, number]],
+      fitBoundsOptions: { padding: 40, maxZoom: 10 },
+    };
+  }, [selectedTilesGeoJSON]);
+
   return (
     <div style={{ height, width: "100%", position: "relative" }}>
       <MapLayerToggle
@@ -71,21 +89,16 @@ export function SelectedGridTilesMap({
       />
 
       <BaseMap
-        initialViewState={{
-          longitude: 170.0,
-          latitude: -43.5,
-          zoom: 5,
-        }}
+        initialViewState={initialViewState}
         showGridOverlay={showGridOverlay}
         interactive={false}
+        // the hash outranks initialViewState, so it would carry the previous
+        // tile's position onto the next one when navigating via neighbours.
+        // This map is non-interactive — there is no user view worth persisting
+        hash={false}
       >
         {selectedTilesGeoJSON && (
           <>
-            <ZoomToGeoJSON
-              geoJson={selectedTilesGeoJSON}
-              options={{ padding: 40, maxZoom: 10 }}
-            />
-
             {neighbourTilesGeoJSON && (
               <>
                 <Source

@@ -28,7 +28,6 @@
     grid-template-columns: 1fr 25%;
     gap: 2rem;
     padding-right: 2rem;
-    padding-bottom: 2rem;
 
     @media (width < 995px) {
       grid-template-columns: 1fr;
@@ -51,6 +50,7 @@
 
     &--offset {
       margin-top: 2rem;
+      margin-bottom: 2rem;
     }
 
     .grid-tile-typeahead {

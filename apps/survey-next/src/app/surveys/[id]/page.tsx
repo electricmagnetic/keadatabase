@@ -1,3 +1,4 @@
+import { type Metadata } from "next";
 import { notFound } from "next/navigation";
 import DateTime from "shared/ui/DateTime";
 import type { PageWithParams } from "shared/next/types";
@@ -15,6 +16,22 @@ import { getSurvey } from "../actions";
 import { SurveyAnalysis } from "../_components/SurveyAnalysis";
 
 import "@/app/css/components/survey.css";
+
+export async function generateMetadata({
+  params,
+}: PageWithParams): Promise<Metadata> {
+  const parsedParams = SurveyIdSchema.safeParse(await params);
+
+  // invalid ids fall through to notFound() in the page itself
+  if (!parsedParams.success) return {};
+
+  const { id } = parsedParams.data;
+
+  return {
+    title: `#${id} (Survey) | Kea Survey`,
+    description: `Details for survey #${id}`,
+  };
+}
 
 export default async function SurveyDetailPage({ params }: PageWithParams) {
   const paramsData = await params;

@@ -103,13 +103,13 @@ export function ZoomToGeoJSON({
 export function XYZRasterLayer({
   attribution = "",
   tileSize = 512,
-  url,
+  urls,
   sourceId,
   layerId,
 }: {
   attribution?: string;
   tileSize?: number;
-  url: string;
+  urls: string[];
   sourceId: string;
   layerId?: string;
 }) {
@@ -120,7 +120,7 @@ export function XYZRasterLayer({
       id={sourceId}
       attribution={attribution}
       tileSize={tileSize}
-      tiles={[url]}
+      tiles={urls}
       type="raster"
     >
       <Layer id={actualLayerId} type="raster" />

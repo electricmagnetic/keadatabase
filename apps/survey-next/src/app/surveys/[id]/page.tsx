@@ -72,18 +72,19 @@ export default async function SurveyDetailPage({ params }: PageWithParams) {
             <dt>Observer</dt>
             <dd>{survey.observer}</dd>
           </div>
-          {survey.max_flock_size && (
-            <div>
-              <dt>Max Kea Seen</dt>
-              <dd>{survey.max_flock_size}</dd>
-            </div>
-          )}
-          {survey.comments && (
+          {/* the cell always renders to hold its grid column and keep the rows
+              below aligned, but with no kea seen there is nothing to show, so
+              both the heading and the value go blank */}
+          <div>
+            <dt>{survey.max_flock_size ? "Max Kea Seen" : ""}</dt>
+            <dd>{survey.max_flock_size || ""}</dd>
+          </div>
+          {survey.comments ? (
             <div>
               <dt>Comments</dt>
               <dd>{survey.comments}</dd>
             </div>
-          )}
+          ) : null}
         </dl>
       </Page.Section>
 

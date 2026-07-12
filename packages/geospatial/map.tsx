@@ -6,6 +6,7 @@ import {
   type MapRef,
   NavigationControl,
   FullscreenControl,
+  ScaleControl,
 } from "react-map-gl/maplibre";
 
 import "maplibre-gl/dist/maplibre-gl.css";
@@ -28,16 +29,23 @@ const Map = forwardRef<
     MapLibreMapProps & {
       hideFullscreen?: boolean;
       hideNavigation?: boolean;
-      navigationPosition?: "top-left" | "top-right" | "bottom-left" | "bottom-right";
+      navigationPosition?:
+        | "top-left"
+        | "top-right"
+        | "bottom-left"
+        | "bottom-right";
     }
   >
->(function Map({
-  children,
-  hideFullscreen,
-  hideNavigation,
-  navigationPosition = "top-left",
-  ...others
-}, ref) {
+>(function Map(
+  {
+    children,
+    hideFullscreen,
+    hideNavigation,
+    navigationPosition = "top-left",
+    ...others
+  },
+  ref,
+) {
   const mapProps = { ...DEFAULT_MAP_PROPS, ...others };
 
   return (
@@ -48,11 +56,9 @@ const Map = forwardRef<
     >
       {!hideFullscreen ? <FullscreenControl position="top-left" /> : null}
       {!hideNavigation ? (
-        <NavigationControl
-          position={navigationPosition}
-          showCompass={false}
-        />
+        <NavigationControl position={navigationPosition} showCompass={false} />
       ) : null}
+      <ScaleControl />
       {children}
     </MapLibreMap>
   );

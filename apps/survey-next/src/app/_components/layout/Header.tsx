@@ -27,7 +27,7 @@ export function Header() {
               alt="Kea Survey"
               priority
             />
-            <figcaption>Kea Survey Tool</figcaption>
+            <figcaption>Kea Survey</figcaption>
           </Link>
         </figure>
         <nav className="page__header-nav--desktop">

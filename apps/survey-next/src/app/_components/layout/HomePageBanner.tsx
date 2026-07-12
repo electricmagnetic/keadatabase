@@ -15,7 +15,7 @@ export function HomePageBanner() {
   return (
     <section className="banner">
       <div className="holder holder--sm">
-        <h1 className="banner__title">Kea Survey Tool</h1>
+        <h1 className="banner__title">Kea Survey</h1>
         <div className="banner__buttons">
           <Link href="/submit" className="btn btn--lg btn--primary">
             <i className="fa-fw fas fa-clipboard-list mr-1"></i>Submit Survey

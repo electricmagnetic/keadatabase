@@ -5,7 +5,7 @@ import RecentGridTiles from "@/app/_components/grid/RecentGridTiles";
 import Page from "@/app/_components/ui/Page";
 
 export const metadata: Metadata = {
-  title: "Kea Survey Tool",
+  title: "Kea Survey",
 };
 
 export default async function HomePage() {

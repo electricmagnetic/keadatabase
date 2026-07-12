@@ -17,7 +17,7 @@ export function Footer() {
               </nav>
             </div>
             <aside className="footer__right">
-              <span>Kea Survey Tool</span>
+              <span>Kea Survey</span>
               <br />
               {packageJson.version}
             </aside>

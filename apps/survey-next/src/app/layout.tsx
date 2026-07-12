@@ -37,7 +37,7 @@ export const metadata: Metadata = {
   },
   manifest: "/site.webmanifest",
   appleWebApp: {
-    title: "Kea Survey Tool",
+    title: "Kea Survey",
   },
 };
 

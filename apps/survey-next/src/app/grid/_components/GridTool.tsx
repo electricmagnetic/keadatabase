@@ -26,7 +26,7 @@ export function GridTool() {
     <div>
       {selectedTiles.length > 0 && (
         <h2 className="print-only">
-          <small>Grid Tiles, Kea Survey Tool</small>
+          <small>Grid Tiles, Kea Survey</small>
           <br />
           {selectedTiles.join(" ")}
         </h2>

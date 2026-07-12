@@ -32,6 +32,7 @@
     @media (width < 995px) {
       grid-template-columns: 1fr;
       padding-right: 0;
+      gap: 0;
     }
   }
 

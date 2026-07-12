@@ -15,7 +15,7 @@ import {
   type ProfileFormData,
 } from "./schema";
 import { Toast } from "@/app/_components/ui/Toast";
-import { Spinner } from "@/app/_components/ui/Spinner";
+import { Skeleton } from "@/app/_components/ui/Skeleton";
 
 /**
  * Edit first/last name via GET/PATCH /me/; returns to /account on save.
@@ -39,13 +39,30 @@ export function AccountDetailsForm() {
     });
   }, []);
 
-  if (!profile && !toast) return <Spinner />;
+  if (!profile && !toast) return <DetailsFormSkeleton />;
 
   return (
     <>
       {profile && <DetailsForm profile={profile} onError={setToast} />}
       <Toast message={toast} variant="error" onDismiss={() => setToast(null)} />
     </>
+  );
+}
+
+/** Mirrors DetailsForm's layout so the real fields swap in without a jump. */
+function DetailsFormSkeleton() {
+  return (
+    <div className="form auth-form" aria-busy="true">
+      {["First name", "Last name"].map((label) => (
+        <div className="form__row" key={label}>
+          <span className="form__label form__label--required">{label}</span>
+          <Skeleton height="2.375rem" />
+        </div>
+      ))}
+      <div className="form__actions">
+        <Skeleton width="8rem" height="2.375rem" />
+      </div>
+    </div>
   );
 }
 

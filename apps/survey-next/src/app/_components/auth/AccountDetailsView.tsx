@@ -17,8 +17,10 @@ export function AccountDetailsView() {
     if (!loading && !isAuthenticated) router.replace("/login");
   }, [loading, isAuthenticated, router]);
 
-  if (loading || !isAuthenticated) return <Spinner />;
+  // anon users are being redirected away, so don't flash the form at them
+  if (!loading && !isAuthenticated) return <Spinner />;
 
+  // while `loading`, AccountDetailsForm shows its own skeleton
   return (
     <Page.Container>
       <Page.Heading>Edit details</Page.Heading>

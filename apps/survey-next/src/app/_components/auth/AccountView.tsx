@@ -6,6 +6,7 @@ import Link from "next/link";
 
 import Page from "@/app/_components/ui/Page";
 import { Spinner } from "@/app/_components/ui/Spinner";
+import { Skeleton } from "@/app/_components/ui/Skeleton";
 import { useSession } from "./useSession";
 import { profileFetch } from "./client";
 import type { Profile } from "./schema";
@@ -42,7 +43,8 @@ export function AccountView() {
           <div>
             <h2>Account Details</h2>
             <p>
-              {name} <Link href="/account/details">(edit details)</Link>
+              {profile ? name : <Skeleton width="10rem" />}{" "}
+              <Link href="/account/details">(edit details)</Link>
             </p>
             <p>{user?.email}</p>
           </div>

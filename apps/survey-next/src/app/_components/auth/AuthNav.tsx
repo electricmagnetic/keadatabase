@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useSession } from "./useSession";
 import { authFetch, AUTH_PATHS } from "./client";
+import { Skeleton } from "@/app/_components/ui/Skeleton";
 
 /**
  * Auth links for the navigation: Login / Register when anonymous, and the
@@ -14,8 +15,20 @@ export function AuthNav() {
   const { isAuthenticated, loading, refresh } = useSession();
   const router = useRouter();
 
-  // avoid a flash of the wrong state before the session resolves
-  if (loading) return null;
+  // both signed-in and signed-out states render two links, so hold two
+  // placeholders and the nav bar doesn't reflow once the session resolves
+  if (loading) {
+    return (
+      <>
+        <li>
+          <Skeleton width="5rem" />
+        </li>
+        <li>
+          <Skeleton width="5rem" />
+        </li>
+      </>
+    );
+  }
 
   const handleLogout = async () => {
     await authFetch(AUTH_PATHS.session, { method: "DELETE" });

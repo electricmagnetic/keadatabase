@@ -106,12 +106,16 @@ export function XYZRasterLayer({
   urls,
   sourceId,
   layerId,
+  minzoom,
+  maxzoom,
 }: {
   attribution?: string;
   tileSize?: number;
   urls: string[];
   sourceId: string;
   layerId?: string;
+  minzoom?: number;
+  maxzoom?: number;
 }) {
   const actualLayerId = layerId || `${sourceId}-layer`;
 
@@ -121,6 +125,8 @@ export function XYZRasterLayer({
       attribution={attribution}
       tileSize={tileSize}
       tiles={urls}
+      minzoom={minzoom}
+      maxzoom={maxzoom}
       type="raster"
     >
       <Layer id={actualLayerId} type="raster" />

@@ -55,6 +55,9 @@ export const BaseMap = forwardRef<MapRef, PropsWithChildren<BaseMapProps>>(
       <Map
         hash={hash}
         ref={ref}
+        // firefox rasterises a fresh frame when printing; without this the WebGL
+        // buffer is already cleared and the map prints blank
+        canvasContextAttributes={{ preserveDrawingBuffer: true }}
         mapStyle={{
           version: 8,
           sources: {},

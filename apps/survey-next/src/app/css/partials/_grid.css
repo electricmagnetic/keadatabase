@@ -67,7 +67,6 @@
 .grid-tile-typeahead--full {
   .rbt-input,
   .form-control {
-    background-color: var(--grey-light);
     cursor: not-allowed;
   }
 

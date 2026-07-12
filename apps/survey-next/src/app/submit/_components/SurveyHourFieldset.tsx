@@ -67,6 +67,14 @@ function SurveyHourRow({
   if (isNotSurveying) setValue(`hours.${index}.kea`, false);
   // likewise a disabled max-seen keeps its last value, so clear it when kea is unticked
   if (!kea) setValue(`hours.${index}.max_seen`, null);
+  // and a stale grid tile would otherwise persist, submitting a not-surveyed hour
+  // as a surveyed one (the payload keys off grid_tile being present). for the
+  // single-tile case, restore the autofill when the hour is surveyed again.
+  if (isNotSurveying && singleGridTile !== null) {
+    setValue(`hours.${index}.grid_tile`, null);
+  } else if (hasSingleGridTile && !isNotSurveying && singleGridTile === null) {
+    setValue(`hours.${index}.grid_tile`, [gridTiles[0]]);
+  }
 
   const activityError = errors.hours?.[index]?.activity;
   const activityTouched = touchedFields.hours?.[index]?.activity;
@@ -151,7 +159,8 @@ function SurveyHourRow({
       </td>
 
       <td>
-        {hasSingleGridTile ? (
+        {/* not-surveying wins over the single-tile autofill, so the row greys out */}
+        {isNotSurveying || hasSingleGridTile ? (
           <div className="form-group">
             <label className="sr-only" htmlFor={`hours.${index}.grid_tile`}>
               Grid Tile
@@ -163,20 +172,8 @@ function SurveyHourRow({
               value={
                 Array.isArray(singleGridTile) ? singleGridTile[0] || "" : ""
               }
+              disabled={isNotSurveying}
               readOnly
-              tabIndex={-1}
-            />
-          </div>
-        ) : isNotSurveying ? (
-          <div className="form-group">
-            <label className="sr-only" htmlFor={`hours.${index}.grid_tile`}>
-              Grid Tile
-            </label>
-            <input
-              type="text"
-              id={`hours.${index}.grid_tile`}
-              className="form__control"
-              disabled
               tabIndex={-1}
             />
           </div>

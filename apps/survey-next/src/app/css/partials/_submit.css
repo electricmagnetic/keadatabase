@@ -44,6 +44,7 @@
     border: 1px solid var(--border-color);
     padding: 1rem;
     background-color: var(--cream-light);
+    margin-bottom: 2rem;
 
     @media (width < 995px) {
       margin-inline: 2rem;

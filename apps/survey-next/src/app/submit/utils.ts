@@ -1,6 +1,20 @@
 import { SEASONS, SURVEY_HOURS, type Season } from "./constants";
 import type { SurveyHour, SurveySubmissionPayload, Step2FormData } from "./schema";
 
+/**
+ * Today's calendar date in the user's own timezone, as YYYY-MM-DD.
+ *
+ * Deliberately not `toISOString()`: that converts to UTC first, so anywhere east
+ * of Greenwich (NZ is +12/+13) local midnight is still *yesterday* in UTC and
+ * today's date comes back a day early.
+ */
+export function getLocalDateString(date: Date = new Date()): string {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
 export function getCurrentSeason(date: Date = new Date()): Season {
   const month = date.getMonth() + 1;
   return (SEASONS.summer as readonly number[]).includes(month) ? "summer" : "winter";
@@ -50,7 +64,9 @@ export function transformFormDataToPayload(
 
   return {
     ...rest,
-    date: date.toISOString().split("T")[0],
+    // already a YYYY-MM-DD calendar string — no Date round-trip, which would
+    // shift the day across the UTC boundary
+    date,
     max_flock_size: maxHour?.max_seen ?? null,
     max_flock_size_grid_tile: maxHour?.grid_tile?.[0] ?? null,
     hours: hours

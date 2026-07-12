@@ -4,6 +4,7 @@ import { useMemo } from "react";
 import { useFormContext, useFormState } from "react-hook-form";
 import { SelectedGridTilesMap } from "../../_components/grid/SelectedGridTilesMap";
 import type { Step2FormData } from "../schema";
+import { getLocalDateString } from "../utils";
 
 interface TripFieldsetProps {
   /** When true, the name came from the user's profile and is locked. */
@@ -31,11 +32,7 @@ export function TripFieldset({
   const nameError = errors.observer?.name;
   const nameTouched = touchedFields.observer?.name;
 
-  const todayString = useMemo(() => {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    return today.toISOString().split("T")[0];
-  }, []);
+  const todayString = useMemo(() => getLocalDateString(), []);
 
   const purposeChoices = fieldOptions?.purpose?.choices || [];
 

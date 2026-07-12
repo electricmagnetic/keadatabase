@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { getAllGridTileIds } from "../_components/grid/helpers";
+import { getLocalDateString } from "./utils";
 
 const MESSAGES = {
   required: "This field is required.",
@@ -72,19 +73,18 @@ export const SurveyHourSchemaWithValidation = SurveyHourSchema.superRefine(
   },
 );
 
-// accepts the raw string from <input type="date">; empty is "required",
-// unparseable is "format invalid", and a future date fails maxDate.
-// output is a Date so the payload transform can call toISOString()
+// accepts the raw YYYY-MM-DD string from <input type="date">; empty is
+// "required", anything else is "format invalid", and a future date fails
+// maxDate. Kept as a string rather than a Date: ISO dates compare correctly
+// lexically, so "today or earlier" needs no timezone reasoning at all — which
+// is what broke this (new Date("2025-07-13") is UTC midnight, i.e. noon in NZ,
+// so today read as being in the future).
 export const DateSchema = z
   .string()
   .min(1, MESSAGES.required)
+  .regex(/^\d{4}-\d{2}-\d{2}$/, MESSAGES.date)
   .refine((value) => !Number.isNaN(new Date(value).getTime()), MESSAGES.date)
-  .transform((value) => new Date(value))
-  .refine((date) => {
-    const today = new Date();
-    today.setHours(23, 59, 59, 999);
-    return date.getTime() <= today.getTime();
-  }, MESSAGES.maxDate);
+  .refine((value) => value <= getLocalDateString(), MESSAGES.maxDate);
 
 export const Step2Schema = z.object({
   observer: ObserverSchema,
@@ -99,8 +99,8 @@ export type Observer = z.infer<typeof ObserverSchema>;
 export type GridTiles = z.infer<typeof GridTilesSchema>;
 export type Step1FormData = z.infer<typeof Step1Schema>;
 export type SurveyHour = z.infer<typeof SurveyHourSchema>;
-// input type accepts the raw date string from <input type="date">,
-// output type (post-coercion) has date as a Date
+// date stays a YYYY-MM-DD string end to end — the form field, the validation
+// and the API payload all speak calendar dates, so there is no Date to mistime
 export type Step2FormInput = z.input<typeof Step2Schema>;
 export type Step2FormData = z.infer<typeof Step2Schema>;
 

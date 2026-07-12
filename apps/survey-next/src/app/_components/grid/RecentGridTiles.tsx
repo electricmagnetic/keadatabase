@@ -20,9 +20,11 @@ export default async function RecentGridTiles({
 }: {
   limit?: number;
 }) {
+  // hours also arrive from the mobile app, so never serve a build-time snapshot
   const surveyHoursFetch = await fetcher(
     getApiUrl("/surveys/hours/?page_size=120"),
     SurveyHoursApiListResponseSchema,
+    { cache: "no-store" },
   );
 
   if (!surveyHoursFetch.success) {

@@ -15,7 +15,7 @@
     "date-fns": "^4.1.0",
     "geospatial": "workspace:^",
     "maplibre-gl": "^5.24.0",
-    "next": "16.2.6",
+    "next": "16.2.11",
     "react": "19.2.7",
     "react-bootstrap-typeahead": "^6.4.1",
     "react-dom": "19.2.7",

@@ -19,7 +19,7 @@ dependencies = [
     "djangorestframework-gis==1.2.1",
     "environs[django]==11.0.0",
     "gunicorn==23.0.0",
-    "marshmallow==3.26.1",
+    "marshmallow==3.26.2",
     "pillow==12.2.0",
     "psycopg[binary]>=3.2",
     "python-dateutil==2.9.0.post0",

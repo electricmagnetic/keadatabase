@@ -34,7 +34,7 @@
     "babel-plugin-react-compiler": "1.0.0",
     "eslint": "^9",
     "eslint-config-next": "16.2.6",
-    "postcss": "^8.5.15",
+    "postcss": "^8.5.23",
     "postcss-discard-comments": "^7.0.3",
     "postcss-nested": "^7.0.2",
     "typescript": "^5"

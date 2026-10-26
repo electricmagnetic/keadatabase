@@ -30,6 +30,10 @@ SECRET_KEY = 'DO_NOT_USE_IN_PRODUCTION'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env.bool('DEBUG', True)
 
+# PostHog configuration
+POSTHOG_PROJECT_TOKEN = env.str('POSTHOG_PROJECT_TOKEN', '')
+POSTHOG_HOST = env.str('POSTHOG_HOST', '')
+
 ALLOWED_HOSTS = []
 
 # Production settings for security
@@ -84,6 +88,7 @@ INSTALLED_APPS = [
     'sightings',
     'report',
     'geojson',
+    'keadatabase.apps.KeadatabaseConfig',
 ]
 
 MIDDLEWARE = [
@@ -96,6 +101,7 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'posthog.integrations.django.PosthogContextMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]

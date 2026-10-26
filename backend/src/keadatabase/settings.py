@@ -14,6 +14,8 @@ import os
 
 from environs import Env
 
+from keadatabase.client_ip import posthog_request_properties
+
 # Read environment variables, .env file
 env = Env()
 env.read_env()
@@ -33,6 +35,9 @@ DEBUG = env.bool('DEBUG', True)
 # PostHog configuration
 POSTHOG_PROJECT_TOKEN = env.str('POSTHOG_PROJECT_TOKEN', '')
 POSTHOG_HOST = env.str('POSTHOG_HOST', '')
+# DigitalOcean's ingress is in X-Forwarded-For; use the real client IP instead.
+POSTHOG_MW_EXTRA_PROPERTIES = posthog_request_properties
+
 
 ALLOWED_HOSTS = []
 
@@ -96,6 +101,7 @@ MIDDLEWARE = [
     'django.middleware.gzip.GZipMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
+    'keadatabase.middleware.RequestLoggingMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',

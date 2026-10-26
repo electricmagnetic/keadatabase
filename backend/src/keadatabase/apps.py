@@ -6,10 +6,10 @@ import logging
 from django.apps import AppConfig
 from django.conf import settings
 from django.contrib.auth.signals import user_logged_in
-from django.core.exceptions import ImproperlyConfigured
 from django.dispatch import receiver
 from posthog import Posthog, identify_context
 
+logger = logging.getLogger(__name__)
 
 posthog_client = None
 
@@ -54,22 +54,16 @@ class KeadatabaseConfig(AppConfig):
         """Initialize the process-wide PostHog client when Django starts."""
         global posthog_client
 
-        if not settings.POSTHOG_PROJECT_TOKEN:
-            if settings.DEBUG:
-                raise ImproperlyConfigured(
-                    'POSTHOG_PROJECT_TOKEN variable required by PostHog is missing '
-                    'or un-configured, this causes events to be silently missed. '
-                    'This error stops appearing once POSTHOG_PROJECT_TOKEN is configured'
-                )
-            return
-
-        if not settings.POSTHOG_HOST:
-            if settings.DEBUG:
-                raise ImproperlyConfigured(
-                    'POSTHOG_HOST variable required by PostHog is missing or '
-                    'un-configured, this causes events to be silently missed. This '
-                    'error stops appearing once POSTHOG_HOST is configured'
-                )
+        missing = [
+            name
+            for name in ('POSTHOG_PROJECT_TOKEN', 'POSTHOG_HOST')
+            if not getattr(settings, name)
+        ]
+        if missing:
+            logger.warning(
+                '%s not configured; PostHog is disabled and no events will be sent.',
+                ', '.join(missing),
+            )
             return
 
         posthog_client = Posthog(
